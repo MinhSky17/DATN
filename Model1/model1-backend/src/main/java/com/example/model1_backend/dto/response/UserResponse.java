@@ -1,20 +1,18 @@
-package com.example.model1_backend.entity;
+package com.example.model1_backend.dto.response;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 
-@Entity
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+public class UserResponse {
     private String id;
     private int roleId = 0;
     private String username;
@@ -26,8 +24,7 @@ public class User {
     private String phoneNumber;
     private String gender;
     private String address;
-    private Boolean active = true;
+    private Boolean active;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
 }
