@@ -1,33 +1,44 @@
 package com.example.model1_backend.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Data;
+import com.example.model1_backend.enums.Role;
+import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.Type;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
+import java.util.List;
 
 @Data
-
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
-    private int roleId = 0;
-    private String username;
-    private String password;
-    private String firstName;
-    private String lastName;
-    private LocalDate dateOfBirth;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    @Column(name = "full_name")
+    private String fullName;
+    @Column(name = "email",nullable = false,length = 200)
     private String email;
-    private String phoneNumber;
-    private String gender;
+    @Column(name = "password",nullable = false)
+    private String password;
+    @Column(name = "phone")
+    private String phone;
+    @Column(name = "address")
     private String address;
-    private Boolean active = true;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    @Column(name = "avatar")
+    private String avatar;
+    @Type(type = "json")
+    @Column(name = "roles",nullable = false,columnDefinition = "json")
+    private List<String> roles;
+    @Column(name = "status",columnDefinition = "BOOLEAN")
+    private boolean status;
+    @Column(name = "created_at")
 
+    private Timestamp createdAt;
+    @Column(name = "modified_at")
+    private Timestamp modifiedAt;
 }

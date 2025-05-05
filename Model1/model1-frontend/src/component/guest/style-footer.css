@@ -1,0 +1,73 @@
+.container-footer-guest {
+  background-color: #e38e02;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  color: white;
+}
+
+.footer-column {
+  text-align: center;
+}
+
+.title-footer-column-1 {
+  font-family: "Krona One", sans-serif;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.subtitle-footer-column-2 {
+  font-size: 15px;
+  margin-top: 15px;
+  margin-left: 10%;
+  margin-right: 10%;
+  font-weight: 500;
+}
+
+.icon-social-footer {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.title-footer-column-2 {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.footer-final-guest {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 12px;
+  font-style: italic;
+}
+
+.col-footer {
+  margin-bottom: 30px;
+}
+
+.link_footer_guest {
+  color: #ffffff;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.link_footer_guest:hover {
+  color: #2569cf;
+  font-weight: 600;
+  text-decoration: underline;
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .col-footer-box {
+    justify-content: left !important;
+    margin-left: 30px;
+    margin-top: 35px;
+  }
+
+  .footer-final-guest {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+}

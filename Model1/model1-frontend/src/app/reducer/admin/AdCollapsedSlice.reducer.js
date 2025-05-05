@@ -10,7 +10,7 @@ const AdCollapsedSlice = createSlice({
       state = false;
       return state;
     },
-    SetTrueToggle: (state, action) => {
+    SetTTrueToggle: (state, action) => {
       state = true;
       return state;
     },
@@ -21,7 +21,7 @@ const AdCollapsedSlice = createSlice({
   },
 });
 
-export const { SetFalseToggle, SetTrueToggle, Toggle } =
+export const { SetFalseToggle, SetTTrueToggle, Toggle } =
   AdCollapsedSlice.actions;
 
 export const GetAdCollapsed = (state) => state.adCollapsed;
