@@ -197,18 +197,18 @@
 
                     </div>
 
-                    <!-- Tab product Color -->
+                    <!-- Tab product size -->
                     <div class="tab-pane" id="tabs-2" role="tabpanel">
                         <div>
                             <div class="row">
                                 <form class="form-inline">
-                                    <div class="form-group col-md-2">
-                                        <label for="Color">Color giày</label>&emsp;
-                                        <select class="form-control" id="Color">
-                                            <th:block th:each="Color : ${ColorVN}">
-                                                <option th:value="${Color}" th:text="${Color}"></option>
-                                            </th:block>
-                                        </select>
+                                    <div class="form-group col-md-2">                                
+                                        <label for="code">Mã màu</label>&emsp;
+                                        <input type="text" class="form-control" id="code" placeholder="M01">
+                                    </div>
+                                    <div class="form-group col-md-2">                                
+                                        <label for="clname">Tên màu</label>&emsp;
+                                        <input type="text" class="form-control" id="clname" placeholder="Đỏ">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label for="count">Số lượng có sẵn</label>&emsp;
@@ -217,11 +217,11 @@
                                     <div class=" form-group col-md-3">
                                         <label for="">Thực hiện</label>
                                         <br>
-                                        <button type="button" id="" class="btn btn-primary btn-update-Color-count">Cập
+                                        <button type="button" id="" class="btn btn-primary btn-update-color-count">Cập
                                             nhật số lượng <i class="fas fa-plus"></i></button>
                                         <br>
                                         <span class="invalid-feedback"
-                                              id="invalid-feedback-Color">Vui lòng nhập số lượng</span>
+                                              id="invalid-feedback-size">Vui lòng nhập số lượng</span>
                                     </div>
                                 </form>
                             </div>
@@ -230,15 +230,17 @@
                             <table class="table table-striped table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <th>Color giày</th>
+                                    <th>Mã màu</th>
+                                    <th>Tên màu</th>
                                     <th>Số lượng có sẵn</th>
                                 </tr>
                                 </thead>
-                                <tbody class="list-product-Color">
+                                <tbody class="list-product-color">
                                 <th:block th:each="ps : ${productColors}">
                                     <tr>
-                                        <td th:text="${ps.Color}" class="product-Color" th:data-Color="${ps.Color}"></td>
-                                        <td th:text="${ps.quantity}" class="product-count"></td>
+                                        <td th:text="${ps.code}" class="product-color-code"></td>
+                                        <td th:text="${ps.name}" class="product-color-name"></td>
+                                        <td th:text="${ps.quantity}" class="product-color-count"></td>
                                     </tr>
                                 </th:block>
                                 </tbody>
@@ -479,31 +481,41 @@
             }
         })
 
-        $('.btn-update-Color-count').click(function (event) {
+        $('.btn-update-color-count').click(function (event) {
             event.preventDefault();
-            let Color = parseInt($('#Color').val());
+            let code = $('#code').val();
+            let name = $('#clname').val();
             let count = parseInt($('#count').val());
-            if (isNaN(count)) {
-                $('#invalid-feedback-Color').show();
-                return;
-            }
+
             req = {
-                Color: Color,
+                code: code,
+                name: name,
                 count: count,
                 product_id: [[${product.id}]]
             }
             var myJSON = JSON.stringify(req);
             $.ajax({
-                url: '/api/admin/products/Colors',
+                url: '/api/admin/products/colors',
                 type: 'PUT',
                 data: myJSON,
                 contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    let productColor = $('.product-Color[data-Color=' + Color + ']')
+                success: function (data) {                    
+                    //let productColor = $('.product-color[data-code=' + code + ']')
+                    let productColor = $('.product-color').filter(function() {
+                        return $(this).find('.product-color-code').text().trim() === code.trim();
+                    });
                     if (productColor.length === 0) {
-                        $('.list-product-Color').append(`<tr><td class="product-Color" data-Color="${Color}">${Color}</td><td class="product-count">${count}</td></tr>`);
-                    } else {
-                        $(productColor).parent().find('.product-count').text(count);
+                        $('.list-product-color').append(`                      
+                            <tr class="product-color">
+                                <td class="product-color-code">${code}</td>
+                                <td class="product-color-name">${name}</td>
+                                <td class="product-color-count">${count}</td>
+                            </tr>
+                        `); 
+                    }else{                
+                        $(productColor).find('.product-color-name').text(name);
+                        $(productColor).find('.product-color-count').text(count);
+                        //location.reload();
                     }
                     toastr.success("Cập nhật thành công");
                 },
@@ -511,7 +523,51 @@
                     toastr.warning(data.responseJSON.message);
                 },
                 complete: function () {
-                    $('#invalid-feedback-Color').hide();
+                    $('#code').val('');
+                    $('#clname').val('');
+                    $('#count').val('0');
+                }
+
+            });
+        });
+
+        $('.btn-update-size-count').click(function (event) {
+            event.preventDefault();
+            let size = parseInt($('#size').val());
+            let count = parseInt($('#count').val());
+            if (isNaN(count)) {
+                $('#invalid-feedback-size').show();
+                return;
+            }
+            req = {
+                size: size,
+                count: count,
+                product_id: [[${product.id}]]
+            }
+            var myJSON = JSON.stringify(req);
+            $.ajax({
+                url: '/api/admin/products/sizes',
+                type: 'PUT',
+                data: myJSON,
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    let productSize = $('.product-size[data-size=' + size + ']')
+                    if (productSize.length === 0) {
+                        $('.list-product-size').append(`
+                        <tr>
+                        <td class="product-size" data-size="${size}">${size}</td>
+                        <td class="product-color-count">${count}</td>
+                        </tr>`);
+                    } else {
+                        $(productSize).parent().find('.product-color-count').text(count);
+                    }
+                    toastr.success("Cập nhật thành công");
+                },
+                error: function (data) {
+                    toastr.warning(data.responseJSON.message);
+                },
+                complete: function () {
+                    $('#invalid-feedback-size').hide();
                 }
             });
         })

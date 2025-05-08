@@ -1,7 +1,7 @@
 /*!
-	autoColor 4.0.2
+	autosize 4.0.2
 	license: MIT
-	http://www.jacklmoore.com/autoColor
+	http://www.jacklmoore.com/autosize
 */
 (function (global, factory) {
 	if (typeof define === "function" && define.amd) {
@@ -13,7 +13,7 @@
 			exports: {}
 		};
 		factory(mod, mod.exports);
-		global.autoColor = mod.exports;
+		global.autosize = mod.exports;
 	}
 })(this, function (module, exports) {
 	'use strict';
@@ -69,10 +69,10 @@
 		function init() {
 			var style = window.getComputedStyle(ta, null);
 
-			if (style.reColor === 'vertical') {
-				ta.style.reColor = 'none';
-			} else if (style.reColor === 'both') {
-				ta.style.reColor = 'horizontal';
+			if (style.resize === 'vertical') {
+				ta.style.resize = 'none';
+			} else if (style.resize === 'both') {
+				ta.style.resize = 'horizontal';
 			}
 
 			if (style.boxSizing === 'content-box') {
@@ -121,7 +121,7 @@
 			return arr;
 		}
 
-		function reColor() {
+		function resize() {
 			if (ta.scrollHeight === 0) {
 				// If the scrollHeight is 0, then the element probably has display:none or is detached from the DOM.
 				return;
@@ -133,7 +133,7 @@
 			ta.style.height = '';
 			ta.style.height = ta.scrollHeight + heightOffset + 'px';
 
-			// used to check if an update is actually necessary on window.reColor
+			// used to check if an update is actually necessary on window.resize
 			clientWidth = ta.clientWidth;
 
 			// prevents scroll-position jumping
@@ -147,7 +147,7 @@
 		}
 
 		function update() {
-			reColor();
+			resize();
 
 			var styleHeight = Math.round(parseFloat(ta.style.height));
 			var computed = window.getComputedStyle(ta, null);
@@ -155,26 +155,26 @@
 			// Using offsetHeight as a replacement for computed.height in IE, because IE does not account use of border-box
 			var actualHeight = computed.boxSizing === 'content-box' ? Math.round(parseFloat(computed.height)) : ta.offsetHeight;
 
-			// The actual height not matching the style height (set via the reColor method) indicates that 
+			// The actual height not matching the style height (set via the resize method) indicates that 
 			// the max-height has been exceeded, in which case the overflow should be allowed.
 			if (actualHeight < styleHeight) {
 				if (computed.overflowY === 'hidden') {
 					changeOverflow('scroll');
-					reColor();
+					resize();
 					actualHeight = computed.boxSizing === 'content-box' ? Math.round(parseFloat(window.getComputedStyle(ta, null).height)) : ta.offsetHeight;
 				}
 			} else {
 				// Normally keep overflow set to hidden, to avoid flash of scrollbar as the textarea expands.
 				if (computed.overflowY !== 'hidden') {
 					changeOverflow('hidden');
-					reColor();
+					resize();
 					actualHeight = computed.boxSizing === 'content-box' ? Math.round(parseFloat(window.getComputedStyle(ta, null).height)) : ta.offsetHeight;
 				}
 			}
 
 			if (cachedHeight !== actualHeight) {
 				cachedHeight = actualHeight;
-				var evt = createEvent('autoColor:reColord');
+				var evt = createEvent('autosize:resized');
 				try {
 					ta.dispatchEvent(evt);
 				} catch (err) {
@@ -184,18 +184,18 @@
 			}
 		}
 
-		var pageReColor = function pageReColor() {
+		var pageResize = function pageResize() {
 			if (ta.clientWidth !== clientWidth) {
 				update();
 			}
 		};
 
 		var destroy = function (style) {
-			window.removeEventListener('reColor', pageReColor, false);
+			window.removeEventListener('resize', pageResize, false);
 			ta.removeEventListener('input', update, false);
 			ta.removeEventListener('keyup', update, false);
-			ta.removeEventListener('autoColor:destroy', destroy, false);
-			ta.removeEventListener('autoColor:update', update, false);
+			ta.removeEventListener('autosize:destroy', destroy, false);
+			ta.removeEventListener('autosize:update', update, false);
 
 			Object.keys(style).forEach(function (key) {
 				ta.style[key] = style[key];
@@ -204,13 +204,13 @@
 			map.delete(ta);
 		}.bind(ta, {
 			height: ta.style.height,
-			reColor: ta.style.reColor,
+			resize: ta.style.resize,
 			overflowY: ta.style.overflowY,
 			overflowX: ta.style.overflowX,
 			wordWrap: ta.style.wordWrap
 		});
 
-		ta.addEventListener('autoColor:destroy', destroy, false);
+		ta.addEventListener('autosize:destroy', destroy, false);
 
 		// IE9 does not fire onpropertychange or oninput for deletions,
 		// so binding to onkeyup to catch most of those events.
@@ -219,9 +219,9 @@
 			ta.addEventListener('keyup', update, false);
 		}
 
-		window.addEventListener('reColor', pageReColor, false);
+		window.addEventListener('resize', pageResize, false);
 		ta.addEventListener('input', update, false);
-		ta.addEventListener('autoColor:update', update, false);
+		ta.addEventListener('autosize:update', update, false);
 		ta.style.overflowX = 'hidden';
 		ta.style.wordWrap = 'break-word';
 
@@ -247,21 +247,21 @@
 		}
 	}
 
-	var autoColor = null;
+	var autosize = null;
 
 	// Do nothing in Node.js environment and IE8 (or lower)
 	if (typeof window === 'undefined' || typeof window.getComputedStyle !== 'function') {
-		autoColor = function autoColor(el) {
+		autosize = function autosize(el) {
 			return el;
 		};
-		autoColor.destroy = function (el) {
+		autosize.destroy = function (el) {
 			return el;
 		};
-		autoColor.update = function (el) {
+		autosize.update = function (el) {
 			return el;
 		};
 	} else {
-		autoColor = function autoColor(el, options) {
+		autosize = function autosize(el, options) {
 			if (el) {
 				Array.prototype.forEach.call(el.length ? el : [el], function (x) {
 					return assign(x, options);
@@ -269,13 +269,13 @@
 			}
 			return el;
 		};
-		autoColor.destroy = function (el) {
+		autosize.destroy = function (el) {
 			if (el) {
 				Array.prototype.forEach.call(el.length ? el : [el], destroy);
 			}
 			return el;
 		};
-		autoColor.update = function (el) {
+		autosize.update = function (el) {
 			if (el) {
 				Array.prototype.forEach.call(el.length ? el : [el], update);
 			}
@@ -283,6 +283,6 @@
 		};
 	}
 
-	exports.default = autoColor;
+	exports.default = autosize;
 	module.exports = exports['default'];
 });

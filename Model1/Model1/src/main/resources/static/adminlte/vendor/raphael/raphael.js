@@ -300,7 +300,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             "fill-opacity": 1,
             font: '10px "Arial"',
             "font-family": '"Arial"',
-            "font-Color": "10",
+            "font-size": "10",
             "font-style": "normal",
             "font-weight": 400,
             gradient: 0,
@@ -336,7 +336,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             cy: nu,
             fill: "colour",
             "fill-opacity": nu,
-            "font-Color": nu,
+            "font-size": nu,
             height: nu,
             opacity: nu,
             path: "path",
@@ -483,7 +483,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
      * ability for namespaced plugins was removed in Raphael 2.0. It is up to the plugin to
      * ensure any namespacing ensures proper context.
      > Usage
-     | Raphael.fn.arrow = function (x1, y1, x2, y2, Color) {
+     | Raphael.fn.arrow = function (x1, y1, x2, y2, size) {
      |     return this.path( ... );
      | };
      | // or create namespace
@@ -3604,14 +3604,14 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         return out;
     };
     /*\
-     * Paper.getColor
+     * Paper.getSize
      [ method ]
      **
-     * Obtains current paper actual Color.
+     * Obtains current paper actual size.
      **
      = (object)
      \*/
-    paperproto.getColor = function () {
+    paperproto.getSize = function () {
         var container = this.canvas.parentNode;
         return {
             width: container.offsetWidth,
@@ -3619,7 +3619,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 };
         };
     /*\
-     * Paper.setColor
+     * Paper.setSize
      [ method ]
      **
      * If you need to change dimensions of the canvas call this method
@@ -3629,8 +3629,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
      - width (number) new width of the canvas
      - height (number) new height of the canvas
     \*/
-    paperproto.setColor = function (width, height) {
-        return R._engine.setColor.call(this, width, height);
+    paperproto.setSize = function (width, height) {
+        return R._engine.setSize.call(this, width, height);
     };
     /*\
      * Paper.setViewBox
@@ -3910,7 +3910,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
      **
      - glow (object) #optional parameters object with all properties optional:
      o {
-     o     width (number) Color of the glow, default is `10`
+     o     width (number) size of the glow, default is `10`
      o     fill (boolean) will it be filled, default is `false`
      o     opacity (number) opacity, default is `0.5`
      o     offsetx (number) horizontal offset, default is `0`
@@ -5304,7 +5304,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
      * Paper.print
      [ method ]
      **
-     * Creates path that represent given text written using given font at given position with given Color.
+     * Creates path that represent given text written using given font at given position with given size.
      * Result of the method is path element that contains whole text as a separate path.
      **
      > Parameters
@@ -5313,7 +5313,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
      - y (number) y position of the text
      - string (string) text to print
      - font (object) font object, see @Paper.getFont
-     - Color (number) #optional Color of the font, default is `16`
+     - size (number) #optional size of the font, default is `16`
      - origin (string) #optional could be `"baseline"` or `"middle"`, default is `"middle"`
      - letter_spacing (number) #optional number in range `-1..1`, default is `0`
      - line_spacing (number) #optional number in range `1..3`, default is `1`
@@ -5321,7 +5321,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
      > Usage
      | var txt = r.print(10, 50, "print", r.getFont("Museo"), 30).attr({fill: "#fff"});
     \*/
-    paperproto.print = function (x, y, string, font, Color, origin, letter_spacing, line_spacing) {
+    paperproto.print = function (x, y, string, font, size, origin, letter_spacing, line_spacing) {
         origin = origin || "middle"; // baseline|middle
         letter_spacing = mmax(mmin(letter_spacing || 0, 1), -1);
         line_spacing = mmax(mmin(line_spacing || 1, 3), 1);
@@ -5332,7 +5332,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             scale;
         R.is(font, "string") && (font = this.getFont(font));
         if (font) {
-            scale = (Color || 16) / font.face["units-per-em"];
+            scale = (size || 16) / font.face["units-per-em"];
             var bb = font.face.bbox[split](separator),
                 top = +bb[0],
                 lineHeight = bb[3] - bb[1],
@@ -6118,7 +6118,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                             break;
                         }
                     default:
-                        att == "font-Color" && (value = toInt(value, 10) + "px");
+                        att == "font-size" && (value = toInt(value, 10) + "px");
                         var cssrule = att.replace(/(\-.)/g, function (w) {
                             return w.substring(1).toUpperCase();
                         });
@@ -6135,12 +6135,12 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     },
     leading = 1.2,
     tuneText = function (el, params) {
-        if (el.type != "text" || !(params[has]("text") || params[has]("font") || params[has]("font-Color") || params[has]("x") || params[has]("y"))) {
+        if (el.type != "text" || !(params[has]("text") || params[has]("font") || params[has]("font-size") || params[has]("x") || params[has]("y"))) {
             return;
         }
         var a = el.attrs,
             node = el.node,
-            fontColor = node.firstChild ? toInt(R._g.doc.defaultView.getComputedStyle(node.firstChild, E).getPropertyValue("font-Color"), 10) : 10;
+            fontSize = node.firstChild ? toInt(R._g.doc.defaultView.getComputedStyle(node.firstChild, E).getPropertyValue("font-size"), 10) : 10;
 
         if (params[has]("text")) {
             a.text = params.text;
@@ -6152,7 +6152,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 tspan;
             for (var i = 0, ii = texts.length; i < ii; i++) {
                 tspan = $("tspan");
-                i && $(tspan, {dy: fontColor * leading, x: a.x});
+                i && $(tspan, {dy: fontSize * leading, x: a.x});
                 tspan.appendChild(R._g.doc.createTextNode(texts[i]));
                 node.appendChild(tspan);
                 tspans[i] = tspan;
@@ -6160,7 +6160,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         } else {
             tspans = node.getElementsByTagName("tspan");
             for (i = 0, ii = tspans.length; i < ii; i++) if (i) {
-                $(tspans[i], {dy: fontColor * leading, x: a.x});
+                $(tspans[i], {dy: fontSize * leading, x: a.x});
             } else {
                 $(tspans[0], {dy: 0});
             }
@@ -6553,7 +6553,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
      o fill-opacity (number)
      o font (string)
      o font-family (string)
-     o font-Color (number) font Color in pixels
+     o font-size (number) font size in pixels
      o font-weight (string)
      o height (number)
      o href (string) URL, if specified element behaves as hyperlink
@@ -6740,15 +6740,15 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         R._insertbefore(this, element, this.paper);
         return this;
     };
-    elproto.blur = function (Color) {
+    elproto.blur = function (size) {
         // Experimental. No Safari support. Use it on your own risk.
         var t = this;
-        if (+Color !== 0) {
+        if (+size !== 0) {
             var fltr = $("filter"),
                 blur = $("feGaussianBlur");
-            t.attrs.blur = Color;
+            t.attrs.blur = size;
             fltr.id = R.createUUID();
-            $(blur, {stdDeviation: +Color || 1.5});
+            $(blur, {stdDeviation: +size || 1.5});
             fltr.appendChild(blur);
             t.paper.defs.appendChild(fltr);
             t._blur = fltr;
@@ -6810,7 +6810,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             "text-anchor": "middle",
             text: text,
             "font-family": R._availableAttrs["font-family"],
-            "font-Color": R._availableAttrs["font-Color"],
+            "font-size": R._availableAttrs["font-size"],
             stroke: "none",
             fill: "#000"
         };
@@ -6818,7 +6818,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         setFillAndStroke(res, res.attrs);
         return res;
     };
-    R._engine.setColor = function (width, height) {
+    R._engine.setSize = function (width, height) {
         this.width = width || this.width;
         this.height = height || this.height;
         this.canvas.setAttribute("width", this.width);
@@ -6876,27 +6876,27 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     };
     R._engine.setViewBox = function (x, y, w, h, fit) {
         eve("raphael.setViewBox", this, this._viewBox, [x, y, w, h, fit]);
-        var paperColor = this.getColor(),
-            Color = mmax(w / paperColor.width, h / paperColor.height),
+        var paperSize = this.getSize(),
+            size = mmax(w / paperSize.width, h / paperSize.height),
             top = this.top,
             aspectRatio = fit ? "xMidYMid meet" : "xMinYMin",
             vb,
             sw;
         if (x == null) {
-            if (this._vbColor) {
-                Color = 1;
+            if (this._vbSize) {
+                size = 1;
             }
-            delete this._vbColor;
+            delete this._vbSize;
             vb = "0 0 " + this.width + S + this.height;
         } else {
-            this._vbColor = Color;
+            this._vbSize = size;
             vb = x + S + y + S + w + S + h;
         }
         $(this.canvas, {
             viewBox: vb,
             preserveAspectRatio: aspectRatio
         });
-        while (Color && top) {
+        while (size && top) {
             sw = "stroke-width" in top.attrs ? top.attrs["stroke-width"] : 1;
             top.attr({"stroke-width": sw});
             top._.dirty = 1;
@@ -7076,7 +7076,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             if (!sx || !sy) {
                 return;
             }
-            o.coordColor = abs(kx) + S + abs(ky);
+            o.coordsize = abs(kx) + S + abs(ky);
             s.rotation = deg * (sx * sy < 0 ? -1 : 1);
             if (deg) {
                 var c = compensation(deg, dx, dy);
@@ -7087,7 +7087,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             sy < 0 && (flip += " y") && (y = -1);
             s.flip = flip;
             o.coordorigin = (dx * -kx) + S + (dy * -ky);
-            if (fillpos || _.fillColor) {
+            if (fillpos || _.fillsize) {
                 var fill = o.getElementsByTagName(fillString);
                 fill = fill && fill[0];
                 o.removeChild(fill);
@@ -7095,8 +7095,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                     c = compensation(deg, m.x(fillpos[0], fillpos[1]), m.y(fillpos[0], fillpos[1]));
                     fill.position = c.dx * y + S + c.dy * y;
                 }
-                if (_.fillColor) {
-                    fill.Color = _.fillColor[0] * abs(sx) + S + _.fillColor[1] * abs(sy);
+                if (_.fillsize) {
+                    fill.size = _.fillsize[0] * abs(sx) + S + _.fillsize[1] * abs(sy);
                 }
                 o.appendChild(fill);
             }
@@ -7162,7 +7162,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             o._.dirty = 1;
             if (o.type == "image") {
                 o._.fillpos = [a.x, a.y];
-                o._.fillColor = [a.width, a.height];
+                o._.fillsize = [a.width, a.height];
                 setCoords(o, 1, 1, 0, 0, 0);
             }
         }
@@ -7202,7 +7202,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             var textpathStyle = o.textpath.style;
             params.font && (textpathStyle.font = params.font);
             params["font-family"] && (textpathStyle.fontFamily = '"' + params["font-family"].split(",")[0].replace(/^['"]+|['"]+$/g, E) + '"');
-            params["font-Color"] && (textpathStyle.fontColor = params["font-Color"]);
+            params["font-size"] && (textpathStyle.fontSize = params["font-size"]);
             params["font-weight"] && (textpathStyle.fontWeight = params["font-weight"]);
             params["font-style"] && (textpathStyle.fontStyle = params["font-style"]);
         }
@@ -7246,7 +7246,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                     o._.fillpos = [bbox.x, bbox.y];
 
                     R._preload(isURL[1], function () {
-                        o._.fillColor = [this.offsetWidth, this.offsetHeight];
+                        o._.fillsize = [this.offsetWidth, this.offsetHeight];
                     });
                 } else {
                     fill.color = R.getRGB(params.fill).hex;
@@ -7315,14 +7315,14 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             res.paper.canvas.style.display = E;
             var span = res.paper.span,
                 m = 100,
-                fontColor = a.font && a.font.match(/\d+(?:\.\d*)?(?=px)/);
+                fontSize = a.font && a.font.match(/\d+(?:\.\d*)?(?=px)/);
             s = span.style;
             a.font && (s.font = a.font);
             a["font-family"] && (s.fontFamily = a["font-family"]);
             a["font-weight"] && (s.fontWeight = a["font-weight"]);
             a["font-style"] && (s.fontStyle = a["font-style"]);
-            fontColor = toFloat(a["font-Color"] || fontColor && fontColor[0]) || 10;
-            s.fontColor = fontColor * m + "px";
+            fontSize = toFloat(a["font-size"] || fontSize && fontSize[0]) || 10;
+            s.fontSize = fontSize * m + "px";
             res.textpath.string && (span.innerHTML = Str(res.textpath.string).replace(/</g, "&#60;").replace(/&/g, "&#38;").replace(/\n/g, "<br>"));
             var brect = span.getBoundingClientRect();
             res.W = a.w = (brect.right - brect.left) / m;
@@ -7332,7 +7332,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             res.Y = a.y + res.H / 2;
 
             ("x" in params || "y" in params) && (res.path.v = R.format("m{0},{1}l{2},{1}", round(a.x * zoom), round(a.y * zoom), round(a.x * zoom) + 1));
-            var dirtyattrs = ["x", "y", "text", "font", "font-family", "font-weight", "font-style", "font-Color"];
+            var dirtyattrs = ["x", "y", "text", "font", "font-family", "font-weight", "font-style", "font-size"];
             for (var d = 0, dd = dirtyattrs.length; d < dd; d++) if (dirtyattrs[d] in params) {
                 res._.dirty = 1;
                 break;
@@ -7403,7 +7403,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             if (type == "radial") {
                 fill.type = "gradientTitle";
                 fill.focus = "100%";
-                fill.focusColor = "0 0";
+                fill.focussize = "0 0";
                 fill.focusposition = fxfy;
                 fill.angle = 0;
             } else {
@@ -7713,14 +7713,14 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         R._insertbefore(this, element, this.paper);
         return this;
     };
-    elproto.blur = function (Color) {
+    elproto.blur = function (size) {
         var s = this.node.runtimeStyle,
             f = s.filter;
         f = f.replace(blurregexp, E);
-        if (+Color !== 0) {
-            this.attrs.blur = Color;
-            s.filter = f + S + ms + ".Blur(pixelradius=" + (+Color || 1.5) + ")";
-            s.margin = R.format("-{0}px 0 0 -{0}px", round(+Color || 1.5));
+        if (+size !== 0) {
+            this.attrs.blur = size;
+            s.filter = f + S + ms + ".Blur(pixelradius=" + (+size || 1.5) + ")";
+            s.margin = R.format("-{0}px 0 0 -{0}px", round(+size || 1.5));
         } else {
             s.filter = f;
             s.margin = 0;
@@ -7732,7 +7732,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     R._engine.path = function (pathString, vml) {
         var el = createNode("shape");
         el.style.cssText = cssDot;
-        el.coordColor = zoom + S + zoom;
+        el.coordsize = zoom + S + zoom;
         el.coordorigin = vml.coordorigin;
         var p = new Element(el, vml),
             attr = {fill: "none", stroke: "#000"};
@@ -7810,7 +7810,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         fill.src = src;
         fill.type = "tile";
         res._.fillpos = [x, y];
-        res._.fillColor = [w, h];
+        res._.fillsize = [w, h];
         node.appendChild(fill);
         setCoords(res, 1, 1, 0, 0, 0);
         return res;
@@ -7827,7 +7827,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         o.string = Str(text);
         o.on = true;
         el.style.cssText = cssDot;
-        el.coordColor = zoom + S + zoom;
+        el.coordsize = zoom + S + zoom;
         el.coordorigin = "0 0";
         var p = new Element(el, vml),
             attr = {
@@ -7856,7 +7856,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         p.transform(E);
         return p;
     };
-    R._engine.setColor = function (width, height) {
+    R._engine.setSize = function (width, height) {
         var cs = this.canvas.style;
         this.width = width;
         this.height = height;
@@ -7872,9 +7872,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     };
     R._engine.setViewBox = function (x, y, w, h, fit) {
         R.eve("raphael.setViewBox", this, this._viewBox, [x, y, w, h, fit]);
-        var paperColor = this.getColor(),
-            width = paperColor.width,
-            height = paperColor.height,
+        var paperSize = this.getSize(),
+            width = paperSize.width,
+            height = paperSize.height,
             H, W;
         if (fit) {
             H = height / h;
@@ -7890,7 +7890,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         this._viewBoxShift = {
             dx: -x,
             dy: -y,
-            scale: paperColor
+            scale: paperSize
         };
         this.forEach(function (el) {
             el.transform("...");
@@ -7941,7 +7941,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         res.height = height;
         width == +width && (width += "px");
         height == +height && (height += "px");
-        res.coordColor = zoom * 1e3 + S + zoom * 1e3;
+        res.coordsize = zoom * 1e3 + S + zoom * 1e3;
         res.coordorigin = "0 0";
         res.span = R._g.doc.createElement("span");
         res.span.style.cssText = "position:absolute;left:-9999em;top:-9999em;padding:0;margin:0;line-height:1;";

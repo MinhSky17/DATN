@@ -2,6 +2,7 @@ package com.model1.application.service.impl;
 
 import com.model1.application.entity.Product;
 import com.model1.application.entity.ProductColor;
+import com.model1.application.entity.ProductSize;
 import com.model1.application.entity.Promotion;
 import com.model1.application.exception.BadRequestException;
 import com.model1.application.exception.InternalServerException;
@@ -11,14 +12,8 @@ import com.model1.application.model.dto.PageableDTO;
 import com.model1.application.model.dto.ProductInfoDTO;
 import com.model1.application.model.dto.ShortProductInfoDTO;
 import com.model1.application.model.mapper.ProductMapper;
-import com.model1.application.model.request.CreateProductRequest;
-import com.model1.application.model.request.CreateColorCountRequest;
-import com.model1.application.model.request.FilterProductRequest;
-import com.model1.application.model.request.UpdateFeedBackRequest;
-import com.model1.application.repository.OrderRepository;
-import com.model1.application.repository.ProductRepository;
-import com.model1.application.repository.ProductColorRepository;
-import com.model1.application.repository.PromotionRepository;
+import com.model1.application.model.request.*;
+import com.model1.application.repository.*;
 import com.model1.application.service.ProductService;
 import com.model1.application.service.PromotionService;
 import com.model1.application.utils.PageUtil;
@@ -42,6 +37,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private ProductSizeRepository productSizeRepository;
 
     @Autowired
     private ProductColorRepository productColorRepository;
@@ -162,8 +160,8 @@ public class ProductServiceImpl implements ProductService {
         }
 
         try {
-            // Delete product color
-            productColorRepository.deleteByProductId(id);
+            // Delete product size
+            productSizeRepository.deleteByProductId(id);
 
             productRepository.deleteById(id);
         } catch (Exception ex) {
@@ -242,10 +240,48 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Integer> getListAvailableColor(String id) {
+    public List<Integer> getListAvailableSize(String id) {
+        return productSizeRepository.findAllSizeOfProduct(id);
+    }
+
+    //Lay mau cua san pham
+    @Override
+    public List<String> getListAvailableColor(String id) {
         return productColorRepository.findAllColorOfProduct(id);
     }
 
+    @Override
+    public void createSizeCount(CreateSizeCountRequest createSizeCountRequest) {
+
+        //Kiểm trả size
+        boolean isValid = false;
+        for (int size : SIZE_VN) {
+            if (size == createSizeCountRequest.getSize()) {
+                isValid = true;
+                break;
+            }
+        }
+        if (!isValid) {
+            throw new BadRequestException("Size không hợp lệ");
+        }
+
+        //Kiểm trả sản phẩm có tồn tại
+        Optional<Product> product = productRepository.findById(createSizeCountRequest.getProductId());
+        if (product.isEmpty()) {
+            throw new NotFoundException("Không tìm thấy sản phẩm trong hệ thống!");
+        }
+
+//        Optional<ProductSize> productSizeOld = productSizeRepository.getProductSizeBySize(createSizeCountRequest.getSize(),createSizeCountRequest.getProductId());
+
+        ProductSize productSize = new ProductSize();
+        productSize.setProductId(createSizeCountRequest.getProductId());
+        productSize.setSize(createSizeCountRequest.getSize());
+        productSize.setQuantity(createSizeCountRequest.getCount());
+
+        productSizeRepository.save(productSize);
+    }
+
+    //Nhap so luong theo mau
     @Override
     public void createColorCount(CreateColorCountRequest createColorCountRequest) {
 
@@ -255,16 +291,29 @@ public class ProductServiceImpl implements ProductService {
             throw new NotFoundException("Không tìm thấy sản phẩm trong hệ thống!");
         }
 
-//        Optional<ProductColor> productColorOld = productColorRepository.getProductColorByColor(createColorCountRequest.getColor(),createColorCountRequest.getProductId());
-
-        ProductColor productColor = new ProductColor();
-        productColor.setProductId(createColorCountRequest.getProductId());
-        productColor.setColor(createColorCountRequest.getColor());
-        productColor.setQuantity(createColorCountRequest.getCount());
-
+        //Kiểm tra sản phẩm có tồn tại màu
+        ProductColor productColor = productColorRepository.checkProductAndColorAvailable(createColorCountRequest.getProductId(), createColorCountRequest.getCode());
+        if(productColor != null){
+            productColor.setName(createColorCountRequest.getName());
+            productColor.setQuantity(createColorCountRequest.getCount());
+        }
+        else{
+            productColor = new ProductColor();
+            productColor.setProductId(createColorCountRequest.getProductId());
+            productColor.setCode(createColorCountRequest.getCode());
+            productColor.setName(createColorCountRequest.getName());
+            productColor.setQuantity(createColorCountRequest.getCount());
+        }
+        
         productColorRepository.save(productColor);
     }
 
+    @Override
+    public List<ProductSize> getListSizeOfProduct(String id) {
+        return productSizeRepository.findByProductId(id);
+    }
+
+    // Lay ds mau cua san pham
     @Override
     public List<ProductColor> getListColorOfProduct(String id) {
         return productColorRepository.findByProductId(id);
@@ -280,6 +329,16 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.getAvailableProducts();
     }
 
+    @Override
+    public boolean checkProductSizeAvailable(String id, int size) {
+        ProductSize productSize = productSizeRepository.checkProductAndSizeAvailable(id, size);
+        if (productSize != null) {
+            return true;
+        }
+        return false;
+    }
+
+    //Check mau san pham
     @Override
     public boolean checkProductColorAvailable(String id, String code) {
         ProductColor productColor = productColorRepository.checkProductAndColorAvailable(id, code);
@@ -324,14 +383,14 @@ public class ProductServiceImpl implements ProductService {
         int totalItems;
         List<ProductInfoDTO> products;
 
-        if (req.getColors().isEmpty()) {
-            //Nếu không có color
-            products = productRepository.searchProductAllColor(req.getBrands(), req.getCategories(), req.getMinPrice(), req.getMaxPrice(), LIMIT_PRODUCT_SHOP, pageUtil.calculateOffset());
-            totalItems = productRepository.countProductAllColor(req.getBrands(), req.getCategories(), req.getMinPrice(), req.getMaxPrice());
+        if (req.getSizes().isEmpty()) {
+            //Nếu không có size
+            products = productRepository.searchProductAllSize(req.getBrands(), req.getCategories(), req.getMinPrice(), req.getMaxPrice(), LIMIT_PRODUCT_SHOP, pageUtil.calculateOffset());
+            totalItems = productRepository.countProductAllSize(req.getBrands(), req.getCategories(), req.getMinPrice(), req.getMaxPrice());
         } else {
-            //Nếu có Color
-            products = productRepository.searchProductByColor(req.getBrands(), req.getCategories(), req.getMinPrice(), req.getMaxPrice(), req.getColors(), LIMIT_PRODUCT_SHOP, pageUtil.calculateOffset());
-            totalItems = productRepository.countProductByColor(req.getBrands(), req.getCategories(), req.getMinPrice(), req.getMaxPrice(), req.getColors());
+            //Nếu có size
+            products = productRepository.searchProductBySize(req.getBrands(), req.getCategories(), req.getMinPrice(), req.getMaxPrice(), req.getSizes(), LIMIT_PRODUCT_SHOP, pageUtil.calculateOffset());
+            totalItems = productRepository.countProductBySize(req.getBrands(), req.getCategories(), req.getMinPrice(), req.getMaxPrice(), req.getSizes());
         }
 
         //Tính tổng số trang

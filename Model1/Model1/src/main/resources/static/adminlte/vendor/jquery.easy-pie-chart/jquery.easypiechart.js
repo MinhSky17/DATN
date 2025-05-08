@@ -40,24 +40,24 @@ var CanvasRenderer = function(el, options) {
 
 	var ctx = canvas.getContext('2d');
 
-	canvas.width = canvas.height = options.Color;
+	canvas.width = canvas.height = options.size;
 
 	// canvas on retina devices
 	var scaleBy = 1;
 	if (window.devicePixelRatio > 1) {
 		scaleBy = window.devicePixelRatio;
-		canvas.style.width = canvas.style.height = [options.Color, 'px'].join('');
-		canvas.width = canvas.height = options.Color * scaleBy;
+		canvas.style.width = canvas.style.height = [options.size, 'px'].join('');
+		canvas.width = canvas.height = options.size * scaleBy;
 		ctx.scale(scaleBy, scaleBy);
 	}
 
 	// move 0,0 coordinates to the center
-	ctx.translate(options.Color / 2, options.Color / 2);
+	ctx.translate(options.size / 2, options.size / 2);
 
 	// rotate canvas -90deg
 	ctx.rotate((-1 / 2 + options.rotate / 180) * Math.PI);
 
-	var radius = (options.Color - options.lineWidth) / 2;
+	var radius = (options.size - options.lineWidth) / 2;
 	if (options.scaleColor && options.scaleLength) {
 		radius -= options.scaleLength + 2; // 2 is the distance between scale and bar
 	}
@@ -105,7 +105,7 @@ var CanvasRenderer = function(el, options) {
 				length = options.scaleLength * 0.6;
 				offset = options.scaleLength - length;
 			}
-			ctx.fillRect(-options.Color/2 + offset, 0, length, 1);
+			ctx.fillRect(-options.size/2 + offset, 0, length, 1);
 			ctx.rotate(Math.PI / 12);
 		}
 		ctx.restore();
@@ -150,7 +150,7 @@ var CanvasRenderer = function(el, options) {
 	 * Clear the complete canvas
 	 */
 	this.clear = function() {
-		ctx.clearRect(options.Color / -2, options.Color / -2, options.Color, options.Color);
+		ctx.clearRect(options.size / -2, options.size / -2, options.size, options.size);
 	};
 
 	/**
@@ -164,7 +164,7 @@ var CanvasRenderer = function(el, options) {
 			if (ctx.getImageData && ctx.putImageData) {
 				if (!cachedBackground) {
 					drawBackground();
-					cachedBackground = ctx.getImageData(0, 0, options.Color * scaleBy, options.Color * scaleBy);
+					cachedBackground = ctx.getImageData(0, 0, options.size * scaleBy, options.size * scaleBy);
 				} else {
 					ctx.putImageData(cachedBackground, 0, 0);
 				}
@@ -223,7 +223,7 @@ var EasyPieChart = function(el, opts) {
 		lineCap: 'round',
 		lineWidth: 3,
 		trackWidth: undefined,
-		Color: 110,
+		size: 110,
 		rotate: 0,
 		animate: {
 			duration: 1000,

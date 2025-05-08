@@ -216,7 +216,7 @@
   border-left: 1px solid #e2e3e3;
 }
 .vakata-context .vakata-contextmenu-shortcut {
-  font-Color: 0.8em;
+  font-size: 0.8em;
   color: silver;
   opacity: 0.5;
   display: none;
@@ -263,7 +263,7 @@
   border-left: 5px solid;
   width: 0;
   height: 0;
-  font-Color: 0;
+  font-size: 0;
   line-height: 0;
 }
 #jstree-dnd {
@@ -480,7 +480,7 @@
   /* Chrome 19+ & Safari 6+ */
 }
 .jstree-default > .jstree-striped {
-  background-Color: auto 48px;
+  background-size: auto 48px;
 }
 .jstree-default.jstree-rtl .jstree-node {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACAQMAAAB49I5GAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMOBgAAGAAJMwQHdQAAAABJRU5ErkJggg==");
@@ -661,7 +661,7 @@
   /* Chrome 19+ & Safari 6+ */
 }
 .jstree-default-small > .jstree-striped {
-  background-Color: auto 36px;
+  background-size: auto 36px;
 }
 .jstree-default-small.jstree-rtl .jstree-node {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACAQMAAAB49I5GAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMOBgAAGAAJMwQHdQAAAABJRU5ErkJggg==");
@@ -842,7 +842,7 @@
   /* Chrome 19+ & Safari 6+ */
 }
 .jstree-default-large > .jstree-striped {
-  background-Color: auto 64px;
+  background-size: auto 64px;
 }
 .jstree-default-large.jstree-rtl .jstree-node {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACAQMAAAB49I5GAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMOBgAAGAAJMwQHdQAAAABJRU5ErkJggg==");
@@ -929,7 +929,7 @@
   #jstree-dnd.jstree-dnd-responsive {
     line-height: 40px;
     font-weight: bold;
-    font-Color: 1.1em;
+    font-size: 1.1em;
     text-shadow: 1px 1px white;
   }
   #jstree-dnd.jstree-dnd-responsive > i {
@@ -940,12 +940,12 @@
   #jstree-dnd.jstree-dnd-responsive > .jstree-ok {
     background-image: url("40px.png");
     background-position: 0 -200px;
-    background-Color: 120px 240px;
+    background-size: 120px 240px;
   }
   #jstree-dnd.jstree-dnd-responsive > .jstree-er {
     background-image: url("40px.png");
     background-position: -40px -200px;
-    background-Color: 120px 240px;
+    background-size: 120px 240px;
   }
   #jstree-marker.jstree-dnd-responsive {
     border-left-width: 10px;
@@ -999,7 +999,7 @@
   .jstree-default-responsive .jstree-ocl,
   .jstree-default-responsive .jstree-themeicon,
   .jstree-default-responsive .jstree-checkbox {
-    background-Color: 120px 240px;
+    background-size: 120px 240px;
   }
   .jstree-default-responsive .jstree-leaf > .jstree-ocl,
   .jstree-default-responsive.jstree-rtl .jstree-leaf > .jstree-ocl {
@@ -1033,7 +1033,7 @@
   }
   .jstree-default-responsive .jstree-anchor {
     font-weight: bold;
-    font-Color: 1.1em;
+    font-size: 1.1em;
     text-shadow: 1px 1px white;
   }
   .jstree-default-responsive > .jstree-striped {
@@ -1067,7 +1067,7 @@
   .jstree-default-responsive .jstree-themeicon,
   .jstree-default-responsive .jstree-checkbox {
     background-image: url("40px.png");
-    background-Color: 120px 240px;
+    background-size: 120px 240px;
   }
   .jstree-default-responsive .jstree-node {
     background-position: -80px 0;
@@ -1089,11 +1089,11 @@
   }
   .jstree-default-responsive .jstree-file {
     background: url("40px.png") 0 -160px no-repeat;
-    background-Color: 120px 240px;
+    background-size: 120px 240px;
   }
   .jstree-default-responsive .jstree-folder {
     background: url("40px.png") -40px -40px no-repeat;
-    background-Color: 120px 240px;
+    background-size: 120px 240px;
   }
   .jstree-default-responsive > .jstree-container-ul > .jstree-node {
     margin-left: 0;

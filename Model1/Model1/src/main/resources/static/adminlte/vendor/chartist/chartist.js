@@ -1808,7 +1808,7 @@ var Chartist = {
 
   var window = globalRoot.window;
 
-  // TODO: Currently we need to re-draw the chart on window reColor. This is usually very bad and will affect performance.
+  // TODO: Currently we need to re-draw the chart on window resize. This is usually very bad and will affect performance.
   // This is done because we can't work with relative coordinates when drawing the chart because SVG Path does not
   // work with relative positions yet. We need to check if we can do a viewBox hack to switch to percentage.
   // See http://mozilla.6506.n7.nabble.com/Specyfing-paths-with-percentages-unit-td247474.html
@@ -1855,7 +1855,7 @@ var Chartist = {
   }
 
   /**
-   * This method can be called on the API object of each chart and will un-register all event listeners that were added to other components. This currently includes a window.reColor listener as well as media query listeners if any responsive options have been provided. Use this function if you need to destroy and recreate Chartist charts dynamically.
+   * This method can be called on the API object of each chart and will un-register all event listeners that were added to other components. This currently includes a window.resize listener as well as media query listeners if any responsive options have been provided. Use this function if you need to destroy and recreate Chartist charts dynamically.
    *
    * @memberof Chartist.Base
    */
@@ -1863,7 +1863,7 @@ var Chartist = {
     // Only detach if initialization already occurred on this chart. If this chart still hasn't initialized (therefore
     // the initializationTimeoutId is still a valid timeout reference, we will clear the timeout
     if(!this.initializeTimeoutId) {
-      window.removeEventListener('reColor', this.reColorListener);
+      window.removeEventListener('resize', this.resizeListener);
       this.optionsProvider.removeMediaQueryListeners();
     } else {
       window.clearTimeout(this.initializeTimeoutId);
@@ -1897,8 +1897,8 @@ var Chartist = {
   }
 
   function initialize() {
-    // Add window reColor listener that re-creates the chart
-    window.addEventListener('reColor', this.reColorListener);
+    // Add window resize listener that re-creates the chart
+    window.addEventListener('resize', this.resizeListener);
 
     // Obtain current options based on matching media queries (if responsive options are given)
     // This will also register a listener that is re-creating the chart based on media changes
@@ -1955,7 +1955,7 @@ var Chartist = {
     this.eventEmitter = Chartist.EventEmitter();
     this.supportsForeignObject = Chartist.Svg.isSupported('Extensibility');
     this.supportsAnimations = Chartist.Svg.isSupported('AnimationEventsAttribute');
-    this.reColorListener = function reColorListener(){
+    this.resizeListener = function resizeListener(){
       this.update();
     }.bind(this);
 
@@ -3594,7 +3594,7 @@ var Chartist = {
    *   ]
    * };
    *
-   * // As options we currently only set a static Color of 300x200 px
+   * // As options we currently only set a static size of 300x200 px
    * var options = {
    *   width: '300px',
    *   height: '200px'

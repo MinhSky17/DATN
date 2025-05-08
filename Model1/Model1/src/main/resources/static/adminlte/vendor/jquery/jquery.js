@@ -895,7 +895,7 @@ function Sizzle( selector, context, results, seed ) {
 }
 
 /**
- * Create key-value caches of limited Color
+ * Create key-value caches of limited size
  * @returns {function(string, object)} Returns the Object data after storing it on itself with
  *	property name the (space-suffixed) string and (if the cache is larger than Expr.cacheLength)
  *	deleting the oldest entry
@@ -2036,7 +2036,7 @@ Expr = Sizzle.selectors = {
 							}
 						}
 
-						// Incorporate the offset, then check against cycle Color
+						// Incorporate the offset, then check against cycle size
 						diff -= last;
 						return diff === first || ( diff % first === 0 && diff / first >= 0 );
 					}
@@ -6485,7 +6485,7 @@ var rboxStyle = new RegExp( cssExpand.join( "|" ), "i" );
 		// Support: Chrome <=64
 		// Don't get tricked when zoom affects offsetWidth (gh-4029)
 		div.style.position = "absolute";
-		scrollboxColorVal = roundPixelMeasures( div.offsetWidth / 3 ) === 12;
+		scrollboxSizeVal = roundPixelMeasures( div.offsetWidth / 3 ) === 12;
 
 		documentElement.removeChild( container );
 
@@ -6498,7 +6498,7 @@ var rboxStyle = new RegExp( cssExpand.join( "|" ), "i" );
 		return Math.round( parseFloat( measure ) );
 	}
 
-	var pixelPositionVal, boxSizingReliableVal, scrollboxColorVal, pixelBoxStylesVal,
+	var pixelPositionVal, boxSizingReliableVal, scrollboxSizeVal, pixelBoxStylesVal,
 		reliableTrDimensionsVal, reliableMarginLeftVal,
 		container = document.createElement( "div" ),
 		div = document.createElement( "div" );
@@ -6531,9 +6531,9 @@ var rboxStyle = new RegExp( cssExpand.join( "|" ), "i" );
 			computeStyleTests();
 			return reliableMarginLeftVal;
 		},
-		scrollboxColor: function() {
+		scrollboxSize: function() {
 			computeStyleTests();
-			return scrollboxColorVal;
+			return scrollboxSizeVal;
 		},
 
 		// Support: IE 9 - 11+, Edge 15 - 18+
@@ -6837,7 +6837,7 @@ function getWidthOrHeight( elem, dimension, extra ) {
 			valueIsBorderBox,
 			styles,
 
-			// Provide the current computed Color to request scroll gutter calculation (gh-3589)
+			// Provide the current computed size to request scroll gutter calculation (gh-3589)
 			val
 		)
 	) + "px";
@@ -7035,11 +7035,11 @@ jQuery.each( [ "height", "width" ], function( _i, dimension ) {
 
 				// Only read styles.position if the test has a chance to fail
 				// to avoid forcing a reflow.
-				scrollboxColorBuggy = !support.scrollboxColor() &&
+				scrollboxSizeBuggy = !support.scrollboxSize() &&
 					styles.position === "absolute",
 
 				// To avoid forcing a reflow, only fetch boxSizing if we need it (gh-3991)
-				boxSizingNeeded = scrollboxColorBuggy || extra,
+				boxSizingNeeded = scrollboxSizeBuggy || extra,
 				isBorderBox = boxSizingNeeded &&
 					jQuery.css( elem, "boxSizing", false, styles ) === "border-box",
 				subtract = extra ?
@@ -7054,7 +7054,7 @@ jQuery.each( [ "height", "width" ], function( _i, dimension ) {
 
 			// Account for unreliable border-box dimensions by comparing offset* to computed and
 			// faking a content-box to get border and padding (gh-3699)
-			if ( isBorderBox && scrollboxColorBuggy ) {
+			if ( isBorderBox && scrollboxSizeBuggy ) {
 				subtract -= Math.ceil(
 					elem[ "offset" + dimension[ 0 ].toUpperCase() + dimension.slice( 1 ) ] -
 					parseFloat( styles[ dimension ] ) -
@@ -7565,7 +7565,7 @@ function Animation( elem, properties, options ) {
 				return remaining;
 			}
 
-			// If this was an empty animation, syntheColor a final progress notification
+			// If this was an empty animation, synthesize a final progress notification
 			if ( !length ) {
 				deferred.notifyWith( elem, [ animation, 1, 0 ] );
 			}
@@ -10726,7 +10726,7 @@ jQuery.fn.extend( {
 	}
 } );
 
-jQuery.each( ( "blur focus focusin focusout reColor scroll click dblclick " +
+jQuery.each( ( "blur focus focusin focusout resize scroll click dblclick " +
 	"mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
 	"change select submit keydown keypress keyup contextmenu" ).split( " " ),
 	function( _i, name ) {

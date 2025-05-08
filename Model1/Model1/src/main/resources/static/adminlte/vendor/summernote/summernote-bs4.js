@@ -243,16 +243,16 @@ external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default.a.exten
       strikethrough: 'Strikethrough',
       subscript: 'Subscript',
       superscript: 'Superscript',
-      Color: 'Font Color',
-      Colorunit: 'Font Color Unit'
+      size: 'Font Size',
+      sizeunit: 'Font Size Unit'
     },
     image: {
       image: 'Picture',
       insert: 'Insert Image',
-      reColorFull: 'ReColor full',
-      reColorHalf: 'ReColor half',
-      reColorQuarter: 'ReColor quarter',
-      reColorNone: 'Original Color',
+      resizeFull: 'Resize full',
+      resizeHalf: 'Resize half',
+      resizeQuarter: 'Resize quarter',
+      resizeNone: 'Original size',
       floatLeft: 'Float Left',
       floatRight: 'Float Right',
       floatNone: 'Remove float',
@@ -263,8 +263,8 @@ external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default.a.exten
       dragImageHere: 'Drag image or text here',
       dropImage: 'Drop image or Text',
       selectFromFiles: 'Select from files',
-      maximumFileColor: 'Maximum file Color',
-      maximumFileColorError: 'Maximum file Color exceeded.',
+      maximumFileSize: 'Maximum file size',
+      maximumFileSizeError: 'Maximum file size exceeded.',
       url: 'Image URL',
       remove: 'Remove Image',
       original: 'Original'
@@ -412,12 +412,12 @@ function validFontName(fontName) {
 function env_isFontInstalled(fontName) {
   var testFontName = fontName === 'Comic Sans MS' ? 'Courier New' : 'Comic Sans MS';
   var testText = 'mmmmmmmmmmwwwww';
-  var testColor = '200px';
+  var testSize = '200px';
   var canvas = document.createElement('canvas');
   var context = canvas.getContext('2d');
-  context.font = testColor + " '" + testFontName + "'";
+  context.font = testSize + " '" + testFontName + "'";
   var originalWidth = context.measureText(testText).width;
-  context.font = testColor + ' ' + validFontName(fontName) + ', "' + testFontName + '"';
+  context.font = testSize + ' ' + validFontName(fontName) + ', "' + testFontName + '"';
   var width = context.measureText(testText).width;
   return originalWidth !== width;
 }
@@ -1099,7 +1099,7 @@ var blankHTML = env.isMSIE && env.browserVersion < 11 ? '&nbsp;' : '<br>';
 /**
  * @method nodeLength
  *
- * returns #text's text Color or element's childNodes Color
+ * returns #text's text size or element's childNodes size
  *
  * @param {Node} node
  */
@@ -3782,7 +3782,7 @@ var History_History = /*#__PURE__*/function () {
       } // Create new snapshot and push it to the end
 
 
-      this.stack.push(this.makeSnapshot()); // If the stack Color reachs to the limit, then slice it
+      this.stack.push(this.makeSnapshot()); // If the stack size reachs to the limit, then slice it
 
       if (this.stack.length > this.context.options.historyLimit) {
         this.stack.shift();
@@ -3850,11 +3850,11 @@ var Style_Style = /*#__PURE__*/function () {
   }, {
     key: "fromNode",
     value: function fromNode($node) {
-      var properties = ['font-family', 'font-Color', 'text-align', 'list-style-type', 'line-height'];
+      var properties = ['font-family', 'font-size', 'text-align', 'list-style-type', 'line-height'];
       var styleInfo = this.jQueryCSS($node, properties) || {};
-      var fontColor = $node[0].style.fontColor || styleInfo['font-Color'];
-      styleInfo['font-Color'] = parseInt(fontColor, 10);
-      styleInfo['font-Color-unit'] = fontColor.match(/[a-z%]+$/);
+      var fontSize = $node[0].style.fontSize || styleInfo['font-size'];
+      styleInfo['font-size'] = parseInt(fontSize, 10);
+      styleInfo['font-size-unit'] = fontSize.match(/[a-z%]+$/);
       return styleInfo;
     }
     /**
@@ -3967,7 +3967,7 @@ var Style_Style = /*#__PURE__*/function () {
       if (para && para.style['line-height']) {
         styleInfo['line-height'] = para.style.lineHeight;
       } else {
-        var lineHeight = parseInt(styleInfo['line-height'], 10) / parseInt(styleInfo['font-Color'], 10);
+        var lineHeight = parseInt(styleInfo['line-height'], 10) / parseInt(styleInfo['font-size'], 10);
         styleInfo['line-height'] = lineHeight.toFixed(1);
       }
 
@@ -4333,17 +4333,17 @@ var Typing_Typing = /*#__PURE__*/function () {
    * insert tab
    *
    * @param {WrappedRange} rng
-   * @param {Number} tabColor
+   * @param {Number} tabsize
    */
 
 
   Typing_createClass(Typing, [{
     key: "insertTab",
-    value: function insertTab(rng, tabColor) {
-      var tab = dom.createText(new Array(tabColor + 1).join(dom.NBSP_CHAR));
+    value: function insertTab(rng, tabsize) {
+      var tab = dom.createText(new Array(tabsize + 1).join(dom.NBSP_CHAR));
       rng = rng.deleteContents();
       rng.insertNode(tab, true);
-      rng = range.create(tab, tabColor);
+      rng = range.create(tab, tabsize);
       rng.select();
     }
     /**
@@ -5213,15 +5213,15 @@ var Editor_Editor = /*#__PURE__*/function () {
     this.fontName = this.wrapCommand(function (value) {
       return _this.fontStyling('font-family', env.validFontName(value));
     });
-    this.fontColor = this.wrapCommand(function (value) {
-      var unit = _this.currentStyle()['font-Color-unit'];
+    this.fontSize = this.wrapCommand(function (value) {
+      var unit = _this.currentStyle()['font-size-unit'];
 
-      return _this.fontStyling('font-Color', value + unit);
+      return _this.fontStyling('font-size', value + unit);
     });
-    this.fontColorUnit = this.wrapCommand(function (value) {
-      var Color = _this.currentStyle()['font-Color'];
+    this.fontSizeUnit = this.wrapCommand(function (value) {
+      var size = _this.currentStyle()['font-size'];
 
-      return _this.fontStyling('font-Color', Color + value);
+      return _this.fontStyling('font-size', size + value);
     });
 
     for (var _idx = 1; _idx <= 6; _idx++) {
@@ -5463,11 +5463,11 @@ var Editor_Editor = /*#__PURE__*/function () {
       $target.css('float', value === 'none' ? '' : value);
     });
     /**
-     * reColor overlay element
+     * resize overlay element
      * @param {String} value
      */
 
-    this.reColor = this.wrapCommand(function (value) {
+    this.resize = this.wrapCommand(function (value) {
       var $target = external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default()(_this.restoreTarget());
       value = parseFloat(value);
 
@@ -5887,13 +5887,13 @@ var Editor_Editor = /*#__PURE__*/function () {
       if (rng.isCollapsed() && rng.isOnCell()) {
         this.table.tab(rng);
       } else {
-        if (this.options.tabColor === 0) {
+        if (this.options.tabSize === 0) {
           return false;
         }
 
-        if (!this.isLimited(this.options.tabColor)) {
+        if (!this.isLimited(this.options.tabSize)) {
           this.beforeCommand();
-          this.typing.insertTab(rng, this.options.tabColor);
+          this.typing.insertTab(rng, this.options.tabSize);
           this.afterCommand();
         }
       }
@@ -5910,7 +5910,7 @@ var Editor_Editor = /*#__PURE__*/function () {
       if (rng.isCollapsed() && rng.isOnCell()) {
         this.table.tab(rng, true);
       } else {
-        if (this.options.tabColor === 0) {
+        if (this.options.tabSize === 0) {
           return false;
         }
       }
@@ -5978,8 +5978,8 @@ var Editor_Editor = /*#__PURE__*/function () {
       external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default.a.each(files, function (idx, file) {
         var filename = file.name;
 
-        if (_this4.options.maximumImageFileColor && _this4.options.maximumImageFileColor < file.Color) {
-          _this4.context.triggerEvent('image.upload.error', _this4.lang.image.maximumFileColorError);
+        if (_this4.options.maximumImageFileSize && _this4.options.maximumImageFileSize < file.size) {
+          _this4.context.triggerEvent('image.upload.error', _this4.lang.image.maximumFileSizeError);
         } else {
           readFileAsDataURL(file).then(function (dataURL) {
             return _this4.insertImage(dataURL, filename);
@@ -6192,25 +6192,25 @@ var Editor_Editor = /*#__PURE__*/function () {
      */
 
   }, {
-    key: "reColorTo",
-    value: function reColorTo(pos, $target, bKeepRatio) {
-      var imageColor;
+    key: "resizeTo",
+    value: function resizeTo(pos, $target, bKeepRatio) {
+      var imageSize;
 
       if (bKeepRatio) {
         var newRatio = pos.y / pos.x;
         var ratio = $target.data('ratio');
-        imageColor = {
+        imageSize = {
           width: ratio > newRatio ? pos.x : pos.y / ratio,
           height: ratio > newRatio ? pos.x * ratio : pos.y
         };
       } else {
-        imageColor = {
+        imageSize = {
           width: pos.x,
           height: pos.y
         };
       }
 
-      $target.css(imageColor);
+      $target.css(imageSize);
     }
     /**
      * returns whether editable area has focus or not.
@@ -6394,9 +6394,9 @@ var Dropzone_Dropzone = /*#__PURE__*/function () {
       this.documentEventHandlers.onDragenter = function (e) {
         var isCodeview = _this.context.invoke('codeview.isActivated');
 
-        var hasEditorColor = _this.$editor.width() > 0 && _this.$editor.height() > 0;
+        var hasEditorSize = _this.$editor.width() > 0 && _this.$editor.height() > 0;
 
-        if (!isCodeview && !collection.length && hasEditorColor) {
+        if (!isCodeview && !collection.length && hasEditorSize) {
           _this.$editor.addClass('dragover');
 
           _this.$dropzone.width(_this.$editor.width());
@@ -6655,7 +6655,7 @@ var Codeview_CodeView = /*#__PURE__*/function () {
           _this2.context.triggerEvent('change.codeview', cmEditor.getValue(), cmEditor);
         }); // CodeMirror hasn't Padding.
 
-        cmEditor.setColor(null, this.$editable.outerHeight());
+        cmEditor.setSize(null, this.$editable.outerHeight());
         this.$codable.data('cmEditor', cmEditor);
       } else {
         this.$codable.on('blur', function (event) {
@@ -6733,7 +6733,7 @@ var Statusbar_Statusbar = /*#__PURE__*/function () {
     value: function initialize() {
       var _this = this;
 
-      if (this.options.airMode || this.options.disableReColorEditor) {
+      if (this.options.airMode || this.options.disableResizeEditor) {
         this.destroy();
         return;
       }
@@ -6792,21 +6792,21 @@ var Fullscreen_Fullscreen = /*#__PURE__*/function () {
     this.$window = external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default()(window);
     this.$scrollbar = external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default()('html, body');
 
-    this.onReColor = function () {
-      _this.reColorTo({
+    this.onResize = function () {
+      _this.resizeTo({
         h: _this.$window.height() - _this.$toolbar.outerHeight()
       });
     };
   }
 
   Fullscreen_createClass(Fullscreen, [{
-    key: "reColorTo",
-    value: function reColorTo(Color) {
-      this.$editable.css('height', Color.h);
-      this.$codable.css('height', Color.h);
+    key: "resizeTo",
+    value: function resizeTo(size) {
+      this.$editable.css('height', size.h);
+      this.$codable.css('height', size.h);
 
       if (this.$codable.data('cmeditor')) {
-        this.$codable.data('cmeditor').setColor(null, Color.h);
+        this.$codable.data('cmeditor').setsize(null, size.h);
       }
     }
     /**
@@ -6822,11 +6822,11 @@ var Fullscreen_Fullscreen = /*#__PURE__*/function () {
         this.$editable.data('orgHeight', this.$editable.css('height'));
         this.$editable.data('orgMaxHeight', this.$editable.css('maxHeight'));
         this.$editable.css('maxHeight', '');
-        this.$window.on('reColor', this.onReColor).trigger('reColor');
+        this.$window.on('resize', this.onResize).trigger('resize');
         this.$scrollbar.css('overflow', 'hidden');
       } else {
-        this.$window.off('reColor', this.onReColor);
-        this.reColorTo({
+        this.$window.off('resize', this.onResize);
+        this.resizeTo({
           h: this.$editable.data('orgHeight')
         });
         this.$editable.css('maxHeight', this.$editable.css('orgMaxHeight'));
@@ -6890,7 +6890,7 @@ var Handle_Handle = /*#__PURE__*/function () {
     value: function initialize() {
       var _this2 = this;
 
-      this.$handle = external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default()(['<div class="note-handle">', '<div class="note-control-selection">', '<div class="note-control-selection-bg"></div>', '<div class="note-control-holder note-control-nw"></div>', '<div class="note-control-holder note-control-ne"></div>', '<div class="note-control-holder note-control-sw"></div>', '<div class="', this.options.disableReColorImage ? 'note-control-holder' : 'note-control-sizing', ' note-control-se"></div>', this.options.disableReColorImage ? '' : '<div class="note-control-selection-info"></div>', '</div>', '</div>'].join('')).prependTo(this.$editingArea);
+      this.$handle = external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default()(['<div class="note-handle">', '<div class="note-control-selection">', '<div class="note-control-selection-bg"></div>', '<div class="note-control-holder note-control-nw"></div>', '<div class="note-control-holder note-control-ne"></div>', '<div class="note-control-holder note-control-sw"></div>', '<div class="', this.options.disableResizeImage ? 'note-control-holder' : 'note-control-sizing', ' note-control-se"></div>', this.options.disableResizeImage ? '' : '<div class="note-control-selection-info"></div>', '</div>', '</div>'].join('')).prependTo(this.$editingArea);
       this.$handle.on('mousedown', function (event) {
         if (dom.isControlSizing(event.target)) {
           event.preventDefault();
@@ -6903,7 +6903,7 @@ var Handle_Handle = /*#__PURE__*/function () {
           var scrollTop = _this2.$document.scrollTop();
 
           var onMouseMove = function onMouseMove(event) {
-            _this2.context.invoke('editor.reColorTo', {
+            _this2.context.invoke('editor.resizeTo', {
               x: event.clientX - posStart.left,
               y: event.clientY - (posStart.top - scrollTop)
             }, $target, !event.shiftKey);
@@ -6956,7 +6956,7 @@ var Handle_Handle = /*#__PURE__*/function () {
           top: position.top + parseInt($image.css('marginTop'), 10)
         }; // exclude margin
 
-        var imageColor = {
+        var imageSize = {
           w: $image.outerWidth(false),
           h: $image.outerHeight(false)
         };
@@ -6964,13 +6964,13 @@ var Handle_Handle = /*#__PURE__*/function () {
           display: 'block',
           left: pos.left,
           top: pos.top,
-          width: imageColor.w,
-          height: imageColor.h
+          width: imageSize.w,
+          height: imageSize.h
         }).data('target', $image); // save current image element.
 
         var origImageObj = new Image();
         origImageObj.src = $image.attr('src');
-        var sizingText = imageColor.w + 'x' + imageColor.h + ' (' + this.lang.image.original + ': ' + origImageObj.width + 'x' + origImageObj.height + ')';
+        var sizingText = imageSize.w + 'x' + imageSize.h + ' (' + this.lang.image.original + ': ' + origImageObj.width + 'x' + origImageObj.height + ')';
         $selection.find('.note-control-selection-info').text(sizingText);
         this.context.invoke('editor.saveTarget', target);
       } else {
@@ -7635,36 +7635,36 @@ var Buttons_Buttons = /*#__PURE__*/function () {
           click: _this2.context.createInvokeHandlerAndUpdateState('editor.fontName')
         })]).render();
       });
-      this.context.memo('button.fontColor', function () {
+      this.context.memo('button.fontsize', function () {
         return _this2.ui.buttonGroup([_this2.button({
           className: 'dropdown-toggle',
-          contents: _this2.ui.dropdownButtonContents('<span class="note-current-fontColor"></span>', _this2.options),
-          tooltip: _this2.lang.font.Color,
+          contents: _this2.ui.dropdownButtonContents('<span class="note-current-fontsize"></span>', _this2.options),
+          tooltip: _this2.lang.font.size,
           data: {
             toggle: 'dropdown'
           }
         }), _this2.ui.dropdownCheck({
-          className: 'dropdown-fontColor',
+          className: 'dropdown-fontsize',
           checkClassName: _this2.options.icons.menuCheck,
-          items: _this2.options.fontColors,
-          title: _this2.lang.font.Color,
-          click: _this2.context.createInvokeHandlerAndUpdateState('editor.fontColor')
+          items: _this2.options.fontSizes,
+          title: _this2.lang.font.size,
+          click: _this2.context.createInvokeHandlerAndUpdateState('editor.fontSize')
         })]).render();
       });
-      this.context.memo('button.fontColorunit', function () {
+      this.context.memo('button.fontsizeunit', function () {
         return _this2.ui.buttonGroup([_this2.button({
           className: 'dropdown-toggle',
-          contents: _this2.ui.dropdownButtonContents('<span class="note-current-fontColorunit"></span>', _this2.options),
-          tooltip: _this2.lang.font.Colorunit,
+          contents: _this2.ui.dropdownButtonContents('<span class="note-current-fontsizeunit"></span>', _this2.options),
+          tooltip: _this2.lang.font.sizeunit,
           data: {
             toggle: 'dropdown'
           }
         }), _this2.ui.dropdownCheck({
-          className: 'dropdown-fontColorunit',
+          className: 'dropdown-fontsizeunit',
           checkClassName: _this2.options.icons.menuCheck,
-          items: _this2.options.fontColorUnits,
-          title: _this2.lang.font.Colorunit,
-          click: _this2.context.createInvokeHandlerAndUpdateState('editor.fontColorUnit')
+          items: _this2.options.fontSizeUnits,
+          title: _this2.lang.font.sizeunit,
+          click: _this2.context.createInvokeHandlerAndUpdateState('editor.fontSizeUnit')
         })]).render();
       });
       this.context.memo('button.color', function () {
@@ -7774,8 +7774,8 @@ var Buttons_Buttons = /*#__PURE__*/function () {
           callback: function callback($node) {
             var $catcher = $node.find('.note-dimension-picker-mousecatcher');
             $catcher.css({
-              width: _this2.options.insertTableMaxColor.col + 'em',
-              height: _this2.options.insertTableMaxColor.row + 'em'
+              width: _this2.options.insertTableMaxSize.col + 'em',
+              height: _this2.options.insertTableMaxSize.row + 'em'
             }).mousedown(_this2.context.createInvokeHandler('editor.insertTable')).on('mousemove', _this2.tableMoveHandler.bind(_this2));
           }
         }).render();
@@ -7848,7 +7848,7 @@ var Buttons_Buttons = /*#__PURE__*/function () {
     }
     /**
      * image: [
-     *   ['imageReColor', ['reColorFull', 'reColorHalf', 'reColorQuarter', 'reColorNone']],
+     *   ['imageResize', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
      *   ['float', ['floatLeft', 'floatRight', 'floatNone']],
      *   ['remove', ['removeMedia']],
      * ],
@@ -7859,33 +7859,33 @@ var Buttons_Buttons = /*#__PURE__*/function () {
     value: function addImagePopoverButtons() {
       var _this3 = this;
 
-      // Image Color Buttons
-      this.context.memo('button.reColorFull', function () {
+      // Image Size Buttons
+      this.context.memo('button.resizeFull', function () {
         return _this3.button({
-          contents: '<span class="note-fontColor-10">100%</span>',
-          tooltip: _this3.lang.image.reColorFull,
-          click: _this3.context.createInvokeHandler('editor.reColor', '1')
+          contents: '<span class="note-fontsize-10">100%</span>',
+          tooltip: _this3.lang.image.resizeFull,
+          click: _this3.context.createInvokeHandler('editor.resize', '1')
         }).render();
       });
-      this.context.memo('button.reColorHalf', function () {
+      this.context.memo('button.resizeHalf', function () {
         return _this3.button({
-          contents: '<span class="note-fontColor-10">50%</span>',
-          tooltip: _this3.lang.image.reColorHalf,
-          click: _this3.context.createInvokeHandler('editor.reColor', '0.5')
+          contents: '<span class="note-fontsize-10">50%</span>',
+          tooltip: _this3.lang.image.resizeHalf,
+          click: _this3.context.createInvokeHandler('editor.resize', '0.5')
         }).render();
       });
-      this.context.memo('button.reColorQuarter', function () {
+      this.context.memo('button.resizeQuarter', function () {
         return _this3.button({
-          contents: '<span class="note-fontColor-10">25%</span>',
-          tooltip: _this3.lang.image.reColorQuarter,
-          click: _this3.context.createInvokeHandler('editor.reColor', '0.25')
+          contents: '<span class="note-fontsize-10">25%</span>',
+          tooltip: _this3.lang.image.resizeQuarter,
+          click: _this3.context.createInvokeHandler('editor.resize', '0.25')
         }).render();
       });
-      this.context.memo('button.reColorNone', function () {
+      this.context.memo('button.resizeNone', function () {
         return _this3.button({
           contents: _this3.ui.icon(_this3.options.icons.rollback),
-          tooltip: _this3.lang.image.reColorNone,
-          click: _this3.context.createInvokeHandler('editor.reColor', '0')
+          tooltip: _this3.lang.image.resizeNone,
+          click: _this3.context.createInvokeHandler('editor.resize', '0')
         }).render();
       }); // Float Buttons
 
@@ -8076,22 +8076,22 @@ var Buttons_Buttons = /*#__PURE__*/function () {
         $cont.find('.note-current-fontname').text(fontName).css('font-family', fontName);
       }
 
-      if (styleInfo['font-Color']) {
-        var fontColor = styleInfo['font-Color'];
-        $cont.find('.dropdown-fontColor a').each(function (idx, item) {
+      if (styleInfo['font-size']) {
+        var fontSize = styleInfo['font-size'];
+        $cont.find('.dropdown-fontsize a').each(function (idx, item) {
           var $item = external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default()(item); // always compare with string to avoid creating another func.
 
-          var isChecked = $item.data('value') + '' === fontColor + '';
+          var isChecked = $item.data('value') + '' === fontSize + '';
           $item.toggleClass('checked', isChecked);
         });
-        $cont.find('.note-current-fontColor').text(fontColor);
-        var fontColorUnit = styleInfo['font-Color-unit'];
-        $cont.find('.dropdown-fontColorunit a').each(function (idx, item) {
+        $cont.find('.note-current-fontsize').text(fontSize);
+        var fontSizeUnit = styleInfo['font-size-unit'];
+        $cont.find('.dropdown-fontsizeunit a').each(function (idx, item) {
           var $item = external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default()(item);
-          var isChecked = $item.data('value') + '' === fontColorUnit + '';
+          var isChecked = $item.data('value') + '' === fontSizeUnit + '';
           $item.toggleClass('checked', isChecked);
         });
-        $cont.find('.note-current-fontColorunit').text(fontColorUnit);
+        $cont.find('.note-current-fontsizeunit').text(fontSizeUnit);
       }
 
       if (styleInfo['line-height']) {
@@ -8147,13 +8147,13 @@ var Buttons_Buttons = /*#__PURE__*/function () {
       });
       $catcher.data('value', dim.c + 'x' + dim.r);
 
-      if (dim.c > 3 && dim.c < this.options.insertTableMaxColor.col) {
+      if (dim.c > 3 && dim.c < this.options.insertTableMaxSize.col) {
         $unhighlighted.css({
           width: dim.c + 1 + 'em'
         });
       }
 
-      if (dim.r > 3 && dim.r < this.options.insertTableMaxColor.row) {
+      if (dim.r > 3 && dim.r < this.options.insertTableMaxSize.row) {
         $unhighlighted.css({
           height: dim.r + 1 + 'em'
         });
@@ -8223,7 +8223,7 @@ var Toolbar_Toolbar = /*#__PURE__*/function () {
       this.context.invoke('buttons.updateCurrentStyle');
 
       if (this.options.followingToolbar) {
-        this.$window.on('scroll reColor', this.followScroll);
+        this.$window.on('scroll resize', this.followScroll);
       }
     }
   }, {
@@ -8232,7 +8232,7 @@ var Toolbar_Toolbar = /*#__PURE__*/function () {
       this.$toolbar.children().remove();
 
       if (this.options.followingToolbar) {
-        this.$window.off('scroll reColor', this.followScroll);
+        this.$window.off('scroll resize', this.followScroll);
       }
     }
   }, {
@@ -8654,10 +8654,10 @@ var ImageDialog_ImageDialog = /*#__PURE__*/function () {
     value: function initialize() {
       var imageLimitation = '';
 
-      if (this.options.maximumImageFileColor) {
-        var unit = Math.floor(Math.log(this.options.maximumImageFileColor) / Math.log(1024));
-        var readableColor = (this.options.maximumImageFileColor / Math.pow(1024, unit)).toFixed(2) * 1 + ' ' + ' KMGTP'[unit] + 'B';
-        imageLimitation = "<small>".concat(this.lang.image.maximumFileColor + ' : ' + readableColor, "</small>");
+      if (this.options.maximumImageFileSize) {
+        var unit = Math.floor(Math.log(this.options.maximumImageFileSize) / Math.log(1024));
+        var readableSize = (this.options.maximumImageFileSize / Math.pow(1024, unit)).toFixed(2) * 1 + ' ' + ' KMGTP'[unit] + 'B';
+        imageLimitation = "<small>".concat(this.lang.image.maximumFileSize + ' : ' + readableSize, "</small>");
       }
 
       var $container = this.options.dialogsInBody ? this.$body : this.options.container;
@@ -9790,7 +9790,7 @@ external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default.a.summe
     // popover
     popatmouse: true,
     popover: {
-      image: [['reColor', ['reColorFull', 'reColorHalf', 'reColorQuarter', 'reColorNone']], ['float', ['floatLeft', 'floatRight', 'floatNone']], ['remove', ['removeMedia']]],
+      image: [['resize', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']], ['float', ['floatLeft', 'floatRight', 'floatNone']], ['remove', ['removeMedia']]],
       link: [['link', ['linkDialogShow', 'unlink']]],
       table: [['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']], ['delete', ['deleteRow', 'deleteCol', 'deleteTable']]],
       air: [['color', ['color']], ['font', ['bold', 'underline', 'clear']], ['para', ['ul', 'paragraph']], ['table', ['table']], ['insert', ['link', 'picture']], ['view', ['fullscreen', 'codeview']]]
@@ -9806,7 +9806,7 @@ external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default.a.summe
     defaultProtocol: 'http://',
     focus: false,
     tabDisabled: false,
-    tabColor: 4,
+    tabSize: 4,
     styleWithCSS: false,
     shortcuts: true,
     textareaAutoSync: true,
@@ -9831,8 +9831,8 @@ external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default.a.summe
     fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Helvetica Neue', 'Helvetica', 'Impact', 'Lucida Grande', 'Tahoma', 'Times New Roman', 'Verdana'],
     fontNamesIgnoreCheck: [],
     addDefaultFonts: true,
-    fontColors: ['8', '9', '10', '11', '12', '14', '18', '24', '36'],
-    fontColorUnits: ['px', 'pt'],
+    fontSizes: ['8', '9', '10', '11', '12', '14', '18', '24', '36'],
+    fontSizeUnits: ['px', 'pt'],
     // pallete colors(n x n)
     colors: [['#000000', '#424242', '#636363', '#9C9C94', '#CEC6CE', '#EFEFEF', '#F7F7F7', '#FFFFFF'], ['#FF0000', '#FF9C00', '#FFFF00', '#00FF00', '#00FFFF', '#0000FF', '#9C00FF', '#FF00FF'], ['#F7C6CE', '#FFE7CE', '#FFEFC6', '#D6EFD6', '#CEDEE7', '#CEE7F7', '#D6D6E7', '#E7D6DE'], ['#E79C9C', '#FFC69C', '#FFE79C', '#B5D6A5', '#A5C6CE', '#9CC6EF', '#B5A5D6', '#D6A5BD'], ['#E76363', '#F7AD6B', '#FFD663', '#94BD7B', '#73A5AD', '#6BADDE', '#8C7BC6', '#C67BA5'], ['#CE0000', '#E79439', '#EFC631', '#6BA54A', '#4A7B8C', '#3984C6', '#634AA5', '#A54A7B'], ['#9C0000', '#B56308', '#BD9400', '#397B21', '#104A5A', '#085294', '#311873', '#731842'], ['#630000', '#7B3900', '#846300', '#295218', '#083139', '#003163', '#21104A', '#4A1031']],
     // http://chir.ag/projects/name-that-color/
@@ -9843,14 +9843,14 @@ external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default.a.summe
     },
     lineHeights: ['1.0', '1.2', '1.4', '1.5', '1.6', '1.8', '2.0', '3.0'],
     tableClassName: 'table table-bordered',
-    insertTableMaxColor: {
+    insertTableMaxSize: {
       col: 10,
       row: 10
     },
     // By default, dialogs are attached in container.
     dialogsInBody: false,
     dialogsFade: false,
-    maximumImageFileColor: null,
+    maximumImageFileSize: null,
     callbacks: {
       onBeforeCommand: null,
       onBlur: null,
@@ -10028,7 +10028,7 @@ var toolbar = renderer["a" /* default */].create('<div class="note-toolbar card-
 var editingArea = renderer["a" /* default */].create('<div class="note-editing-area"/>');
 var codable = renderer["a" /* default */].create('<textarea class="note-codable" aria-multiline="true"/>');
 var editable = renderer["a" /* default */].create('<div class="note-editable card-block" contentEditable="true" role="textbox" aria-multiline="true"/>');
-var statusbar = renderer["a" /* default */].create(['<output class="note-status-output" role="status" aria-live="polite"></output>', '<div class="note-statusbar" role="status">', '<div class="note-reColorbar" aria-label="ReColor">', '<div class="note-icon-bar"></div>', '<div class="note-icon-bar"></div>', '<div class="note-icon-bar"></div>', '</div>', '</div>'].join(''));
+var statusbar = renderer["a" /* default */].create(['<output class="note-status-output" role="status" aria-live="polite"></output>', '<div class="note-statusbar" role="status">', '<div class="note-resizebar" aria-label="Resize">', '<div class="note-icon-bar"></div>', '<div class="note-icon-bar"></div>', '<div class="note-icon-bar"></div>', '</div>', '</div>'].join(''));
 var airEditor = renderer["a" /* default */].create('<div class="note-editor note-airframe"/>');
 var airEditable = renderer["a" /* default */].create(['<div class="note-editable" contentEditable="true" role="textbox" aria-multiline="true"></div>', '<output class="note-status-output" role="status" aria-live="polite"></output>'].join(''));
 var buttonGroup = renderer["a" /* default */].create('<div class="note-btn-group btn-group">');
@@ -10118,13 +10118,13 @@ var ui_ui = function ui(editorOptions) {
       return renderer["a" /* default */].create('<div class="note-color-palette"/>', function ($node, options) {
         var contents = [];
 
-        for (var row = 0, rowColor = options.colors.length; row < rowColor; row++) {
+        for (var row = 0, rowSize = options.colors.length; row < rowSize; row++) {
           var eventName = options.eventName;
           var colors = options.colors[row];
           var colorsName = options.colorsName[row];
           var buttons = [];
 
-          for (var col = 0, colColor = colors.length; col < colColor; col++) {
+          for (var col = 0, colSize = colors.length; col < colSize; col++) {
             var color = colors[col];
             var colorName = colorsName[col];
             buttons.push(['<button type="button" class="note-color-btn"', 'style="background-color:', color, '" ', 'data-event="', eventName, '" ', 'data-value="', color, '" ', 'title="', colorName, '" ', 'aria-label="', colorName, '" ', 'data-toggle="button" tabindex="-1"></button>'].join(''));

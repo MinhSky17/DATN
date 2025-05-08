@@ -2,15 +2,13 @@ package com.model1.application.service;
 
 import com.model1.application.entity.Product;
 import com.model1.application.entity.ProductColor;
+import com.model1.application.entity.ProductSize;
 import com.model1.application.entity.Promotion;
 import com.model1.application.model.dto.DetailProductInfoDTO;
 import com.model1.application.model.dto.PageableDTO;
 import com.model1.application.model.dto.ProductInfoDTO;
 import com.model1.application.model.dto.ShortProductInfoDTO;
-import com.model1.application.model.request.CreateProductRequest;
-import com.model1.application.model.request.CreateColorCountRequest;
-import com.model1.application.model.request.FilterProductRequest;
-import com.model1.application.model.request.UpdateFeedBackRequest;
+import com.model1.application.model.request.*;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -52,22 +50,49 @@ public interface ProductService {
     //Lấy sản phẩm liên quan
     List<ProductInfoDTO> getRelatedProducts(String id);
 
-    //Lấy color có sẵn
-    List<Integer> getListAvailableColor(String id);
 
-    //Nhập số lượng theo color
-    void createColorCount(CreateColorCountRequest createColorCountRequest);
 
-    //Lấy color của sản phẩm
-    List<ProductColor> getListColorOfProduct(String id);
+
+
+    //Lấy size có sẵn
+    List<Integer> getListAvailableSize(String id);
+
+    //Nhập số lượng theo size
+    void createSizeCount(CreateSizeCountRequest createSizeCountRequest);
+
+    //Lấy size của sản phẩm
+    List<ProductSize> getListSizeOfProduct(String id);
 
     List<ShortProductInfoDTO> getListProduct();
 
-    //Lấy sản phẩm có sẵn color
+    //Lấy sản phẩm có sẵn size
     List<ShortProductInfoDTO> getAvailableProducts();
 
-    //Check color sản phẩm
+    //Check size sản phẩm
+    boolean checkProductSizeAvailable(String id, int size);
+
+
+
+    //Lấy màu có sẵn
+    List<String> getListAvailableColor(String id);
+
+    //Nhập số lượng theo màu
+    void createColorCount(CreateColorCountRequest createColorCountRequest);
+
+    //Lấy màu của sản phẩm
+    List<ProductColor> getListColorOfProduct(String id);
+
+    //List<ShortProductInfoDTO> getListProduct();
+
+    //Lấy sản phẩm có sẵn màu
+    //List<ShortProductInfoDTO> getAvailableProducts();
+
+    //Check màu sản phẩm
     boolean checkProductColorAvailable(String id, String code);
+
+
+
+
 
     //Kiểm tra sản phẩm có khuyến mại
     List<ProductInfoDTO> checkPublicPromotion(List<ProductInfoDTO> products);

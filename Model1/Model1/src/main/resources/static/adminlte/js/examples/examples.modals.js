@@ -18,9 +18,9 @@ Theme Version: 	3.1.0
 	});
 
 	/*
-	Colors
+	Sizes
 	*/
-	$('.modal-Colors').magnificPopup({
+	$('.modal-sizes').magnificPopup({
 		type: 'inline',
 		preloader: false,
 		modal: true

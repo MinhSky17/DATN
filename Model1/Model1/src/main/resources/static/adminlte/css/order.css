@@ -20,7 +20,7 @@ textarea {
     border-radius: 4px;
     padding: 20px;
     width: 100%;
-    reColor: none;
+    resize: none;
 }
 
 .info-div {
@@ -48,7 +48,7 @@ textarea {
 }
 
 .display-info-price .text-price{
-    font-Color: 1.5rem;
+    font-size: 1.5rem;
 }
 .card-outline{
     border: 1px solid #cccccc;

@@ -30,7 +30,7 @@ Theme Version: 	3.1.0
 					points: {
 						show: true
 					},
-					shadowColor: 0
+					shadowSize: 0
 				},
 				grid: {
 					hoverable: true,
@@ -116,7 +116,7 @@ Theme Version: 	3.1.0
 				points: {
 					show: false
 				},
-				shadowColor: 0
+				shadowSize: 0
 			},
 			grid: {
 				borderColor: 'rgba(0,0,0,0.1)',
@@ -217,7 +217,7 @@ Theme Version: 	3.1.0
 	*/
 	if( $('#morrisLine').get(0) ) {
 		Morris.Line({
-			reColor: true,
+			resize: true,
 			element: 'morrisLine',
 			data: morrisLineData,
 			xkey: 'y',
@@ -233,7 +233,7 @@ Theme Version: 	3.1.0
 	*/
 	if( $('#morrisDonut').get(0) ) {
 		Morris.Donut({
-			reColor: true,
+			resize: true,
 			element: 'morrisDonut',
 			data: morrisDonutData,
 			colors: ['#0088cc', '#734ba9', '#E36159']
@@ -245,7 +245,7 @@ Theme Version: 	3.1.0
 	*/
 	if( $('#morrisBar').get(0) ) {
 		Morris.Bar({
-			reColor: true,
+			resize: true,
 			element: 'morrisBar',
 			data: morrisBarData,
 			xkey: 'y',
@@ -261,7 +261,7 @@ Theme Version: 	3.1.0
 	*/
 	if( $('#morrisArea').get(0) ) {
 		Morris.Area({
-			reColor: true,
+			resize: true,
 			element: 'morrisArea',
 			data: morrisAreaData,
 			xkey: 'y',
@@ -278,7 +278,7 @@ Theme Version: 	3.1.0
 	*/
 	if( $('#morrisStacked').get(0) ) {
 		Morris.Bar({
-			reColor: true,
+			resize: true,
 			element: 'morrisStacked',
 			data: morrisStackedData,
 			xkey: 'y',
@@ -362,7 +362,7 @@ Theme Version: 	3.1.0
 			shape: 'circle',
 			color: '#0088CC',
 			background: '#F9F9F9',
-			fontColor: '24px',
+			fontSize: '24px',
 			fontWeight: '600',
 			stroke: '#F2F2F2',
 			textColor: '#333',
@@ -382,7 +382,7 @@ Theme Version: 	3.1.0
 			color: '#0088CC',
 			background: '#272A31',
 			stroke: '#33363F',
-			fontColor: '24px',
+			fontSize: '24px',
 			fontWeight: '600',
 			textColor: '#FFFFFF',
 			liquidOpacity: 0.9,

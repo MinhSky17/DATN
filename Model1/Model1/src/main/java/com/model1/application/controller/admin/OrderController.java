@@ -69,8 +69,8 @@ public class OrderController {
         List<ShortProductInfoDTO> products = productService.getAvailableProducts();
         model.addAttribute("products", products);
 
-        // Get list Color
-        model.addAttribute("ColorVn", Color_VN);
+        // Get list size
+        model.addAttribute("sizeVn", SIZE_VN);
 
 //        //Get list valid promotion
         List<Promotion> promotions = promotionService.getAllValidPromotion();
@@ -112,9 +112,9 @@ public class OrderController {
                 }
             }
 
-            // Check Color available
-            boolean ColorIsAvailable = productService.checkProductColorAvailable(order.getProduct().getId(), order.getColor());
-            model.addAttribute("ColorIsAvailable", ColorIsAvailable);
+            // Check size available
+            boolean sizeIsAvailable = productService.checkProductSizeAvailable(order.getProduct().getId(), order.getSize());
+            model.addAttribute("sizeIsAvailable", sizeIsAvailable);
         }
 
         return "admin/order/edit";

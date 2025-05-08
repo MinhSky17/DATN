@@ -54,9 +54,9 @@
                         </table>
                         <!-- Pricing Section-->
                         <div class="pricing childs">
-                            <h6 class="not-found-Color" style="margin-top: 5px; color: #dc3545;"  th:styleappend="${notFoundColor} == true ? '' : 'display:none'">Color giày này đã hết. Vui lòng chọn Color khác.</h6>
-                            <div class="Color-btn" data-toggle="modal" data-target="#modal-Color-Choose">
-                                <button class="btn btn-primary Color trans-btn"><span class="Color-text">Color</span><span th:data-Color="${Color}" class="Color-details">9US | 42.5VN | 26.2CM</span><i class="fas dropdown-arrow"></i></button>
+                            <h6 class="not-found-size" style="margin-top: 5px; color: #dc3545;"  th:styleappend="${notFoundSize} == true ? '' : 'display:none'">Size giày này đã hết. Vui lòng chọn size khác.</h6>
+                            <div class="size-btn" data-toggle="modal" data-target="#modal-size-Choose">
+                                <button class="btn btn-primary size trans-btn"><span class="size-text">Size</span><span th:data-size="${size}" class="size-details">9US | 42.5VN | 26.2CM</span><i class="fas dropdown-arrow"></i></button>
                             </div>
                             <div class="input-group" style="margin-top:30px">
                                 <input type="text" class="form-control" placeholder="Nhập mã khuyến mãi" id="in-coupon" th:value="${product.couponCode}">
@@ -80,7 +80,7 @@
                         <a th:href="@{/{slug}/{id}(id=${product.id}, slug=${product.slug})}">
                             <button class="btn btn-secondary confirm-btn">Quay lại</button>
                         </a>
-                        <button type="button" class="btn btn-primary confirm-btn red-btn" id="btn-buy-now" th:style="${notFoundColor} ? 'display:none': ''">ĐẶT HÀNG</button>
+                        <button type="button" class="btn btn-primary confirm-btn red-btn" id="btn-buy-now" th:style="${notFoundSize} ? 'display:none': ''">ĐẶT HÀNG</button>
                     </div><!-- End #order-cart-section -->
                 </div><!-- End .order-summary -->
             </div><!-- End .col-lg-4 -->
@@ -121,11 +121,11 @@
 
     <div class="mb-6"></div><!-- margin -->
     <!-- Modals-->
-    <th:block th:replace="~{fragment/Color_choose_modal :: Color-choose-modal}"></th:block>
+    <th:block th:replace="~{fragment/size_choose_modal :: size-choose-modal}"></th:block>
 </main><!-- End .main -->
 
 <th:block id="js-resources">
-    <script th:src="@{/shop/js/Color-choose.js}"></script>
+    <script th:src="@{/shop/js/size-choose.js}"></script>
     <script th:inline="javascript">
         let price = [[${product.price}]];
 
@@ -141,62 +141,62 @@
 
         let couponCode = [[${product.couponCode}]];
 
-        let ColorVn = [[${ColorVn}]];
+        let sizeVn = [[${sizeVn}]];
 
-        let ColorUs = [[${ColorUs}]];
+        let sizeUs = [[${sizeUs}]];
 
-        let ColorCm = [[${ColorCm}]];
+        let sizeCm = [[${sizeCm}]];
 
         $(function () {
             formatMoney();
             render();
-            activeColor();
-            ColorGuideRender();
+            activeSize();
+            sizeGuideRender();
         });
 
         function render() {
-            for (let i = 0; i < ColorVn.length; i++) {
-                let ColorChoose = `
-            <div class="item" data-Color="${ColorUs[i]}US | ${ColorVn[i]}VN | ${ColorCm[i]}CM" data-id="${ColorVn[i]}">
-                ${ColorVn[i]}
+            for (let i = 0; i < sizeVn.length; i++) {
+                let sizeChoose = `
+            <div class="item" data-size="${sizeUs[i]}US | ${sizeVn[i]}VN | ${sizeCm[i]}CM" data-id="${sizeVn[i]}">
+                ${sizeVn[i]}
             </div>
             `;
 
-                $('.Color .select-filter').append(ColorChoose);
+                $('.size .select-filter').append(sizeChoose);
             };
         };
 
-        function ColorGuideRender() {
+        function sizeGuideRender() {
             let tr = '';
-            for (let i = 0; i < ColorVn.length; i++) {
+            for (let i = 0; i < sizeVn.length; i++) {
                 tr += `
             <tr>
-              <td>${ColorVn[i]}</td>
-              <td>${ColorUs[i]}</td>
-              <td>${ColorCm[i]}</td>
+              <td>${sizeVn[i]}</td>
+              <td>${sizeUs[i]}</td>
+              <td>${sizeCm[i]}</td>
             </tr>
             `;
             }
             $('.side-guide-table tbody').html(tr);
         }
 
-        function activeColor() {
-            let availableColors = [[${availableColors}]]
+        function activeSize() {
+            let availableSizes = [[${availableSizes}]]
 
-            for (let i = 0; i < ColorVn.length; i++) {
-                if (ColorVn[i] == [[${Color}]]) {
-                    $('.Color-details').text(ColorUs[i] + "US | " + ColorVn[i] + "VN | " + ColorCm[i] + "CM")
+            for (let i = 0; i < sizeVn.length; i++) {
+                if (sizeVn[i] == [[${size}]]) {
+                    $('.size-details').text(sizeUs[i] + "US | " + sizeVn[i] + "VN | " + sizeCm[i] + "CM")
                     break;
                 }
             }
 
-            $('.Color .item').addClass('cross')
-            if (![[${notFoundColor}]]) {
-                $(`.item[data-Color='${$('.Color-details').text()}']`).addClass('Color-choose').removeClass('cross');
+            $('.size .item').addClass('cross')
+            if (![[${notFoundSize}]]) {
+                $(`.item[data-size='${$('.size-details').text()}']`).addClass('size-choose').removeClass('cross');
             }
 
-            for (let i = 0; i < availableColors.length; i++) {
-                $(`.item[data-id='${availableColors[i]}']`).removeClass('cross');
+            for (let i = 0; i < availableSizes.length; i++) {
+                $(`.item[data-id='${availableSizes[i]}']`).removeClass('cross');
             }
         }
         $('#btn-apply-coupon').click(function() {
@@ -265,16 +265,16 @@
                 addressInvalid.html('Vui lòng nhập địa chỉ nhận hàng');
                 isValid = false;
             }
-            let Color = $('.Color-choose').data("id");
-            if (Color == null || Color == "") {
-                $('.not-found-Color').show();
+            let size = $('.size-choose').data("id");
+            if (size == null || size == "") {
+                $('.not-found-size').show();
                 isValid = false;
             }
 
             if (isValid) {
                 req = {
                     product_id: [[${product.id}]],
-                    Color: Color,
+                    size: size,
                     receiver_name: receiverName,
                     receiver_phone: receiverPhone,
                     receiver_address: receiverAddress,

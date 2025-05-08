@@ -146,7 +146,7 @@ as "categories" on the axis object, e.g. plot.getAxes().xaxis.categories.
     function transformPointsOnAxis(datapoints, axis, categories) {
         // go through the points, transforming them
         var points = datapoints.points,
-            ps = datapoints.pointColor,
+            ps = datapoints.pointsize,
             format = datapoints.format,
             formatColumn = axis.charAt(0),
             index = getNextIndex(categories);

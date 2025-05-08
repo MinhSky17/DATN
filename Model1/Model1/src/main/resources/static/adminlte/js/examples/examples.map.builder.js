@@ -10,18 +10,18 @@ Theme Version: 	3.1.0
 
 	var $window = $(window);
 
-	/* Fix Map Color on Mobile */
+	/* Fix Map size on Mobile */
 	function fixMapListener() {
 
-		fixMapColor();
+		fixMapSize();
 
-		$(window).on('load reColor orientationchange', function() {
-			fixMapColor();
+		$(window).on('load resize orientationchange', function() {
+			fixMapSize();
 		});
 
 	}
 
-	function fixMapColor() {
+	function fixMapSize() {
 		if ( $window.width() <= 767 ) {
 
 			var windowHeight = $(window).height(),

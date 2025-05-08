@@ -45,7 +45,7 @@
           message: null, // an alternative way to provide the message text
           showCharsTyped: true, // show the number of characters typed and not the number of characters remaining
           validate: false, // if the browser doesn't support the maxlength attribute, attempt to type more than the indicated chars, will be prevented.
-          utf8: false, // counts using byteColor rather than length. eg: '£' is counted as 2 characters.
+          utf8: false, // counts using bytesize rather than length. eg: '£' is counted as 2 characters.
           appendToParent: false, // append the indicator to the input field's parent instead of body
           twoCharLinebreak: true, // count linebreak as 2 characters to match IE/Chrome textarea validation. As well as DB storage.
           customMaxAttribute: null, // null = use maxlength attribute and browser functionality, string = use specified attribute instead.
@@ -141,12 +141,12 @@
         }
 
         if (options.utf8) {
-          var indexedColor = text.split("").map(utf8CharByteCount);
+          var indexedSize = text.split("").map(utf8CharByteCount);
           for (
             var removedBytes = 0,
-              bytesPastMax = utf8Length(text) - maxlength; removedBytes < bytesPastMax; removedBytes += indexedColor.pop()
+              bytesPastMax = utf8Length(text) - maxlength; removedBytes < bytesPastMax; removedBytes += indexedSize.pop()
           );
-          maxlength -= (maxlength - indexedColor.length);
+          maxlength -= (maxlength - indexedSize.length);
         }
 
         input.val(text.substr(0, maxlength));
@@ -481,7 +481,7 @@
         }
 
         if (!max) {
-          max = currentInput.attr('Color');
+          max = currentInput.attr('size');
         }
         return max;
       }
@@ -492,7 +492,7 @@
           maxLengthCurrentInput,
           maxLengthIndicator;
 
-        $(window).reColor(function () {
+        $(window).resize(function () {
           if (maxLengthIndicator) {
             place(currentInput, maxLengthIndicator);
           }
@@ -511,18 +511,18 @@
             }).html(maxlengthContent);
           }
 
-          // We need to detect reColors if we are dealing with a textarea:
+          // We need to detect resizes if we are dealing with a textarea:
           if (currentInput.is('textarea')) {
-            currentInput.data('maxlenghtColorx', currentInput.outerWidth());
-            currentInput.data('maxlenghtColory', currentInput.outerHeight());
+            currentInput.data('maxlenghtsizex', currentInput.outerWidth());
+            currentInput.data('maxlenghtsizey', currentInput.outerHeight());
 
             currentInput.mouseup(function () {
-              if (currentInput.outerWidth() !== currentInput.data('maxlenghtColorx') || currentInput.outerHeight() !== currentInput.data('maxlenghtColory')) {
+              if (currentInput.outerWidth() !== currentInput.data('maxlenghtsizex') || currentInput.outerHeight() !== currentInput.data('maxlenghtsizey')) {
                 place(currentInput, maxLengthIndicator);
               }
 
-              currentInput.data('maxlenghtColorx', currentInput.outerWidth());
-              currentInput.data('maxlenghtColory', currentInput.outerHeight());
+              currentInput.data('maxlenghtsizex', currentInput.outerWidth());
+              currentInput.data('maxlenghtsizey', currentInput.outerHeight());
             });
           }
 

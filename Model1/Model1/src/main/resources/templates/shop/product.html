@@ -19,26 +19,6 @@
 </head>
 <body>
 <main class="main" id="main-content">
-<!--    <div class="category-banner-container bg-gray">-->
-<!--        <div class="category-banner banner text-uppercase"-->
-<!--             style="background: no-repeat 60%/cover url('shop/images/slider/1.jpg'); height: 450px">-->
-<!--            <div class="container position-relative">-->
-<!--                <div class="row">-->
-<!--                    <div class="pl-lg-5 pb-5 pb-md-0 col-md-5 col-xl-4 col-lg-4 offset-1">-->
-<!--&lt;!&ndash;                        <h3 class="ml-lg-5 mb-2 ls-10">Electronic<br>Deals</h3>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <a href="#" class="ml-lg-5 btn btn-dark btn-black ls-10">Get Yours!</a>&ndash;&gt;-->
-<!--                    </div>-->
-<!--&lt;!&ndash;                    <div class="pl-lg-5 col-md-4 offset-md-0 offset-1 pt-4">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <div class="coupon-sale-content">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <h4 class="m-b-2 coupon-sale-text bg-white ls-10 text-transform-none">Exclusive COUPON</h4>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <h5 class="mb-2 coupon-sale-text d-block ls-10 p-0"><i class="ls-0">UP TO</i><b&ndash;&gt;-->
-<!--&lt;!&ndash;                                    class="text-dark">$100</b> OFF</h5>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
 
     <div class="container">
         <nav aria-label="breadcrumb" class="breadcrumb-nav">
@@ -95,7 +75,7 @@
             <div class="sidebar-overlay"></div>
             <div class="sidebar-toggle"><i class="fas fa-sliders-h"></i></div>
             <aside class="sidebar-shop col-lg-3 order-lg-first mobile-sidebar">
-                <div class="sidebar-wrapper filter-bar small-Color">
+                <div class="sidebar-wrapper filter-bar small-size">
                     <div class="filter-header content">
                         <div class="left-side d-flex align-items-center"><i class="fas fa-sliders-h"></i>
                             <div class="text">Lọc</div>
@@ -142,9 +122,9 @@
                             </div><!-- End .widget-body -->
                         </div><!-- End .collapse -->
                     </div><!-- End .widget -->
-
-                    <!--     DANH MUC  -->
-
+                    
+                    <!--DANH MUC-->
+                    
                     <div class="widget">
                         <h3 class="widget-title">
                             <a data-toggle="collapse" href="#widget-body-2" role="button" aria-expanded="true"
@@ -187,6 +167,20 @@
                         </div><!-- End .collapse -->
                     </div><!-- End .widget -->
 
+<!--                    <div class="widget">-->
+<!--                        <h3 class="widget-title">-->
+<!--                            <a data-toggle="collapse" href="#widget-body-3" role="button" aria-expanded="true"-->
+<!--                               aria-controls="widget-body-3">Size</a>-->
+<!--                        </h3>-->
+<!--                        &lt;!&ndash; Size &ndash;&gt;-->
+<!--                        <div class="size content" id="widget-body-3">-->
+<!--                            <div class="select-filter collapse show" id="size-collapse">-->
+<!--                                <th:block th:each="size : ${sizeVn}">-->
+<!--                                    <div class="item check-size" th:data-id="${size}" th:text="${size}"></div>-->
+<!--                                </th:block>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>&lt;!&ndash; End .widget &ndash;&gt;-->
 
 <!--                    <div class="widget">-->
 <!--                        <h3 class="widget-title">-->
@@ -208,9 +202,6 @@
 <!--                    </div>&lt;!&ndash; End .widget &ndash;&gt;-->
 
 
-
-
-
                 </div><!-- End .sidebar-wrapper -->
             </aside><!-- End .col-lg-3 -->
         </div><!-- End .row -->
@@ -229,7 +220,7 @@
         let totalPages = [[${totalPages}]];
         let checkedCategories = [];
         let checkedBrands = [];
-        let checkedColors = [];
+        let checkedSizes = [];
         let minPrice = 0;
         let maxPrice = 0;
 
@@ -288,10 +279,10 @@
             }
         });
 
-        $(".check-Color").click(function () {
-            $(this).toggleClass('Color-choose');
+        $(".check-size").click(function () {
+            $(this).toggleClass('size-choose');
 
-            checkedColors = $(".check-Color.Color-choose").map(function () {
+            checkedSizes = $(".check-size.size-choose").map(function () {
                 return $(this).data("id");
             }).get();
 
@@ -300,24 +291,6 @@
                 searchProduct();
             }
         });
-
-<!--GIA SAN PHAM-->
-<!--        $('#apply-price-web').click(function () {-->
-<!--            minPrice = parseInt($('.price-input#from-price').val());-->
-<!--            maxPrice = parseInt($('.price-input#to-price').val());-->
-
-<!--            if (isNaN(minPrice) && isNaN(maxPrice)) {-->
-<!--                toastr.warning("Khoảng giá không hợp lệ");-->
-<!--                return;-->
-<!--            }-->
-<!--            if (minPrice > 999999999999 || maxPrice > 999999999999) {-->
-<!--                toastr.warning("Khoảng giá quá lớn");-->
-<!--                return;-->
-<!--            }-->
-
-<!--            currentPage = 1;-->
-<!--            searchProduct();-->
-<!--        })-->
 
         $(".check-price").change(function() {
             let priceRanges = $(".check-price:checked").map(function() {
@@ -331,15 +304,29 @@
             if (priceRanges.length > 0) {
                 minPrice = Math.min(...priceRanges.map(p => p.min));
                 maxPrice = Math.max(...priceRanges.map(p => p.max));
-            } else {
-                minPrice = 0;
-                maxPrice = 0;
             }
-        
+            console.log(minPrice);
+            console.log(maxPrice);
             currentPage = 1;
             searchProduct();
         });
-        
+
+        $('#apply-price-web').click(function () {
+            minPrice = parseInt($('.price-input#from-price').val());
+            maxPrice = parseInt($('.price-input#to-price').val());
+
+            if (isNaN(minPrice) && isNaN(maxPrice)) {
+                toastr.warning("Khoảng giá không hợp lệ");
+                return;
+            }
+            if (minPrice > 999999999999 || maxPrice > 999999999999) {
+                toastr.warning("Khoảng giá quá lớn");
+                return;
+            }
+
+            currentPage = 1;
+            searchProduct();
+        })
 
         $('#apply-price-mobile').click(function () {
             minPrice = parseInt($('.price-input#from-price-small').val());
@@ -361,7 +348,7 @@
         })
 
         function searchProduct() {
-            if (checkedColors.length > 0 || checkedBrands.length > 0 || checkedCategories.length > 0 || minPrice > 0 || maxPrice > 0) {
+            if (checkedSizes.length > 0 || checkedBrands.length > 0 || checkedCategories.length > 0 || minPrice >= 0 || maxPrice >= 0) {
                 $('.clear-filter')
                     .removeAttr('disabled');
             } else {
@@ -381,7 +368,7 @@
             req = {
                 brands: checkedBrands,
                 categories: checkedCategories,
-                Colors: checkedColors,
+                sizes: checkedSizes,
                 min_price: minPrice,
                 max_price: maxPrice,
                 page: currentPage
@@ -467,7 +454,7 @@
             });
 
             $(".clear-filter").click(function () {
-                checkedColors = [];
+                checkedSizes = [];
                 checkedBrands = [];
                 checkedCategories = [];
                 minPrice = 0;
@@ -476,7 +463,7 @@
                 searchProduct();
 
                 $('.filter-bar input').prop('checked', false);
-                $('.Color .item').removeClass('Color-choose');
+                $('.size .item').removeClass('size-choose');
                 $('.price-input').val('');
                 $('.price-input.small').val('');
                 $('.apply-price:not(.small)').attr('disabled', 'disabled');

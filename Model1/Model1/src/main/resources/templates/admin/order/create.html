@@ -70,20 +70,20 @@
                                                     <option th:value="${product.id}" th:text="${product.name}"></option>
                                                 </th:block>
                                             </select>
-                                            <span class="invalid-feedback" id="invalid-feedback-product">Sản phẩm đã hết Color</span>
+                                            <span class="invalid-feedback" id="invalid-feedback-product">Sản phẩm đã hết size</span>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="Color">Kích cỡ</label>
-                                            <select class="form-control" id="Color">
+                                            <label for="size">Kích cỡ</label>
+                                            <select class="form-control" id="size">
 
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <label for="Color">Khuyến mãi</label>
+                                            <label for="size">Khuyến mãi</label>
                                             <select class="form-control" id="promotion">
                                                 <option value="">Chọn khuyến mãi</option>
                                                 <th:block th:each="promotion : ${promotions}">
@@ -192,11 +192,11 @@
 
         function eventChangeProduct() {
             let idProduct = $('#product').val();
-            let Colors = [];
+            let sizes = [];
             for (product of products) {
                 if (product.id == idProduct) {
-                    if (product.availableColors != null) {
-                        Colors = product.availableColors;
+                    if (product.availableSizes != null) {
+                        sizes = product.availableSizes;
                     }
                     productPrice = product.price;
                     totalPrice = product.price;
@@ -204,9 +204,9 @@
                 }
             }
 
-            $('#Color').empty();
-            for (Color of Colors) {
-                $("#Color").append(new Option(Color, Color));
+            $('#size').empty();
+            for (size of sizes) {
+                $("#size").append(new Option(size, size));
             }
 
             calculatePrice();
@@ -254,7 +254,7 @@
             let receiverAddress = $('#receiver-address').val();
             let note = $('#receiver-note').val();
             let product = $('#product').val();
-            let Color = $('#Color').val();
+            let size = $('#size').val();
             let promotion = $('#promotion').val();
             let isValid = true;
 
@@ -270,7 +270,7 @@
                 $('#invalid-feedback-address').show();
                 isValid = false;
             }
-            if (Color == null) {
+            if (size == null) {
                 $('#invalid-feedback-product').show();
                 isValid = false;
             }
@@ -278,7 +278,7 @@
             if (isValid) {
                 req = {
                     product_id: product,
-                    Color: parseInt(Color),
+                    size: parseInt(size),
                     receiver_name: receiverName,
                     receiver_phone: receiverPhone,
                     receiver_address: receiverAddress,

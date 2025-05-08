@@ -212,15 +212,15 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
 
         /**
          * If `chunking` is enabled, this defines whether **every** file should be chunked,
-         * even if the file Color is below chunkColor. This means, that the additional chunk
+         * even if the file size is below chunkSize. This means, that the additional chunk
          * form data will be submitted and the `chunksUploaded` callback will be invoked.
          */
         forceChunking: false,
 
         /**
-         * If `chunking` is `true`, then this defines the chunk Color in bytes.
+         * If `chunking` is `true`, then this defines the chunk size in bytes.
          */
-        chunkColor: 2000000,
+        chunkSize: 2000000,
 
         /**
          * If `true`, the individual chunks of a file are being uploaded simultaneously.
@@ -242,7 +242,7 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
          * the event `maxfilesexceeded` will be called. The dropzone element gets the
          * class `dz-max-files-reached` accordingly so you can provide visual feedback.
          */
-        maxFileColor: 256,
+        maxFilesize: 256,
 
         /**
          * The name of the file param that gets transferred.
@@ -259,7 +259,7 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
         /**
          * In MB. When the filename exceeds this limit, the thumbnail will not be generated.
          */
-        maxThumbnailFileColor: 10,
+        maxThumbnailFilesize: 10,
 
         /**
          * If `null`, the ratio of the image will be used to calculate it.
@@ -267,7 +267,7 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
         thumbnailWidth: 120,
 
         /**
-         * The same as `thumbnailWidth`. If both are null, images will not be reColord.
+         * The same as `thumbnailWidth`. If both are null, images will not be resized.
          */
         thumbnailHeight: 120,
 
@@ -278,45 +278,45 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
         thumbnailMethod: 'crop',
 
         /**
-         * If set, images will be reColord to these dimensions before being **uploaded**.
-         * If only one, `reColorWidth` **or** `reColorHeight` is provided, the original aspect
+         * If set, images will be resized to these dimensions before being **uploaded**.
+         * If only one, `resizeWidth` **or** `resizeHeight` is provided, the original aspect
          * ratio of the file will be preserved.
          *
          * The `options.transformFile` function uses these options, so if the `transformFile` function
          * is overridden, these options don't do anything.
          */
-        reColorWidth: null,
+        resizeWidth: null,
 
         /**
-         * See `reColorWidth`.
+         * See `resizeWidth`.
          */
-        reColorHeight: null,
+        resizeHeight: null,
 
         /**
-         * The mime type of the reColord image (before it gets uploaded to the server).
+         * The mime type of the resized image (before it gets uploaded to the server).
          * If `null` the original mime type will be used. To force jpeg, for example, use `image/jpeg`.
-         * See `reColorWidth` for more information.
+         * See `resizeWidth` for more information.
          */
-        reColorMimeType: null,
+        resizeMimeType: null,
 
         /**
-         * The quality of the reColord images. See `reColorWidth`.
+         * The quality of the resized images. See `resizeWidth`.
          */
-        reColorQuality: 0.8,
+        resizeQuality: 0.8,
 
         /**
-         * How the images should be scaled down in case both, `reColorWidth` and `reColorHeight` are provided.
+         * How the images should be scaled down in case both, `resizeWidth` and `resizeHeight` are provided.
          * Can be either `contain` or `crop`.
          */
-        reColorMethod: 'contain',
+        resizeMethod: 'contain',
 
         /**
-         * The base that is used to calculate the fileColor. You can change this to
+         * The base that is used to calculate the filesize. You can change this to
          * 1024 if you would rather display kibibytes, mebibytes, etc...
          * 1024 is technically incorrect, because `1024 bytes` are `1 kibibyte` not `1 kilobyte`.
          * You can change this to `1024` if you don't care about validity.
          */
-        fileColorBase: 1000,
+        filesizeBase: 1000,
 
         /**
          * Can be used to limit the maximum number of files that will be handled by this Dropzone
@@ -453,10 +453,10 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
         dictFallbackText: "Please use the fallback form below to upload your files like in the olden days.",
 
         /**
-         * If the fileColor is too big.
-         * `{{fileColor}}` and `{{maxFileColor}}` will be replaced with the respective configuration values.
+         * If the filesize is too big.
+         * `{{filesize}}` and `{{maxFilesize}}` will be replaced with the respective configuration values.
          */
-        dictFileTooBig: "File is too big ({{fileColor}}MiB). Max fileColor: {{maxFileColor}}MiB.",
+        dictFileTooBig: "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.",
 
         /**
          * If the file doesn't match the file type.
@@ -504,7 +504,7 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
          * Allows you to translate the different units. Starting with `tb` for terabytes and going down to
          * `b` for bytes.
          */
-        dictFileColorUnits: {
+        dictFileSizeUnits: {
           tb: "TB",
           gb: "GB",
           mb: "MB",
@@ -533,10 +533,10 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
             return {
               dzuuid: chunk.file.upload.uuid,
               dzchunkindex: chunk.index,
-              dztotalfileColor: chunk.file.Color,
-              dzchunkColor: this.options.chunkColor,
+              dztotalfilesize: chunk.file.size,
+              dzchunksize: this.options.chunkSize,
               dztotalchunkcount: chunk.file.upload.totalChunkCount,
-              dzchunkbyteoffset: chunk.index * this.options.chunkColor
+              dzchunkbyteoffset: chunk.index * this.options.chunkSize
             };
           }
         },
@@ -624,7 +624,7 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
          *
          * Those values are going to be used by `ctx.drawImage()`.
          */
-        reColor: function reColor(file, width, height, reColorMethod) {
+        resize: function resize(file, width, height, resizeMethod) {
           var info = {
             srcX: 0,
             srcY: 0,
@@ -649,7 +649,7 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
 
           if (info.srcWidth > width || info.srcHeight > height) {
             // Image is bigger and needs rescaling
-            if (reColorMethod === 'crop') {
+            if (resizeMethod === 'crop') {
               if (srcRatio > trgRatio) {
                 info.srcHeight = file.height;
                 info.srcWidth = info.srcHeight * trgRatio;
@@ -657,7 +657,7 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
                 info.srcWidth = file.width;
                 info.srcHeight = info.srcWidth / trgRatio;
               }
-            } else if (reColorMethod === 'contain') {
+            } else if (resizeMethod === 'contain') {
               // Method 'contain'
               if (srcRatio > trgRatio) {
                 height = width / srcRatio;
@@ -665,7 +665,7 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
                 width = height * srcRatio;
               }
             } else {
-              throw new Error("Unknown reColorMethod '".concat(reColorMethod, "'"));
+              throw new Error("Unknown resizeMethod '".concat(resizeMethod, "'"));
             }
           }
 
@@ -677,17 +677,17 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
         },
 
         /**
-         * Can be used to transform the file (for example, reColor an image if necessary).
+         * Can be used to transform the file (for example, resize an image if necessary).
          *
-         * The default implementation uses `reColorWidth` and `reColorHeight` (if provided) and reColors
+         * The default implementation uses `resizeWidth` and `resizeHeight` (if provided) and resizes
          * images according to those dimensions.
          *
          * Gets the `file` as the first parameter, and a `done()` function as the second, that needs
          * to be invoked with the file when the transformation is done.
          */
         transformFile: function transformFile(file, done) {
-          if ((this.options.reColorWidth || this.options.reColorHeight) && file.type.match(/image.*/)) {
-            return this.reColorImage(file, this.options.reColorWidth, this.options.reColorHeight, this.options.reColorMethod, done);
+          if ((this.options.resizeWidth || this.options.resizeHeight) && file.type.match(/image.*/)) {
+            return this.resizeImage(file, this.options.resizeWidth, this.options.resizeHeight, this.options.resizeMethod, done);
           } else {
             return done(file);
           }
@@ -707,7 +707,7 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
          *       .innerHTML
          *
          */
-        previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-image\"><img data-dz-thumbnail /></div>\n  <div class=\"dz-details\">\n    <div class=\"dz-Color\"><span data-dz-Color></span></div>\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n  </div>\n  <div class=\"dz-progress\"><span class=\"dz-upload\" data-dz-uploadprogress></span></div>\n  <div class=\"dz-error-message\"><span data-dz-errormessage></span></div>\n  <div class=\"dz-success-mark\">\n    <svg width=\"54px\" height=\"54px\" viewBox=\"0 0 54 54\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n      <title>Check</title>\n      <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n        <path d=\"M23.5,31.8431458 L17.5852419,25.9283877 C16.0248253,24.3679711 13.4910294,24.366835 11.9289322,25.9289322 C10.3700136,27.4878508 10.3665912,30.0234455 11.9283877,31.5852419 L20.4147581,40.0716123 C20.5133999,40.1702541 20.6159315,40.2626649 20.7218615,40.3488435 C22.2835669,41.8725651 24.794234,41.8626202 26.3461564,40.3106978 L43.3106978,23.3461564 C44.8771021,21.7797521 44.8758057,19.2483887 43.3137085,17.6862915 C41.7547899,16.1273729 39.2176035,16.1255422 37.6538436,17.6893022 L23.5,31.8431458 Z M27,53 C41.3594035,53 53,41.3594035 53,27 C53,12.6405965 41.3594035,1 27,1 C12.6405965,1 1,12.6405965 1,27 C1,41.3594035 12.6405965,53 27,53 Z\" stroke-opacity=\"0.198794158\" stroke=\"#747474\" fill-opacity=\"0.816519475\" fill=\"#FFFFFF\"></path>\n      </g>\n    </svg>\n  </div>\n  <div class=\"dz-error-mark\">\n    <svg width=\"54px\" height=\"54px\" viewBox=\"0 0 54 54\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n      <title>Error</title>\n      <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n        <g stroke=\"#747474\" stroke-opacity=\"0.198794158\" fill=\"#FFFFFF\" fill-opacity=\"0.816519475\">\n          <path d=\"M32.6568542,29 L38.3106978,23.3461564 C39.8771021,21.7797521 39.8758057,19.2483887 38.3137085,17.6862915 C36.7547899,16.1273729 34.2176035,16.1255422 32.6538436,17.6893022 L27,23.3431458 L21.3461564,17.6893022 C19.7823965,16.1255422 17.2452101,16.1273729 15.6862915,17.6862915 C14.1241943,19.2483887 14.1228979,21.7797521 15.6893022,23.3461564 L21.3431458,29 L15.6893022,34.6538436 C14.1228979,36.2202479 14.1241943,38.7516113 15.6862915,40.3137085 C17.2452101,41.8726271 19.7823965,41.8744578 21.3461564,40.3106978 L27,34.6568542 L32.6538436,40.3106978 C34.2176035,41.8744578 36.7547899,41.8726271 38.3137085,40.3137085 C39.8758057,38.7516113 39.8771021,36.2202479 38.3106978,34.6538436 L32.6568542,29 Z M27,53 C41.3594035,53 53,41.3594035 53,27 C53,12.6405965 41.3594035,1 27,1 C12.6405965,1 1,12.6405965 1,27 C1,41.3594035 12.6405965,53 27,53 Z\"></path>\n        </g>\n      </g>\n    </svg>\n  </div>\n</div>",
+        previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-image\"><img data-dz-thumbnail /></div>\n  <div class=\"dz-details\">\n    <div class=\"dz-size\"><span data-dz-size></span></div>\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n  </div>\n  <div class=\"dz-progress\"><span class=\"dz-upload\" data-dz-uploadprogress></span></div>\n  <div class=\"dz-error-message\"><span data-dz-errormessage></span></div>\n  <div class=\"dz-success-mark\">\n    <svg width=\"54px\" height=\"54px\" viewBox=\"0 0 54 54\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n      <title>Check</title>\n      <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n        <path d=\"M23.5,31.8431458 L17.5852419,25.9283877 C16.0248253,24.3679711 13.4910294,24.366835 11.9289322,25.9289322 C10.3700136,27.4878508 10.3665912,30.0234455 11.9283877,31.5852419 L20.4147581,40.0716123 C20.5133999,40.1702541 20.6159315,40.2626649 20.7218615,40.3488435 C22.2835669,41.8725651 24.794234,41.8626202 26.3461564,40.3106978 L43.3106978,23.3461564 C44.8771021,21.7797521 44.8758057,19.2483887 43.3137085,17.6862915 C41.7547899,16.1273729 39.2176035,16.1255422 37.6538436,17.6893022 L23.5,31.8431458 Z M27,53 C41.3594035,53 53,41.3594035 53,27 C53,12.6405965 41.3594035,1 27,1 C12.6405965,1 1,12.6405965 1,27 C1,41.3594035 12.6405965,53 27,53 Z\" stroke-opacity=\"0.198794158\" stroke=\"#747474\" fill-opacity=\"0.816519475\" fill=\"#FFFFFF\"></path>\n      </g>\n    </svg>\n  </div>\n  <div class=\"dz-error-mark\">\n    <svg width=\"54px\" height=\"54px\" viewBox=\"0 0 54 54\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n      <title>Error</title>\n      <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n        <g stroke=\"#747474\" stroke-opacity=\"0.198794158\" fill=\"#FFFFFF\" fill-opacity=\"0.816519475\">\n          <path d=\"M32.6568542,29 L38.3106978,23.3461564 C39.8771021,21.7797521 39.8758057,19.2483887 38.3137085,17.6862915 C36.7547899,16.1273729 34.2176035,16.1255422 32.6538436,17.6893022 L27,23.3431458 L21.3461564,17.6893022 C19.7823965,16.1255422 17.2452101,16.1273729 15.6862915,17.6862915 C14.1241943,19.2483887 14.1228979,21.7797521 15.6893022,23.3461564 L21.3431458,29 L15.6893022,34.6538436 C14.1228979,36.2202479 14.1241943,38.7516113 15.6862915,40.3137085 C17.2452101,41.8726271 19.7823965,41.8744578 21.3461564,40.3106978 L27,34.6568542 L32.6538436,40.3106978 C34.2176035,41.8744578 36.7547899,41.8726271 38.3137085,40.3137085 C39.8758057,38.7516113 39.8771021,36.2202479 38.3106978,34.6538436 L32.6568542,29 Z M27,53 C41.3594035,53 53,41.3594035 53,27 C53,12.6405965 41.3594035,1 27,1 C12.6405965,1 1,12.6405965 1,27 C1,41.3594035 12.6405965,53 27,53 Z\"></path>\n        </g>\n      </g>\n    </svg>\n  </div>\n</div>",
         // END OPTIONS
         // (Required by the dropzone documentation parser)
 
@@ -771,13 +771,13 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
               _iterator3.f();
             }
 
-            var _iterator4 = _createForOfIteratorHelper(file.previewElement.querySelectorAll("[data-dz-Color]")),
+            var _iterator4 = _createForOfIteratorHelper(file.previewElement.querySelectorAll("[data-dz-size]")),
                 _step4;
 
             try {
               for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
                 node = _step4.value;
-                node.innerHTML = this.fileColor(file.Color);
+                node.innerHTML = this.filesize(file.size);
               }
             } catch (err) {
               _iterator4.e(err);
@@ -899,7 +899,7 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
         processingmultiple: function processingmultiple() {},
         // Called whenever the upload progress gets updated.
         // Receives `file`, `progress` (percentage 0-100) and `bytesSent`.
-        // To get the total number of bytes of the file, use `file.Color`
+        // To get the total number of bytes of the file, use `file.size`
         uploadprogress: function uploadprogress(file, progress, bytesSent) {
           if (file.previewElement) {
             var _iterator8 = _createForOfIteratorHelper(file.previewElement.querySelectorAll("[data-dz-uploadprogress]")),
@@ -1529,32 +1529,32 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
         return element.classList.add("dz-clickable");
       });
       return this.setupEventListeners();
-    } // Returns a nicely formatted fileColor
+    } // Returns a nicely formatted filesize
 
   }, {
-    key: "fileColor",
-    value: function fileColor(Color) {
-      var selectedColor = 0;
+    key: "filesize",
+    value: function filesize(size) {
+      var selectedSize = 0;
       var selectedUnit = "b";
 
-      if (Color > 0) {
+      if (size > 0) {
         var units = ['tb', 'gb', 'mb', 'kb', 'b'];
 
         for (var i = 0; i < units.length; i++) {
           var unit = units[i];
-          var cutoff = Math.pow(this.options.fileColorBase, 4 - i) / 10;
+          var cutoff = Math.pow(this.options.filesizeBase, 4 - i) / 10;
 
-          if (Color >= cutoff) {
-            selectedColor = Color / Math.pow(this.options.fileColorBase, 4 - i);
+          if (size >= cutoff) {
+            selectedSize = size / Math.pow(this.options.filesizeBase, 4 - i);
             selectedUnit = unit;
             break;
           }
         }
 
-        selectedColor = Math.round(10 * selectedColor) / 10; // Cutting of digits
+        selectedSize = Math.round(10 * selectedSize) / 10; // Cutting of digits
       }
 
-      return "<strong>".concat(selectedColor, "</strong> ").concat(this.options.dictFileColorUnits[selectedUnit]);
+      return "<strong>".concat(selectedSize, "</strong> ").concat(this.options.dictFileSizeUnits[selectedUnit]);
     } // Adds or removes the `dz-max-files-reached` class from the form.
 
   }, {
@@ -1737,14 +1737,14 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
     // If you call it with an error message, the file is rejected
     // (This allows for asynchronous validation)
     //
-    // This function checks the fileColor, and if the file.type passes the
+    // This function checks the filesize, and if the file.type passes the
     // `acceptedFiles` check.
 
   }, {
     key: "accept",
     value: function accept(file, done) {
-      if (this.options.maxFileColor && file.Color > this.options.maxFileColor * 1024 * 1024) {
-        done(this.options.dictFileTooBig.replace("{{fileColor}}", Math.round(file.Color / 1024 / 10.24) / 100).replace("{{maxFileColor}}", this.options.maxFileColor));
+      if (this.options.maxFilesize && file.size > this.options.maxFilesize * 1024 * 1024) {
+        done(this.options.dictFileTooBig.replace("{{filesize}}", Math.round(file.size / 1024 / 10.24) / 100).replace("{{maxFilesize}}", this.options.maxFilesize));
       } else if (!Dropzone.isValidFile(file, this.options.acceptedFiles)) {
         done(this.options.dictInvalidFileType);
       } else if (this.options.maxFiles != null && this.getAcceptedFiles().length >= this.options.maxFiles) {
@@ -1762,9 +1762,9 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
       file.upload = {
         uuid: Dropzone.uuidv4(),
         progress: 0,
-        // Setting the total upload Color to file.Color for the beginning
-        // It's actual different than the Color to be transmitted.
-        total: file.Color,
+        // Setting the total upload size to file.size for the beginning
+        // It's actual different than the size to be transmitted.
+        total: file.size,
         bytesSent: 0,
         filename: this._renameFile(file) // Not setting chunking information here, because the acutal data — and
         // thus the chunks — might change if `options.transformFile` is set
@@ -1837,7 +1837,7 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
     value: function _enqueueThumbnail(file) {
       var _this9 = this;
 
-      if (this.options.createImageThumbnails && file.type.match(/image.*/) && file.Color <= this.options.maxThumbnailFileColor * 1024 * 1024) {
+      if (this.options.createImageThumbnails && file.type.match(/image.*/) && file.size <= this.options.maxThumbnailFilesize * 1024 * 1024) {
         this._thumbnailQueue.push(file);
 
         return setTimeout(function () {
@@ -1907,40 +1907,40 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
       }
 
       return null;
-    } // ReColors an image before it gets sent to the server. This function is the default behavior of
-    // `options.transformFile` if `reColorWidth` or `reColorHeight` are set. The callback is invoked with
-    // the reColord blob.
+    } // Resizes an image before it gets sent to the server. This function is the default behavior of
+    // `options.transformFile` if `resizeWidth` or `resizeHeight` are set. The callback is invoked with
+    // the resized blob.
 
   }, {
-    key: "reColorImage",
-    value: function reColorImage(file, width, height, reColorMethod, callback) {
+    key: "resizeImage",
+    value: function resizeImage(file, width, height, resizeMethod, callback) {
       var _this11 = this;
 
-      return this.createThumbnail(file, width, height, reColorMethod, true, function (dataUrl, canvas) {
+      return this.createThumbnail(file, width, height, resizeMethod, true, function (dataUrl, canvas) {
         if (canvas == null) {
-          // The image has not been reColord
+          // The image has not been resized
           return callback(file);
         } else {
-          var reColorMimeType = _this11.options.reColorMimeType;
+          var resizeMimeType = _this11.options.resizeMimeType;
 
-          if (reColorMimeType == null) {
-            reColorMimeType = file.type;
+          if (resizeMimeType == null) {
+            resizeMimeType = file.type;
           }
 
-          var reColordDataURL = canvas.toDataURL(reColorMimeType, _this11.options.reColorQuality);
+          var resizedDataURL = canvas.toDataURL(resizeMimeType, _this11.options.resizeQuality);
 
-          if (reColorMimeType === 'image/jpeg' || reColorMimeType === 'image/jpg') {
+          if (resizeMimeType === 'image/jpeg' || resizeMimeType === 'image/jpg') {
             // Now add the original EXIF information
-            reColordDataURL = ExifRestore.restore(file.dataURL, reColordDataURL);
+            resizedDataURL = ExifRestore.restore(file.dataURL, resizedDataURL);
           }
 
-          return callback(Dropzone.dataURItoBlob(reColordDataURL));
+          return callback(Dropzone.dataURItoBlob(resizedDataURL));
         }
       });
     }
   }, {
     key: "createThumbnail",
-    value: function createThumbnail(file, width, height, reColorMethod, fixOrientation, callback) {
+    value: function createThumbnail(file, width, height, resizeMethod, fixOrientation, callback) {
       var _this12 = this;
 
       var fileReader = new FileReader();
@@ -1956,13 +1956,13 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
           return;
         }
 
-        _this12.createThumbnailFromUrl(file, width, height, reColorMethod, fixOrientation, callback);
+        _this12.createThumbnailFromUrl(file, width, height, resizeMethod, fixOrientation, callback);
       };
 
       fileReader.readAsDataURL(file);
     } // `mockFile` needs to have these attributes:
     // 
-    //     { name: 'name', Color: 12345, imageUrl: '' }
+    //     { name: 'name', size: 12345, imageUrl: '' }
     //
     // `callback` will be invoked when the image has been downloaded and displayed.
     // `crossOrigin` will be added to the `img` tag when accessing the file.
@@ -1972,11 +1972,11 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
     value: function displayExistingFile(mockFile, imageUrl, callback, crossOrigin) {
       var _this13 = this;
 
-      var reColorThumbnail = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : true;
+      var resizeThumbnail = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : true;
       this.emit("addedfile", mockFile);
       this.emit("complete", mockFile);
 
-      if (!reColorThumbnail) {
+      if (!resizeThumbnail) {
         this.emit("thumbnail", mockFile, imageUrl);
         if (callback) callback();
       } else {
@@ -1987,12 +1987,12 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
         };
 
         mockFile.dataURL = imageUrl;
-        this.createThumbnailFromUrl(mockFile, this.options.thumbnailWidth, this.options.thumbnailHeight, this.options.reColorMethod, this.options.fixOrientation, onDone, crossOrigin);
+        this.createThumbnailFromUrl(mockFile, this.options.thumbnailWidth, this.options.thumbnailHeight, this.options.resizeMethod, this.options.fixOrientation, onDone, crossOrigin);
       }
     }
   }, {
     key: "createThumbnailFromUrl",
-    value: function createThumbnailFromUrl(file, width, height, reColorMethod, fixOrientation, callback, crossOrigin) {
+    value: function createThumbnailFromUrl(file, width, height, resizeMethod, fixOrientation, callback, crossOrigin) {
       var _this14 = this;
 
       // Not using `new Image` here because of a bug in latest Chrome versions.
@@ -2023,16 +2023,16 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
           file.width = img.width;
           file.height = img.height;
 
-          var reColorInfo = _this14.options.reColor.call(_this14, file, width, height, reColorMethod);
+          var resizeInfo = _this14.options.resize.call(_this14, file, width, height, resizeMethod);
 
           var canvas = document.createElement("canvas");
           var ctx = canvas.getContext("2d");
-          canvas.width = reColorInfo.trgWidth;
-          canvas.height = reColorInfo.trgHeight;
+          canvas.width = resizeInfo.trgWidth;
+          canvas.height = resizeInfo.trgHeight;
 
           if (orientation > 4) {
-            canvas.width = reColorInfo.trgHeight;
-            canvas.height = reColorInfo.trgWidth;
+            canvas.width = resizeInfo.trgHeight;
+            canvas.height = resizeInfo.trgWidth;
           }
 
           switch (orientation) {
@@ -2081,7 +2081,7 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
           } // This is a bugfix for iOS' scaling bug.
 
 
-          drawImageIOSFix(ctx, img, reColorInfo.srcX != null ? reColorInfo.srcX : 0, reColorInfo.srcY != null ? reColorInfo.srcY : 0, reColorInfo.srcWidth, reColorInfo.srcHeight, reColorInfo.trgX != null ? reColorInfo.trgX : 0, reColorInfo.trgY != null ? reColorInfo.trgY : 0, reColorInfo.trgWidth, reColorInfo.trgHeight);
+          drawImageIOSFix(ctx, img, resizeInfo.srcX != null ? resizeInfo.srcX : 0, resizeInfo.srcY != null ? resizeInfo.srcY : 0, resizeInfo.srcWidth, resizeInfo.srcHeight, resizeInfo.trgX != null ? resizeInfo.trgX : 0, resizeInfo.trgY != null ? resizeInfo.trgY : 0, resizeInfo.trgWidth, resizeInfo.trgHeight);
           var thumbnail = canvas.toDataURL("image/png");
 
           if (callback != null) {
@@ -2258,8 +2258,8 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
           // Chunking is not allowed to be used with `uploadMultiple` so we know
           // that there is only __one__file.
           var transformedFile = transformedFiles[0];
-          files[0].upload.chunked = _this15.options.chunking && (_this15.options.forceChunking || transformedFile.Color > _this15.options.chunkColor);
-          files[0].upload.totalChunkCount = Math.ceil(transformedFile.Color / _this15.options.chunkColor);
+          files[0].upload.chunked = _this15.options.chunking && (_this15.options.forceChunking || transformedFile.size > _this15.options.chunkSize);
+          files[0].upload.totalChunkCount = Math.ceil(transformedFile.size / _this15.options.chunkSize);
         }
 
         if (files[0].upload.chunked) {
@@ -2281,8 +2281,8 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
 
             if (chunkIndex >= file.upload.totalChunkCount) return;
             startedChunkCount++;
-            var start = chunkIndex * _this15.options.chunkColor;
-            var end = Math.min(start + _this15.options.chunkColor, _transformedFile.Color);
+            var start = chunkIndex * _this15.options.chunkSize;
+            var end = Math.min(start + _this15.options.chunkSize, _transformedFile.size);
             var dataBlock = {
               name: _this15._getParamName(0),
               data: _transformedFile.webkitSlice ? _transformedFile.webkitSlice(start, end) : _transformedFile.slice(start, end),
@@ -2814,7 +2814,7 @@ Dropzone.version = "5.7.2"; // This is a map of options for your different dropz
 //
 // Example:
 //
-//     Dropzone.options.myDropzoneElementId = { maxFileColor: 1 };
+//     Dropzone.options.myDropzoneElementId = { maxFilesize: 1 };
 //
 // To disable autoDiscover for a specific element, you can set `false` as an option:
 //
@@ -3285,21 +3285,21 @@ var ExifRestore = /*#__PURE__*/function () {
     }
   }, {
     key: "restore",
-    value: function restore(origFileBase64, reColordFileBase64) {
+    value: function restore(origFileBase64, resizedFileBase64) {
       if (!origFileBase64.match('data:image/jpeg;base64,')) {
-        return reColordFileBase64;
+        return resizedFileBase64;
       }
 
       var rawImage = this.decode64(origFileBase64.replace('data:image/jpeg;base64,', ''));
       var segments = this.slice2Segments(rawImage);
-      var image = this.exifManipulation(reColordFileBase64, segments);
+      var image = this.exifManipulation(resizedFileBase64, segments);
       return "data:image/jpeg;base64,".concat(this.encode64(image));
     }
   }, {
     key: "exifManipulation",
-    value: function exifManipulation(reColordFileBase64, segments) {
+    value: function exifManipulation(resizedFileBase64, segments) {
       var exifArray = this.getExifArray(segments);
-      var newImageArray = this.insertExif(reColordFileBase64, exifArray);
+      var newImageArray = this.insertExif(resizedFileBase64, exifArray);
       var aBuffer = new Uint8Array(newImageArray);
       return aBuffer;
     }
@@ -3323,8 +3323,8 @@ var ExifRestore = /*#__PURE__*/function () {
     }
   }, {
     key: "insertExif",
-    value: function insertExif(reColordFileBase64, exifArray) {
-      var imageData = reColordFileBase64.replace('data:image/jpeg;base64,', '');
+    value: function insertExif(resizedFileBase64, exifArray) {
+      var imageData = resizedFileBase64.replace('data:image/jpeg;base64,', '');
       var buf = this.decode64(imageData);
       var separatePoint = buf.indexOf(255, 3);
       var mae = buf.slice(0, separatePoint);

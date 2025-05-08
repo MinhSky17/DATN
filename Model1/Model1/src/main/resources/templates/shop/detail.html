@@ -117,10 +117,10 @@
                     <hr class="divider">
 
                     <div class="btns">
-                        <div class="Color-btn" data-toggle="modal" data-target="#modal-Color-Choose">
-                            <button class="btn btn-primary Color trans-btn">
-                                <span class="Color-text">Color</span>
-                                <span class="Color-details"></span>
+                        <div class="size-btn" data-toggle="modal" data-target="#modal-size-Choose">
+                            <button class="btn btn-primary size trans-btn">
+                                <span class="size-text">Size</span>
+                                <span class="size-details"></span>
                                 <i class="fas dropdown-arrow"></i>
                             </button>
                         </div>
@@ -294,92 +294,79 @@
     </div><!-- End .container -->
 
     <!-- Modals-->
-    <th:block th:replace="~{fragment/Color_choose_modal :: Color-choose-modal}"></th:block>
+    <th:block th:replace="~{fragment/size_choose_modal :: size-choose-modal}"></th:block>
 </main><!-- End .main -->
 
 <th:block id="js-resources">
-    <script th:src="@{/shop/js/Color-choose.js}"></script>
+    <script th:src="@{/shop/js/size-choose.js}"></script>
     <script th:src="@{/shop/js/bootstrap.bundle.min.js}"></script>
     <script th:src="@{/shop/js/plugins.min.js}"></script>
 
     <script th:inline="javascript">
+        let sizeVn = [[${sizeVn}]];
 
-        let productColors = /*[[${productColors}]]*/ [];
+        let sizeUs = [[${sizeUs}]];
+
+        let sizeCm = [[${sizeCm}]];
 
         $(function () {
             formatMoney();
             render();
-            activeColor();
-            ColorGuideRender();
+            activeSize();
+            sizeGuideRender();
         });
 
         function render() {
-            $('.Color .select-filter').empty(); // Xóa cũ
-    
-            for (let i = 0; i < productColors.length; i++) {
-                let color = productColors[i];
-                let colorChoose = `
-                    <div class="item" data-id="${color.name}">
-                        ${color.name}
-                    </div>
-                `;
-                $('.Color .select-filter').append(colorChoose);
+            for (let i = 0; i < sizeVn.length; i++) {
+                let sizeChoose = `
+            <div class="item" data-size="${sizeUs[i]}US | ${sizeVn[i]}VN | ${sizeCm[i]}CM" data-id="${sizeVn[i]}">
+                ${sizeVn[i]}
+            </div>
+            `;
+
+                $('.size .select-filter').append(sizeChoose);
+            };
+        };
+
+        function sizeGuideRender() {
+            let tr = '';
+            for (let i = 0; i < sizeVn.length; i++) {
+                tr += `
+            <tr>
+              <td>${sizeVn[i]}</td>
+              <td>${sizeUs[i]}</td>
+              <td>${sizeCm[i]}</td>
+            </tr>
+            `;
             }
+            $('.side-guide-table tbody').html(tr);
         }
 
-<!--        function activeColor() {-->
-<!--            let availableColors = [[${availableColors}]]-->
+        function activeSize() {
+            let availableSizes = [[${availableSizes}]]
 
-<!--            for (let i = 0; i < ColorVn.length; i++) {-->
-<!--                if (ColorVn[i] == availableColors[0]) {-->
-<!--                    $('.Color-details').text(ColorUs[i] + "US | " + ColorVn[i] + "VN | " + ColorCm[i] + "CM")-->
-<!--                    break;-->
-<!--                }-->
-<!--            }-->
-
-<!--            $('.Color .item').addClass('cross')-->
-<!--            $(`.item[data-Color='${$('.Color-details').text()}']`).addClass('Color-choose').removeClass('cross');-->
-
-<!--            for (let i = 0; i < availableColors.length; i++) {-->
-<!--                $(`.item[data-id='${availableColors[i]}']`).removeClass('cross');-->
-<!--            }-->
-<!--        }-->
-
-        function activeColor() {
-            // Mặc định chọn màu đầu tiên còn hàng
-            let selectedColor = productColors.find(c => c.available);
-            if (selectedColor) {
-                $('.Color-details').text(selectedColor.name);
-                $(`.item[data-id='${selectedColor.name}']`).addClass('Color-choose');
-            }
-
-            // Đánh dấu hết hàng (disable)
-            productColors.forEach(c => {
-                if (!c.available) {
-                    $(`.item[data-id='${c.name}']`).addClass('cross');
+            for (let i = 0; i < sizeVn.length; i++) {
+                if (sizeVn[i] == availableSizes[0]) {
+                    $('.size-details').text(sizeUs[i] + "US | " + sizeVn[i] + "VN | " + sizeCm[i] + "CM")
+                    break;
                 }
-            });
-        }
-
-        //Click chọn màu
-        $(document).on('click', '.Color .item', function () {
-            if ($(this).hasClass('cross')) {
-                toastr.warning("Màu này đã hết hàng.");
-                return;
             }
-    
-            $('.Color .item').removeClass('Color-choose');
-            $(this).addClass('Color-choose');
-            $('.Color-details').text($(this).data("id"));
-        });
+
+            $('.size .item').addClass('cross')
+            $(`.item[data-size='${$('.size-details').text()}']`).addClass('size-choose').removeClass('cross');
+
+            for (let i = 0; i < availableSizes.length; i++) {
+                $(`.item[data-id='${availableSizes[i]}']`).removeClass('cross');
+            }
+        }
 
         $('.buy-now').click(function() {
             if (isLogined == true) {
-                let Color = $('.Color-choose').data("id");
-                if (Color == null || Color == "") {
+                let size = $('.size-choose').data("id");
+                if (size == null || size == "") {
                     toastr.warning("Sản phẩm tạm hết hàng. Vui lòng đặt hàng sau.");
                 } else {
-                    location.href = "/dat-hang?id="+[[${product.id}]]+"&Color="+Color;
+                    location.href = "/dat-hang?id="+[[${product.id}]]+"&size="+size;
                 }
             } else {
                 toastr.warning("Vui lòng đăng nhập để đặt hàng");

@@ -1,8 +1,9 @@
 package com.model1.application.controller.admin;
 
 import com.model1.application.entity.*;
-import com.model1.application.model.request.CreateProductRequest;
 import com.model1.application.model.request.CreateColorCountRequest;
+import com.model1.application.model.request.CreateProductRequest;
+import com.model1.application.model.request.CreateSizeCountRequest;
 import com.model1.application.model.request.UpdateFeedBackRequest;
 import com.model1.application.security.CustomUserDetails;
 import com.model1.application.service.BrandService;
@@ -29,12 +30,14 @@ import java.io.*;
 import java.nio.file.Files;
 import java.util.List;
 
+import static com.model1.application.config.Contant.SIZE_VN;
+
 @Slf4j
 @Controller
 public class ProductController {
 
     private String xlsx = ".xlsx";
-    private static final int BUFFER_Color = 4096;
+    private static final int BUFFER_SIZE = 4096;
     private static final String TEMP_EXPORT_DATA_DIRECTORY = "\\resources\\reports";
     private static final String EXPORT_DATA_REPORT_FILE_NAME = "San_pham";
 
@@ -113,7 +116,14 @@ public class ProductController {
         List<Brand> brands = brandService.getListBrand();
         model.addAttribute("brands", brands);
 
-        //Lấy color của sản phẩm
+        //Lấy danh sách size
+        model.addAttribute("sizeVN", SIZE_VN);
+
+        //Lấy size của sản phẩm
+        List<ProductSize> productSizes = productService.getListSizeOfProduct(id);
+        model.addAttribute("productSizes", productSizes);
+
+        //Lấy mau của sản phẩm
         List<ProductColor> productColors = productService.getListColorOfProduct(id);
         model.addAttribute("productColors", productColors);
 
@@ -158,6 +168,13 @@ public class ProductController {
     public ResponseEntity<Object> deleteProductById(@PathVariable String id) {
         productService.deleteProductById(id);
         return ResponseEntity.ok("Xóa sản phẩm thành công!");
+    }
+
+    @PutMapping("/api/admin/products/sizes")
+    public ResponseEntity<?> updateSizeCount(@Valid @RequestBody CreateSizeCountRequest createSizeCountRequest) {
+        productService.createSizeCount(createSizeCountRequest);
+
+        return ResponseEntity.ok("Cập nhật thành công!");
     }
 
     @PutMapping("/api/admin/products/colors")
@@ -297,7 +314,7 @@ public class ProductController {
                 response.setContentType(mimeType);
                 response.setHeader("content-disposition", "attachment; filename=" + fileName + "." + type);
                 os = response.getOutputStream();
-                byte[] buffer = new byte[BUFFER_Color];
+                byte[] buffer = new byte[BUFFER_SIZE];
                 int bytesRead = -1;
                 while ((bytesRead = fis.read(buffer)) != -1) {
                     os.write(buffer, 0, bytesRead);

@@ -103,7 +103,7 @@ html.modern .header.header-nav-menu .header-nav-main {
 	}
 
 	html.modern .header.header-nav-menu .header-nav-main nav > ul li a .fa-caret-down {
-		font-Color: 0.6rem;
+		font-size: 0.6rem;
 	}
 
 	html.modern .header.header-nav-menu .header-nav-main nav > ul li a .fa-caret-down:before {
@@ -113,8 +113,8 @@ html.modern .header.header-nav-menu .header-nav-main {
 
 html.modern .header.header-nav-menu .search-toggle {
 	color: #333;
-	font-Color: 19.2px;
-	font-Color: 1.2rem;
+	font-size: 19.2px;
+	font-size: 1.2rem;
 	padding-right: 0;
 	padding-top: 15px;
 }
@@ -180,8 +180,8 @@ html.modern .dropdown-language .flag {
 
 html.modern .dropdown-language > i {
 	margin-left: 4px;
-	font-Color: 9.6px;
-	font-Color: 0.6rem;
+	font-size: 9.6px;
+	font-size: 0.6rem;
 }
 
 html.modern .dropdown-language:hover {
@@ -199,8 +199,8 @@ html.modern .dropdown-language + .dropdown-menu .dropdown-item {
 	align-items: center;
 	padding: 4px 5px;
 	color: #999;
-	font-Color: 12.8px;
-	font-Color: 0.8rem;
+	font-size: 12.8px;
+	font-size: 0.8rem;
 	background: transparent !important;
 }
 
@@ -215,8 +215,8 @@ html.modern .dropdown-language + .dropdown-menu .dropdown-item:hover:active, htm
 }
 
 html.modern .notifications > li .notification-icon {
-	font-Color: 22.4px;
-	font-Color: 1.4rem;
+	font-size: 22.4px;
+	font-size: 1.4rem;
 	box-shadow: none;
 	background: transparent;
 	width: 20px;
@@ -227,8 +227,8 @@ html.modern .notifications > li .notification-icon i {
 }
 
 html.modern .notifications > li .notification-icon i[class*="fa-"] {
-	font-Color: 16px;
-	font-Color: 1rem;
+	font-size: 16px;
+	font-size: 1rem;
 }
 
 html.modern .notifications > li .notification-icon .badge {
@@ -262,8 +262,8 @@ html.modern .notifications .notification-menu {
 }
 
 html.modern .notifications .notification-menu .notification-title {
-	font-Color: 14.4px;
-	font-Color: 0.9rem;
+	font-size: 14.4px;
+	font-size: 0.9rem;
 	font-weight: 600;
 	padding: 9px 16px;
 	border-radius: 5px 5px 0 0;
@@ -275,14 +275,14 @@ html.modern .notifications .notification-menu .notification-title .badge {
 }
 
 html.modern .notifications .notification-menu .title {
-	font-Color: 14.4px;
-	font-Color: 0.9rem;
+	font-size: 14.4px;
+	font-size: 0.9rem;
 	font-weight: 600;
 }
 
 html.modern .notifications .notification-menu .message {
-	font-Color: 12.8px;
-	font-Color: 0.8rem;
+	font-size: 12.8px;
+	font-size: 0.8rem;
 	line-height: 1.7;
 	padding: 0;
 }
@@ -299,8 +299,8 @@ html.modern .notifications .notification-menu .image.image-as-text {
 	border-radius: 100%;
 	width: 35px;
 	height: 35px;
-	font-Color: 12.8px;
-	font-Color: 0.8rem;
+	font-size: 12.8px;
+	font-size: 0.8rem;
 	color: #FFF;
 	font-weight: 600;
 	margin-right: 9px;
@@ -326,8 +326,8 @@ html.modern .userbox .profile-picture.profile-picture-as-text {
 	width: 40px;
 	height: 40px;
 	border-radius: 100%;
-	font-Color: 17.6px;
-	font-Color: 1.1rem;
+	font-size: 17.6px;
+	font-size: 1.1rem;
 	padding-right: 1px;
 }
 
@@ -336,8 +336,8 @@ html.modern .userbox .profile-info {
 }
 
 html.modern .userbox .profile-info + i {
-	font-Color: 9.6px;
-	font-Color: 0.6rem;
+	font-size: 9.6px;
+	font-size: 0.6rem;
 }
 
 html.modern .userbox.show .dropdown-menu {
@@ -354,8 +354,8 @@ html.modern .userbox.show .dropdown-menu a {
 }
 
 html.modern .userbox.show .dropdown-menu a i.bx {
-	font-Color: 22.4px;
-	font-Color: 1.4rem;
+	font-size: 22.4px;
+	font-size: 1.4rem;
 	color: #000;
 	transition: ease color 300ms;
 }
@@ -393,8 +393,8 @@ html.modern .sidebar-left .sidebar-header .sidebar-toggle {
 }
 
 html.modern .sidebar-left .sidebar-header .sidebar-toggle i {
-	font-Color: 17.6px;
-	font-Color: 1.1rem;
+	font-size: 17.6px;
+	font-size: 1.1rem;
 	color: #FFF;
 }
 
@@ -405,8 +405,8 @@ html.modern ul.nav-main {
 html.modern ul.nav-main li > a {
 	position: relative;
 	display: flex;
-	font-Color: 13.6px;
-	font-Color: 0.85rem;
+	font-size: 13.6px;
+	font-size: 0.85rem;
 }
 
 html.modern ul.nav-main li > a span.badge {
@@ -422,13 +422,13 @@ html.modern ul.nav-main li i {
 }
 
 html.modern ul.nav-main li i.bx {
-	font-Color: 21.6px;
-	font-Color: 1.35rem;
+	font-size: 21.6px;
+	font-size: 1.35rem;
 }
 
 html.modern ul.nav-main li.nav-group-label {
-	font-Color: 12px;
-	font-Color: 0.75rem;
+	font-size: 12px;
+	font-size: 0.75rem;
 	padding: 12px 25px;
 	margin-top: 20px;
 	text-overflow: ellipsis;
@@ -446,8 +446,8 @@ html.modern ul.nav-main li.nav-expanded > a {
 
 html.modern ul.nav-main li.nav-parent > a:after {
 	content: "\f054";
-	font-Color: 9.6px;
-	font-Color: 0.6rem;
+	font-size: 9.6px;
+	font-size: 0.6rem;
 	color: #57595b;
 	transition: ease color 300ms, ease transform 300ms;
 }
@@ -563,8 +563,8 @@ html.modern.sidebar-left-collapsed .nano:not(.hovered) ul.nav-main li.nav-group-
 }
 
 html.modern .sidebar-widget .widget-header h6 {
-	font-Color: 12px;
-	font-Color: 0.75rem;
+	font-size: 12px;
+	font-size: 0.75rem;
 	color: #777;
 	font-weight: 400;
 }

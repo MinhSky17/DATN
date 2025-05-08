@@ -1,6 +1,7 @@
 package com.model1.application.repository;
 
 import com.model1.application.entity.ProductColor;
+import com.model1.application.entity.ProductSize;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -14,13 +15,14 @@ public interface ProductColorRepository extends JpaRepository<ProductColor,Long>
 
     //Lấy color của sản phẩm
     @Query(nativeQuery = true,value = "SELECT ps.code FROM product_color ps WHERE ps.product_id = ?1 AND ps.quantity > 0")
-    List<Integer> findAllColorOfProduct(String id);
+    List<String> findAllColorOfProduct(String id);
 
+    //Lay ds cua san pham
     List<ProductColor> findByProductId(String id);
 
     //Kiểm trả color sản phẩm
-    @Query(value = "SELECT * FROM product_color WHERE product_id = ?1 AND code = ?2 AND quantity >0", nativeQuery = true)
-    ProductColor checkProductAndColorAvailable(String id, String code);
+    @Query(value = "SELECT * FROM product_color WHERE product_id = ?1 AND code = ?2 AND quantity >0 ", nativeQuery = true)
+    ProductColor checkProductAndColorAvailable(String productId, String code);
 
     //Trừ 1 sản phẩm theo color
     @Transactional

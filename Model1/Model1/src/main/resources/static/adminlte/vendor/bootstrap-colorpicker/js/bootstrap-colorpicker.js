@@ -1131,12 +1131,12 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var sassVars = {
-  'bar_Color_short': 16,
+  'bar_size_short': 16,
   'base_margin': 6,
   'columns': 6
 };
 
-var sliderColor = sassVars.bar_Color_short * sassVars.columns + sassVars.base_margin * (sassVars.columns - 1);
+var sliderSize = sassVars.bar_size_short * sassVars.columns + sassVars.base_margin * (sassVars.columns - 1);
 
 /**
  * Colorpicker default options
@@ -1321,15 +1321,15 @@ exports.default = {
   sliders: {
     saturation: {
       selector: '.colorpicker-saturation',
-      maxLeft: sliderColor,
-      maxTop: sliderColor,
+      maxLeft: sliderSize,
+      maxTop: sliderSize,
       callLeft: 'setSaturationRatio',
       callTop: 'setValueRatio'
     },
     hue: {
       selector: '.colorpicker-hue',
       maxLeft: 0,
-      maxTop: sliderColor,
+      maxTop: sliderSize,
       callLeft: false,
       callTop: 'setHueRatio'
     },
@@ -1337,7 +1337,7 @@ exports.default = {
       selector: '.colorpicker-alpha',
       childSelector: '.colorpicker-alpha-color',
       maxLeft: 0,
-      maxTop: sliderColor,
+      maxTop: sliderSize,
       callLeft: false,
       callTop: 'setAlphaRatio'
     }
@@ -1349,14 +1349,14 @@ exports.default = {
   slidersHorz: {
     saturation: {
       selector: '.colorpicker-saturation',
-      maxLeft: sliderColor,
-      maxTop: sliderColor,
+      maxLeft: sliderSize,
+      maxTop: sliderSize,
       callLeft: 'setSaturationRatio',
       callTop: 'setValueRatio'
     },
     hue: {
       selector: '.colorpicker-hue',
-      maxLeft: sliderColor,
+      maxLeft: sliderSize,
       maxTop: 0,
       callLeft: 'setHueRatio',
       callTop: false
@@ -1364,7 +1364,7 @@ exports.default = {
     alpha: {
       selector: '.colorpicker-alpha',
       childSelector: '.colorpicker-alpha-color',
-      maxLeft: sliderColor,
+      maxLeft: sliderSize,
       maxTop: 0,
       callLeft: 'setAlphaRatio',
       callTop: false
@@ -4087,8 +4087,8 @@ var PopupHandler = function () {
         });
       }
 
-      // reposition popup on window reColor
-      (0, _jquery2.default)(this.root).on('reColor.colorpicker', _jquery2.default.proxy(this.reposition, this));
+      // reposition popup on window resize
+      (0, _jquery2.default)(this.root).on('resize.colorpicker', _jquery2.default.proxy(this.reposition, this));
     }
 
     /**
@@ -4124,7 +4124,7 @@ var PopupHandler = function () {
         this.popoverTarget.popover('dispose');
       }
 
-      (0, _jquery2.default)(this.root).off('reColor.colorpicker', _jquery2.default.proxy(this.reposition, this));
+      (0, _jquery2.default)(this.root).off('resize.colorpicker', _jquery2.default.proxy(this.reposition, this));
       (0, _jquery2.default)(this.root.document).off('mousedown.colorpicker touchstart.colorpicker', _jquery2.default.proxy(this.hide, this));
       (0, _jquery2.default)(this.root.document).off('mousedown.colorpicker touchstart.colorpicker', _jquery2.default.proxy(this.onClickingInside, this));
     }
@@ -4235,7 +4235,7 @@ var PopupHandler = function () {
 
       // If it's a popover, add event to the document to hide the picker when clicking outside of it
       if (this.isPopover) {
-        (0, _jquery2.default)(this.root).on('reColor.colorpicker', _jquery2.default.proxy(this.reposition, this));
+        (0, _jquery2.default)(this.root).on('resize.colorpicker', _jquery2.default.proxy(this.reposition, this));
       }
 
       // add visible class before popover is shown
@@ -4318,7 +4318,7 @@ var PopupHandler = function () {
       cp.picker.addClass('colorpicker-hidden').removeClass('colorpicker-visible');
 
       // Unbind window and document events, since there is no need to keep them while the popup is hidden
-      (0, _jquery2.default)(this.root).off('reColor.colorpicker', _jquery2.default.proxy(this.reposition, this));
+      (0, _jquery2.default)(this.root).off('resize.colorpicker', _jquery2.default.proxy(this.reposition, this));
       (0, _jquery2.default)(this.root.document).off('mousedown.colorpicker touchstart.colorpicker', _jquery2.default.proxy(this.hide, this));
       (0, _jquery2.default)(this.root.document).off('mousedown.colorpicker touchstart.colorpicker', _jquery2.default.proxy(this.onClickingInside, this));
 

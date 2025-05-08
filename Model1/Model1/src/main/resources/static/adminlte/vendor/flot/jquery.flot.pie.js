@@ -18,8 +18,8 @@ The plugin supports these options:
 	series: {
 		pie: {
 			show: true/false
-			radius: 0-1 for percentage of fullColor, or a specified pixel length, or 'auto'
-			innerRadius: 0-1 for percentage of fullColor or a specified pixel length, for creating a donut effect
+			radius: 0-1 for percentage of fullsize, or a specified pixel length, or 'auto'
+			innerRadius: 0-1 for percentage of fullsize or a specified pixel length, for creating a donut effect
 			startAngle: 0-2 factor of PI used for starting angle (in radians) i.e 3/2 starts at the top, 0 and 2 have the same result
 			tilt: 0-1 for percentage to tilt the pie, where 1 is no tilt, and 0 is completely flat (nothing will show)
 			offset: {
@@ -33,7 +33,7 @@ The plugin supports these options:
 			label: {
 				show: true/false, or 'auto'
 				formatter:  a user-defined function that modifies the text/style of the label text
-				radius: 0-1 for percentage of fullColor, or a specified pixel length
+				radius: 0-1 for percentage of fullsize, or a specified pixel length
 				background: {
 					color: any hexidecimal color value (other formats may or may not work, so best to stick with something like '#000')
 					opacity: 0-1
@@ -788,7 +788,7 @@ More detail and specific examples can be found in the included HTML file.
 				label: {
 					show: "auto",
 					formatter: function(label, slice) {
-						return "<div style='font-Color:x-small;text-align:center;padding:2px;color:" + slice.color + ";'>" + label + "<br/>" + Math.round(slice.percent) + "%</div>";
+						return "<div style='font-size:x-small;text-align:center;padding:2px;color:" + slice.color + ";'>" + label + "<br/>" + Math.round(slice.percent) + "%</div>";
 					},	// formatter function
 					radius: 1,	// radius at which to place the labels (based on full calculated radius if <=1, or hard pixel value)
 					background: {

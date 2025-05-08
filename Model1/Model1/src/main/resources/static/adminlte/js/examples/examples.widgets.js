@@ -23,7 +23,7 @@ Theme Version: 	3.1.0
 					points: {
 						show: true
 					},
-					shadowColor: 0
+					shadowSize: 0
 				},
 				grid: {
 					hoverable: true,
@@ -61,7 +61,7 @@ Theme Version: 	3.1.0
 		*/
 		if( $('#morrisLine').get(0) ){
 			Morris.Line({
-				reColor: true,
+				resize: true,
 				element: 'morrisLine',
 				data: morrisLineData,
 				grid: false,

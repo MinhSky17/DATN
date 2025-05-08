@@ -42,14 +42,14 @@ import java.util.List;
                         )
                 ),
                 @SqlResultSetMapping(
-                        name = "productInfoAndAvailableColor",
+                        name = "productInfoAndAvailableSize",
                         classes = @ConstructorResult(
                                 targetClass = ShortProductInfoDTO.class,
                                 columns = {
                                         @ColumnResult(name = "id", type = String.class),
                                         @ColumnResult(name = "name", type = String.class),
                                         @ColumnResult(name = "price", type = Long.class),
-                                        @ColumnResult(name = "Colors", type = String.class),
+                                        @ColumnResult(name = "sizes", type = String.class),
 
                                 }
                         )
@@ -108,14 +108,14 @@ import java.util.List;
         query = "SELECT p.id, p.name FROM product p"
 )
 @NamedNativeQuery(
-        name = "getAllByColorAvailable",
-        resultSetMapping = "productInfoAndAvailableColor",
+        name = "getAllBySizeAvailable",
+        resultSetMapping = "productInfoAndAvailableSize",
         query = "SELECT p.id, p.name, p.sale_price as price, " +
-                "(SELECT JSON_ARRAYAGG(ps.Color) FROM product_Color ps WHERE ps.product_id = p.id AND ps.quantity > 0) AS Colors " +
+                "(SELECT JSON_ARRAYAGG(ps.size) FROM product_size ps WHERE ps.product_id = p.id AND ps.quantity > 0) AS sizes " +
                 "FROM product p"
 )
 @NamedNativeQuery(
-        name = "searchProductByColor",
+        name = "searchProductBySize",
         resultSetMapping = "productInfoDto",
         query = "SELECT DISTINCT d.* " +
                 "FROM (" +
@@ -125,14 +125,14 @@ import java.util.List;
                 "ON product.id = product_category.product_id " +
                 "WHERE product.status = 1 AND product.brand_id IN (?1) AND product_category.category_id IN (?2) " +
                 "AND product.price > ?3 AND product.price < ?4) as d " +
-                "INNER JOIN product_Color " +
-                "ON product_Color.product_id = d.id " +
-                "WHERE product_Color.Color IN (?5) " +
+                "INNER JOIN product_size " +
+                "ON product_size.product_id = d.id " +
+                "WHERE product_size.size IN (?5) " +
                 "LIMIT ?6 "+
                 "OFFSET ?7"
 )
 @NamedNativeQuery(
-        name = "searchProductAllColor",
+        name = "searchProductAllSize",
         resultSetMapping = "productInfoDto",
         query = "SELECT DISTINCT product.id, product.name, product.slug, product.sale_price as price, product.product_view as views, product.total_sold, product.images ->> '$[0]' AS images " +
                 "FROM product " +

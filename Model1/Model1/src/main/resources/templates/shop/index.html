@@ -10,48 +10,96 @@
                                                                     )}">
 <head>
     <meta charset="UTF-8">
-    <title>Shop Shoes</title>
+    <title>Coshine</title>
     <th:block id="css-resources">
 
     </th:block>
 </head>
 <body>
 <main class="main" id="main-content">
-    <div class="home-slider owl-carousel owl-theme owl-carousel-lazy show-nav-hover nav-big mb-2 text-uppercase" data-owl-options="{
-				'loop': false
-			}">
-
-        <!-- Banner -->
+    <div class="home-slider owl-carousel owl-theme owl-carousel-lazy show-nav-hover nav-big mb-2 text-uppercase" 
+         data-owl-options="{ 
+            'loop': true,
+            'margin': 0,
+            'nav': true,
+            'dots': true,
+            'autoplay': true,
+            'autoplayTimeout': 4000,
+            'autoplayHoverPause': true,
+            'smartSpeed': 800,
+            'responsive': {
+                '0': {
+                    'items': 1
+                },
+                '768': {
+                    'items': 1
+                }
+            }
+         }">
         <div class="home-slide home-slide1 banner">
-            <img class="owl-lazy slide-bg" th:src="@{/shop/images/slider/nike-just-do-it.jpg}" data-src="shop/images/slider/nike-just-do-it.jpg" alt="slider image">
-            <div class="container">
-                <div class="banner-layer banner-layer-middle">
-                    <h4 class="text-transform-none m-b-3">Find the Boundaries. Push Through!</h4>
-                    <h2 class="text-transform-none mb-0">Summer Sale</h2>
-                    <h3 class="m-b-3">70% Off</h3>
-                    <h5 class="d-inline-block mb-0">
-                        Starting At
-                        <b class="coupon-sale-text ml-4 mr-1 text-white bg-secondary align-middle">$<em class="align-text-top">199</em>99</b>
-                    </h5>
-                </div><!-- End .banner-layer -->
-            </div>
-        </div><!-- End .home-slide -->
+            <img class="owl-lazy slide-bg" th:src="@{/shop/images/slider/banner1.jpg}" 
+                 data-src="shop/images/slider/banner1.jpg" 
+                 alt="slider image"
+                 style="max-height: 500px; object-fit: cover; width: 100%;">           
+        </div>
 
         <div class="home-slide home-slide2 banner banner-md-vw">
-            <img class="owl-lazy slide-bg" th:src="@{/shop/images/slider/nike-just-do-it (1).jpg}" data-src="shop/images/slider/nike-just-do-it (1).jpg" alt="slider image">
-            <div class="container">
-                <div class="banner-layer banner-layer-middle d-flex justify-content-center">
-                    <div class="mx-auto">
-                        <h4 class="m-b-1">Extra</h4>
-                        <h3 class="m-b-2">20% off</h3>
-                        <h3 class="mb-2 heading-border">Accessories</h3>
-                        <h2 class="text-transform-none m-b-4">Summer Sale</h2>
-                        <a href="category.html" class="btn btn-block btn-dark">Shop All Sale</a>
-                    </div>
-                </div><!-- End .banner-layer -->
-            </div>
-        </div><!-- End .home-slide -->
+            <img class="owl-lazy slide-bg" th:src="@{/shop/images/slider/banner2.jpg}" 
+                 data-src="shop/images/slider/banner2.jpg" 
+                 alt="slider image"
+                 style="max-height: 500px; object-fit: cover; width: 100%;">
+        </div>
+
+        <div class="home-slide home-slide2 banner banner-md-vw">
+            <img class="owl-lazy slide-bg" th:src="@{/shop/images/slider/banner3.jpg}" 
+                 data-src="shop/images/slider/banner3.jpg" 
+                 alt="slider image"
+                 style="max-height: 500px; object-fit: cover; width: 100%;">
+        </div>
     </div><!-- End .home-slider -->
+
+
+<!--    <div class="container">-->
+<!--        <div class="info-boxes-slider owl-carousel owl-theme mb-2" data-owl-options="{-->
+<!--					'dots': false,-->
+<!--					'loop': false,-->
+<!--					'responsive': {-->
+<!--						'576': {-->
+<!--							'items': 2-->
+<!--						},-->
+<!--						'992': {-->
+<!--							'items': 3-->
+<!--						}-->
+<!--					}-->
+<!--				}">-->
+<!--            <div class="info-box info-box-icon-left">-->
+<!--                <i class="icon-shipping"></i>-->
+
+<!--                <div class="info-box-content">-->
+<!--                    <h4>FREE SHIPPING &amp; RETURN</h4>-->
+<!--                    <p class="text-body">Free shipping on all orders over $99.</p>-->
+<!--                </div>&lt;!&ndash; End .info-box-content &ndash;&gt;-->
+<!--            </div>&lt;!&ndash; End .info-box &ndash;&gt;-->
+
+<!--            <div class="info-box info-box-icon-left">-->
+<!--                <i class="icon-money"></i>-->
+
+<!--                <div class="info-box-content">-->
+<!--                    <h4>MONEY BACK GUARANTEE</h4>-->
+<!--                    <p class="text-body">100% money back guarantee</p>-->
+<!--                </div>&lt;!&ndash; End .info-box-content &ndash;&gt;-->
+<!--            </div>&lt;!&ndash; End .info-box &ndash;&gt;-->
+
+<!--            <div class="info-box info-box-icon-left">-->
+<!--                <i class="icon-support"></i>-->
+
+<!--                <div class="info-box-content">-->
+<!--                    <h4>ONLINE SUPPORT 24/7</h4>-->
+<!--                    <p class="text-body">Lorem ipsum dolor sit amet.</p>-->
+<!--                </div>&lt;!&ndash; End .info-box-content &ndash;&gt;-->
+<!--            </div>&lt;!&ndash; End .info-box &ndash;&gt;-->
+<!--        </div>&lt;!&ndash; End .info-boxes-slider &ndash;&gt;-->
+<!--    </div>&lt;!&ndash; End .container &ndash;&gt;-->
 
     <section class="featured-products-section">
         <div class="container">
@@ -193,6 +241,50 @@
         </div>
     </section>
 
+<!--    <section class="feature-boxes-container">-->
+<!--        <div class="container">-->
+<!--            <div class="row">-->
+<!--                <div class="col-md-4">-->
+<!--                    <div class="feature-box px-sm-5 feature-box-simple text-center">-->
+<!--                        <i class="icon-earphones-alt"></i>-->
+
+<!--                        <div class="feature-box-content">-->
+<!--                            <h3 class="m-b-1">Customer Support</h3>-->
+<!--                            <h5 class="m-b-3">You Won't Be Alone</h5>-->
+
+<!--                            <p>We really care about you and your website as much as you do. Purchasing Porto or any other theme from us you get 100% free support.</p>-->
+<!--                        </div>&lt;!&ndash; End .feature-box-content &ndash;&gt;-->
+<!--                    </div>&lt;!&ndash; End .feature-box &ndash;&gt;-->
+<!--                </div>&lt;!&ndash; End .col-md-4 &ndash;&gt;-->
+
+<!--                <div class="col-md-4">-->
+<!--                    <div class="feature-box px-sm-5 feature-box-simple text-center">-->
+<!--                        <i class="icon-credit-card"></i>-->
+
+<!--                        <div class="feature-box-content">-->
+<!--                            <h3 class="m-b-1">Fully Customizable</h3>-->
+<!--                            <h5 class="m-b-3">Tons Of Options</h5>-->
+
+<!--                            <p>With Porto you can customize the layout, colors and styles within only a few minutes. Start creating an amazing website right now!</p>-->
+<!--                        </div>&lt;!&ndash; End .feature-box-content &ndash;&gt;-->
+<!--                    </div>&lt;!&ndash; End .feature-box &ndash;&gt;-->
+<!--                </div>&lt;!&ndash; End .col-md-4 &ndash;&gt;-->
+
+<!--                <div class="col-md-4">-->
+<!--                    <div class="feature-box px-sm-5 feature-box-simple text-center">-->
+<!--                        <i class="icon-action-undo"></i>-->
+
+<!--                        <div class="feature-box-content">-->
+<!--                            <h3 class="m-b-1">Powerful Admin</h3>-->
+<!--                            <h5 class="m-b-3">Made To Help You</h5>-->
+
+<!--                            <p>Porto has very powerful admin features to help customer to build their own shop in minutes without any special skills in web development.</p>-->
+<!--                        </div>&lt;!&ndash; End .feature-box-content &ndash;&gt;-->
+<!--                    </div>&lt;!&ndash; End .feature-box &ndash;&gt;-->
+<!--                </div>&lt;!&ndash; End .col-md-4 &ndash;&gt;-->
+<!--            </div>&lt;!&ndash; End .row &ndash;&gt;-->
+<!--        </div>&lt;!&ndash; End .container&ndash;&gt;-->
+<!--    </section>&lt;!&ndash; End .feature-boxes-container &ndash;&gt;-->
 
     <section class="blog-section">
         <div class="container">
@@ -220,15 +312,16 @@
                         <a th:href="@{/tin-tuc/{slug}/{id}(id=${post.id},slug=${post.slug})}">
                             <img th:src="@{${post.thumbnail}}" alt="Post" width="225" height="280">
                         </a>
+                        <div class="post-date">
+                            <span th:text="${#dates.format(post.publishedAt, 'MM yyyy')}"></span></p>
+                        </div>
                     </div><!-- End .post-media -->
 
                     <div class="post-body">
                         <h2 class="post-title">
                             <a th:href="@{/tin-tuc/{slug}/{id}(id=${post.id},slug=${post.slug})}" th:text="${post.title}"></a>
                         </h2>
-<!--                        <div class="post-content">-->
-<!--                            <p th:utext="${post.content}"></p>-->
-<!--                        </div> -->
+                        <!-- End .post-content -->
 <!--                        <a href="single.html" class="post-comment">0 Comments</a>-->
                     </div><!-- End .post-body -->
                 </article><!-- End .post -->

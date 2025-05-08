@@ -490,7 +490,7 @@
 	function processJsonpRequest( requestSettings, mockHandler, origSettings ) {
 		logger.debug( mockHandler, ['Performing JSONP request', mockHandler, requestSettings, origSettings] );
 
-		// SyntheColor the mock request for adding a script tag
+		// Synthesize the mock request for adding a script tag
 		var callbackContext = origSettings && origSettings.context || requestSettings,
 			// If we are running under jQuery 1.5+, return a deferred object
 			newMock = ($.Deferred) ? (new $.Deferred()) : null;

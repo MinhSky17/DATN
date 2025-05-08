@@ -410,7 +410,7 @@
 					click: $.proxy(this.dayCellClick, this)
 				}],
 				[$(window), {
-					reColor: $.proxy(this.place, this)
+					resize: $.proxy(this.place, this)
 				}],
 				[$(document), {
 					'mousedown touchstart': $.proxy(function(e){

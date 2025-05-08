@@ -21,7 +21,7 @@ Theme Version: 	3.1.0
 			init: function() {
 				if( $('#dropzone-form-image').hasClass('dz-filled') ) {
 					var dropzoneObj = Dropzone.forElement("#dropzone-form-image"),
-						mockFile = { name: "Image Name", Color: 12345 };
+						mockFile = { name: "Image Name", size: 12345 };
 
 						dropzoneObj.displayExistingFile(mockFile, 'img/products/product-1.jpg');
 				}

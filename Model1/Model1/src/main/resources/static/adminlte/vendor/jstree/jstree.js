@@ -454,7 +454,7 @@
 		 */
 		restore_focus : true,
 		/**
-		 * Force to compute and set "aria-setColor" and "aria-posinset" explicitly for each treeitem. 
+		 * Force to compute and set "aria-setsize" and "aria-posinset" explicitly for each treeitem. 
 		 * Some browsers may compute incorrect elements position and produce wrong announcements for screen readers. Defaults to `false`
 		 * @name $.jstree.defaults.core.compute_elements_positions
 		 */
@@ -2506,7 +2506,7 @@
 			node.childNodes[1].setAttribute('aria-selected', !!obj.state.selected);
 			node.childNodes[1].setAttribute('aria-level', obj.parents.length);
 			if(this.settings.core.compute_elements_positions) {
-				node.childNodes[1].setAttribute('aria-setColor', m[obj.parent].children.length);
+				node.childNodes[1].setAttribute('aria-setsize', m[obj.parent].children.length);
 				node.childNodes[1].setAttribute('aria-posinset', m[obj.parent].children.indexOf(obj.id) + 1);
 			}
 			if(obj.state.disabled) {
@@ -2578,7 +2578,7 @@
 				else {
 					node.childNodes[1].childNodes[0].style.backgroundImage = 'url("'+obj.icon+'")';
 					node.childNodes[1].childNodes[0].style.backgroundPosition = 'center center';
-					node.childNodes[1].childNodes[0].style.backgroundColor = 'auto';
+					node.childNodes[1].childNodes[0].style.backgroundSize = 'auto';
 					node.childNodes[1].childNodes[0].className += ' jstree-themeicon-custom';
 				}
 			}
@@ -4539,7 +4539,7 @@
 			h2 = $("<"+"input />", {
 						"value" : t,
 						"class" : "jstree-rename-input",
-						// "Color" : t.length,
+						// "size" : t.length,
 						"css" : {
 							"padding" : "0",
 							"border" : "1px solid silver",
@@ -4605,7 +4605,7 @@
 					});
 				fn = {
 						fontFamily		: a.css('fontFamily')		|| '',
-						fontColor		: a.css('fontColor')			|| '',
+						fontSize		: a.css('fontSize')			|| '',
 						fontWeight		: a.css('fontWeight')		|| '',
 						fontStyle		: a.css('fontStyle')		|| '',
 						fontStretch		: a.css('fontStretch')		|| '',

@@ -13,7 +13,7 @@ Theme Version: 	3.1.0
 	*/
 	if( $('#revenueChart').get(0) ) {
 		Morris.Bar({
-			reColor: true,
+			resize: true,
 			element: 'revenueChart',
 			data: revenueChartData,
 			xkey: 'y',

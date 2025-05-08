@@ -58,7 +58,7 @@ Theme Version: 	3.1.0
 				});
 			}
 
-			$(window).trigger('reColor');
+			$(window).trigger('resize');
 			$(window).trigger('ecommerce.sidebar.overlay.show');
 		});
 			

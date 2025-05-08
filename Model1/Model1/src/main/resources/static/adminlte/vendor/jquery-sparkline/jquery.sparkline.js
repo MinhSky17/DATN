@@ -202,7 +202,7 @@
 
 /*jslint regexp: true, browser: true, jquery: true, white: true, nomen: false, plusplus: false, maxerr: 500, indent: 4 */
 
-(function(document, Math, undefined) { // performance/minified-Color optimization
+(function(document, Math, undefined) { // performance/minified-size optimization
 (function(factory) {
     if(typeof define === 'function' && define.amd) {
         define(['jquery'], factory);
@@ -539,14 +539,14 @@
         return !isNaN(parseFloat(num)) && isFinite(num);
     };
 
-    formatNumber = function (num, prec, groupColor, groupsep, decsep) {
+    formatNumber = function (num, prec, groupsize, groupsep, decsep) {
         var p, i;
         num = (prec === false ? parseFloat(num).toString() : num.toFixed(prec)).split('');
         p = (p = $.inArray('.', num)) < 0 ? num.length : p;
         if (p < num.length) {
             num[p] = decsep;
         }
-        for (i = p - groupColor; i > 0; i -= groupColor) {
+        for (i = p - groupsize; i > 0; i -= groupsize) {
             num.splice(i, 0, groupsep);
         }
         return num.join('');
@@ -832,24 +832,24 @@
 
 
     Tooltip = createClass({
-        ColorStyle: 'position: static !important;' +
+        sizeStyle: 'position: static !important;' +
             'display: block !important;' +
             'visibility: hidden !important;' +
             'float: left !important;',
 
         init: function (options) {
             var tooltipClassname = options.get('tooltipClassname', 'jqstooltip'),
-                ColortipStyle = this.ColorStyle,
+                sizetipStyle = this.sizeStyle,
                 offset;
             this.container = options.get('tooltipContainer') || document.body;
             this.tooltipOffsetX = options.get('tooltipOffsetX', 10);
             this.tooltipOffsetY = options.get('tooltipOffsetY', 12);
             // remove any previous lingering tooltip
-            $('#jqsColortip').remove();
+            $('#jqssizetip').remove();
             $('#jqstooltip').remove();
-            this.Colortip = $('<div/>', {
-                id: 'jqsColortip',
-                style: ColortipStyle,
+            this.sizetip = $('<div/>', {
+                id: 'jqssizetip',
+                style: sizetipStyle,
                 'class': tooltipClassname
             });
             this.tooltip = $('<div/>', {
@@ -861,8 +861,8 @@
             this.offsetLeft = offset.left;
             this.offsetTop = offset.top;
             this.hidden = true;
-            $(window).unbind('reColor.jqs scroll.jqs');
-            $(window).bind('reColor.jqs scroll.jqs', $.proxy(this.updateWindowDims, this));
+            $(window).unbind('resize.jqs scroll.jqs');
+            $(window).bind('resize.jqs scroll.jqs', $.proxy(this.updateWindowDims, this));
             this.updateWindowDims();
         },
 
@@ -873,11 +873,11 @@
             this.updatePosition();
         },
 
-        getColor: function (content) {
-            this.Colortip.html(content).appendTo(this.container);
-            this.width = this.Colortip.width() + 1;
-            this.height = this.Colortip.height();
-            this.Colortip.remove();
+        getSize: function (content) {
+            this.sizetip.html(content).appendTo(this.container);
+            this.width = this.sizetip.width() + 1;
+            this.height = this.sizetip.height();
+            this.sizetip.remove();
         },
 
         setContent: function (content) {
@@ -886,7 +886,7 @@
                 this.hidden = true;
                 return;
             }
-            this.getColor(content);
+            this.getSize(content);
             this.tooltip.html(content)
                 .css({
                     'width': this.width,
@@ -935,9 +935,9 @@
 
         remove: function () {
             this.tooltip.remove();
-            this.Colortip.remove();
-            this.Colortip = this.tooltip = undefined;
-            $(window).unbind('reColor.jqs scroll.jqs');
+            this.sizetip.remove();
+            this.sizetip = this.tooltip = undefined;
+            $(window).unbind('resize.jqs scroll.jqs');
         }
     });
 
@@ -1557,7 +1557,7 @@
                 spotRadius = 0;
             }
             if (spotRadius) {
-                // adjust the canvas Color as required so that spots will fit
+                // adjust the canvas size as required so that spots will fit
                 hlSpotsEnabled = options.get('highlightSpotColor') &&  !options.get('disableInteraction');
                 if (hlSpotsEnabled || options.get('minSpotColor') || (options.get('spotColor') && yvalues[yvallast] === this.miny)) {
                     canvasHeight -= Math.ceil(spotRadius);
@@ -1823,7 +1823,7 @@
             range = stacked ? (Math.max.apply(Math, stackRanges) + Math.max.apply(Math, stackRangesNeg)) : max - min;
 
             // as we plot zero/min values a single pixel line, we add a pixel to all other
-            // values - Reduce the effective canvas Color to suit
+            // values - Reduce the effective canvas size to suit
             this.canvasHeightEf = (zeroAxis && min < 0) ? this.canvasHeight - 2 : this.canvasHeight - 1;
 
             if (min < xaxisOffset) {
@@ -2429,7 +2429,7 @@
                 maxValue = options.get('chartRangeMax') === undefined ? Math.max.apply(Math, values) : options.get('chartRangeMax'),
                 canvasLeft = 0,
                 lwhisker, loutlier, iqr, q1, q2, q3, rwhisker, routlier, i,
-                Color, unitColor;
+                size, unitSize;
 
             if (!box._super.render.call(this)) {
                 return;
@@ -2480,20 +2480,20 @@
             this.loutlier = loutlier;
             this.routlier = routlier;
 
-            unitColor = canvasWidth / (maxValue - minValue + 1);
+            unitSize = canvasWidth / (maxValue - minValue + 1);
             if (options.get('showOutliers')) {
                 canvasLeft = Math.ceil(options.get('spotRadius'));
                 canvasWidth -= 2 * Math.ceil(options.get('spotRadius'));
-                unitColor = canvasWidth / (maxValue - minValue + 1);
+                unitSize = canvasWidth / (maxValue - minValue + 1);
                 if (loutlier < lwhisker) {
-                    target.drawCircle((loutlier - minValue) * unitColor + canvasLeft,
+                    target.drawCircle((loutlier - minValue) * unitSize + canvasLeft,
                         canvasHeight / 2,
                         options.get('spotRadius'),
                         options.get('outlierLineColor'),
                         options.get('outlierFillColor')).append();
                 }
                 if (routlier > rwhisker) {
-                    target.drawCircle((routlier - minValue) * unitColor + canvasLeft,
+                    target.drawCircle((routlier - minValue) * unitSize + canvasLeft,
                         canvasHeight / 2,
                         options.get('spotRadius'),
                         options.get('outlierLineColor'),
@@ -2503,56 +2503,56 @@
 
             // box
             target.drawRect(
-                Math.round((q1 - minValue) * unitColor + canvasLeft),
+                Math.round((q1 - minValue) * unitSize + canvasLeft),
                 Math.round(canvasHeight * 0.1),
-                Math.round((q3 - q1) * unitColor),
+                Math.round((q3 - q1) * unitSize),
                 Math.round(canvasHeight * 0.8),
                 options.get('boxLineColor'),
                 options.get('boxFillColor')).append();
             // left whisker
             target.drawLine(
-                Math.round((lwhisker - minValue) * unitColor + canvasLeft),
+                Math.round((lwhisker - minValue) * unitSize + canvasLeft),
                 Math.round(canvasHeight / 2),
-                Math.round((q1 - minValue) * unitColor + canvasLeft),
+                Math.round((q1 - minValue) * unitSize + canvasLeft),
                 Math.round(canvasHeight / 2),
                 options.get('lineColor')).append();
             target.drawLine(
-                Math.round((lwhisker - minValue) * unitColor + canvasLeft),
+                Math.round((lwhisker - minValue) * unitSize + canvasLeft),
                 Math.round(canvasHeight / 4),
-                Math.round((lwhisker - minValue) * unitColor + canvasLeft),
+                Math.round((lwhisker - minValue) * unitSize + canvasLeft),
                 Math.round(canvasHeight - canvasHeight / 4),
                 options.get('whiskerColor')).append();
             // right whisker
-            target.drawLine(Math.round((rwhisker - minValue) * unitColor + canvasLeft),
+            target.drawLine(Math.round((rwhisker - minValue) * unitSize + canvasLeft),
                 Math.round(canvasHeight / 2),
-                Math.round((q3 - minValue) * unitColor + canvasLeft),
+                Math.round((q3 - minValue) * unitSize + canvasLeft),
                 Math.round(canvasHeight / 2),
                 options.get('lineColor')).append();
             target.drawLine(
-                Math.round((rwhisker - minValue) * unitColor + canvasLeft),
+                Math.round((rwhisker - minValue) * unitSize + canvasLeft),
                 Math.round(canvasHeight / 4),
-                Math.round((rwhisker - minValue) * unitColor + canvasLeft),
+                Math.round((rwhisker - minValue) * unitSize + canvasLeft),
                 Math.round(canvasHeight - canvasHeight / 4),
                 options.get('whiskerColor')).append();
             // median line
             target.drawLine(
-                Math.round((q2 - minValue) * unitColor + canvasLeft),
+                Math.round((q2 - minValue) * unitSize + canvasLeft),
                 Math.round(canvasHeight * 0.1),
-                Math.round((q2 - minValue) * unitColor + canvasLeft),
+                Math.round((q2 - minValue) * unitSize + canvasLeft),
                 Math.round(canvasHeight * 0.9),
                 options.get('medianColor')).append();
             if (options.get('target')) {
-                Color = Math.ceil(options.get('spotRadius'));
+                size = Math.ceil(options.get('spotRadius'));
                 target.drawLine(
-                    Math.round((options.get('target') - minValue) * unitColor + canvasLeft),
-                    Math.round((canvasHeight / 2) - Color),
-                    Math.round((options.get('target') - minValue) * unitColor + canvasLeft),
-                    Math.round((canvasHeight / 2) + Color),
+                    Math.round((options.get('target') - minValue) * unitSize + canvasLeft),
+                    Math.round((canvasHeight / 2) - size),
+                    Math.round((options.get('target') - minValue) * unitSize + canvasLeft),
+                    Math.round((canvasHeight / 2) + size),
                     options.get('targetColor')).append();
                 target.drawLine(
-                    Math.round((options.get('target') - minValue) * unitColor + canvasLeft - Color),
+                    Math.round((options.get('target') - minValue) * unitSize + canvasLeft - size),
                     Math.round(canvasHeight / 2),
-                    Math.round((options.get('target') - minValue) * unitColor + canvasLeft + Color),
+                    Math.round((options.get('target') - minValue) * unitSize + canvasLeft + size),
                     Math.round(canvasHeight / 2),
                     options.get('targetColor')).append();
             }
@@ -2914,7 +2914,7 @@
             this._calculatePixelDims(width, height, this.canvas);
             this.canvas.width = this.pixelWidth;
             this.canvas.height = this.pixelHeight;
-            groupel = '<v:group coordorigin="0 0" coordColor="' + this.pixelWidth + ' ' + this.pixelHeight + '"' +
+            groupel = '<v:group coordorigin="0 0" coordsize="' + this.pixelWidth + ' ' + this.pixelHeight + '"' +
                     ' style="position:absolute;top:0;left:0;width:' + this.pixelWidth + 'px;height=' + this.pixelHeight + 'px;"></v:group>';
             this.canvas.insertAdjacentHTML('beforeEnd', groupel);
             this.group = $(this.canvas).children()[0];
@@ -2933,7 +2933,7 @@
             stroke = lineColor === undefined ? ' stroked="false" ' : ' strokeWeight="' + lineWidth + 'px" strokeColor="' + lineColor + '" ';
             fill = fillColor === undefined ? ' filled="false"' : ' fillColor="' + fillColor + '" filled="true" ';
             closed = vpath[0] === vpath[vpath.length - 1] ? 'x ' : '';
-            vel = '<v:shape coordorigin="0 0" coordColor="' + this.pixelWidth + ' ' + this.pixelHeight + '" ' +
+            vel = '<v:shape coordorigin="0 0" coordsize="' + this.pixelWidth + ' ' + this.pixelHeight + '" ' +
                  ' id="jqsshape' + shapeid + '" ' +
                  stroke +
                  fill +
@@ -2990,7 +2990,7 @@
             vpath = [x - radius, y - radius, x + radius, y + radius, startx, starty, endx, endy];
             stroke = lineColor === undefined ? ' stroked="false" ' : ' strokeWeight="1px" strokeColor="' + lineColor + '" ';
             fill = fillColor === undefined ? ' filled="false"' : ' fillColor="' + fillColor + '" filled="true" ';
-            vel = '<v:shape coordorigin="0 0" coordColor="' + this.pixelWidth + ' ' + this.pixelHeight + '" ' +
+            vel = '<v:shape coordorigin="0 0" coordsize="' + this.pixelWidth + ' ' + this.pixelHeight + '" ' +
                  ' id="jqsshape' + shapeid + '" ' +
                  stroke +
                  fill +

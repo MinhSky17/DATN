@@ -50,7 +50,7 @@
                     <div class="product-info-wrapper">
                         <div class="thumbnails"><img class="img-fluid" th:src="${order.productImg}" th:alt="${order.productName}"/></div>
                         <div class="product-info"><span class="name" th:text="${order.productName}"></span>
-                            <div class="Color"><span th:text="${order.ColorUs}"></span>US | <span th:text="${order.ColorVn}"></span>VN | <span th:text="${order.ColorCm}"></span>CM</div>
+                            <div class="size"><span th:text="${order.sizeUs}"></span>US | <span th:text="${order.sizeVn}"></span>VN | <span th:text="${order.sizeCm}"></span>CM</div>
                         </div>
                     </div>
                     <div class="price asks-price"><span class="text-price" th:text="${order.productPrice}"></span> &#x20AB;</div>
@@ -74,7 +74,7 @@
                     <div class="item-info-wrapper">
                         <div class="product-info-wrapper">
                             <div class="product-info"><span class="name" th:text="${order.productName}"></span>
-                                <div class="Color"><span th:text="${order.ColorUs}"></span>US | <span th:text="${order.ColorVn}"></span>VN | <span th:text="${order.ColorCm}"></span>CM</div>
+                                <div class="size"><span th:text="${order.sizeUs}"></span>US | <span th:text="${order.sizeVn}"></span>VN | <span th:text="${order.sizeCm}"></span>CM</div>
                             </div>
                         </div>
                         <div class="price asks-price"><span class="text-price" th:text="${order.productPrice}"></span> &#x20AB;</div>

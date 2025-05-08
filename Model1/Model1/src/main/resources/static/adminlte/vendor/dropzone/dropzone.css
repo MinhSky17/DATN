@@ -226,7 +226,7 @@
         -o-transition: opacity 0.2s linear;
         transition: opacity 0.2s linear; }
     .dropzone .dz-preview .dz-remove {
-      font-Color: 14px;
+      font-size: 14px;
       text-align: center;
       display: block;
       cursor: pointer;
@@ -241,16 +241,16 @@
       top: 0;
       left: 0;
       opacity: 0;
-      font-Color: 13px;
+      font-size: 13px;
       min-width: 100%;
       max-width: 100%;
       padding: 2em 1em;
       text-align: center;
       color: rgba(0, 0, 0, 0.9);
       line-height: 150%; }
-      .dropzone .dz-preview .dz-details .dz-Color {
+      .dropzone .dz-preview .dz-details .dz-size {
         margin-bottom: 1em;
-        font-Color: 16px; }
+        font-size: 16px; }
       .dropzone .dz-preview .dz-details .dz-filename {
         white-space: nowrap; }
         .dropzone .dz-preview .dz-details .dz-filename:hover span {
@@ -261,7 +261,7 @@
           text-overflow: ellipsis; }
           .dropzone .dz-preview .dz-details .dz-filename:not(:hover) span {
             border: 1px solid transparent; }
-      .dropzone .dz-preview .dz-details .dz-filename span, .dropzone .dz-preview .dz-details .dz-Color span {
+      .dropzone .dz-preview .dz-details .dz-filename span, .dropzone .dz-preview .dz-details .dz-size span {
         background-color: rgba(255, 255, 255, 0.4);
         padding: 0 0.4em;
         border-radius: 3px; }
@@ -376,7 +376,7 @@
       -o-transition: opacity 0.3s ease;
       transition: opacity 0.3s ease;
       border-radius: 8px;
-      font-Color: 13px;
+      font-size: 13px;
       top: 130px;
       left: -10px;
       width: 140px;

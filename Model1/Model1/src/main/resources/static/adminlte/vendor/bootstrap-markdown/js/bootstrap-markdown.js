@@ -37,7 +37,7 @@
     // @TODO : remove this BC on next major release
     // @see : https://github.com/toopay/bootstrap-markdown/issues/109
     var opts = ['autofocus', 'savable', 'hideable', 'width',
-      'height', 'reColor', 'iconlibrary', 'language',
+      'height', 'resize', 'iconlibrary', 'language',
       'footer', 'fullscreen', 'hiddenButtons', 'disabledButtons'
     ];
     $.each(opts, function(_, opt) {
@@ -157,14 +157,14 @@
       return container;
     },
     __setListener: function() {
-      // Set Color and resizable Properties
+      // Set size and resizable Properties
       var hasRows = typeof this.$textarea.attr('rows') !== 'undefined',
         maxRows = this.$textarea.val().split("\n").length > 5 ? this.$textarea.val().split("\n").length : '5',
         rowsVal = hasRows ? this.$textarea.attr('rows') : maxRows;
 
       this.$textarea.attr('rows', rowsVal);
-      if (this.$options.reColor) {
-        this.$textarea.css('reColor', this.$options.reColor);
+      if (this.$options.resize) {
+        this.$textarea.css('resize', this.$options.resize);
       }
 
       // Re-attach markdown data
@@ -591,8 +591,8 @@
         "height": "auto"
       });
 
-      if (this.$options.reColor) {
-        replacementContainer.css('reColor', this.$options.reColor);
+      if (this.$options.resize) {
+        replacementContainer.css('resize', this.$options.resize);
       }
 
       // Hide the last-active textarea
@@ -1024,7 +1024,7 @@
     savable: false,
     width: 'inherit',
     height: 'inherit',
-    reColor: 'none',
+    resize: 'none',
     iconlibrary: 'glyph',
     language: 'en',
     initialstate: 'editor',
@@ -1091,7 +1091,7 @@
 
             if (selected.length === 0) {
               // Give extra word
-              chunk = e.__localize('emphaColord text');
+              chunk = e.__localize('emphasized text');
             } else {
               chunk = selected.text;
             }
@@ -1119,7 +1119,7 @@
             fa: 'fa fa-header',
             'fa-3': 'icon-font',
             'fa-5': 'fas fa-heading',
-            octicons: 'octicon octicon-text-Color'
+            octicons: 'octicon octicon-text-size'
           },
           callback: function(e) {
             // Append/remove ### surround the selection
@@ -1487,7 +1487,7 @@
           icon: {
             fa: 'fa fa-expand',
             glyph: 'glyphicon glyphicon-fullscreen',
-            'fa-3': 'icon-reColor-full',
+            'fa-3': 'icon-resize-full',
             'fa-5': 'fas fa-expand-arrows-alt',
             octicons: 'octicon octicon-link-external'
           }
@@ -1497,7 +1497,7 @@
           icon: {
             fa: 'fa fa-compress',
             glyph: 'glyphicon glyphicon-fullscreen',
-            'fa-3': 'icon-reColor-small',
+            'fa-3': 'icon-resize-small',
             'fa-5': 'fas fa-compress',
             octicons: 'octicon octicon-browser'
           }

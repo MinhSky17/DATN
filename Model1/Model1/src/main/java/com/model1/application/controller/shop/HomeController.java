@@ -2,6 +2,7 @@ package com.model1.application.controller.shop;
 
 import com.model1.application.entity.*;
 import com.model1.application.service.*;
+
 import com.model1.application.exception.BadRequestException;
 import com.model1.application.exception.NotFoundException;
 import com.model1.application.model.dto.CheckPromotion;
@@ -11,6 +12,7 @@ import com.model1.application.model.dto.ProductInfoDTO;
 import com.model1.application.model.request.CreateOrderRequest;
 import com.model1.application.model.request.FilterProductRequest;
 import com.model1.application.security.CustomUserDetails;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -94,25 +96,25 @@ public class HomeController {
         List<Brand> brands = brandService.getListBrand();
         model.addAttribute("brands",brands);
 
-        // Lấy Color có sẵn
-        List<Integer> availableColors = productService.getListAvailableColor(id);
-        model.addAttribute("availableColors", availableColors);
-        if (!availableColors.isEmpty()) {
+        // Lấy size có sẵn
+        List<Integer> availableSizes = productService.getListAvailableSize(id);
+        model.addAttribute("availableSizes", availableSizes);
+        if (!availableSizes.isEmpty()) {
             model.addAttribute("canBuy", true);
         } else {
             model.addAttribute("canBuy", false);
         }
 
-        //Lấy danh sách Color giầy
-        model.addAttribute("ColorVn", Color_VN);
-        model.addAttribute("ColorUs", Color_US);
-        model.addAttribute("ColorCm", Color_CM);
+        //Lấy danh sách size giầy
+        model.addAttribute("sizeVn", SIZE_VN);
+        model.addAttribute("sizeUs", SIZE_US);
+        model.addAttribute("sizeCm", SIZE_CM);
 
         return "shop/detail";
     }
 
     @GetMapping("/dat-hang")
-    public String getCartPage(Model model, @RequestParam String id,@RequestParam int Color){
+    public String getCartPage(Model model, @RequestParam String id,@RequestParam int size){
 
         //Lấy chi tiết sản phẩm
         DetailProductInfoDTO product;
@@ -125,28 +127,28 @@ public class HomeController {
         }
         model.addAttribute("product", product);
 
-        //Validate Color
-        if (Color < 35 || Color > 42) {
+        //Validate size
+        if (size < 35 || size > 42) {
             return "error/404";
         }
 
-        //Lấy danh sách Color có sẵn
-        List<Integer> availableColors = productService.getListAvailableColor(id);
-        model.addAttribute("availableColors", availableColors);
-        boolean notFoundColor = true;
-        for (Integer availableColor : availableColors) {
-            if (availableColor == Color) {
-                notFoundColor = false;
+        //Lấy danh sách size có sẵn
+        List<Integer> availableSizes = productService.getListAvailableSize(id);
+        model.addAttribute("availableSizes", availableSizes);
+        boolean notFoundSize = true;
+        for (Integer availableSize : availableSizes) {
+            if (availableSize == size) {
+                notFoundSize = false;
                 break;
             }
         }
-        model.addAttribute("notFoundColor", notFoundColor);
+        model.addAttribute("notFoundSize", notFoundSize);
 
-        //Lấy danh sách Color
-        model.addAttribute("ColorVn", Color_VN);
-        model.addAttribute("ColorUs", Color_US);
-        model.addAttribute("ColorCm", Color_CM);
-        model.addAttribute("Color", Color);
+        //Lấy danh sách size
+        model.addAttribute("sizeVn", SIZE_VN);
+        model.addAttribute("sizeUs", SIZE_US);
+        model.addAttribute("sizeCm", SIZE_CM);
+        model.addAttribute("size", size);
 
         return "shop/payment";
     }
@@ -186,8 +188,8 @@ public class HomeController {
         }
         model.addAttribute("categoryIds", categoryIds);
 
-        //Danh sách Color của sản phẩm
-        model.addAttribute("ColorVn", Color_VN);
+        //Danh sách size của sản phẩm
+        model.addAttribute("sizeVn", SIZE_VN);
 
         //Lấy danh sách sản phẩm
         FilterProductRequest req = new FilterProductRequest(brandIds, categoryIds, new ArrayList<>(), (long) 0, Long.MAX_VALUE, 1);

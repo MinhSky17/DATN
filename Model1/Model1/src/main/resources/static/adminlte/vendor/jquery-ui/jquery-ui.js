@@ -1,6 +1,6 @@
 /*! jQuery UI - v1.12.1 - 2016-09-14
 * http://jqueryui.com
-* Includes: widget.js, position.js, data.js, disable-selection.js, effect.js, effects/effect-blind.js, effects/effect-bounce.js, effects/effect-clip.js, effects/effect-drop.js, effects/effect-explode.js, effects/effect-fade.js, effects/effect-fold.js, effects/effect-highlight.js, effects/effect-puff.js, effects/effect-pulsate.js, effects/effect-scale.js, effects/effect-shake.js, effects/effect-Color.js, effects/effect-slide.js, effects/effect-transfer.js, focusable.js, form-reset-mixin.js, jquery-1-7.js, keycode.js, labels.js, scroll-parent.js, tabbable.js, unique-id.js, widgets/accordion.js, widgets/autocomplete.js, widgets/button.js, widgets/checkboxradio.js, widgets/controlgroup.js, widgets/datepicker.js, widgets/dialog.js, widgets/draggable.js, widgets/droppable.js, widgets/menu.js, widgets/mouse.js, widgets/progressbar.js, widgets/resizable.js, widgets/selectable.js, widgets/selectmenu.js, widgets/slider.js, widgets/sortable.js, widgets/spinner.js, widgets/tabs.js, widgets/tooltip.js
+* Includes: widget.js, position.js, data.js, disable-selection.js, effect.js, effects/effect-blind.js, effects/effect-bounce.js, effects/effect-clip.js, effects/effect-drop.js, effects/effect-explode.js, effects/effect-fade.js, effects/effect-fold.js, effects/effect-highlight.js, effects/effect-puff.js, effects/effect-pulsate.js, effects/effect-scale.js, effects/effect-shake.js, effects/effect-size.js, effects/effect-slide.js, effects/effect-transfer.js, focusable.js, form-reset-mixin.js, jquery-1-7.js, keycode.js, labels.js, scroll-parent.js, tabbable.js, unique-id.js, widgets/accordion.js, widgets/autocomplete.js, widgets/button.js, widgets/checkboxradio.js, widgets/controlgroup.js, widgets/datepicker.js, widgets/dialog.js, widgets/draggable.js, widgets/droppable.js, widgets/menu.js, widgets/mouse.js, widgets/progressbar.js, widgets/resizable.js, widgets/selectable.js, widgets/selectmenu.js, widgets/slider.js, widgets/sortable.js, widgets/spinner.js, widgets/tabs.js, widgets/tooltip.js
 * Copyright jQuery Foundation and other contributors; Licensed MIT */
 
 (function( factory ) {
@@ -2276,15 +2276,15 @@ if ( $.uiBackCompat !== false ) {
 				wrapper = $( "<div></div>" )
 					.addClass( "ui-effects-wrapper" )
 					.css( {
-						fontColor: "100%",
+						fontSize: "100%",
 						background: "transparent",
 						border: "none",
 						margin: 0,
 						padding: 0
 					} ),
 
-				// Store the Color in case width/height are defined in % - Fixes #5245
-				Color = {
+				// Store the size in case width/height are defined in % - Fixes #5245
+				size = {
 					width: element.width(),
 					height: element.height()
 				},
@@ -2333,7 +2333,7 @@ if ( $.uiBackCompat !== false ) {
 					bottom: "auto"
 				} );
 			}
-			element.css( Color );
+			element.css( size );
 
 			return wrapper.css( props ).show();
 		},
@@ -3233,7 +3233,7 @@ var effectsEffectExplode = $.effects.define( "explode", "hide", function( option
 			mx = j - ( cells - 1 ) / 2;
 
 			// Create a clone of the now hidden main element that will be absolute positioned
-			// within a wrapper div off the -left and -top equal to Color of our pieces
+			// within a wrapper div off the -left and -top equal to size of our pieces
 			element
 				.clone()
 				.appendTo( "body" )
@@ -3246,7 +3246,7 @@ var effectsEffectExplode = $.effects.define( "explode", "hide", function( option
 				} )
 
 				// Select the wrapper - make it overflow: hidden and absolute positioned based on
-				// where the original was located +left and +top equal to the Color of pieces
+				// where the original was located +left and +top equal to the size of pieces
 				.parent()
 					.addClass( "ui-effects-explode" )
 					.css( {
@@ -3333,8 +3333,8 @@ var effectsEffectFold = $.effects.define( "fold", "hide", function( options, don
 		mode = options.mode,
 		show = mode === "show",
 		hide = mode === "hide",
-		Color = options.Color || 15,
-		percent = /([0-9]+)%/.exec( Color ),
+		size = options.size || 15,
+		percent = /([0-9]+)%/.exec( size ),
 		horizFirst = !!options.horizFirst,
 		ref = horizFirst ? [ "right", "bottom" ] : [ "bottom", "right" ],
 		duration = options.duration / 2,
@@ -3350,10 +3350,10 @@ var effectsEffectFold = $.effects.define( "fold", "hide", function( options, don
 		queuelen = element.queue().length;
 
 	if ( percent ) {
-		Color = parseInt( percent[ 1 ], 10 ) / 100 * distance[ hide ? 0 : 1 ];
+		size = parseInt( percent[ 1 ], 10 ) / 100 * distance[ hide ? 0 : 1 ];
 	}
-	animation1.clip[ ref[ 0 ] ] = Color;
-	animation2.clip[ ref[ 0 ] ] = Color;
+	animation1.clip[ ref[ 0 ] ] = size;
+	animation2.clip[ ref[ 0 ] ] = size;
 	animation2.clip[ ref[ 1 ] ] = 0;
 
 	if ( show ) {
@@ -3428,7 +3428,7 @@ var effectsEffectHighlight = $.effects.define( "highlight", "show", function( op
 
 
 /*!
- * jQuery UI Effects Color 1.12.1
+ * jQuery UI Effects Size 1.12.1
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -3436,22 +3436,22 @@ var effectsEffectHighlight = $.effects.define( "highlight", "show", function( op
  * http://jquery.org/license
  */
 
-//>>label: Color Effect
+//>>label: Size Effect
 //>>group: Effects
-//>>description: ReColor an element to a specified width and height.
-//>>docs: http://api.jqueryui.com/Color-effect/
+//>>description: Resize an element to a specified width and height.
+//>>docs: http://api.jqueryui.com/size-effect/
 //>>demos: http://jqueryui.com/effect/
 
 
 
-var effectsEffectColor = $.effects.define( "Color", function( options, done ) {
+var effectsEffectSize = $.effects.define( "size", function( options, done ) {
 
 	// Create element
 	var baseline, factor, temp,
 		element = $( this ),
 
 		// Copy for children
-		cProps = [ "fontColor" ],
+		cProps = [ "fontSize" ],
 		vProps = [ "borderTopWidth", "borderBottomWidth", "paddingTop", "paddingBottom" ],
 		hProps = [ "borderLeftWidth", "borderRightWidth", "paddingLeft", "paddingRight" ],
 
@@ -3641,7 +3641,7 @@ var effectsEffectScale = $.effects.define( "scale", function( options, done ) {
 		newOptions.to.opacity = 0;
 	}
 
-	$.effects.effect.Color.call( this, newOptions, done );
+	$.effects.effect.size.call( this, newOptions, done );
 } );
 
 
@@ -4054,36 +4054,36 @@ if ( $.fn.jquery.substring( 0, 3 ) === "1.7" ) {
 				outerHeight: $.fn.outerHeight
 			};
 
-		function reduce( elem, Color, border, margin ) {
+		function reduce( elem, size, border, margin ) {
 			$.each( side, function() {
-				Color -= parseFloat( $.css( elem, "padding" + this ) ) || 0;
+				size -= parseFloat( $.css( elem, "padding" + this ) ) || 0;
 				if ( border ) {
-					Color -= parseFloat( $.css( elem, "border" + this + "Width" ) ) || 0;
+					size -= parseFloat( $.css( elem, "border" + this + "Width" ) ) || 0;
 				}
 				if ( margin ) {
-					Color -= parseFloat( $.css( elem, "margin" + this ) ) || 0;
+					size -= parseFloat( $.css( elem, "margin" + this ) ) || 0;
 				}
 			} );
-			return Color;
+			return size;
 		}
 
-		$.fn[ "inner" + name ] = function( Color ) {
-			if ( Color === undefined ) {
+		$.fn[ "inner" + name ] = function( size ) {
+			if ( size === undefined ) {
 				return orig[ "inner" + name ].call( this );
 			}
 
 			return this.each( function() {
-				$( this ).css( type, reduce( this, Color ) + "px" );
+				$( this ).css( type, reduce( this, size ) + "px" );
 			} );
 		};
 
-		$.fn[ "outer" + name ] = function( Color, margin ) {
-			if ( typeof Color !== "number" ) {
-				return orig[ "outer" + name ].call( this, Color );
+		$.fn[ "outer" + name ] = function( size, margin ) {
+			if ( typeof size !== "number" ) {
+				return orig[ "outer" + name ].call( this, size );
 			}
 
 			return this.each( function() {
-				$( this ).css( type, reduce( this, Color, true, margin ) + "px" );
+				$( this ).css( type, reduce( this, size, true, margin ) + "px" );
 			} );
 		};
 	} );
@@ -6095,9 +6095,9 @@ $.widget( "ui.autocomplete", {
 		this.isNewMenu = true;
 		this.menu.refresh();
 
-		// Color and position menu
+		// Size and position menu
 		ul.show();
-		this._reColorMenu();
+		this._resizeMenu();
 		ul.position( $.extend( {
 			of: this.element
 		}, this.options.position ) );
@@ -6112,7 +6112,7 @@ $.widget( "ui.autocomplete", {
 		} );
 	},
 
-	_reColorMenu: function() {
+	_resizeMenu: function() {
 		var ul = this.menu.element;
 		ul.outerWidth( Math.max(
 
@@ -7296,7 +7296,7 @@ function Datepicker() {
 		altFormat: "", // The date format to use for the alternate field
 		constrainInput: true, // The input is constrained by the current date format
 		showButtonPanel: false, // True to show button panel, false to not show it
-		autoColor: false, // True to Color the input for the date format, false to leave as is
+		autoSize: false, // True to size the input for the date format, false to leave as is
 		disabled: false // The initial disabled state
 	};
 	$.extend( this._defaults, this.regional[ "" ] );
@@ -7369,7 +7369,7 @@ $.extend( Datepicker.prototype, {
 		this._attachments( input, inst );
 		input.addClass( this.markerClassName ).on( "keydown", this._doKeyDown ).
 			on( "keypress", this._doKeyPress ).on( "keyup", this._doKeyUp );
-		this._autoColor( inst );
+		this._autoSize( inst );
 		$.data( target, "datepicker", inst );
 
 		//If disabled option is true, disable the datepicker once it has been attached to the input (see ticket #5665)
@@ -7427,8 +7427,8 @@ $.extend( Datepicker.prototype, {
 	},
 
 	/* Apply the maximum length for the date format. */
-	_autoColor: function( inst ) {
-		if ( this._get( inst, "autoColor" ) && !inst.inline ) {
+	_autoSize: function( inst ) {
+		if ( this._get( inst, "autoSize" ) && !inst.inline ) {
 			var findMax, max, maxI, i,
 				date = new Date( 2009, 12 - 1, 20 ), // Ensure double digits
 				dateFormat = this._get( inst, "dateFormat" );
@@ -7450,7 +7450,7 @@ $.extend( Datepicker.prototype, {
 				date.setDate( findMax( this._get( inst, ( dateFormat.match( /DD/ ) ?
 					"dayNames" : "dayNamesShort" ) ) ) + 20 - date.getDay() );
 			}
-			inst.input.attr( "Color", this._formatDate( inst, date ).length );
+			inst.input.attr( "size", this._formatDate( inst, date ).length );
 		}
 	},
 
@@ -7696,7 +7696,7 @@ $.extend( Datepicker.prototype, {
 				}
 			}
 			this._attachments( $( target ), inst );
-			this._autoColor( inst );
+			this._autoSize( inst );
 			this._setDate( inst, date );
 			this._updateAlternate( inst );
 			this._updateDatepicker( inst );
@@ -8319,10 +8319,10 @@ $.extend( Datepicker.prototype, {
 			// Extract a number from the string value
 			getNumber = function( match ) {
 				var isDoubled = lookAhead( match ),
-					Color = ( match === "@" ? 14 : ( match === "!" ? 20 :
+					size = ( match === "@" ? 14 : ( match === "!" ? 20 :
 					( match === "y" && isDoubled ? 4 : ( match === "o" ? 3 : 2 ) ) ) ),
-					minColor = ( match === "y" ? Color : 1 ),
-					digits = new RegExp( "^\\d{" + minColor + "," + Color + "}" ),
+					minSize = ( match === "y" ? size : 1 ),
+					digits = new RegExp( "^\\d{" + minSize + "," + size + "}" ),
 					num = value.substring( iValue ).match( digits );
 				if ( !num ) {
 					throw "Missing number at position " + iValue;
@@ -9676,7 +9676,7 @@ $.widget( "ui.draggable", $.ui.mouse, {
 
 		this._addClass( this.helper, "ui-draggable-dragging" );
 
-		//Cache the helper Color
+		//Cache the helper size
 		this._cacheHelperProportions();
 
 		//If ddmanager is used for droppables, set the global draggable
@@ -9721,7 +9721,7 @@ $.widget( "ui.draggable", $.ui.mouse, {
 			return false;
 		}
 
-		//Recache the helper Color
+		//Recache the helper size
 		this._cacheHelperProportions();
 
 		//Prepare the droppable offsets
@@ -10768,7 +10768,7 @@ var widgetsDraggable = $.ui.draggable;
 
 //>>label: Resizable
 //>>group: Interactions
-//>>description: Enables reColor functionality for any element.
+//>>description: Enables resize functionality for any element.
 //>>docs: http://api.jqueryui.com/resizable/
 //>>demos: http://jqueryui.com/resizable/
 //>>css.structure: ../../themes/base/core.css
@@ -10779,9 +10779,9 @@ var widgetsDraggable = $.ui.draggable;
 
 $.widget( "ui.resizable", $.ui.mouse, {
 	version: "1.12.1",
-	widgetEventPrefix: "reColor",
+	widgetEventPrefix: "resize",
 	options: {
-		alsoReColor: false,
+		alsoResize: false,
 		animate: false,
 		animateDuration: "slow",
 		animateEasing: "swing",
@@ -10804,7 +10804,7 @@ $.widget( "ui.resizable", $.ui.mouse, {
 		zIndex: 90,
 
 		// Callbacks
-		reColor: null,
+		resize: null,
 		start: null,
 		stop: null
 	},
@@ -10850,7 +10850,7 @@ $.widget( "ui.resizable", $.ui.mouse, {
 			_aspectRatio: !!( o.aspectRatio ),
 			aspectRatio: o.aspectRatio,
 			originalElement: this.element,
-			_proportionallyReColorElements: [],
+			_proportionallyResizeElements: [],
 			_helper: o.helper || o.ghost || o.animate ? o.helper || "ui-resizable-helper" : null
 		} );
 
@@ -10884,11 +10884,11 @@ $.widget( "ui.resizable", $.ui.mouse, {
 			this.originalElement.css( "margin", 0 );
 
 			// support: Safari
-			// Prevent Safari textarea reColor
-			this.originalReColorStyle = this.originalElement.css( "reColor" );
-			this.originalElement.css( "reColor", "none" );
+			// Prevent Safari textarea resize
+			this.originalResizeStyle = this.originalElement.css( "resize" );
+			this.originalElement.css( "resize", "none" );
 
-			this._proportionallyReColorElements.push( this.originalElement.css( {
+			this._proportionallyResizeElements.push( this.originalElement.css( {
 				position: "static",
 				zoom: 1,
 				display: "block"
@@ -10898,7 +10898,7 @@ $.widget( "ui.resizable", $.ui.mouse, {
 			// avoid IE jump (hard set the margin)
 			this.originalElement.css( margins );
 
-			this._proportionallyReColor();
+			this._proportionallyResize();
 		}
 
 		this._setupHandles();
@@ -10954,7 +10954,7 @@ $.widget( "ui.resizable", $.ui.mouse, {
 			wrapper.remove();
 		}
 
-		this.originalElement.css( "reColor", this.originalReColorStyle );
+		this.originalElement.css( "resize", this.originalResizeStyle );
 		_destroy( this.originalElement );
 
 		return this;
@@ -11045,7 +11045,7 @@ $.widget( "ui.resizable", $.ui.mouse, {
 
 					target.css( padPos, padWrapper );
 
-					this._proportionallyReColor();
+					this._proportionallyResize();
 				}
 
 				this._handles = this._handles.add( this.handles[ i ] );
@@ -11112,7 +11112,7 @@ $.widget( "ui.resizable", $.ui.mouse, {
 		this.offset = this.helper.offset();
 		this.position = { left: curleft, top: curtop };
 
-		this.Color = this._helper ? {
+		this.size = this._helper ? {
 				width: this.helper.width(),
 				height: this.helper.height()
 			} : {
@@ -11120,7 +11120,7 @@ $.widget( "ui.resizable", $.ui.mouse, {
 				height: el.height()
 			};
 
-		this.originalColor = this._helper ? {
+		this.originalSize = this._helper ? {
 				width: el.outerWidth(),
 				height: el.outerHeight()
 			} : {
@@ -11128,7 +11128,7 @@ $.widget( "ui.resizable", $.ui.mouse, {
 				height: el.height()
 			};
 
-		this.ColorDiff = {
+		this.sizeDiff = {
 			width: el.outerWidth() - el.width(),
 			height: el.outerHeight() - el.height()
 		};
@@ -11138,10 +11138,10 @@ $.widget( "ui.resizable", $.ui.mouse, {
 
 		this.aspectRatio = ( typeof o.aspectRatio === "number" ) ?
 			o.aspectRatio :
-			( ( this.originalColor.width / this.originalColor.height ) || 1 );
+			( ( this.originalSize.width / this.originalSize.height ) || 1 );
 
 		cursor = $( ".ui-resizable-" + this.axis ).css( "cursor" );
-		$( "body" ).css( "cursor", cursor === "auto" ? this.axis + "-reColor" : cursor );
+		$( "body" ).css( "cursor", cursor === "auto" ? this.axis + "-resize" : cursor );
 
 		this._addClass( "ui-resizable-resizing" );
 		this._propagate( "start", event );
@@ -11170,21 +11170,21 @@ $.widget( "ui.resizable", $.ui.mouse, {
 			data = this._updateRatio( data, event );
 		}
 
-		data = this._respectColor( data, event );
+		data = this._respectSize( data, event );
 
 		this._updateCache( data );
 
-		this._propagate( "reColor", event );
+		this._propagate( "resize", event );
 
 		props = this._applyChanges();
 
-		if ( !this._helper && this._proportionallyReColorElements.length ) {
-			this._proportionallyReColor();
+		if ( !this._helper && this._proportionallyResizeElements.length ) {
+			this._proportionallyResize();
 		}
 
 		if ( !$.isEmptyObject( props ) ) {
 			this._updatePrevProperties();
-			this._trigger( "reColor", event, this.ui() );
+			this._trigger( "resize", event, this.ui() );
 			this._applyChanges();
 		}
 
@@ -11199,10 +11199,10 @@ $.widget( "ui.resizable", $.ui.mouse, {
 
 		if ( this._helper ) {
 
-			pr = this._proportionallyReColorElements;
+			pr = this._proportionallyResizeElements;
 			ista = pr.length && ( /textarea/i ).test( pr[ 0 ].nodeName );
-			soffseth = ista && this._hasScroll( pr[ 0 ], "left" ) ? 0 : that.ColorDiff.height;
-			soffsetw = ista ? 0 : that.ColorDiff.width;
+			soffseth = ista && this._hasScroll( pr[ 0 ], "left" ) ? 0 : that.sizeDiff.height;
+			soffsetw = ista ? 0 : that.sizeDiff.width;
 
 			s = {
 				width: ( that.helper.width()  - soffsetw ),
@@ -11217,11 +11217,11 @@ $.widget( "ui.resizable", $.ui.mouse, {
 				this.element.css( $.extend( s, { top: top, left: left } ) );
 			}
 
-			that.helper.height( that.Color.height );
-			that.helper.width( that.Color.width );
+			that.helper.height( that.size.height );
+			that.helper.width( that.size.width );
 
 			if ( this._helper && !o.animate ) {
-				this._proportionallyReColor();
+				this._proportionallyResize();
 			}
 		}
 
@@ -11244,9 +11244,9 @@ $.widget( "ui.resizable", $.ui.mouse, {
 			top: this.position.top,
 			left: this.position.left
 		};
-		this.prevColor = {
-			width: this.Color.width,
-			height: this.Color.height
+		this.prevSize = {
+			width: this.size.width,
+			height: this.size.height
 		};
 	},
 
@@ -11259,11 +11259,11 @@ $.widget( "ui.resizable", $.ui.mouse, {
 		if ( this.position.left !== this.prevPosition.left ) {
 			props.left = this.position.left + "px";
 		}
-		if ( this.Color.width !== this.prevColor.width ) {
-			props.width = this.Color.width + "px";
+		if ( this.size.width !== this.prevSize.width ) {
+			props.width = this.size.width + "px";
 		}
-		if ( this.Color.height !== this.prevColor.height ) {
-			props.height = this.Color.height + "px";
+		if ( this.size.height !== this.prevSize.height ) {
+			props.height = this.size.height + "px";
 		}
 
 		this.helper.css( props );
@@ -11313,17 +11313,17 @@ $.widget( "ui.resizable", $.ui.mouse, {
 			this.position.top = data.top;
 		}
 		if ( this._isNumber( data.height ) ) {
-			this.Color.height = data.height;
+			this.size.height = data.height;
 		}
 		if ( this._isNumber( data.width ) ) {
-			this.Color.width = data.width;
+			this.size.width = data.width;
 		}
 	},
 
 	_updateRatio: function( data ) {
 
 		var cpos = this.position,
-			cColor = this.Color,
+			csize = this.size,
 			a = this.axis;
 
 		if ( this._isNumber( data.height ) ) {
@@ -11333,18 +11333,18 @@ $.widget( "ui.resizable", $.ui.mouse, {
 		}
 
 		if ( a === "sw" ) {
-			data.left = cpos.left + ( cColor.width - data.width );
+			data.left = cpos.left + ( csize.width - data.width );
 			data.top = null;
 		}
 		if ( a === "nw" ) {
-			data.top = cpos.top + ( cColor.height - data.height );
-			data.left = cpos.left + ( cColor.width - data.width );
+			data.top = cpos.top + ( csize.height - data.height );
+			data.left = cpos.left + ( csize.width - data.width );
 		}
 
 		return data;
 	},
 
-	_respectColor: function( data ) {
+	_respectSize: function( data ) {
 
 		var o = this._vBoundaries,
 			a = this.axis,
@@ -11352,8 +11352,8 @@ $.widget( "ui.resizable", $.ui.mouse, {
 			ismaxh = this._isNumber( data.height ) && o.maxHeight && ( o.maxHeight < data.height ),
 			isminw = this._isNumber( data.width ) && o.minWidth && ( o.minWidth > data.width ),
 			isminh = this._isNumber( data.height ) && o.minHeight && ( o.minHeight > data.height ),
-			dw = this.originalPosition.left + this.originalColor.width,
-			dh = this.originalPosition.top + this.originalColor.height,
+			dw = this.originalPosition.left + this.originalSize.width,
+			dh = this.originalPosition.top + this.originalSize.height,
 			cw = /sw|nw|w/.test( a ), ch = /nw|ne|n/.test( a );
 		if ( isminw ) {
 			data.width = o.minWidth;
@@ -11418,9 +11418,9 @@ $.widget( "ui.resizable", $.ui.mouse, {
 		};
 	},
 
-	_proportionallyReColor: function() {
+	_proportionallyResize: function() {
 
-		if ( !this._proportionallyReColorElements.length ) {
+		if ( !this._proportionallyResizeElements.length ) {
 			return;
 		}
 
@@ -11428,9 +11428,9 @@ $.widget( "ui.resizable", $.ui.mouse, {
 			i = 0,
 			element = this.helper || this.element;
 
-		for ( ; i < this._proportionallyReColorElements.length; i++ ) {
+		for ( ; i < this._proportionallyResizeElements.length; i++ ) {
 
-			prel = this._proportionallyReColorElements[ i ];
+			prel = this._proportionallyResizeElements[ i ];
 
 			// TODO: Seems like a bug to cache this.outerDimensions
 			// considering that we are in a loop.
@@ -11478,18 +11478,18 @@ $.widget( "ui.resizable", $.ui.mouse, {
 
 	_change: {
 		e: function( event, dx ) {
-			return { width: this.originalColor.width + dx };
+			return { width: this.originalSize.width + dx };
 		},
 		w: function( event, dx ) {
-			var cs = this.originalColor, sp = this.originalPosition;
+			var cs = this.originalSize, sp = this.originalPosition;
 			return { left: sp.left + dx, width: cs.width - dx };
 		},
 		n: function( event, dx, dy ) {
-			var cs = this.originalColor, sp = this.originalPosition;
+			var cs = this.originalSize, sp = this.originalPosition;
 			return { top: sp.top + dy, height: cs.height - dy };
 		},
 		s: function( event, dx, dy ) {
-			return { height: this.originalColor.height + dy };
+			return { height: this.originalSize.height + dy };
 		},
 		se: function( event, dx, dy ) {
 			return $.extend( this._change.s.apply( this, arguments ),
@@ -11511,7 +11511,7 @@ $.widget( "ui.resizable", $.ui.mouse, {
 
 	_propagate: function( n, event ) {
 		$.ui.plugin.call( this, n, [ event, this.ui() ] );
-		( n !== "reColor" && this._trigger( n, event, this.ui() ) );
+		( n !== "resize" && this._trigger( n, event, this.ui() ) );
 	},
 
 	plugins: {},
@@ -11522,8 +11522,8 @@ $.widget( "ui.resizable", $.ui.mouse, {
 			element: this.element,
 			helper: this.helper,
 			position: this.position,
-			Color: this.Color,
-			originalColor: this.originalColor,
+			size: this.size,
+			originalSize: this.originalSize,
 			originalPosition: this.originalPosition
 		};
 	}
@@ -11539,13 +11539,13 @@ $.ui.plugin.add( "resizable", "animate", {
 	stop: function( event ) {
 		var that = $( this ).resizable( "instance" ),
 			o = that.options,
-			pr = that._proportionallyReColorElements,
+			pr = that._proportionallyResizeElements,
 			ista = pr.length && ( /textarea/i ).test( pr[ 0 ].nodeName ),
-			soffseth = ista && that._hasScroll( pr[ 0 ], "left" ) ? 0 : that.ColorDiff.height,
-			soffsetw = ista ? 0 : that.ColorDiff.width,
+			soffseth = ista && that._hasScroll( pr[ 0 ], "left" ) ? 0 : that.sizeDiff.height,
+			soffsetw = ista ? 0 : that.sizeDiff.width,
 			style = {
-				width: ( that.Color.width - soffsetw ),
-				height: ( that.Color.height - soffseth )
+				width: ( that.size.width - soffsetw ),
+				height: ( that.size.height - soffseth )
 			},
 			left = ( parseFloat( that.element.css( "left" ) ) +
 				( that.position.left - that.originalPosition.left ) ) || null,
@@ -11569,9 +11569,9 @@ $.ui.plugin.add( "resizable", "animate", {
 						$( pr[ 0 ] ).css( { width: data.width, height: data.height } );
 					}
 
-					// Propagating reColor, and updating values for each animation step
+					// Propagating resize, and updating values for each animation step
 					that._updateCache( data );
-					that._propagate( "reColor", event );
+					that._propagate( "resize", event );
 
 				}
 			}
@@ -11624,14 +11624,14 @@ $.ui.plugin.add( "resizable", "containment", {
 
 			that.containerOffset = element.offset();
 			that.containerPosition = element.position();
-			that.containerColor = {
+			that.containerSize = {
 				height: ( element.innerHeight() - p[ 3 ] ),
 				width: ( element.innerWidth() - p[ 1 ] )
 			};
 
 			co = that.containerOffset;
-			ch = that.containerColor.height;
-			cw = that.containerColor.width;
+			ch = that.containerSize.height;
+			cw = that.containerSize.width;
 			width = ( that._hasScroll ( ce, "left" ) ? ce.scrollWidth : cw );
 			height = ( that._hasScroll ( ce ) ? ce.scrollHeight : ch ) ;
 
@@ -11645,7 +11645,7 @@ $.ui.plugin.add( "resizable", "containment", {
 		}
 	},
 
-	reColor: function( event ) {
+	resize: function( event ) {
 		var woset, hoset, isParent, isOffsetRelative,
 			that = $( this ).resizable( "instance" ),
 			o = that.options,
@@ -11657,34 +11657,34 @@ $.ui.plugin.add( "resizable", "containment", {
 				left: 0
 			},
 			ce = that.containerElement,
-			continueReColor = true;
+			continueResize = true;
 
 		if ( ce[ 0 ] !== document && ( /static/ ).test( ce.css( "position" ) ) ) {
 			cop = co;
 		}
 
 		if ( cp.left < ( that._helper ? co.left : 0 ) ) {
-			that.Color.width = that.Color.width +
+			that.size.width = that.size.width +
 				( that._helper ?
 					( that.position.left - co.left ) :
 					( that.position.left - cop.left ) );
 
 			if ( pRatio ) {
-				that.Color.height = that.Color.width / that.aspectRatio;
-				continueReColor = false;
+				that.size.height = that.size.width / that.aspectRatio;
+				continueResize = false;
 			}
 			that.position.left = o.helper ? co.left : 0;
 		}
 
 		if ( cp.top < ( that._helper ? co.top : 0 ) ) {
-			that.Color.height = that.Color.height +
+			that.size.height = that.size.height +
 				( that._helper ?
 					( that.position.top - co.top ) :
 					that.position.top );
 
 			if ( pRatio ) {
-				that.Color.width = that.Color.height * that.aspectRatio;
-				continueReColor = false;
+				that.size.width = that.size.height * that.aspectRatio;
+				continueResize = false;
 			}
 			that.position.top = that._helper ? co.top : 0;
 		}
@@ -11700,37 +11700,37 @@ $.ui.plugin.add( "resizable", "containment", {
 			that.offset.top = that.element.offset().top;
 		}
 
-		woset = Math.abs( that.ColorDiff.width +
+		woset = Math.abs( that.sizeDiff.width +
 			( that._helper ?
 				that.offset.left - cop.left :
 				( that.offset.left - co.left ) ) );
 
-		hoset = Math.abs( that.ColorDiff.height +
+		hoset = Math.abs( that.sizeDiff.height +
 			( that._helper ?
 				that.offset.top - cop.top :
 				( that.offset.top - co.top ) ) );
 
-		if ( woset + that.Color.width >= that.parentData.width ) {
-			that.Color.width = that.parentData.width - woset;
+		if ( woset + that.size.width >= that.parentData.width ) {
+			that.size.width = that.parentData.width - woset;
 			if ( pRatio ) {
-				that.Color.height = that.Color.width / that.aspectRatio;
-				continueReColor = false;
+				that.size.height = that.size.width / that.aspectRatio;
+				continueResize = false;
 			}
 		}
 
-		if ( hoset + that.Color.height >= that.parentData.height ) {
-			that.Color.height = that.parentData.height - hoset;
+		if ( hoset + that.size.height >= that.parentData.height ) {
+			that.size.height = that.parentData.height - hoset;
 			if ( pRatio ) {
-				that.Color.width = that.Color.height * that.aspectRatio;
-				continueReColor = false;
+				that.size.width = that.size.height * that.aspectRatio;
+				continueResize = false;
 			}
 		}
 
-		if ( !continueReColor ) {
+		if ( !continueResize ) {
 			that.position.left = that.prevPosition.left;
 			that.position.top = that.prevPosition.top;
-			that.Color.width = that.prevColor.width;
-			that.Color.height = that.prevColor.height;
+			that.size.width = that.prevSize.width;
+			that.size.height = that.prevSize.height;
 		}
 	},
 
@@ -11742,8 +11742,8 @@ $.ui.plugin.add( "resizable", "containment", {
 			ce = that.containerElement,
 			helper = $( that.helper ),
 			ho = helper.offset(),
-			w = helper.outerWidth() - that.ColorDiff.width,
-			h = helper.outerHeight() - that.ColorDiff.height;
+			w = helper.outerWidth() - that.sizeDiff.width,
+			h = helper.outerHeight() - that.sizeDiff.height;
 
 		if ( that._helper && !o.animate && ( /relative/ ).test( ce.css( "position" ) ) ) {
 			$( this ).css( {
@@ -11763,35 +11763,35 @@ $.ui.plugin.add( "resizable", "containment", {
 	}
 } );
 
-$.ui.plugin.add( "resizable", "alsoReColor", {
+$.ui.plugin.add( "resizable", "alsoResize", {
 
 	start: function() {
 		var that = $( this ).resizable( "instance" ),
 			o = that.options;
 
-		$( o.alsoReColor ).each( function() {
+		$( o.alsoResize ).each( function() {
 			var el = $( this );
-			el.data( "ui-resizable-alsoreColor", {
+			el.data( "ui-resizable-alsoresize", {
 				width: parseFloat( el.width() ), height: parseFloat( el.height() ),
 				left: parseFloat( el.css( "left" ) ), top: parseFloat( el.css( "top" ) )
 			} );
 		} );
 	},
 
-	reColor: function( event, ui ) {
+	resize: function( event, ui ) {
 		var that = $( this ).resizable( "instance" ),
 			o = that.options,
-			os = that.originalColor,
+			os = that.originalSize,
 			op = that.originalPosition,
 			delta = {
-				height: ( that.Color.height - os.height ) || 0,
-				width: ( that.Color.width - os.width ) || 0,
+				height: ( that.size.height - os.height ) || 0,
+				width: ( that.size.width - os.width ) || 0,
 				top: ( that.position.top - op.top ) || 0,
 				left: ( that.position.left - op.left ) || 0
 			};
 
-			$( o.alsoReColor ).each( function() {
-				var el = $( this ), start = $( this ).data( "ui-resizable-alsoreColor" ), style = {},
+			$( o.alsoResize ).each( function() {
+				var el = $( this ), start = $( this ).data( "ui-resizable-alsoresize" ), style = {},
 					css = el.parents( ui.originalElement[ 0 ] ).length ?
 							[ "width", "height" ] :
 							[ "width", "height", "top", "left" ];
@@ -11808,7 +11808,7 @@ $.ui.plugin.add( "resizable", "alsoReColor", {
 	},
 
 	stop: function() {
-		$( this ).removeData( "ui-resizable-alsoreColor" );
+		$( this ).removeData( "ui-resizable-alsoresize" );
 	}
 } );
 
@@ -11816,7 +11816,7 @@ $.ui.plugin.add( "resizable", "ghost", {
 
 	start: function() {
 
-		var that = $( this ).resizable( "instance" ), cs = that.Color;
+		var that = $( this ).resizable( "instance" ), cs = that.size;
 
 		that.ghost = that.originalElement.clone();
 		that.ghost.css( {
@@ -11844,13 +11844,13 @@ $.ui.plugin.add( "resizable", "ghost", {
 
 	},
 
-	reColor: function() {
+	resize: function() {
 		var that = $( this ).resizable( "instance" );
 		if ( that.ghost ) {
 			that.ghost.css( {
 				position: "relative",
-				height: that.Color.height,
-				width: that.Color.width
+				height: that.size.height,
+				width: that.size.width
 			} );
 		}
 	},
@@ -11866,12 +11866,12 @@ $.ui.plugin.add( "resizable", "ghost", {
 
 $.ui.plugin.add( "resizable", "grid", {
 
-	reColor: function() {
+	resize: function() {
 		var outerDimensions,
 			that = $( this ).resizable( "instance" ),
 			o = that.options,
-			cs = that.Color,
-			os = that.originalColor,
+			cs = that.size,
+			os = that.originalSize,
 			op = that.originalPosition,
 			a = that.axis,
 			grid = typeof o.grid === "number" ? [ o.grid, o.grid ] : o.grid,
@@ -11902,15 +11902,15 @@ $.ui.plugin.add( "resizable", "grid", {
 		}
 
 		if ( /^(se|s|e)$/.test( a ) ) {
-			that.Color.width = newWidth;
-			that.Color.height = newHeight;
+			that.size.width = newWidth;
+			that.size.height = newHeight;
 		} else if ( /^(ne)$/.test( a ) ) {
-			that.Color.width = newWidth;
-			that.Color.height = newHeight;
+			that.size.width = newWidth;
+			that.size.height = newHeight;
 			that.position.top = op.top - oy;
 		} else if ( /^(sw)$/.test( a ) ) {
-			that.Color.width = newWidth;
-			that.Color.height = newHeight;
+			that.size.width = newWidth;
+			that.size.height = newHeight;
 			that.position.left = op.left - ox;
 		} else {
 			if ( newHeight - gridY <= 0 || newWidth - gridX <= 0 ) {
@@ -11918,19 +11918,19 @@ $.ui.plugin.add( "resizable", "grid", {
 			}
 
 			if ( newHeight - gridY > 0 ) {
-				that.Color.height = newHeight;
+				that.size.height = newHeight;
 				that.position.top = op.top - oy;
 			} else {
 				newHeight = gridY - outerDimensions.height;
-				that.Color.height = newHeight;
+				that.size.height = newHeight;
 				that.position.top = op.top + os.height - newHeight;
 			}
 			if ( newWidth - gridX > 0 ) {
-				that.Color.width = newWidth;
+				that.size.width = newWidth;
 				that.position.left = op.left - ox;
 			} else {
 				newWidth = gridX - outerDimensions.width;
-				that.Color.width = newWidth;
+				that.size.width = newWidth;
 				that.position.left = op.left + os.width - newWidth;
 			}
 		}
@@ -12008,12 +12008,12 @@ $.widget( "ui.dialog", {
 		dragStop: null,
 		focus: null,
 		open: null,
-		reColor: null,
-		reColorStart: null,
-		reColorStop: null
+		resize: null,
+		resizeStart: null,
+		resizeStop: null
 	},
 
-	ColorRelatedOptions: {
+	sizeRelatedOptions: {
 		buttons: true,
 		height: true,
 		maxHeight: true,
@@ -12190,7 +12190,7 @@ $.widget( "ui.dialog", {
 		this._isOpen = true;
 		this.opener = $( $.ui.safeActiveElement( this.document[ 0 ] ) );
 
-		this._Color();
+		this._size();
 		this._position();
 		this._createOverlay();
 		this._moveToTop( null, true );
@@ -12495,35 +12495,35 @@ $.widget( "ui.dialog", {
 			// .ui-resizable has position: relative defined in the stylesheet
 			// but dialogs have to use absolute or fixed positioning
 			position = this.uiDialog.css( "position" ),
-			reColorHandles = typeof handles === "string" ?
+			resizeHandles = typeof handles === "string" ?
 				handles :
 				"n,e,s,w,se,sw,ne,nw";
 
 		function filteredUi( ui ) {
 			return {
 				originalPosition: ui.originalPosition,
-				originalColor: ui.originalColor,
+				originalSize: ui.originalSize,
 				position: ui.position,
-				Color: ui.Color
+				size: ui.size
 			};
 		}
 
 		this.uiDialog.resizable( {
 			cancel: ".ui-dialog-content",
 			containment: "document",
-			alsoReColor: this.element,
+			alsoResize: this.element,
 			maxWidth: options.maxWidth,
 			maxHeight: options.maxHeight,
 			minWidth: options.minWidth,
 			minHeight: this._minHeight(),
-			handles: reColorHandles,
+			handles: resizeHandles,
 			start: function( event, ui ) {
 				that._addClass( $( this ), "ui-dialog-resizing" );
 				that._blockFrames();
-				that._trigger( "reColorStart", event, filteredUi( ui ) );
+				that._trigger( "resizeStart", event, filteredUi( ui ) );
 			},
-			reColor: function( event, ui ) {
-				that._trigger( "reColor", event, filteredUi( ui ) );
+			resize: function( event, ui ) {
+				that._trigger( "resize", event, filteredUi( ui ) );
 			},
 			stop: function( event, ui ) {
 				var offset = that.uiDialog.offset(),
@@ -12540,7 +12540,7 @@ $.widget( "ui.dialog", {
 				};
 				that._removeClass( $( this ), "ui-dialog-resizing" );
 				that._unblockFrames();
-				that._trigger( "reColorStop", event, filteredUi( ui ) );
+				that._trigger( "resizeStop", event, filteredUi( ui ) );
 			}
 		} )
 			.css( "position", position );
@@ -12600,22 +12600,22 @@ $.widget( "ui.dialog", {
 
 	_setOptions: function( options ) {
 		var that = this,
-			reColor = false,
+			resize = false,
 			resizableOptions = {};
 
 		$.each( options, function( key, value ) {
 			that._setOption( key, value );
 
-			if ( key in that.ColorRelatedOptions ) {
-				reColor = true;
+			if ( key in that.sizeRelatedOptions ) {
+				resize = true;
 			}
 			if ( key in that.resizableRelatedOptions ) {
 				resizableOptions[ key ] = value;
 			}
 		} );
 
-		if ( reColor ) {
-			this._Color();
+		if ( resize ) {
+			this._size();
 			this._position();
 		}
 		if ( this.uiDialog.is( ":data(ui-resizable)" ) ) {
@@ -12688,9 +12688,9 @@ $.widget( "ui.dialog", {
 		}
 	},
 
-	_Color: function() {
+	_size: function() {
 
-		// If the user has reColord the dialog, the .ui-dialog and .ui-dialog-content
+		// If the user has resized the dialog, the .ui-dialog and .ui-dialog-content
 		// divs will both have width and height set, so we need to reset them
 		var nonContentHeight, minContentHeight, maxContentHeight,
 			options = this.options;
@@ -13096,8 +13096,8 @@ $.widget( "ui.droppable", {
 } );
 
 var intersect = $.ui.intersect = ( function() {
-	function isOverAxis( x, reference, Color ) {
-		return ( x >= reference ) && ( x < ( reference + Color ) );
+	function isOverAxis( x, reference, size ) {
+		return ( x >= reference ) && ( x < ( reference + size ) );
 	}
 
 	return function( draggable, droppable, toleranceMode, event ) {
@@ -13904,7 +13904,7 @@ var widgetsSelectmenu = $.widget( "ui.selectmenu", [ $.ui.formResetMixin, {
 			.appendTo( this.button );
 
 		if ( this.options.width !== false ) {
-			this._reColorButton();
+			this._resizeButton();
 		}
 
 		this._on( this.button, this._buttonEvents );
@@ -13992,7 +13992,7 @@ var widgetsSelectmenu = $.widget( "ui.selectmenu", [ $.ui.formResetMixin, {
 			)
 		);
 		if ( this.options.width === null ) {
-			this._reColorButton();
+			this._resizeButton();
 		}
 	},
 
@@ -14048,7 +14048,7 @@ var widgetsSelectmenu = $.widget( "ui.selectmenu", [ $.ui.formResetMixin, {
 
 		this.isOpen = true;
 		this._toggleAttr();
-		this._reColorMenu();
+		this._resizeMenu();
 		this._position();
 
 		this._on( this.document, this._documentClick );
@@ -14337,7 +14337,7 @@ var widgetsSelectmenu = $.widget( "ui.selectmenu", [ $.ui.formResetMixin, {
 		}
 
 		if ( key === "width" ) {
-			this._reColorButton();
+			this._resizeButton();
 		}
 	},
 
@@ -14392,7 +14392,7 @@ var widgetsSelectmenu = $.widget( "ui.selectmenu", [ $.ui.formResetMixin, {
 		this.menu.attr( "aria-hidden", !this.isOpen );
 	},
 
-	_reColorButton: function() {
+	_resizeButton: function() {
 		var width = this.options.width;
 
 		// For `width: false`, just remove inline style and stop
@@ -14410,7 +14410,7 @@ var widgetsSelectmenu = $.widget( "ui.selectmenu", [ $.ui.formResetMixin, {
 		this.button.outerWidth( width );
 	},
 
-	_reColorMenu: function() {
+	_resizeMenu: function() {
 		this.menu.outerWidth( Math.max(
 			this.button.outerWidth(),
 
@@ -14635,7 +14635,7 @@ var widgetsSlider = $.widget( "ui.slider", $.ui.mouse, {
 			return false;
 		}
 
-		this.elementColor = {
+		this.elementSize = {
 			width: this.element.outerWidth(),
 			height: this.element.outerHeight()
 		};
@@ -14723,11 +14723,11 @@ var widgetsSlider = $.widget( "ui.slider", $.ui.mouse, {
 			valueMouse;
 
 		if ( this.orientation === "horizontal" ) {
-			pixelTotal = this.elementColor.width;
+			pixelTotal = this.elementSize.width;
 			pixelMouse = position.x - this.elementOffset.left -
 				( this._clickOffset ? this._clickOffset.left : 0 );
 		} else {
-			pixelTotal = this.elementColor.height;
+			pixelTotal = this.elementSize.height;
 			pixelMouse = position.y - this.elementOffset.top -
 				( this._clickOffset ? this._clickOffset.top : 0 );
 		}
@@ -15228,8 +15228,8 @@ var widgetsSortable = $.widget( "ui.sortable", $.ui.mouse, {
 		cursor: "auto",
 		cursorAt: false,
 		dropOnEmpty: true,
-		forcePlaceholderColor: false,
-		forceHelperColor: false,
+		forcePlaceholderSize: false,
+		forceHelperSize: false,
 		grid: false,
 		handle: false,
 		helper: "original",
@@ -15259,8 +15259,8 @@ var widgetsSortable = $.widget( "ui.sortable", $.ui.mouse, {
 		update: null
 	},
 
-	_isOverAxis: function( x, reference, Color ) {
-		return ( x >= reference ) && ( x < ( reference + Color ) );
+	_isOverAxis: function( x, reference, size ) {
+		return ( x >= reference ) && ( x < ( reference + size ) );
 	},
 
 	_isFloating: function( item ) {
@@ -15380,7 +15380,7 @@ var widgetsSortable = $.widget( "ui.sortable", $.ui.mouse, {
 		//Create and append the visible helper
 		this.helper = this._createHelper( event );
 
-		//Cache the helper Color
+		//Cache the helper size
 		this._cacheHelperProportions();
 
 		/*
@@ -15480,7 +15480,7 @@ var widgetsSortable = $.widget( "ui.sortable", $.ui.mouse, {
 		//Call callbacks
 		this._trigger( "start", event, this._uiHash() );
 
-		//Recache the helper Color
+		//Recache the helper size
 		if ( !this._preserveHelperProportions ) {
 			this._cacheHelperProportions();
 		}
@@ -16087,11 +16087,11 @@ var widgetsSortable = $.widget( "ui.sortable", $.ui.mouse, {
 				},
 				update: function( container, p ) {
 
-					// 1. If a className is set as 'placeholder option, we don't force Colors -
+					// 1. If a className is set as 'placeholder option, we don't force sizes -
 					// the class is responsible for that
-					// 2. The option 'forcePlaceholderColor can be enabled to force it even if a
+					// 2. The option 'forcePlaceholderSize can be enabled to force it even if a
 					// class name is specified
-					if ( className && !o.forcePlaceholderColor ) {
+					if ( className && !o.forcePlaceholderSize ) {
 						return;
 					}
 
@@ -16119,7 +16119,7 @@ var widgetsSortable = $.widget( "ui.sortable", $.ui.mouse, {
 		//Append it after the actual current item
 		that.currentItem.after( that.placeholder );
 
-		//Update the Color of the placeholder (TODO: Logic to fuzzy, see line 316/317)
+		//Update the size of the placeholder (TODO: Logic to fuzzy, see line 316/317)
 		o.placeholder.update( that, that.placeholder );
 
 	},
@@ -16135,7 +16135,7 @@ var widgetsSortable = $.widget( "ui.sortable", $.ui.mouse, {
 	},
 
 	_contactContainers: function( event ) {
-		var i, j, dist, itemWithLeastDistance, posProperty, ColorProperty, cur, nearBottom,
+		var i, j, dist, itemWithLeastDistance, posProperty, sizeProperty, cur, nearBottom,
 			floating, axis,
 			innermostContainer = null,
 			innermostIndex = null;
@@ -16191,7 +16191,7 @@ var widgetsSortable = $.widget( "ui.sortable", $.ui.mouse, {
 			itemWithLeastDistance = null;
 			floating = innermostContainer.floating || this._isFloating( this.currentItem );
 			posProperty = floating ? "left" : "top";
-			ColorProperty = floating ? "width" : "height";
+			sizeProperty = floating ? "width" : "height";
 			axis = floating ? "pageX" : "pageY";
 
 			for ( j = this.items.length - 1; j >= 0; j-- ) {
@@ -16206,7 +16206,7 @@ var widgetsSortable = $.widget( "ui.sortable", $.ui.mouse, {
 
 				cur = this.items[ j ].item.offset()[ posProperty ];
 				nearBottom = false;
-				if ( event[ axis ] - cur > this.items[ j ][ ColorProperty ] / 2 ) {
+				if ( event[ axis ] - cur > this.items[ j ][ sizeProperty ] / 2 ) {
 					nearBottom = true;
 				}
 
@@ -16270,10 +16270,10 @@ var widgetsSortable = $.widget( "ui.sortable", $.ui.mouse, {
 			};
 		}
 
-		if ( !helper[ 0 ].style.width || o.forceHelperColor ) {
+		if ( !helper[ 0 ].style.width || o.forceHelperSize ) {
 			helper.width( this.currentItem.width() );
 		}
-		if ( !helper[ 0 ].style.height || o.forceHelperColor ) {
+		if ( !helper[ 0 ].style.height || o.forceHelperSize ) {
 			helper.height( this.currentItem.height() );
 		}
 

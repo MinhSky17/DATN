@@ -9,7 +9,7 @@
 .colorpicker {
   position: relative;
   display: none;
-  font-Color: inherit;
+  font-size: inherit;
   color: inherit;
   text-align: left;
   list-style: none;
@@ -127,7 +127,7 @@
   width: 16px;
   height: 126px;
   float: left;
-  cursor: row-reColor;
+  cursor: row-resize;
   margin-left: 6px;
   margin-bottom: 6px; }
 
@@ -169,7 +169,7 @@
 
 .colorpicker-alpha {
   background: linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.1) 75%, rgba(0, 0, 0, 0.1) 0), linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.1) 75%, rgba(0, 0, 0, 0.1) 0), white;
-  background-Color: 10px 10px;
+  background-size: 10px 10px;
   background-position: 0 0, 5px 5px;
   display: none; }
 
@@ -178,7 +178,7 @@
   margin: 6px 0 0 0;
   clear: both;
   text-align: center;
-  font-Color: 10px;
+  font-size: 10px;
   line-height: normal;
   max-width: 100%;
   -webkit-box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
@@ -213,7 +213,7 @@
   display: inline-block;
   vertical-align: text-top;
   background: linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.1) 75%, rgba(0, 0, 0, 0.1) 0), linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.1) 75%, rgba(0, 0, 0, 0.1) 0), white;
-  background-Color: 10px 10px;
+  background-size: 10px 10px;
   background-position: 0 0, 5px 5px; }
 
 .colorpicker.colorpicker-inline {
@@ -239,7 +239,7 @@
   float: none;
   width: 126px;
   height: 16px;
-  cursor: col-reColor;
+  cursor: col-resize;
   margin-left: 0;
   margin-top: 6px;
   margin-bottom: 0; }
@@ -266,7 +266,7 @@
 
 .colorpicker.colorpicker-horizontal .colorpicker-alpha {
   background: linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.1) 75%, rgba(0, 0, 0, 0.1) 0), linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.1) 75%, rgba(0, 0, 0, 0.1) 0), white;
-  background-Color: 10px 10px;
+  background-size: 10px 10px;
   background-position: 0 0, 5px 5px; }
 
 .colorpicker-inline:before,
@@ -325,7 +325,7 @@
 /** EXTENSIONS **/
 .colorpicker-preview {
   background: linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.1) 75%, rgba(0, 0, 0, 0.1) 0), linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.1) 75%, rgba(0, 0, 0, 0.1) 0), white;
-  background-Color: 10px 10px;
+  background-size: 10px 10px;
   background-position: 0 0, 5px 5px; }
 
 .colorpicker-preview > div {
@@ -357,7 +357,7 @@
   -webkit-box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
           box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
   background: linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.1) 75%, rgba(0, 0, 0, 0.1) 0), linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.1) 75%, rgba(0, 0, 0, 0.1) 0), white;
-  background-Color: 10px 10px;
+  background-size: 10px 10px;
   background-position: 0 0, 5px 5px; }
 
 .colorpicker-swatch--inner {

@@ -172,7 +172,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #a22;}
   outline: none; /* Prevent dragging from highlighting the element */
   position: relative;
 }
-.CodeMirror-Colorr {
+.CodeMirror-sizer {
   position: relative;
   border-right: 50px solid transparent;
 }
@@ -245,7 +245,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #a22;}
   border-width: 0;
   background: transparent;
   font-family: inherit;
-  font-Color: inherit;
+  font-size: inherit;
   margin: 0;
   white-space: pre;
   word-wrap: normal;
@@ -287,7 +287,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #a22;}
 
 /* Force content-box sizing for the elements where we expect it */
 .CodeMirror-scroll,
-.CodeMirror-Colorr,
+.CodeMirror-sizer,
 .CodeMirror-gutter,
 .CodeMirror-gutters,
 .CodeMirror-linenumber {

@@ -15,13 +15,17 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Getter
 public class CreateColorCountRequest {
-    private String color;
+    @NotEmpty(message = "Mã màu trống")
+    @JsonProperty("code")
+    private String code;
+
+    @NotEmpty(message = "Tên màu trống")
+    private String name;
 
     @Min(0)
     private int count;
 
     @NotEmpty(message = "Mã sản phẩm trống")
-    @NotNull(message = "Mã sản phẩm trống")
     @JsonProperty("product_id")
     private String productId;
 }

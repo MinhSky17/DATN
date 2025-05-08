@@ -4,5 +4,5 @@ if(localStorage.getItem('layout')!==null&&!document.querySelector('html').hasAtt
 if(localStorage.getItem('backgroundColor')!==null&&!document.querySelector('html').hasAttribute('data-style-switcher-options')){if(localStorage.getItem('backgroundColor')=='dark'){document.querySelector('html').className+=' '+'dark';}}
 if(localStorage.getItem('headerColor')!==null&&!document.querySelector('html').hasAttribute('data-style-switcher-options')){if(localStorage.getItem('headerColor')=='dark'){document.querySelector('html').className+=' '+'header-dark';}}
 if(localStorage.getItem('sidebarColor')!==null&&!document.querySelector('html').hasAttribute('data-style-switcher-options')){if(localStorage.getItem('sidebarColor')=='light'){document.querySelector('html').className+=' '+'sidebar-light';}}
-if(localStorage.getItem('sidebarColor')!==null&&!document.querySelector('html').hasAttribute('data-style-switcher-options')){var sidebarColorClass='';switch(localStorage.getItem('sidebarColor')){case 'xs':sidebarColorClass='sidebar-left-xs';break;case 'sm':sidebarColorClass='sidebar-left-sm';break;}
-document.querySelector('html').className+=' '+sidebarColorClass;}}
+if(localStorage.getItem('sidebarSize')!==null&&!document.querySelector('html').hasAttribute('data-style-switcher-options')){var sidebarSizeClass='';switch(localStorage.getItem('sidebarSize')){case 'xs':sidebarSizeClass='sidebar-left-xs';break;case 'sm':sidebarSizeClass='sidebar-left-sm';break;}
+document.querySelector('html').className+=' '+sidebarSizeClass;}}

@@ -109,9 +109,9 @@ Licensed under the MIT license.
 
 		this.pixelRatio = devicePixelRatio / backingStoreRatio;
 
-		// Color the canvas to match the internal dimensions of its container
+		// Size the canvas to match the internal dimensions of its container
 
-		this.reColor(container.width(), container.height());
+		this.resize(container.width(), container.height());
 
 		// Collection of HTML div layers for text overlaid onto the canvas
 
@@ -124,12 +124,12 @@ Licensed under the MIT license.
 		this._textCache = {};
 	}
 
-	// ReColors the canvas to the given dimensions.
+	// Resizes the canvas to the given dimensions.
 	//
 	// @param {number} width New width of the canvas, in pixels.
 	// @param {number} width New height of the canvas, in pixels.
 
-	Canvas.prototype.reColor = function(width, height) {
+	Canvas.prototype.resize = function(width, height) {
 
 		if (width <= 0 || height <= 0) {
 			throw new Error("Invalid dimensions for plot, width = " + width + ", height = " + height);
@@ -139,9 +139,9 @@ Licensed under the MIT license.
 			context = this.context,
 			pixelRatio = this.pixelRatio;
 
-		// ReColor the canvas, increasing its density based on the display's
+		// Resize the canvas, increasing its density based on the display's
 		// pixel ratio; basically giving it more pixels without increasing the
-		// Color of its element, to take advantage of the fact that retina
+		// size of its element, to take advantage of the fact that retina
 		// displays have that many more pixels in the same advertised space.
 
 		// Resizing should reset the state (excanvas seems to be buggy though)
@@ -167,7 +167,7 @@ Licensed under the MIT license.
 
 		// Scale the coordinate space to match the display density; so even though we
 		// may have twice as many pixels, we still want lines and other drawing to
-		// appear at the same Color; the extra pixels will just make them crisper.
+		// appear at the same size; the extra pixels will just make them crisper.
 
 		context.scale(pixelRatio, pixelRatio);
 	};
@@ -254,7 +254,7 @@ Licensed under the MIT license.
 						left: 0,
 						bottom: 0,
 						right: 0,
-						'font-Color': "smaller",
+						'font-size': "smaller",
 						color: "#545454"
 					})
 					.insertAfter(this.element);
@@ -326,7 +326,7 @@ Licensed under the MIT license.
 		// If the font is a font-spec object, generate a CSS font definition
 
 		if (typeof font === "object") {
-			textStyle = font.style + " " + font.variant + " " + font.weight + " " + font.Color + "px/" + font.lineHeight + "px " + font.family;
+			textStyle = font.style + " " + font.variant + " " + font.weight + " " + font.size + "px/" + font.lineHeight + "px " + font.family;
 		} else {
 			textStyle = font;
 		}
@@ -531,7 +531,7 @@ Licensed under the MIT license.
                     show: null, // null = auto-detect, true = always, false = never
                     position: "bottom", // or "top"
                     mode: null, // null or "time"
-                    font: null, // null (derived from CSS in placeholder) or object like { Color: 11, lineHeight: 13, style: "italic", weight: "bold", family: "sans-serif", variant: "small-caps" }
+                    font: null, // null (derived from CSS in placeholder) or object like { size: 11, lineHeight: 13, style: "italic", weight: "bold", family: "sans-serif", variant: "small-caps" }
                     color: null, // base color, labels, ticks
                     tickColor: null, // possibly different color of ticks, e.g. "rgba(0,0,0,0.15)"
                     transform: null, // null or f: number -> number to transform axis
@@ -541,14 +541,14 @@ Licensed under the MIT license.
                     autoscaleMargin: null, // margin in % to add if auto-setting min/max
                     ticks: null, // either [1, 3] or [[1, "a"], 3] or (fn: axis info -> ticks) or app. number of ticks for auto-ticks
                     tickFormatter: null, // fn: number -> string
-                    labelWidth: null, // Color of tick labels in pixels
+                    labelWidth: null, // size of tick labels in pixels
                     labelHeight: null,
                     reserveSpace: null, // whether to reserve space even if axis isn't shown
-                    tickLength: null, // Color in pixels of ticks, or "full" for whole line
+                    tickLength: null, // size in pixels of ticks, or "full" for whole line
                     alignTicksWithAxis: null, // axis number or null for no sync
                     tickDecimals: null, // no. of decimals, null means auto
-                    tickColor: null, // number or [number, "unit"]
-                    minTickColor: null // number or [number, "unit"]
+                    tickSize: null, // number or [number, "unit"]
+                    minTickSize: null // number or [number, "unit"]
                 },
                 yaxis: {
                     autoscaleMargin: 0.02,
@@ -585,7 +585,7 @@ Licensed under the MIT license.
                         horizontal: false,
                         zero: true
                     },
-                    shadowColor: 3,
+                    shadowSize: 3,
                     highlightColor: null
                 },
                 grid: {
@@ -691,11 +691,11 @@ Licensed under the MIT license.
             highlights = [];
             plot = null;
         };
-        plot.reColor = function () {
+        plot.resize = function () {
         	var width = placeholder.width(),
         		height = placeholder.height();
-            surface.reColor(width, height);
-            overlay.reColor(width, height);
+            surface.resize(width, height);
+            overlay.resize(width, height);
         };
 
         // public attributes
@@ -738,7 +738,7 @@ Licensed under the MIT license.
             $.extend(true, options, opts);
 
             // $.extend merges arrays, rather than replacing them.  When less
-            // colors are provided than the Color of the default palette, we
+            // colors are provided than the size of the default palette, we
             // end up with those colors plus the remaining defaults, which is
             // not expected behavior; avoid it by replacing them here.
 
@@ -768,11 +768,11 @@ Licensed under the MIT license.
             // since the rest of the code assumes that they exist.
 
             var i, axisOptions, axisCount,
-                fontColor = placeholder.css("font-Color"),
-                fontColorDefault = fontColor ? +fontColor.replace("px", "") : 13,
+                fontSize = placeholder.css("font-size"),
+                fontSizeDefault = fontSize ? +fontSize.replace("px", "") : 13,
                 fontDefaults = {
                     style: placeholder.css("font-style"),
-                    Color: Math.round(0.8 * fontColorDefault),
+                    size: Math.round(0.8 * fontSizeDefault),
                     variant: placeholder.css("font-variant"),
                     weight: placeholder.css("font-weight"),
                     family: placeholder.css("font-family")
@@ -795,7 +795,7 @@ Licensed under the MIT license.
                         axisOptions.font.color = axisOptions.color;
                     }
                     if (!axisOptions.font.lineHeight) {
-                        axisOptions.font.lineHeight = Math.round(axisOptions.font.Color * 1.15);
+                        axisOptions.font.lineHeight = Math.round(axisOptions.font.size * 1.15);
                     }
                 }
             }
@@ -817,7 +817,7 @@ Licensed under the MIT license.
                         axisOptions.font.color = axisOptions.color;
                     }
                     if (!axisOptions.font.lineHeight) {
-                        axisOptions.font.lineHeight = Math.round(axisOptions.font.Color * 1.15);
+                        axisOptions.font.lineHeight = Math.round(axisOptions.font.size * 1.15);
                     }
                 }
             }
@@ -859,8 +859,8 @@ Licensed under the MIT license.
                 $.extend(true, options.series.points, options.points);
             if (options.bars)
                 $.extend(true, options.series.bars, options.bars);
-            if (options.shadowColor != null)
-                options.series.shadowColor = options.shadowColor;
+            if (options.shadowSize != null)
+                options.series.shadowSize = options.shadowSize;
             if (options.highlightColor != null)
                 options.series.highlightColor = options.highlightColor;
 
@@ -1016,11 +1016,11 @@ Licensed under the MIT license.
             // variations on those colors once they're exhausted.
 
             var c, colors = [], colorPool = options.colors,
-                colorPoolColor = colorPool.length, variation = 0;
+                colorPoolSize = colorPool.length, variation = 0;
 
             for (i = 0; i < neededColors; i++) {
 
-                c = $.color.parse(colorPool[i % colorPoolColor] || "#666");
+                c = $.color.parse(colorPool[i % colorPoolSize] || "#666");
 
                 // Each time we exhaust the colors in the pool we adjust
                 // a scaling factor used to produce more variations on
@@ -1030,7 +1030,7 @@ Licensed under the MIT license.
                 // Reset the variation after every few cycles, or else
                 // it will end up producing only white or black colors.
 
-                if (i % colorPoolColor == 0 && i) {
+                if (i % colorPoolSize == 0 && i) {
                     if (variation >= 0) {
                         if (variation < 0.5) {
                             variation = -variation - 0.2;
@@ -1134,12 +1134,12 @@ Licensed under the MIT license.
                     s.datapoints.format = format;
                 }
 
-                if (s.datapoints.pointColor != null)
+                if (s.datapoints.pointsize != null)
                     continue; // already filled in
 
-                s.datapoints.pointColor = format.length;
+                s.datapoints.pointsize = format.length;
 
-                ps = s.datapoints.pointColor;
+                ps = s.datapoints.pointsize;
                 points = s.datapoints.points;
 
                 var insertSteps = s.lines.show && s.lines.steps;
@@ -1229,7 +1229,7 @@ Licensed under the MIT license.
             for (i = 0; i < series.length; ++i) {
                 s = series[i];
                 points = s.datapoints.points;
-                ps = s.datapoints.pointColor;
+                ps = s.datapoints.pointsize;
                 format = s.datapoints.format;
 
                 var xmin = topSentry, ymin = topSentry,
@@ -1702,32 +1702,32 @@ Licensed under the MIT license.
 
             var magn = Math.pow(10, -dec),
                 norm = delta / magn, // norm is between 1.0 and 10.0
-                Color;
+                size;
 
             if (norm < 1.5) {
-                Color = 1;
+                size = 1;
             } else if (norm < 3) {
-                Color = 2;
+                size = 2;
                 // special case for 2.5, requires an extra decimal
                 if (norm > 2.25 && (maxDec == null || dec + 1 <= maxDec)) {
-                    Color = 2.5;
+                    size = 2.5;
                     ++dec;
                 }
             } else if (norm < 7.5) {
-                Color = 5;
+                size = 5;
             } else {
-                Color = 10;
+                size = 10;
             }
 
-            Color *= magn;
+            size *= magn;
 
-            if (opts.minTickColor != null && Color < opts.minTickColor) {
-                Color = opts.minTickColor;
+            if (opts.minTickSize != null && size < opts.minTickSize) {
+                size = opts.minTickSize;
             }
 
             axis.delta = delta;
             axis.tickDecimals = Math.max(0, maxDec != null ? maxDec : dec);
-            axis.tickColor = opts.tickColor || Color;
+            axis.tickSize = opts.tickSize || size;
 
             // Time mode was moved to a plug-in in 0.8, and since so many people use it
             // we'll add an especially friendly reminder to make sure they included it.
@@ -1744,14 +1744,14 @@ Licensed under the MIT license.
                 axis.tickGenerator = function (axis) {
 
                     var ticks = [],
-                        start = floorInBase(axis.min, axis.tickColor),
+                        start = floorInBase(axis.min, axis.tickSize),
                         i = 0,
                         v = Number.NaN,
                         prev;
 
                     do {
                         prev = v;
-                        v = start + i * axis.tickColor;
+                        v = start + i * axis.tickSize;
                         ticks.push(v);
                         ++i;
                     } while (v < axis.max && v != prev);
@@ -2240,7 +2240,7 @@ Licensed under the MIT license.
         function drawSeriesLines(series) {
             function plotLine(datapoints, xoffset, yoffset, axisx, axisy) {
                 var points = datapoints.points,
-                    ps = datapoints.pointColor,
+                    ps = datapoints.pointsize,
                     prevx = null, prevy = null;
 
                 ctx.beginPath();
@@ -2320,7 +2320,7 @@ Licensed under the MIT license.
 
             function plotLineArea(datapoints, axisx, axisy) {
                 var points = datapoints.points,
-                    ps = datapoints.pointColor,
+                    ps = datapoints.pointsize,
                     bottom = Math.min(Math.max(0, axisy.min), axisy.max),
                     i = 0, top, areaOpen = false,
                     ypos = 1, segmentStart = 0, segmentEnd = 0;
@@ -2465,7 +2465,7 @@ Licensed under the MIT license.
             ctx.lineJoin = "round";
 
             var lw = series.lines.lineWidth,
-                sw = series.shadowColor;
+                sw = series.shadowSize;
             // FIXME: consider another form of shadow when filling is turned on
             if (lw > 0 && sw > 0) {
                 // draw shadow as a thick and thin line with transparency
@@ -2493,7 +2493,7 @@ Licensed under the MIT license.
 
         function drawSeriesPoints(series) {
             function plotPoints(datapoints, radius, fillStyle, offset, shadow, axisx, axisy, symbol) {
-                var points = datapoints.points, ps = datapoints.pointColor;
+                var points = datapoints.points, ps = datapoints.pointsize;
 
                 for (var i = 0; i < points.length; i += ps) {
                     var x = points[i], y = points[i + 1];
@@ -2521,7 +2521,7 @@ Licensed under the MIT license.
             ctx.translate(plotOffset.left, plotOffset.top);
 
             var lw = series.points.lineWidth,
-                sw = series.shadowColor,
+                sw = series.shadowSize,
                 radius = series.points.radius,
                 symbol = series.points.symbol;
 
@@ -2661,7 +2661,7 @@ Licensed under the MIT license.
 
         function drawSeriesBars(series) {
             function plotBars(datapoints, barLeft, barRight, fillStyleCallback, axisx, axisy) {
-                var points = datapoints.points, ps = datapoints.pointColor;
+                var points = datapoints.points, ps = datapoints.pointsize;
 
                 for (var i = 0; i < points.length; i += ps) {
                     if (points[i] == null)
@@ -2781,7 +2781,7 @@ Licensed under the MIT license.
             if (fragments.length == 0)
                 return;
 
-            var table = '<table style="font-Color:smaller;color:' + options.grid.color + '">' + fragments.join("") + '</table>';
+            var table = '<table style="font-size:smaller;color:' + options.grid.color + '">' + fragments.join("") + '</table>';
             if (options.legend.container != null)
                 $(options.legend.container).html(table);
             else {
@@ -2844,7 +2844,7 @@ Licensed under the MIT license.
                     maxx = maxDistance / axisx.scale,
                     maxy = maxDistance / axisy.scale;
 
-                ps = s.datapoints.pointColor;
+                ps = s.datapoints.pointsize;
                 // with inverse transforms, we can't use the maxx/maxy
                 // optimization, sadly
                 if (axisx.options.inverseTransform)
@@ -2915,7 +2915,7 @@ Licensed under the MIT license.
             if (item) {
                 i = item[0];
                 j = item[1];
-                ps = series[i].datapoints.pointColor;
+                ps = series[i].datapoints.pointsize;
 
                 return { datapoint: series[i].datapoints.points.slice(j * ps, (j + 1) * ps),
                          dataIndex: j,
@@ -3018,7 +3018,7 @@ Licensed under the MIT license.
                 s = series[s];
 
             if (typeof point == "number") {
-                var ps = s.datapoints.pointColor;
+                var ps = s.datapoints.pointsize;
                 point = s.datapoints.points.slice(ps * point, ps * (point + 1));
             }
 
@@ -3043,7 +3043,7 @@ Licensed under the MIT license.
                 s = series[s];
 
             if (typeof point == "number") {
-                var ps = s.datapoints.pointColor;
+                var ps = s.datapoints.pointsize;
                 point = s.datapoints.points.slice(ps * point, ps * (point + 1));
             }
 

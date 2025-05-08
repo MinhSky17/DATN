@@ -615,10 +615,10 @@ $.extend( $.validator, {
 		},
 
 		valid: function() {
-			return this.Color() === 0;
+			return this.size() === 0;
 		},
 
-		Color: function() {
+		size: function() {
 			return this.errorList.length;
 		},
 

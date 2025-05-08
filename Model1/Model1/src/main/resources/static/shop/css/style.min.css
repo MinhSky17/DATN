@@ -473,7 +473,7 @@
     position: relative;
     -ms-touch-action: pan-Y;
     touch-action: manipulation;
-    -moz-backface-visibility: hidden
+    backface-visibility: hidden
 }
 
 .owl-carousel .owl-stage:after {
@@ -488,23 +488,20 @@
 .owl-carousel .owl-stage-outer {
     position: relative;
     overflow: hidden;
-    -webkit-transform: translate3d(0px, 0px, 0px)
+    transform: translate3d(0px, 0px, 0px)
 }
 
 .owl-carousel .owl-wrapper, .owl-carousel .owl-item {
-    -webkit-backface-visibility: hidden;
-    -moz-backface-visibility: hidden;
-    -ms-backface-visibility: hidden;
-    -webkit-transform: translate3d(0, 0, 0);
-    -moz-transform: translate3d(0, 0, 0);
-    -ms-transform: translate3d(0, 0, 0)
+    backface-visibility: hidden;
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
 }
 
 .owl-carousel .owl-item {
     position: relative;
     min-height: 1px;
     float: left;
-    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none
 }
@@ -637,7 +634,7 @@
     background: url("../../../../../../www.portotheme.com/html/porto_ecommerce/demo_5/assets/images/owl.video.play.html") no-repeat;
     cursor: pointer;
     z-index: 1;
-    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
     transition: transform 100ms ease
 }
 
@@ -654,7 +651,7 @@
     height: 100%;
     background-position: center center;
     background-repeat: no-repeat;
-    background-Color: contain;
+    background-size: contain;
     transition: opacity 400ms ease
 }
 
@@ -670,7 +667,7 @@
     text-align: center;
     -webkit-tap-highlight-color: transparent;
     color: #222529;
-    font-Color: 3rem
+    font-size: 3rem
 }
 
 .owl-theme .owl-nav [class*='owl-'] {
@@ -679,7 +676,7 @@
     transform: translateY(-50%);
     color: #222529;
     margin: 0;
-    font-Color: 3rem;
+    font-size: 3rem;
     padding: 4px 7px;
     background: transparent;
     display: inline-block;
@@ -942,7 +939,7 @@ button::-moz-focus-inner {
     padding: 0 0 18px 10px;
     color: #FFF;
     font-style: normal;
-    font-Color: 28px;
+    font-size: 28px;
     font-family: Arial, Baskerville, monospace
 }
 
@@ -971,7 +968,7 @@ button::-moz-focus-inner {
     top: 0;
     right: 0;
     color: #CCC;
-    font-Color: 12px;
+    font-size: 12px;
     line-height: 18px;
     white-space: nowrap
 }
@@ -1114,7 +1111,7 @@ img.mfp-img {
 .mfp-figure small {
     color: #BDBDBD;
     display: block;
-    font-Color: 12px;
+    font-size: 12px;
     line-height: 14px
 }
 
@@ -1283,7 +1280,7 @@ img.mfp-img {
     padding: 0;
     width: 2rem;
     text-align: center;
-    font-Color: 1.2rem
+    font-size: 1.2rem
 }
 
 .bootstrap-touchspin .input-group-btn-vertical > .btn:before {
@@ -1418,11 +1415,11 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 }
 
 .noUi-draggable {
-    cursor: ew-reColor
+    cursor: ew-resize
 }
 
 .noUi-vertical .noUi-draggable {
-    cursor: ns-reColor
+    cursor: ns-resize
 }
 
 .noUi-handle {
@@ -1457,7 +1454,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 
 .noUi-value-sub {
     color: #ccc;
-    font-Color: 10px
+    font-size: 10px
 }
 
 .noUi-marker {
@@ -1570,12 +1567,12 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 }
 
 .alert.alert-intro {
-    font-Color: 1.5rem
+    font-size: 1.5rem
 }
 
 .banner {
     position: relative;
-    font-Color: 1.6rem
+    font-size: 1.6rem
 }
 
 .banner figure {
@@ -1599,11 +1596,11 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 }
 
 .ibanner {
-    font-Color: 10px
+    font-size: 10px
 }
 
 aside .banner {
-    font-Color: 1.6rem
+    font-size: 1.6rem
 }
 
 .banner-layer {
@@ -1645,39 +1642,39 @@ aside .banner {
 
 @media (max-width: 1199px) {
     .banner {
-        font-Color: 1.4rem
+        font-size: 1.4rem
     }
 
     .ibanner {
-        font-Color: 1rem
+        font-size: 1rem
     }
 }
 
 @media (max-width: 767px) {
     .banner-md-vw-small {
-        font-Color: 1.8vw
+        font-size: 1.8vw
     }
 
     .banner-md-vw {
-        font-Color: 2.3vw
+        font-size: 2.3vw
     }
 
     .banner-md-vw-large {
-        font-Color: 3vw
+        font-size: 3vw
     }
 }
 
 @media (max-width: 575px) {
     .banner-md-vw-small {
-        font-Color: 2.3vw
+        font-size: 2.3vw
     }
 
     .banner-sm-vw {
-        font-Color: 3vw
+        font-size: 3vw
     }
 
     .banner-sm-vw-large {
-        font-Color: 4vw
+        font-size: 4vw
     }
 }
 
@@ -1694,7 +1691,7 @@ aside .banner {
 }
 
 .breadcrumb-item {
-    font-Color: 11.2px;
+    font-size: 11.2px;
     letter-spacing: .09em;
     line-height: 24px;
     text-transform: uppercase
@@ -1708,7 +1705,7 @@ aside .banner {
     color: inherit;
     padding-right: 11px;
     content: "";
-    font-Color: 12px;
+    font-size: 12px;
     font-family: 'porto';
     vertical-align: middle;
     margin-top: -.5rem
@@ -1723,7 +1720,7 @@ aside .banner {
     text-transform: uppercase;
     padding: 1.85rem 4.2rem;
     border-radius: 0;
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     font-weight: 700;
     font-family: Poppins, sans-serif;
     line-height: 1.429
@@ -1735,22 +1732,22 @@ aside .banner {
 
 .btn-sm {
     padding: 1em 1.6em;
-    font-Color: 1.2rem
+    font-size: 1.2rem
 }
 
 .btn-md {
     padding: 1em 2.2em;
-    font-Color: 1.3rem
+    font-size: 1.3rem
 }
 
 .btn-lg {
     padding: 1em 2.15em;
-    font-Color: 1.4rem
+    font-size: 1.4rem
 }
 
 .btn-xl {
     padding: 1.125em 2.75em;
-    font-Color: 1.125em
+    font-size: 1.125em
 }
 
 .btn-icon-left i {
@@ -1868,7 +1865,7 @@ aside .banner {
     padding-bottom: 0;
     color: #08C;
     font-family: "Open Sans", sans-serif;
-    font-Color: 13px;
+    font-size: 13px;
     letter-spacing: 0;
     text-transform: initial
 }
@@ -1961,7 +1958,7 @@ a:focus {
     margin-bottom: 3rem;
     border: 1px solid #ddd;
     border-radius: 0;
-    font-Color: 1.4rem
+    font-size: 1.4rem
 }
 
 .card-header {
@@ -1986,7 +1983,7 @@ a:focus {
     margin-top: .1rem;
     float: right;
     color: #08C;
-    font-Color: 1.3rem;
+    font-size: 1.3rem;
     font-weight: 400;
     text-transform: capitalize
 }
@@ -2026,13 +2023,13 @@ a:focus {
 
 @media (min-width: 992px) {
     .count-wrapper {
-        font-Color: 3.6rem
+        font-size: 3.6rem
     }
 }
 
 .feature-box {
     color: #7b858a;
-    font-Color: 1.5rem;
+    font-size: 1.5rem;
     line-height: 2;
     margin-bottom: 4rem
 }
@@ -2041,7 +2038,7 @@ a:focus {
     display: inline-block;
     margin-bottom: 2.2rem;
     color: #08C;
-    font-Color: 5rem;
+    font-size: 5rem;
     line-height: 1
 }
 
@@ -2051,7 +2048,7 @@ a:focus {
 
 .feature-box h3 {
     margin-bottom: 2rem;
-    font-Color: 1.6rem;
+    font-size: 1.6rem;
     font-weight: 700;
     text-transform: uppercase;
     line-height: 1.1;
@@ -2064,7 +2061,7 @@ a:focus {
 
 .feature-box-content {
     color: #7b858a;
-    font-Color: 1.5rem;
+    font-size: 1.5rem;
     line-height: 1.8
 }
 
@@ -2881,7 +2878,7 @@ form h2 {
     background-color: #fff;
     color: #777;
     font-family: "Open Sans", sans-serif;
-    font-Color: 1.2rem;
+    font-size: 1.2rem;
     font-weight: 400;
     line-height: 1.5
 }
@@ -2898,11 +2895,11 @@ form h2 {
     padding: .8rem 1.2rem
 }
 
-select.form-control:not([Color]):not([multiple]) {
+select.form-control:not([size]):not([multiple]) {
     height: 6rem
 }
 
-select.form-control-sm:not([Color]):not([multiple]) {
+select.form-control-sm:not([size]):not([multiple]) {
     height: 4.6rem
 }
 
@@ -2922,7 +2919,7 @@ textarea.form-control {
     align-items: center;
     margin-top: 2rem;
     margin-bottom: 3.5rem;
-    font-Color: 1.2rem;
+    font-size: 1.2rem;
     vertical-align: middle
 }
 
@@ -2947,20 +2944,20 @@ label {
     margin: 0 0 .6rem;
     color: #000;
     font-family: Poppins, sans-serif;
-    font-Color: 1.2rem;
+    font-size: 1.2rem;
     font-weight: 700
 }
 
 .required-field > label:after {
     margin: 0 0 0 .45rem;
     color: #e02b27;
-    font-Color: 1.2rem;
+    font-size: 1.2rem;
     content: '*'
 }
 
 .required {
     color: #e02b27;
-    font-Color: 1.2rem
+    font-size: 1.2rem
 }
 
 .required + .form-footer {
@@ -3004,7 +3001,7 @@ label {
     right: 1.9rem;
     transform: translateY(-50%);
     font-family: 'porto';
-    font-Color: 1.5rem;
+    font-size: 1.5rem;
     content: '\e81c'
 }
 
@@ -3090,7 +3087,7 @@ label {
     transform: translateY(-50%);
     transition: all .3s;
     color: #777;
-    font-Color: 2.4rem
+    font-size: 2.4rem
 }
 
 .form-control-tooltip .input-tooltip:hover, .form-control-tooltip .input-tooltip:focus {
@@ -3133,7 +3130,7 @@ label {
 
 .info-box i {
     color: inherit;
-    font-Color: 3.7rem;
+    font-size: 3.7rem;
     text-align: center
 }
 
@@ -3145,7 +3142,7 @@ label {
 .info-box h4 {
     color: inherit;
     margin-bottom: 0;
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     font-weight: 700;
     text-transform: uppercase;
     line-height: 1.1
@@ -3153,7 +3150,7 @@ label {
 
 .info-box p {
     margin-bottom: 0;
-    font-Color: 1.3rem;
+    font-size: 1.3rem;
     letter-spacing: .01em;
     line-height: 1.6
 }
@@ -3208,7 +3205,7 @@ label {
 }
 
 .close {
-    font-Color: 2.2rem
+    font-size: 2.2rem
 }
 
 @media (min-width: 576px) {
@@ -3291,26 +3288,26 @@ label {
     justify-content: space-between;
     -ms-flex-pack: justify;
     margin-bottom: .5rem;
-    font-Color: 1.2rem;
+    font-size: 1.2rem;
     line-height: 1.5
 }
 
 .toolbox .select-custom:after {
     right: 1.5rem;
     margin-top: -1px;
-    font-Color: 1.6rem
+    font-size: 1.6rem
 }
 
 .toolbox .select-custom .form-control {
     max-width: 160px;
     padding-right: 2.5rem;
-    font-Color: 1.2rem
+    font-size: 1.2rem
 }
 
 .toolbox label {
     margin: 1px 1.2rem 0 0;
     color: #777;
-    font-Color: 1.2rem;
+    font-size: 1.2rem;
     font-weight: 400;
     font-family: "Open Sans", sans-serif
 }
@@ -3326,7 +3323,7 @@ label {
     color: #777
 }
 
-.toolbox select.form-control:not([Color]):not([multiple]) {
+.toolbox select.form-control:not([size]):not([multiple]) {
     height: 34px
 }
 
@@ -3371,7 +3368,7 @@ label {
     flex-wrap: wrap;
     -ms-flex-wrap: wrap;
     color: #706f6c;
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     font-weight: 600;
     font-family: Poppins, sans-serif
 }
@@ -3411,7 +3408,7 @@ label {
 }
 
 .page-link i {
-    font-Color: 2rem
+    font-size: 2rem
 }
 
 span.page-link, .page-link-btn {
@@ -3422,7 +3419,7 @@ span.page-link, .page-link-btn {
     display: inline-block;
     width: 1.2em;
     color: #000;
-    font-Color: 1.6rem;
+    font-size: 1.6rem;
     line-height: 34px;
     text-align: center
 }
@@ -3468,7 +3465,7 @@ span.page-link, .page-link-btn {
 }
 
 .login-popup .title {
-    font-Color: 1.5rem;
+    font-size: 1.5rem;
     font-weight: 600;
     line-height: 2;
     text-transform: uppercase
@@ -3481,7 +3478,7 @@ span.page-link, .page-link-btn {
 .login-popup label {
     color: #777;
     font-family: "Open Sans", sans-serif;
-    font-Color: 1.2rem;
+    font-size: 1.2rem;
     font-weight: 400;
     line-height: 1;
     text-transform: capitalize
@@ -3493,12 +3490,12 @@ span.page-link, .page-link-btn {
 
 .login-popup .form-footer .custom-control {
     margin: 0 0 0 auto;
-    font-Color: 1.3rem
+    font-size: 1.3rem
 }
 
 .login-popup .forget-password {
     color: #08C;
-    font-Color: 1.3rem
+    font-size: 1.3rem
 }
 
 .login-popup .social-login-wrapper {
@@ -3510,7 +3507,7 @@ span.page-link, .page-link-btn {
 .login-popup .social-login-wrapper p {
     margin-bottom: 2rem;
     color: #121214;
-    font-Color: 12px;
+    font-size: 12px;
     font-weight: 600;
     text-transform: uppercase
 }
@@ -3578,7 +3575,7 @@ span.page-link, .page-link-btn {
     height: auto;
     padding: 7px 12px;
     border-radius: 5px 0 0 5px;
-    font-Color: 13px;
+    font-size: 13px;
     border-color: #ccc
 }
 
@@ -3589,7 +3586,7 @@ span.page-link, .page-link-btn {
     border-radius: 0 5px 5px 0;
     background-color: transparent;
     color: #555;
-    font-Color: 1.28rem;
+    font-size: 1.28rem;
     font-weight: 400;
     font-family: Poppins, sans-serif;
     text-align: center;
@@ -3610,13 +3607,13 @@ span.page-link, .page-link-btn {
 .newsletter-popup h2 {
     margin: 24px 0 16px;
     color: #313131;
-    font-Color: 16px;
+    font-size: 16px;
     font-weight: 700;
     line-height: 2
 }
 
 .newsletter-popup p {
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     line-height: 1.43;
     letter-spacing: .025em
 }
@@ -3626,7 +3623,7 @@ span.page-link, .page-link-btn {
 }
 
 .newsletter-subscribe {
-    font-Color: 1.1rem;
+    font-size: 1.1rem;
     text-align: left
 }
 
@@ -3641,7 +3638,7 @@ span.page-link, .page-link-btn {
 
 .newsletter-subscribe label {
     color: inherit;
-    font-Color: 1.1rem;
+    font-size: 1.1rem;
     font-weight: 400;
     font-family: "Open Sans", sans-serif;
     text-transform: none
@@ -3759,7 +3756,7 @@ span.page-link, .page-link-btn {
 
 .product-intro.owl-carousel.owl-theme .owl-nav {
     color: #333;
-    font-Color: 2.4rem
+    font-size: 2.4rem
 }
 
 .product-intro.owl-carousel.owl-theme .owl-nav .owl-prev, .product-intro.owl-carousel.owl-theme .owl-nav .owl-next {
@@ -3801,7 +3798,7 @@ span.page-link, .page-link-btn {
 
 .product-panel .section-title h2 {
     font-weight: 700;
-    font-Color: 1.6rem;
+    font-size: 1.6rem;
     font-family: "Open Sans", sans-serif;
     letter-spacing: -0.01em;
     line-height: 22px;
@@ -3864,7 +3861,7 @@ span.page-link, .page-link-btn {
     padding: 5px 11px;
     color: #fff;
     font-weight: 600;
-    font-Color: 10px;
+    font-size: 10px;
     line-height: 1
 }
 
@@ -3889,7 +3886,7 @@ span.page-link, .page-link-btn {
 
 .product-default .category-list {
     font-weight: 400;
-    font-Color: 1rem;
+    font-size: 1rem;
     font-family: "Open Sans", sans-serif;
     line-height: 1.7;
     opacity: .8;
@@ -3899,7 +3896,7 @@ span.page-link, .page-link-btn {
 .product-default .product-title {
     max-width: 100%;
     font-weight: 400;
-    font-Color: 1.5rem;
+    font-size: 1.5rem;
     font-family: "Open Sans", sans-serif;
     line-height: 1.35;
     letter-spacing: .005em;
@@ -3937,7 +3934,7 @@ span.page-link, .page-link-btn {
     margin: 0 2px;
     width: 36px;
     height: 36px;
-    font-Color: 1.6rem;
+    font-size: 1.6rem;
     text-align: center;
     opacity: 0;
     transition: all .25s ease;
@@ -3953,7 +3950,7 @@ span.page-link, .page-link-btn {
 }
 
 .product-default .btn-quickview {
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     transform: translateX(-200%)
 }
 
@@ -3962,7 +3959,7 @@ span.page-link, .page-link-btn {
     color: #333;
     border: 1px solid #ddd;
     padding: 0 1rem;
-    font-Color: 1.2rem;
+    font-size: 1.2rem;
     font-weight: 600;
     font-family: Poppins, sans-serif;
     line-height: 34px;
@@ -3973,7 +3970,7 @@ span.page-link, .page-link-btn {
 }
 
 .product-default .btn-add-cart i {
-    font-Color: 1.5rem;
+    font-size: 1.5rem;
     margin-bottom: 2px;
     line-height: 0
 }
@@ -4022,7 +4019,7 @@ span.page-link, .page-link-btn {
 
 .old-price {
     text-decoration: line-through;
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     letter-spacing: .005em;
     color: #999;
     margin-right: 3px
@@ -4030,7 +4027,7 @@ span.page-link, .page-link-btn {
 
 .product-price {
     color: #222529;
-    font-Color: 1.8rem;
+    font-size: 1.8rem;
     line-height: .8
 }
 
@@ -4052,7 +4049,7 @@ span.page-link, .page-link-btn {
 .ratings-container .product-ratings, .ratings-container .ratings {
     position: relative;
     display: inline-block;
-    font-Color: 11px;
+    font-size: 11px;
     letter-spacing: .1em;
     font-family: 'Font Awesome 5 Free';
     font-weight: 900
@@ -4098,7 +4095,7 @@ span.page-link, .page-link-btn {
 .product-select.type-image {
     width: 32px;
     height: 32px;
-    background-Color: contain;
+    background-size: contain;
     border: 1px solid rgba(0, 0, 0, 0.09)
 }
 
@@ -4130,7 +4127,7 @@ span.page-link, .page-link-btn {
 }
 
 .product-select.type-check.checked:before {
-    font-Color: 8px;
+    font-size: 8px;
     content: '\f00c';
     font-family: 'Font Awesome 5 Free';
     font-weight: 900;
@@ -4165,7 +4162,7 @@ span.page-link, .page-link-btn {
     height: 36px;
     padding: 10px 2px;
     color: #222529;
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     font-family: Poppins, sans-serif
 }
 
@@ -4205,7 +4202,7 @@ span.page-link, .page-link-btn {
 .config-swatch-list {
     margin: 1.5rem 0 0;
     padding: 0;
-    font-Color: 0;
+    font-size: 0;
     list-style: none
 }
 
@@ -4243,7 +4240,7 @@ span.page-link, .page-link-btn {
     transform: translateX(-50%) translateY(-50%);
     color: #fff;
     font-family: 'porto';
-    font-Color: 1.1rem;
+    font-size: 1.1rem;
     line-height: 1;
     content: '\e84e'
 }
@@ -4466,7 +4463,7 @@ span.page-link, .page-link-btn {
     padding: 1.4rem;
     color: #fff;
     background-color: #08C;
-    font-Color: 1.3rem;
+    font-size: 1.3rem;
     font-weight: 400;
     letter-spacing: .025em;
     font-family: Poppins, sans-serif;
@@ -4505,7 +4502,7 @@ span.page-link, .page-link-btn {
     height: auto;
     border: none;
     overflow: visible;
-    font-Color: 1.5rem;
+    font-size: 1.5rem;
     line-height: 0
 }
 
@@ -4541,7 +4538,7 @@ span.page-link, .page-link-btn {
 }
 
 .inner-icon figure .btn-icon i {
-    font-Color: 1.6rem;
+    font-size: 1.6rem;
     margin-bottom: 0
 }
 
@@ -4550,7 +4547,7 @@ span.page-link, .page-link-btn {
 }
 
 .inner-icon figure .btn-icon i.icon-bag {
-    font-Color: 1.8rem
+    font-size: 1.8rem
 }
 
 .inner-icon figure .btn-icon:hover {
@@ -4648,7 +4645,7 @@ span.page-link, .page-link-btn {
     margin: 0;
     border: none;
     height: 45px;
-    font-Color: 1.3rem;
+    font-size: 1.3rem;
     font-weight: 400;
     letter-spacing: .025em;
     font-family: Poppins, sans-serif;
@@ -4668,7 +4665,7 @@ span.page-link, .page-link-btn {
     height: 45px;
     border: none;
     background: #f4f4f4;
-    font-Color: 1.3rem;
+    font-size: 1.3rem;
     font-weight: 400;
     letter-spacing: .025em;
     font-family: Poppins, sans-serif;
@@ -4973,7 +4970,7 @@ span.page-link, .page-link-btn {
 }
 
 .inner-btn figure .btn-quickview i {
-    font-Color: 1.4rem
+    font-size: 1.4rem
 }
 
 .quantity-input .product-details {
@@ -5016,7 +5013,7 @@ span.page-link, .page-link-btn {
 
 .product-list .product-title {
     font-weight: 600;
-    font-Color: 1.8rem;
+    font-size: 1.8rem;
     font-family: "Open Sans", sans-serif
 }
 
@@ -5024,7 +5021,7 @@ span.page-link, .page-link-btn {
     display: -webkit-box;
     max-width: 100%;
     font-weight: 400;
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     font-family: "Open Sans", sans-serif;
     line-height: 24px;
     margin-bottom: 1em;
@@ -5081,7 +5078,7 @@ span.page-link, .page-link-btn {
 
 .product-widget .product-title {
     margin-bottom: .5rem;
-    font-Color: 1.3rem
+    font-size: 1.3rem
 }
 
 .product-widget .price-box {
@@ -5089,11 +5086,11 @@ span.page-link, .page-link-btn {
 }
 
 .product-widget .product-price {
-    font-Color: 1.5rem
+    font-size: 1.5rem
 }
 
 .product-widget .old-price {
-    font-Color: 1.2rem
+    font-size: 1.2rem
 }
 
 .product-widget:hover figure {
@@ -5567,15 +5564,15 @@ span.page-link, .page-link-btn {
     }
 
     .col-xl-7col .product-default .product-title, .col-xl-8col .product-default .product-title {
-        font-Color: 1.3rem
+        font-size: 1.3rem
     }
 
     .col-xl-7col .old-price, .col-xl-8col .old-price {
-        font-Color: 1.2rem
+        font-size: 1.2rem
     }
 
     .col-xl-7col .product-price, .col-xl-8col .product-price {
-        font-Color: 1.5rem
+        font-size: 1.5rem
     }
 }
 
@@ -5607,7 +5604,7 @@ span.page-link, .page-link-btn {
 
 .product-category-panel .owl-carousel .owl-nav button.owl-prev, .product-category-panel .owl-carousel .owl-nav button.owl-next {
     width: 30px;
-    font-Color: 24px;
+    font-size: 24px;
     color: #333;
     line-height: 22px
 }
@@ -5628,7 +5625,7 @@ span.page-link, .page-link-btn {
 
 .product-category-panel .section-title h2 {
     font-weight: 700;
-    font-Color: 1.6rem;
+    font-size: 1.6rem;
     line-height: 1.2;
     font-family: "Open Sans", sans-serif;
     letter-spacing: -0.05em;
@@ -5683,7 +5680,7 @@ span.page-link, .page-link-btn {
 
 .category-content h3 {
     font-weight: 700;
-    font-Color: 1.8rem;
+    font-size: 1.8rem;
     line-height: 1.35;
     font-family: "Open Sans", sans-serif;
     letter-spacing: -.005em;
@@ -5693,7 +5690,7 @@ span.page-link, .page-link-btn {
 
 .category-content span {
     font-weight: 400;
-    font-Color: 10.2px;
+    font-size: 10.2px;
     line-height: 1.8;
     font-family: "Open Sans", sans-serif;
     letter-spacing: normal;
@@ -5912,14 +5909,14 @@ span.page-link, .page-link-btn {
     margin-bottom: .5rem;
     padding-top: .7rem;
     color: #111;
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     text-transform: uppercase
 }
 
 .testimonial-owner span {
     display: block;
     color: #666;
-    font-Color: 1.2rem;
+    font-size: 1.2rem;
     text-transform: uppercase
 }
 
@@ -5935,7 +5932,7 @@ span.page-link, .page-link-btn {
     left: -.2em;
     color: #08C;
     font-family: 'Playfair Display';
-    font-Color: 5rem;
+    font-size: 5rem;
     font-weight: 900;
     line-height: 1;
     content: '\201C'
@@ -5950,7 +5947,7 @@ span.page-link, .page-link-btn {
     width: 3.2rem;
     color: #fff;
     background-color: #08C;
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     line-height: 3.2rem;
     text-align: center;
     text-decoration: none;
@@ -6007,7 +6004,7 @@ span.page-link, .page-link-btn {
     border-bottom: 2px solid transparent;
     color: #282d3b;
     font-weight: 700;
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     line-height: 1;
     font-family: Poppins, sans-serif;
     letter-spacing: .01rem;
@@ -6029,7 +6026,7 @@ span.page-link, .page-link-btn {
 
 .tooltip {
     font-family: "Open Sans", sans-serif;
-    font-Color: 1.3rem
+    font-size: 1.3rem
 }
 
 .tooltip.show {
@@ -6101,16 +6098,17 @@ span.page-link, .page-link-btn {
 
 html {
     overflow-x: hidden;
-    font-Color: 62.5%;
-    font-Color-adjust: 100%;
-    -ms-text-Color-adjust: 100%;
-    -webkit-text-Color-adjust: 100%
+    font-size: 62.5%;
+    font-size-adjust: 100%;
+    text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%
 }
 
 body {
     color: #777;
     background: #fff;
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     font-weight: 400;
     line-height: 1.4;
     font-family: "Open Sans", sans-serif;
@@ -6159,11 +6157,11 @@ hr {
 }
 
 sub, sup {
-    font-Color: 70%
+    font-size: 70%
 }
 
 sup {
-    font-Color: 50%
+    font-size: 50%
 }
 
 sub {
@@ -6279,7 +6277,7 @@ body.modal-open {
 
 @media (max-width: 767px) {
     html {
-        font-Color: 9px
+        font-size: 9px
     }
 }
 
@@ -6292,33 +6290,33 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 }
 
 h1, .h1 {
-    font-Color: 3.6rem;
+    font-size: 3.6rem;
     font-weight: 400;
     line-height: 1.223
 }
 
 h2, .h2 {
-    font-Color: 3rem;
+    font-size: 3rem;
     line-height: 1.5
 }
 
 h3, .h3 {
-    font-Color: 2.5rem;
+    font-size: 2.5rem;
     line-height: 1.28
 }
 
 h4, .h4 {
-    font-Color: 2rem;
+    font-size: 2rem;
     line-height: 1.35
 }
 
 h5, .h5 {
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     line-height: 1.429
 }
 
 h6, .h6 {
-    font-Color: 1.3rem;
+    font-size: 1.3rem;
     line-height: 1.385;
     font-weight: 600
 }
@@ -6358,11 +6356,11 @@ a:hover, a:focus {
 
 .section-title {
     text-transform: uppercase;
-    font-Color: 1.8rem
+    font-size: 1.8rem
 }
 
 .section-sub-title {
-    font-Color: 1.6rem;
+    font-size: 1.6rem;
     text-transform: uppercase
 }
 
@@ -6486,11 +6484,11 @@ a:hover, a:focus {
 
 @media (min-width: 768px) {
     h1, .h1 {
-        font-Color: 4.5rem
+        font-size: 4.5rem
     }
 
     h2, .h2 {
-        font-Color: 2.5rem
+        font-size: 2.5rem
     }
 
     .heading {
@@ -6500,11 +6498,11 @@ a:hover, a:focus {
 
 @media (min-width: 992px) {
     h1, .h1 {
-        font-Color: 5rem
+        font-size: 5rem
     }
 
     h2, .h2 {
-        font-Color: 3rem
+        font-size: 3rem
     }
 
     .heading {
@@ -6664,7 +6662,7 @@ a:hover, a:focus {
 }
 
 .owl-carousel.nav-big .owl-nav {
-    font-Color: 3.7rem
+    font-size: 3.7rem
 }
 
 .owl-carousel.nav-big .owl-nav i {
@@ -6672,7 +6670,7 @@ a:hover, a:focus {
 }
 
 .owl-carousel.nav-large .owl-nav {
-    font-Color: 4.5rem
+    font-size: 4.5rem
 }
 
 .owl-carousel.nav-large .owl-nav i {
@@ -6796,7 +6794,7 @@ a:hover, a:focus {
 div.slide-bg {
     background-repeat: no-repeat;
     background-position: center center;
-    background-Color: cover
+    background-size: cover
 }
 
 img.slide-bg {
@@ -6882,11 +6880,15 @@ header a {
     color: #222529
 }
 
-.header-left, .header-center, .header-right {
-    display: -ms-flexbox;
+.header-left {
     display: flex;
-    -ms-flex-align: center;
-    align-items: center
+    align-items: center;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
 .header-center, .header-right {
@@ -6900,47 +6902,37 @@ header a {
     z-index: 1040
 }
 
-.logo {
-    max-width: 150px
+.logo img {
+    max-height: 50px;
 }
 
 .header-contact {
+    display: flex;
     align-items: center;
-    text-transform: uppercase
-}
-
-.header-contact i {
-    margin-right: 1.1rem;
-    font-Color: 2.9rem
-}
-
-.header-contact img {
-    margin-right: .8rem
+    gap: 10px;
 }
 
 .header-contact h6 {
     margin: 0;
-    font-Color: 1.1rem;
-    line-height: 1.3;
-    color: #777
+    font-size: 13px;
+    color: #999;
 }
 
 .header-contact a {
     display: block;
-    font-Color: 1.8rem;
-    font-weight: 700;
-    white-space: nowrap
+    font-size: 15px;
+    font-weight: 600;
+    color: #333;
+    text-decoration: none;
 }
 
 .mobile-menu-toggler {
-    border: 0;
-    background: transparent;
-    color: #222529;
-    padding: 1rem .5rem;
-    margin-right: .5rem;
-    font-Color: 20px;
-    line-height: 0;
-    cursor: pointer
+    display: none;
+    padding: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #333;
 }
 
 .badge-circle {
@@ -6952,7 +6944,7 @@ header a {
     color: #fff;
     background: #ff5b5b;
     font-weight: 600;
-    font-Color: 1.1rem;
+    font-size: 1.1rem;
     line-height: 1.6rem;
     font-family: "Open Sans", sans-serif;
     text-align: center
@@ -6960,7 +6952,7 @@ header a {
 
 header .social-icon {
     border-radius: 50%;
-    font-Color: 1.28rem;
+    font-size: 1.28rem;
     width: 2.6rem;
     height: 2.6rem;
     line-height: 2.6rem
@@ -6983,7 +6975,7 @@ header .separator {
 .top-notice {
     position: relative;
     padding: 1rem 2rem;
-    font-Color: 1.3rem;
+    font-size: 1.3rem;
     font-family: Poppins, sans-serif;
     line-height: 2;
     letter-spacing: .025em
@@ -6991,12 +6983,12 @@ header .separator {
 
 .top-notice h5 {
     color: inherit;
-    font-Color: inherit;
+    font-size: inherit;
     font-weight: 500
 }
 
 .top-notice small {
-    font-Color: .8461em;
+    font-size: .8461em;
     letter-spacing: .025em;
     opacity: .5
 }
@@ -7010,7 +7002,7 @@ header .separator {
     display: inline-block;
     padding: .3em .8em;
     background: #0075af;
-    font-Color: 1rem
+    font-size: 1rem
 }
 
 .top-notice .mfp-close {
@@ -7025,12 +7017,16 @@ header .separator {
     opacity: 1
 }
 
-.header-icon:not(:last-child) {
-    margin-right: 2.2rem
+.header-icon {
+    position: relative;
+    color: #333;
+    font-size: 22px;
+    text-decoration: none;
+    transition: color 0.3s;
 }
 
-.header-icon i {
-    font-Color: 2.7rem
+.header-icon:hover {
+    color: #666;
 }
 
 @media (min-width: 992px) {
@@ -7040,8 +7036,20 @@ header .separator {
 }
 
 @media (max-width: 991px) {
-    .main-nav {
-        display: none
+    .mobile-menu-toggler {
+        display: block;
+    }
+    
+    .header-bottom {
+        display: none;
+    }
+    
+    .header-search {
+        margin: 0 15px;
+    }
+    
+    .header-contact {
+        display: none;
     }
 }
 
@@ -7079,7 +7087,7 @@ header .separator {
     width: 300px;
     padding-top: 10px;
     z-index: 100;
-    font-Color: 1.1rem;
+    font-size: 1.1rem;
     color: #696969;
     border: 0;
     margin: 0;
@@ -7102,7 +7110,7 @@ header .separator {
 }
 
 .dropdown-toggle i {
-    font-Color: 2.8rem
+    font-size: 2.8rem
 }
 
 .dropdown-toggle:not(.dropdown-arrow):after {
@@ -7113,7 +7121,7 @@ header .separator {
     content: "\e81c";
     border: 0;
     margin: -5px 2px 0 11px;
-    font-Color: 15px;
+    font-size: 15px;
     font-family: porto;
     width: auto;
     height: auto
@@ -7264,7 +7272,7 @@ header .separator {
 .cart-dropdown .product-title {
     padding-right: 1.5rem;
     margin-bottom: 8px;
-    font-Color: 1.3rem;
+    font-size: 1.3rem;
     line-height: 19px
 }
 
@@ -7273,7 +7281,7 @@ header .separator {
 }
 
 .cart-dropdown .product-details {
-    font-Color: 1.3rem
+    font-size: 1.3rem
 }
 
 .cart-dropdown .btn-remove {
@@ -7309,18 +7317,18 @@ header .separator {
 
 .dropdown-cart-total {
     margin-bottom: 1.1rem;
-    font-Color: 1.4rem
+    font-size: 1.4rem
 }
 
 .dropdown-cart-total .cart-total-price {
     margin-left: auto;
-    font-Color: 1.5rem
+    font-size: 1.5rem
 }
 
 .dropdown-cart-header {
     border-bottom: 1px solid #e6ebee;
     color: #696969;
-    font-Color: 1.3rem
+    font-size: 1.3rem
 }
 
 .dropdown-cart-header a {
@@ -7345,7 +7353,7 @@ header .separator {
     padding: 1.4rem 2.5rem;
     border-radius: .2rem;
     color: #fff;
-    font-Color: 1.2rem;
+    font-size: 1.2rem;
     font-weight: 400;
     font-family: "Open Sans", sans-serif;
     letter-spacing: .025em
@@ -7388,7 +7396,7 @@ header .separator {
 .compare-products .product-title {
     margin: 0;
     color: #696969;
-    font-Color: 1.1rem;
+    font-size: 1.1rem;
     font-weight: 400;
     line-height: 1.35;
     text-transform: uppercase
@@ -7409,7 +7417,7 @@ header .separator {
     margin-top: -1.2rem;
     padding: .5rem 0;
     color: #777;
-    font-Color: 1.3rem;
+    font-size: 1.3rem;
     line-height: 1;
     text-align: center;
     overflow: hidden
@@ -7426,7 +7434,7 @@ header .separator {
 .compare-actions .action-link {
     display: inline-block;
     color: #777;
-    font-Color: 1.1rem;
+    font-size: 1.1rem;
     text-transform: uppercase
 }
 
@@ -7437,7 +7445,7 @@ header .separator {
     border: 0;
     border-radius: .2rem;
     color: #fff;
-    font-Color: 1.2rem;
+    font-size: 1.2rem;
     font-weight: 400;
     letter-spacing: .025rem;
     text-align: center;
@@ -7496,20 +7504,22 @@ header .separator {
 }
 
 .header-search {
-    position: relative
+    position: relative;
+    margin: 0 30px;
+    flex: 1;
 }
 
 .header-search form {
     margin: 0
 }
 
-.header-search .form-control, .header-search select {
-    margin: 0;
-    border: 0;
-    color: inherit;
-    font-Color: 1.3rem;
-    height: 100%;
-    box-shadow: none
+.header-search .form-control {
+    flex: 1;
+    height: 42px;
+    padding: 10px 20px;
+    border: none;
+    font-size: 14px;
+    background: #fff;
 }
 
 .header-search .form-control, .header-search .select-custom {
@@ -7530,15 +7540,19 @@ header .separator {
     border-radius: 5rem
 }
 
-.header-search:not(.header-search-category) .btn {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    background: transparent;
-    border: 0;
-    padding: 0 .8em;
-    color: #333
+.header-search .search-button {
+    min-width: 60px;
+    height: 42px;
+    color: #666;
+    background: #f0f0f0;
+    border: none;
+    font-size: 18px;
+    transition: all 0.3s;
+}
+
+.header-search .search-button:hover {
+    background: #e0e0e0;
+    color: #333;
 }
 
 .search-toggle:after {
@@ -7564,16 +7578,11 @@ header .separator {
 
 .header-search-wrapper {
     display: flex;
-    display: -ms-flexbox;
-    position: absolute;
-    right: -2.3rem;
-    z-index: 999;
-    margin-top: 10px;
-    color: #8d8d8d;
-    box-sizing: content-box;
-    height: 40px;
-    border-radius: 5rem;
-    border: 5px solid #08C
+    position: relative;
+    width: 100%;
+    border: 2px solid #f0f0f0;
+    border-radius: 5px;
+    overflow: hidden;
 }
 
 .header-search-wrapper:after {
@@ -7593,7 +7602,7 @@ header .separator {
 }
 
 .header-search-wrapper .select-custom:after {
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     line-height: 0;
     right: 14px
 }
@@ -7620,14 +7629,14 @@ header .separator {
     border-left: 1px solid #fff;
     min-width: 40px;
     color: #222529;
-    font-Color: 2rem;
+    font-size: 2rem;
     background: #f4f4f4
 }
 
 .header-search-popup .form-control {
     min-width: 266px;
     padding: 4px 22px;
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     line-height: 20px
 }
 
@@ -7674,9 +7683,10 @@ header .separator {
 }
 
 .menu {
-    font-Color: 12px;
-    font-weight: 600;
-    line-height: 1.5
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
 .menu:after {
@@ -7707,10 +7717,14 @@ header .separator {
 }
 
 .menu > li > a {
-    padding: 1rem 0;
-    font-Color: 13px;
-    font-weight: 400;
-    color: #555
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s;
 }
 
 .menu > li:hover > a, .menu > li.show > a, .menu > li.active > a {
@@ -7827,7 +7841,7 @@ header .separator {
 
 .main-nav .menu {
     text-transform: uppercase;
-    font-Color: 12px
+    font-size: 12px
 }
 
 .main-nav .menu > li {
@@ -7835,7 +7849,7 @@ header .separator {
 }
 
 .main-nav .menu > li > a {
-    font-Color: 12px;
+    font-size: 12px;
     font-weight: 700;
     padding: 19px 0
 }
@@ -7875,7 +7889,7 @@ header .separator {
     border-radius: 2px;
     color: #fff;
     font-family: "Open Sans", sans-serif;
-    font-Color: 1rem;
+    font-size: 1rem;
     line-height: 1;
     text-transform: uppercase;
     vertical-align: middle;
@@ -7941,7 +7955,7 @@ header .separator {
     transform: translateX(-100%);
     transition: all .25s;
     background-color: #1D1E20;
-    font-Color: 1.2rem;
+    font-size: 1.2rem;
     line-height: 1.5;
     box-shadow: 0.1rem 0 0.6rem 0 rgba(50, 50, 50, 0.65);
     visibility: hidden;
@@ -7966,7 +7980,7 @@ header .separator {
     margin-bottom: 0;
     border: 0;
     background-color: transparent;
-    font-Color: 1.5rem
+    font-size: 1.5rem
 }
 
 .mobile-menu-container .social-icon + .social-icon {
@@ -7989,7 +8003,7 @@ header .separator {
     right: 1rem;
     padding: .4rem;
     color: #fff;
-    font-Color: 1.3rem;
+    font-size: 1.3rem;
     line-height: 1;
     cursor: pointer;
     z-index: 9
@@ -8083,7 +8097,7 @@ header .separator {
     outline: none;
     background-color: transparent;
     color: #fff;
-    font-Color: 1.5rem;
+    font-size: 1.5rem;
     line-height: 3rem;
     cursor: pointer
 }
@@ -8100,7 +8114,7 @@ header .separator {
 }
 
 footer {
-    font-Color: 1.3rem;
+    font-size: 1.3rem;
     line-height: 24px
 }
 
@@ -8120,7 +8134,7 @@ footer .social-icon {
     border-radius: 50%;
     width: 4rem;
     height: 4rem;
-    font-Color: 1.8rem;
+    font-size: 1.8rem;
     line-height: 4rem
 }
 
@@ -8133,8 +8147,8 @@ footer .widget {
 }
 
 footer .widget-title {
-    color: #fff;
-    font-Color: 1.6rem;
+    color: #000;
+    font-size: 1.6rem;
     font-weight: 600;
     text-transform: uppercase;
     margin: 0 0 1.7rem
@@ -8145,7 +8159,7 @@ footer .tagcloud a {
     margin: 0 .8rem .8rem 0;
     border: 1px solid #313438;
     color: inherit;
-    font-Color: 11px;
+    font-size: 11px;
     background: transparent
 }
 
@@ -8155,13 +8169,13 @@ footer .tagcloud a:hover {
 }
 
 footer .contact-info {
-    margin: 0;
-    padding: 0
+    margin: 10px;
+    padding: 10px;
 }
 
 footer .contact-info li {
     position: relative;
-    margin-bottom: 1rem;
+    margin: 1rem;
     line-height: 1.4
 }
 
@@ -8182,7 +8196,7 @@ footer .contact-info-label {
     bottom: 0;
     color: #fff;
     background-color: #43494e;
-    font-Color: 16px;
+    font-size: 16px;
     text-align: center;
     line-height: 1;
     padding: 11px 0;
@@ -8204,13 +8218,14 @@ footer .contact-info-label {
 }
 
 .header {
-    border-bottom: 1px solid #f4f4f4
+    background: #fff;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
 }
 
 .header-top {
     border-bottom: 1px solid #e7e7e7;
     padding: 7.5px 0;
-    font-Color: 1.1rem;
+    font-size: 1.1rem;
     font-weight: 600;
     letter-spacing: .025em;
     line-height: 24px
@@ -8221,23 +8236,16 @@ footer .contact-info-label {
 }
 
 .header-middle {
-    padding: 2.7rem 0
+    padding: 15px 0;
 }
 
-.header-bottom .container:before {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 10px;
-    right: 10px;
-    border-top: 1px solid #f4f4f4;
-    flex: 0 0 100%;
-    -ms-flex: 0 0 100%
+.header-bottom {
+    border-top: 1px solid #f0f0f0;
+    background: #fff;
 }
 
 .header-dropdown .dropdown-toggle:after {
-    font-Color: 17px
+    font-size: 17px
 }
 
 .header-dropdown .badge-circle {
@@ -8276,13 +8284,10 @@ footer .contact-info-label {
 }
 
 .footer-middle {
-    padding: 5.8rem 0 1.2rem
+    padding: 0 1.2rem
 }
 
-.footer-bottom {
-    padding: 1.5rem 0;
-    border-top: 1px solid #313438
-}
+
 
 .footer {
     letter-spacing: .005em
@@ -8291,7 +8296,7 @@ footer .contact-info-label {
 .footer .social-icon {
     height: 3.8rem;
     width: 3.8rem;
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     line-height: 3.6rem;
     border: 1px solid transparent;
     border-radius: 50%
@@ -8328,7 +8333,7 @@ footer .contact-info-label {
     padding: .6em;
     border: 1px solid #313438;
     color: inherit;
-    font-Color: 11px;
+    font-size: 11px;
     background: transparent
 }
 
@@ -8349,7 +8354,7 @@ footer .contact-info-label {
     border-radius: 5rem;
     background: #292c30;
     color: #777;
-    font-Color: inherit
+    font-size: inherit
 }
 
 .footer .widget-newsletter .form-control::placeholder {
@@ -8359,19 +8364,15 @@ footer .contact-info-label {
 .footer .widget-newsletter .btn {
     padding: 1.2rem 2.475rem;
     border-radius: 5rem;
-    font-Color: inherit;
+    font-size: inherit;
     font-family: "Open Sans", sans-serif
 }
 
-.footer-copyright {
-    color: #777;
-    font-Color: 1.2rem;
-    letter-spacing: .005em
-}
+
 
 .page-header h1 {
     color: #1e3636;
-    font-Color: 3.6rem;
+    font-size: 3.6rem;
     font-weight: 900;
     margin-bottom: 2.7rem
 }
@@ -8379,19 +8380,19 @@ footer .contact-info-label {
 .page-header h1 span {
     display: block;
     color: #1e3636;
-    font-Color: .5em;
+    font-size: .5em;
     font-weight: 700
 }
 
 .subtitle {
     color: #21293c;
-    font-Color: 1.9rem
+    font-size: 1.9rem
 }
 
 .about-section {
     padding: 1rem 0 2.5rem;
     color: #7b858a;
-    font-Color: 1.5rem;
+    font-size: 1.5rem;
     line-height: 1.8
 }
 
@@ -8402,7 +8403,7 @@ footer .contact-info-label {
 .about-section .lead {
     font-family: Poppins, sans-serif;
     color: #21293c;
-    font-Color: 1.8rem;
+    font-size: 1.8rem;
     line-height: 1.5;
     font-weight: 400
 }
@@ -8441,18 +8442,18 @@ footer .contact-info-label {
 
 .count-container .count-wrapper {
     color: #0087cb;
-    font-Color: 3.2rem;
+    font-size: 3.2rem;
     font-weight: 800;
     line-height: 3.2rem
 }
 
 .count-container span:not(.count-to) {
-    font-Color: 1.9rem
+    font-size: 1.9rem
 }
 
 .count-container .count-title {
     color: #7b858a;
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     font-weight: 600
 }
 
@@ -8483,7 +8484,7 @@ footer .contact-info-label {
 }
 
 .sidebar-shop {
-    font-Color: 1.3rem
+    font-size: 1.3rem
 }
 
 .sidebar-shop .widget {
@@ -8512,7 +8513,7 @@ footer .contact-info-label {
     align-items: center;
     margin-right: 0;
     margin-bottom: .5rem;
-    font-Color: 1.3rem
+    font-size: 1.3rem
 }
 
 .sidebar-shop .widget .config-swatch-list li:last-child {
@@ -8526,7 +8527,7 @@ footer .contact-info-label {
 .sidebar-shop .widget-title {
     margin: 0;
     color: #313131;
-    font-Color: 1.5rem;
+    font-size: 1.5rem;
     font-weight: 600;
     font-family: Poppins, sans-serif;
     line-height: 1.4;
@@ -8587,7 +8588,7 @@ footer .contact-info-label {
     padding: 0 .4rem !important;
     border-radius: 0;
     color: #222529;
-    font-Color: 2rem;
+    font-size: 2rem;
     line-height: 1
 }
 
@@ -8618,24 +8619,24 @@ footer .contact-info-label {
     color: #08C
 }
 
-.config-Color-list {
+.config-size-list {
     margin: 0;
     padding: 0;
-    font-Color: 0;
+    font-size: 0;
     list-style: none
 }
 
-.config-Color-list li {
+.config-size-list li {
     display: -ms-inline-flexbox;
     display: inline-flex;
     margin-bottom: .8rem
 }
 
-.config-Color-list li:not(:last-child) {
+.config-size-list li:not(:last-child) {
     margin-right: .8rem
 }
 
-.config-Color-list a {
+.config-size-list a {
     display: block;
     position: relative;
     width: 4.4rem;
@@ -8643,14 +8644,14 @@ footer .contact-info-label {
     transition: all .3s;
     border: 1px solid #e9e9e9;
     color: #777;
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     font-weight: 600;
     line-height: 2.8rem;
     text-align: center;
     text-decoration: none
 }
 
-.config-Color-list a:hover, .config-Color-list a:focus, .config-Color-list a.active {
+.config-size-list a:hover, .config-size-list a:focus, .config-size-list a.active {
     border-color: #08C;
     background-color: #08C;
     color: #61605a;
@@ -8668,24 +8669,24 @@ footer .contact-info-label {
 
 .filter-price-action .btn {
     padding: 3px .7em;
-    font-Color: 1.2rem;
+    font-size: 1.2rem;
     font-weight: 400
 }
 
 .filter-price-action .filter-price-text {
-    font-Color: 1.2rem;
+    font-size: 1.2rem;
     line-height: 2
 }
 
 .widget-block {
-    font-Color: 1.5rem;
+    font-size: 1.5rem;
     line-height: 1.42
 }
 
 .widget-block h5 {
     margin-bottom: 2rem;
     color: #7a7d82;
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     font-weight: 600;
     font-family: "Open Sans", sans-serif
 }
@@ -8703,13 +8704,13 @@ footer .contact-info-label {
 
 .horizontal-filter .filter-price-form {
     font-family: "Open Sans", sans-serif;
-    font-Color: 1.36rem
+    font-size: 1.36rem
 }
 
 .horizontal-filter .filter-price-form .btn {
     font-family: inherit;
     padding: .7rem 1.2rem;
-    font-Color: 1.2rem;
+    font-size: 1.2rem;
     font-weight: 400
 }
 
@@ -8729,14 +8730,14 @@ footer .contact-info-label {
 .sort-menu-trigger {
     display: block;
     color: #313131;
-    font-Color: 12px;
+    font-size: 12px;
     line-height: 1.4;
     text-transform: uppercase
 }
 
 .sort-list li {
     padding: 1rem 0;
-    font-Color: 12px;
+    font-size: 12px;
     text-transform: uppercase
 }
 
@@ -8747,7 +8748,7 @@ footer .contact-info-label {
 
 .filter-toggle span {
     color: #777;
-    font-Color: 1.3rem
+    font-size: 1.3rem
 }
 
 .filter-toggle a {
@@ -8806,7 +8807,7 @@ footer .contact-info-label {
     box-shadow: none;
     padding: 1.3rem 3rem;
     border: 1px solid #e7e7e7;
-    font-Color: 1.2rem;
+    font-size: 1.2rem;
     font-family: "Open Sans", sans-serif;
     color: #555
 }
@@ -8924,14 +8925,14 @@ footer .contact-info-label {
 
 .add-cart {
     padding: 11px 28px;
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     font-weight: 700;
     letter-spacing: -.015em;
     line-height: 24px
 }
 
 .add-cart:before {
-    font-Color: 1.8rem;
+    font-size: 1.8rem;
     line-height: 0;
     vertical-align: middle;
     margin-right: 8px;
@@ -8942,7 +8943,7 @@ footer .contact-info-label {
     display: inline-block;
     padding: 16px 8px;
     color: #222529;
-    font-Color: 1.2rem;
+    font-size: 1.2rem;
     font-weight: 700;
     font-family: Poppins, sans-serif;
     letter-spacing: -.015em;
@@ -8954,7 +8955,7 @@ footer .contact-info-label {
     content: '\e91b';
     margin-right: .5rem;
     display: inline-block;
-    font-Color: 1.8rem;
+    font-size: 1.8rem;
     font-family: 'porto';
     line-height: 0;
     transform: translateY(2px)
@@ -8962,7 +8963,7 @@ footer .contact-info-label {
 
 .add-compare:before {
     content: '\e810';
-    font-Color: 1.8rem;
+    font-size: 1.8rem;
     font-family: 'porto';
     margin-right: 6px
 }
@@ -8979,7 +8980,7 @@ footer .contact-info-label {
 .product-single-details .product-title {
     margin-bottom: .5rem;
     color: #222529;
-    font-Color: 3rem;
+    font-size: 3rem;
     font-weight: 700;
     letter-spacing: -.01em
 }
@@ -8992,14 +8993,14 @@ footer .contact-info-label {
 }
 
 .product-single-details .product-price {
-    font-Color: 2.4rem;
+    font-size: 2.4rem;
     letter-spacing: -.02em;
     vertical-align: middle
 }
 
 .product-single-details .old-price {
     color: #777;
-    font-Color: 2rem;
+    font-size: 2rem;
     vertical-align: middle
 }
 
@@ -9033,7 +9034,7 @@ footer .contact-info-label {
 }
 
 .product-single-details .ratings-container .product-ratings, .product-single-details .ratings-container .ratings {
-    font-Color: 1.4rem
+    font-size: 1.4rem
 }
 
 .product-single-details .ratings-container .product-ratings {
@@ -9050,7 +9051,7 @@ footer .contact-info-label {
 
 .product-single-details .rating-link {
     color: #777;
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     font-weight: 400
 }
 
@@ -9060,7 +9061,7 @@ footer .contact-info-label {
 
 .product-single-details .product-desc {
     margin-bottom: 4.2rem;
-    font-Color: 1.6rem;
+    font-size: 1.6rem;
     letter-spacing: -.015em;
     line-height: 1.92
 }
@@ -9087,7 +9088,7 @@ footer .contact-info-label {
 
 .product-single-details .product-single-qty .form-control {
     height: 4.8rem;
-    font-Color: 1.6rem;
+    font-size: 1.6rem;
     font-weight: 700
 }
 
@@ -9131,7 +9132,7 @@ main .sticky-header .sticky-detail {
 main .sticky-header .product-title {
     margin-right: 2rem;
     margin-bottom: 0;
-    font-Color: 16px;
+    font-size: 16px;
     font-weight: 600
 }
 
@@ -9143,11 +9144,11 @@ main .sticky-header .price-box {
 }
 
 main .sticky-header .old-price {
-    font-Color: 1.4rem
+    font-size: 1.4rem
 }
 
 main .sticky-header .product-price {
-    font-Color: 1.8rem
+    font-size: 1.8rem
 }
 
 main .sticky-header .ratings-container {
@@ -9169,7 +9170,7 @@ main .sticky-header .product-ratings:before {
 .single-info-list {
     margin-bottom: 2rem;
     padding: 0;
-    font-Color: 1.2rem;
+    font-size: 1.2rem;
     line-height: 1.5;
     letter-spacing: .005em;
     text-transform: uppercase
@@ -9207,33 +9208,33 @@ main .sticky-header .product-ratings:before {
     margin: 0
 }
 
-.product-single-filter .config-Color-list li {
+.product-single-filter .config-size-list li {
     margin-bottom: 0
 }
 
-.product-single-filter .config-Color-list li:not(:last-child) {
+.product-single-filter .config-size-list li:not(:last-child) {
     margin-right: .7rem
 }
 
-.product-single-filter .config-Color-list li a {
+.product-single-filter .config-size-list li a {
     min-width: 3rem;
     height: 3rem;
     border: 1px solid #21293c;
     background-color: #f4f4f4;
     color: #21293c;
-    font-Color: 1.5rem;
+    font-size: 1.5rem;
     font-weight: 600;
     line-height: 2.8rem;
     cursor: pointer;
 }
 
-.product-single-filter .config-Color-list li a:hover, .product-single-filter .config-Color-list li a:focus {
+.product-single-filter .config-size-list li a:hover, .product-single-filter .config-size-list li a:focus {
     border-color: #ff7272;
     background-color: #f4f4f4;
     color: #21293c
 }
 
-.product-single-filter .config-Color-list li.active a {
+.product-single-filter .config-size-list li.active a {
     border-color: #ff7272;
     outline: none;
     background-color: #f4f4f4;
@@ -9249,7 +9250,7 @@ main .sticky-header .product-ratings:before {
 .product-single-qty label {
     color: #222529;
     font-weight: 600;
-    font-Color: 1.5rem
+    font-size: 1.5rem
 }
 
 .product-single-share {
@@ -9266,7 +9267,7 @@ main .sticky-header .product-ratings:before {
     margin-bottom: .5rem;
     color: #222529;
     font-weight: 600;
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     line-height: 1.1;
     font-family: "Open Sans", sans-serif;
     letter-spacing: .005em;
@@ -9306,7 +9307,7 @@ main .sticky-header .product-ratings:before {
 }
 
 .product-single-gallery .owl-nav {
-    font-Color: 2.8rem
+    font-size: 2.8rem
 }
 
 .product-single-gallery .owl-nav .owl-prev {
@@ -9400,7 +9401,7 @@ main .sticky-header .product-ratings:before {
 
 .prod-full-screen i {
     color: #000;
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     cursor: pointer
 }
 
@@ -9457,7 +9458,7 @@ main .sticky-header .product-ratings:before {
 .product-desc-content li i {
     margin-right: 1.2rem;
     color: #21293c;
-    font-Color: 1.5rem
+    font-size: 1.5rem
 }
 
 .product-desc-content img.float-right, .product-desc-content img.float-left {
@@ -9475,7 +9476,7 @@ main .sticky-header .product-ratings:before {
 
 .product-tags-content h4 {
     margin: 0 0 2rem;
-    font-Color: 1.8rem;
+    font-size: 1.8rem;
     font-weight: 700;
     text-transform: uppercase
 }
@@ -9505,7 +9506,7 @@ main .sticky-header .product-ratings:before {
 }
 
 .product-reviews-content .reviews-title {
-    font-Color: 1.6rem;
+    font-size: 1.6rem;
     font-weight: 600;
     letter-spacing: -.015em;
     margin-bottom: 0
@@ -9535,7 +9536,7 @@ main .sticky-header .product-ratings:before {
 }
 
 .comment-container .product-ratings, .comment-container .ratings {
-    font-Color: 14px
+    font-size: 14px
 }
 
 .comment-container .product-ratings:before {
@@ -9548,7 +9549,7 @@ main .sticky-header .product-ratings:before {
 
 .comment-container .comment-info {
     font-family: "Open Sans", sans-serif;
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     line-height: 1;
     letter-spacing: -.02em
 }
@@ -9556,7 +9557,7 @@ main .sticky-header .product-ratings:before {
 .comment-container .avatar-name {
     display: inline;
     font-family: inherit;
-    font-Color: inherit
+    font-size: inherit
 }
 
 .comment-container .comment-text {
@@ -9569,20 +9570,20 @@ main .sticky-header .product-ratings:before {
 }
 
 .add-product-review h3 {
-    font-Color: 1.6rem;
+    font-size: 1.6rem;
     margin-bottom: 2.4rem
 }
 
 .add-product-review label {
     display: block;
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     font-weight: 600;
     line-height: 1;
     margin-bottom: 1.1rem
 }
 
 .add-product-review .form-control {
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     margin-bottom: 3rem;
     max-width: 100%
 }
@@ -9596,7 +9597,7 @@ main .sticky-header .product-ratings:before {
     display: -ms-flexbox;
     position: relative;
     height: 14px;
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     margin-bottom: 2.8rem
 }
 
@@ -9673,7 +9674,7 @@ main .sticky-header .product-ratings:before {
     padding-bottom: 1rem;
     border-bottom: 1px solid #e7e7e7;
     margin-bottom: 2.4rem;
-    font-Color: 1.8rem;
+    font-size: 1.8rem;
     font-family: "Open Sans", sans-serif;
     line-height: 22px;
     letter-spacing: -.01em;
@@ -9772,7 +9773,7 @@ main .sticky-header .product-ratings:before {
 }
 
 .product-single-extended .product-title {
-    font-Color: 3.5rem;
+    font-size: 3.5rem;
     line-height: 1.15
 }
 
@@ -9782,11 +9783,11 @@ main .sticky-header .product-ratings:before {
 }
 
 .product-single-extended .product-price {
-    font-Color: 3.1rem
+    font-size: 3.1rem
 }
 
 .product-single-extended .old-price {
-    font-Color: 2.4rem
+    font-size: 2.4rem
 }
 
 .product-single-extended .old-price + .product-price {
@@ -9825,7 +9826,7 @@ main .sticky-header .product-ratings:before {
     margin-bottom: 0;
     color: #21293c;
     font-weight: 600;
-    font-Color: 1.5rem;
+    font-size: 1.5rem;
     line-height: 1.1;
     font-family: "Open Sans", sans-serif;
     letter-spacing: .005em;
@@ -9837,7 +9838,7 @@ main .sticky-header .product-ratings:before {
     height: 24px;
     width: 36px;
     background-color: #f4f4f4;
-    font-Color: 1.3rem
+    font-size: 1.3rem
 }
 
 .single-qty-wrapper .product-single-qty .btn {
@@ -9854,9 +9855,9 @@ main .sticky-header .product-ratings:before {
     background-color: #fff;
     background-repeat: no-repeat;
     background-position: center center;
-    background-Color: cover;
+    background-size: cover;
     color: #7b858a;
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     letter-spacing: .005em;
     line-height: 1.92
 }
@@ -9868,7 +9869,7 @@ main .sticky-header .product-ratings:before {
     background-color: #ccc;
     background-repeat: no-repeat;
     background-position: center center;
-    background-Color: cover
+    background-size: cover
 }
 
 .product-single-row .single-row-entire {
@@ -9887,14 +9888,14 @@ main .sticky-header .product-ratings:before {
 .product-single-row h5 {
     margin-bottom: 1.1rem;
     color: #7b858a;
-    font-Color: 2rem;
+    font-size: 2rem;
     font-weight: 600;
     letter-spacing: -.01em
 }
 
 .product-single-row h2 {
     margin-bottom: 2.8rem;
-    font-Color: 4.5rem;
+    font-size: 4.5rem;
     font-weight: 600;
     letter-spacing: -.01em
 }
@@ -9914,7 +9915,7 @@ main .sticky-header .product-ratings:before {
 .product-single-row ul li i, .product-single-row ol li i {
     margin-right: 2rem;
     color: #21293c;
-    font-Color: 1.5rem
+    font-size: 1.5rem
 }
 
 .product-single-row ul li i:before, .product-single-row ol li i:before {
@@ -9930,7 +9931,7 @@ main .sticky-header .product-ratings:before {
     background-color: #4d4d4d;
     background-repeat: no-repeat;
     background-position: center center;
-    background-Color: cover;
+    background-size: cover;
     color: #7b858a;
     text-align: center
 }
@@ -9938,14 +9939,14 @@ main .sticky-header .product-ratings:before {
 .product-single-video h3 {
     margin-bottom: 1.2rem;
     color: #21293c;
-    font-Color: 3.5rem;
+    font-size: 3.5rem;
     font-weight: 600;
     letter-spacing: -.01em
 }
 
 .product-single-video .video-btn {
     color: #7b858a;
-    font-Color: 2rem;
+    font-size: 2rem;
     font-weight: 600;
     letter-spacing: -.01em;
     text-transform: uppercase
@@ -9960,7 +9961,7 @@ main .sticky-header .product-ratings:before {
 
 @media (max-width: 991px) {
     .product-single-row h2 {
-        font-Color: 3.5rem
+        font-size: 3.5rem
     }
 }
 
@@ -9990,17 +9991,17 @@ main .sticky-header .product-ratings:before {
     }
 
     .product-single-extended .product-price {
-        font-Color: 2.4rem
+        font-size: 2.4rem
     }
 
     .product-single-extended .product-title {
-        font-Color: 3rem
+        font-size: 3rem
     }
 }
 
 @media (max-width: 575px) {
     .product-single-row h2 {
-        font-Color: 3rem
+        font-size: 3rem
     }
 
     .product-single-extended .single-qty-wrapper {
@@ -10039,7 +10040,7 @@ main .sticky-header .product-ratings:before {
     transform: translateY(-50%);
     transition: all .35s;
     font-family: 'porto';
-    font-Color: 1.7rem;
+    font-size: 1.7rem;
     font-weight: 400;
     content: '\e81b'
 }
@@ -10070,7 +10071,7 @@ main .sticky-header .product-ratings:before {
 .sidebar-product .widget-title {
     margin: 0;
     color: #222529;
-    font-Color: 1.5rem;
+    font-size: 1.5rem;
     font-weight: 600;
     text-transform: uppercase;
     border-bottom-width: 1px
@@ -10079,7 +10080,7 @@ main .sticky-header .product-ratings:before {
 .sidebar-product .widget-subtitle {
     color: #7a7d82;
     margin-bottom: 3rem;
-    font-Color: 1.3rem;
+    font-size: 1.3rem;
     font-weight: 400
 }
 
@@ -10090,7 +10091,7 @@ main .sticky-header .product-ratings:before {
 
 .sidebar-product .widget-body p {
     line-height: 27px;
-    font-Color: 1.3rem;
+    font-size: 1.3rem;
     color: #222529;
     letter-spacing: .01em;
     font-weight: 500;
@@ -10131,7 +10132,7 @@ aside .widget-info li:not(:last-child) {
     min-width: 40px;
     margin-right: 15px;
     color: #08C;
-    font-Color: 4rem;
+    font-size: 4rem;
     line-height: 1
 }
 
@@ -10148,7 +10149,7 @@ aside .widget-info i {
     margin-bottom: 0;
     color: #6b7a83;
     font-weight: 600;
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     line-height: 1.286;
     font-family: "Open Sans", sans-serif;
     text-transform: uppercase
@@ -10169,7 +10170,7 @@ aside .widget-info i {
 
 .product-collapse-title {
     margin: 0;
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     line-height: 1;
     text-transform: uppercase
 }
@@ -10191,7 +10192,7 @@ aside .widget-info i {
     content: '\e81b';
     margin-right: 1rem;
     font-family: 'porto';
-    font-Color: 2rem;
+    font-size: 2rem;
     font-weight: 400
 }
 
@@ -10232,7 +10233,7 @@ aside .widget-info i {
     border: #dcdcda solid 1px;
     border-left-width: 0;
     background: #fff;
-    font-Color: 17px;
+    font-size: 17px;
     line-height: 38px;
     text-align: center;
     cursor: pointer;
@@ -10344,47 +10345,47 @@ aside .widget-info i {
     opacity: 1
 }
 
-.product-Color-content img {
+.product-size-content img {
     margin-right: auto;
     margin-bottom: 2rem;
     margin-left: auto
 }
 
-.table.table-Color thead tr th, .table.table-Color tbody tr td {
+.table.table-size thead tr th, .table.table-size tbody tr td {
     border: 0;
     color: #21293c;
-    font-Color: 1.5rem;
+    font-size: 1.5rem;
     letter-spacing: .005em;
     text-transform: uppercase
 }
 
-.table.table-Color thead tr th {
+.table.table-size thead tr th {
     padding: 2.8rem 1.5rem 1.7rem;
     background-color: #f4f4f2;
     font-weight: 600
 }
 
-.table.table-Color tbody tr td {
+.table.table-size tbody tr td {
     padding: 1rem 1.5rem;
     background-color: #fff;
     font-weight: 700
 }
 
-.table.table-Color tbody tr td:first-child {
+.table.table-size tbody tr td:first-child {
     font-weight: 600
 }
 
-.table.table-Color tbody tr:nth-child(2n) td {
+.table.table-size tbody tr:nth-child(2n) td {
     background-color: #ebebeb
 }
 
 @media (min-width: 992px) {
-    .table.table-Color thead tr th {
+    .table.table-size thead tr th {
         padding-top: 4.2rem;
         padding-bottom: 2.8rem
     }
 
-    .table.table-Color thead tr th, .table.table-Color tbody tr td {
+    .table.table-size thead tr th, .table.table-size tbody tr td {
         padding-right: 3.5rem;
         padding-left: 3.5rem
     }
@@ -10457,11 +10458,11 @@ aside .widget-info i {
 
 .btn-edit {
     margin-right: 1rem;
-    font-Color: 1.3rem
+    font-size: 1.3rem
 }
 
 .btn-move {
-    font-Color: 1.3rem;
+    font-size: 1.3rem;
     line-height: 2.5rem
 }
 
@@ -10474,7 +10475,7 @@ aside .widget-info i {
 }
 
 tbody .product-col {
-    font-Color: 0
+    font-size: 0
 }
 
 .product-col .product-image-container {
@@ -10499,7 +10500,7 @@ tbody .product-col {
 
 .cart-discount h4 {
     margin-bottom: 1.2rem;
-    font-Color: 1.6rem;
+    font-size: 1.6rem;
     font-weight: 400
 }
 
@@ -10516,14 +10517,14 @@ tbody .product-col {
 
 .cart-summary h3 {
     margin-bottom: 1.3rem;
-    font-Color: 2.5rem;
+    font-size: 2.5rem;
     font-weight: 300
 }
 
 .cart-summary h4 {
     margin-bottom: 0;
     border-top: 1px solid #ccc;
-    font-Color: 1.5rem;
+    font-size: 1.5rem;
     font-weight: 600
 }
 
@@ -10540,7 +10541,7 @@ tbody .product-col {
     right: .4rem;
     transform: translateY(-50%);
     font-family: 'porto';
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     content: '\e81b'
 }
 
@@ -10577,7 +10578,7 @@ tbody .product-col {
 
 .table.table-totals tfoot {
     border-top: 1px solid #ccc;
-    font-Color: 1.8rem;
+    font-size: 1.8rem;
     font-weight: 600
 }
 
@@ -10688,7 +10689,7 @@ tbody .product-col {
 .checkout-progress-bar {
     display: block;
     margin: 0 0 3rem;
-    font-Color: 0;
+    font-size: 0;
     line-height: 1.4;
     counter-reset: i
 }
@@ -10718,7 +10719,7 @@ tbody .product-col {
     width: 100%;
     padding-top: 4.5rem;
     color: #ccc;
-    font-Color: 1.6rem;
+    font-size: 1.6rem;
     font-weight: 300;
     word-wrap: break-word
 }
@@ -10792,7 +10793,7 @@ tbody .product-col {
 .checkout-steps li form p {
     margin-bottom: 1rem;
     color: #777;
-    font-Color: 1.3rem
+    font-size: 1.3rem
 }
 
 .checkout-steps li .form-footer {
@@ -10804,7 +10805,7 @@ tbody .product-col {
     margin-bottom: 0;
     padding-bottom: 9px;
     /*border-bottom: 1px solid #ccc;*/
-    font-Color: 2.2rem;
+    font-size: 2.2rem;
     font-weight: 300
 }
 
@@ -10817,12 +10818,12 @@ tbody .product-col {
 .step-title .step-title-edit {
     margin-top: .4rem;
     float: right;
-    font-Color: 1.4rem
+    font-size: 1.4rem
 }
 
 .shipping-step-addresses {
     margin-bottom: 2rem;
-    font-Color: 0
+    font-size: 0
 }
 
 .shipping-step-addresses:after {
@@ -10840,7 +10841,7 @@ tbody .product-col {
     padding: 1.8rem 3.2rem 1rem 1.8rem;
     transition: .3s border-color;
     border: .2rem solid transparent;
-    font-Color: 1.3rem;
+    font-size: 1.3rem;
     line-height: 3rem;
     vertical-align: top;
     word-wrap: break-word
@@ -10860,7 +10861,7 @@ tbody .product-col {
     background-color: #ff5501;
     color: #fff;
     font-family: 'porto';
-    font-Color: 1.9rem;
+    font-size: 1.9rem;
     line-height: 2.1rem;
     text-align: center;
     content: '\e84e'
@@ -10882,7 +10883,7 @@ tbody .product-col {
 
 .address-box-action .btn.btn-sm {
     padding: .85rem 1.2rem;
-    font-Color: 1.3rem
+    font-size: 1.3rem
 }
 
 .address-box-action .btn.btn-sm.btn-link {
@@ -10930,7 +10931,7 @@ tbody .product-col {
 
 .order-summary h3 {
     margin-bottom: 1.3rem;
-    font-Color: 2.5rem;
+    font-size: 2.5rem;
     font-weight: 300
 }
 
@@ -10938,7 +10939,7 @@ tbody .product-col {
     margin-bottom: 0;
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
-    font-Color: 1.5rem;
+    font-size: 1.5rem;
     font-weight: 600
 }
 
@@ -10955,7 +10956,7 @@ tbody .product-col {
     right: .4rem;
     transform: translateY(-50%);
     font-family: 'porto';
-    font-Color: 1.5rem;
+    font-size: 1.5rem;
     font-weight: 400;
     content: '\e81b'
 }
@@ -10989,7 +10990,7 @@ tbody .product-col {
 
 .table-mini-cart .price-col {
     padding-top: 2.5rem;
-    font-Color: 1.6rem;
+    font-size: 1.6rem;
     font-weight: 400
 }
 
@@ -10997,14 +10998,14 @@ tbody .product-col {
     display: block;
     max-width: 170px;
     margin-bottom: .8rem;
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     font-weight: 600
 }
 
 .table-mini-cart .product-qty {
     display: block;
     color: #777;
-    font-Color: 1.3rem
+    font-size: 1.3rem
 }
 
 .checkout-payment {
@@ -11056,7 +11057,7 @@ tbody .product-col {
 .checkout-discount h4 {
     margin-bottom: 0;
     border-top: 1px solid #ccc;
-    font-Color: 1.4rem;
+    font-size: 1.4rem;
     font-weight: 400
 }
 
@@ -11073,7 +11074,7 @@ tbody .product-col {
     right: .4rem;
     transform: translateY(-50%);
     font-family: 'porto';
-    font-Color: 1.5rem;
+    font-size: 1.5rem;
     content: '\e81b'
 }
 
@@ -11083,7 +11084,7 @@ tbody .product-col {
 
 .checkout-info-box {
     margin-bottom: 3rem;
-    font-Color: 1.3rem;
+    font-size: 1.3rem;
     line-height: 2.7rem
 }
 
@@ -11097,7 +11098,7 @@ tbody .product-col {
     }
 
     .checkout-progress-bar li > span {
-        font-Color: 1.8rem
+        font-size: 1.8rem
     }
 
     .shipping-address-box {
@@ -11153,14 +11154,14 @@ tbody .product-col {
 
 .post-media .day {
     display: block;
-    font-Color: 1.8rem;
+    font-size: 1.8rem;
     font-weight: 700;
     line-height: 1
 }
 
 .post-media .month {
     display: block;
-    font-Color: 1.12rem;
+    font-size: 1.12rem;
     line-height: 1;
     opacity: .7
 }
@@ -11197,7 +11198,7 @@ tbody .product-col {
     border-radius: .2rem .2rem 0 0;
     background-color: #f4f4f4;
     color: #08C;
-    font-Color: 1.6rem;
+    font-size: 1.6rem;
     font-weight: 700;
     line-height: 1.375
 }
@@ -11208,7 +11209,7 @@ tbody .product-col {
     border-radius: 0 0 .2rem .2rem;
     background-color: #08C;
     color: #fff;
-    font-Color: 1.2rem;
+    font-size: 1.2rem;
     line-height: 1.33;
     box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.07) inset
 }
@@ -11216,7 +11217,7 @@ tbody .product-col {
 .post-title {
     margin-bottom: 1rem;
     color: #222529;
-    font-Color: 2.2rem;
+    font-size: 2.2rem;
     font-weight: 400;
     line-height: 1.35
 }
@@ -11260,19 +11261,19 @@ tbody .product-col {
 
 .post-date-in-media .post-title {
     margin-bottom: 1.6rem;
-    font-Color: 1.8rem;
+    font-size: 1.8rem;
     font-family: "Open Sans", sans-serif;
     font-weight: 700
 }
 
 .post-date-in-media p {
-    font-Color: 1.3rem;
+    font-size: 1.3rem;
     line-height: 1.846
 }
 
 .post-date-in-media .post-comment {
     color: #999;
-    font-Color: 1rem;
+    font-size: 1rem;
     text-transform: uppercase
 }
 
@@ -11281,11 +11282,11 @@ tbody .product-col {
 }
 
 .single .post-title {
-    font-Color: 2.4rem
+    font-size: 2.4rem
 }
 
 .single h3 {
-    font-Color: 2.2rem;
+    font-size: 2.2rem;
     font-weight: 400
 }
 
@@ -11341,7 +11342,7 @@ tbody .product-col {
 }
 
 .post-author .author-content {
-    font-Color: 1.3rem;
+    font-size: 1.3rem;
     line-height: 1.8
 }
 
@@ -11367,7 +11368,7 @@ tbody .product-col {
 
 .related-posts h4 {
     margin-bottom: 2rem;
-    font-Color: 2rem;
+    font-size: 2rem;
     text-transform: uppercase
 }
 
@@ -11392,12 +11393,12 @@ tbody .product-col {
 
 .related-posts .post-title {
     margin-bottom: 1rem;
-    font-Color: 2rem
+    font-size: 2rem
 }
 
 .sidebar {
     position: relative;
-    font-Color: 1.3rem
+    font-size: 1.3rem
 }
 
 .sidebar .widget {
@@ -11412,7 +11413,7 @@ tbody .product-col {
 .widget-title {
     margin: .5rem 0 1.3rem;
     color: #000;
-    font-Color: 1.8rem;
+    font-size: 1.8rem;
     font-weight: 700;
     line-height: 1.2
 }
@@ -11444,7 +11445,7 @@ tbody .product-col {
     padding: .8rem 0 .8rem 2rem;
     border-bottom: 1px solid #ededde;
     color: #000;
-    font-Color: 1.3rem
+    font-size: 1.3rem
 }
 
 .list li a:before {
@@ -11489,7 +11490,7 @@ tbody .product-col {
     outline: none;
     background-color: transparent;
     color: #08C;
-    font-Color: 1.3rem;
+    font-size: 1.3rem;
     text-align: center;
     box-shadow: none;
     cursor: pointer
@@ -11508,7 +11509,7 @@ tbody .product-col {
     float: left;
     background-color: #e1e1e1;
     color: #7e7d79;
-    font-Color: 1.3rem;
+    font-size: 1.3rem;
     font-weight: 400;
     line-height: 11px
 }
@@ -11556,7 +11557,7 @@ tbody .product-col {
 
 .simple-post-list .post-meta {
     color: #888;
-    font-Color: 1.3rem
+    font-size: 1.3rem
 }
 
 @media (min-width: 576px) {
@@ -11580,7 +11581,7 @@ tbody .product-col {
     }
 
     .single .post-title {
-        font-Color: 2.6rem
+        font-size: 2.6rem
     }
 
     .post-body {
@@ -11617,7 +11618,7 @@ tbody .product-col {
 #map address {
     margin: 0;
     padding: .625rem .875rem;
-    font-Color: 1.3rem;
+    font-size: 1.3rem;
     font-style: normal;
     font-weight: 400;
     line-height: 1.5
@@ -11626,7 +11627,7 @@ tbody .product-col {
 #map a {
     display: inline-block;
     margin-top: .8rem;
-    font-Color: 1.2rem;
+    font-size: 1.2rem;
     text-transform: uppercase
 }
 
@@ -11658,7 +11659,7 @@ tbody .product-col {
     border-radius: 0;
     background-color: #08C;
     color: #fff;
-    font-Color: 1.6rem;
+    font-size: 1.6rem;
     text-align: center
 }
 
@@ -11691,7 +11692,7 @@ tbody .product-col {
 
 .dashboard-content h2 {
     margin-bottom: 2rem;
-    font-Color: 2.4rem
+    font-size: 2.4rem
 }
 
 .dashboard-content .form-control {
@@ -11709,7 +11710,7 @@ tbody .product-col {
 
 .widget-dashboard .widget-title {
     margin-top: .2rem;
-    font-Color: 1.8rem;
+    font-size: 1.8rem;
     font-weight: 600
 }
 
@@ -11719,7 +11720,7 @@ tbody .product-col {
 
 @media (min-width: 768px) {
     .dashboard-content h2 {
-        font-Color: 2.6rem
+        font-size: 2.6rem
     }
 }
 
@@ -11773,7 +11774,7 @@ tbody .product-col {
 }
 
 .category-content h3 {
-    font-Color: 1.5rem;
+    font-size: 1.5rem;
     font-family: Poppins, sans-serif
 }
 
@@ -11793,7 +11794,7 @@ tbody .product-col {
     left: -2.25em;
     top: 50%;
     transform: translateY(-50%) rotate(-90deg);
-    font-Color: .65em;
+    font-size: .65em;
     font-style: normal;
     opacity: .6;
     letter-spacing: 0
@@ -11802,12 +11803,12 @@ tbody .product-col {
 .coupon-sale-text b {
     display: inline-block;
     padding: 5px 8px;
-    font-Color: 1.6em;
+    font-size: 1.6em;
     background-color: #fff
 }
 
 .coupon-sale-text em {
-    font-Color: 2em;
+    font-size: 2em;
     font-style: normal
 }
 
@@ -11864,33 +11865,33 @@ section {
 }
 
 .home-slider h2 {
-    font-Color: 3.3125em;
+    font-size: 3.3125em;
     letter-spacing: .005em;
     font-family: 'Segoe Script', 'Savoye LET'
 }
 
 .home-slider .btn {
-    font-Color: .875em
+    font-size: .875em
 }
 
 .home-slide1 h4 {
-    font-Color: 1.1875em;
+    font-size: 1.1875em;
     font-weight: 500;
     letter-spacing: .08em;
     opacity: .7
 }
 
 .home-slide1 h3 {
-    font-Color: 5.875em
+    font-size: 5.875em
 }
 
 .home-slide1 h5 {
-    font-Color: .75em;
+    font-size: .75em;
     vertical-align: super
 }
 
 .home-slide1 .coupon-sale-text {
-    font-Color: 1.2em
+    font-size: 1.2em
 }
 
 .home-slide1 .banner-layer {
@@ -11904,20 +11905,20 @@ section {
 
 .home-slide2 h4 {
     color: #999;
-    font-Color: 2.125em;
+    font-size: 2.125em;
     font-weight: 500
 }
 
 .home-slide2 h2 {
-    font-Color: 2.5em
+    font-size: 2.5em
 }
 
 .home-slide2 h3 {
-    font-Color: 4.3125em
+    font-size: 4.3125em
 }
 
 .home-slide2 .heading-border {
-    font-Color: 2.125em
+    font-size: 2.125em
 }
 
 .home-slide2 .heading-border:before, .home-slide2 .heading-border:after {
@@ -11930,7 +11931,7 @@ section {
 }
 
 .home-slide2 .btn {
-    font-Color: 1em;
+    font-size: 1em;
     letter-spacing: .15em
 }
 
@@ -11952,11 +11953,11 @@ section {
 }
 
 .banners-slider h3 {
-    font-Color: 1.5em
+    font-size: 1.5em
 }
 
 .banners-slider h4 {
-    font-Color: .9375em;
+    font-size: .9375em;
     font-weight: 600
 }
 
@@ -11971,7 +11972,7 @@ section {
 }
 
 .banner1 h4 {
-    font-Color: 1.8125em;
+    font-size: 1.8125em;
     font-weight: 800
 }
 
@@ -11980,7 +11981,7 @@ section {
 }
 
 .banner1 sup {
-    font-Color: 70%
+    font-size: 70%
 }
 
 .banner2 img {
@@ -11988,7 +11989,7 @@ section {
 }
 
 .banner2 h3 {
-    font-Color: 1.375em
+    font-size: 1.375em
 }
 
 .banner2 .banner-layer {
@@ -12006,12 +12007,12 @@ section {
 }
 
 .banner-big-sale h2 {
-    font-Color: 1.275em;
+    font-size: 1.275em;
     line-height: 1.2
 }
 
 .banner-big-sale h2 small {
-    font-Color: 64%;
+    font-size: 64%;
     font-weight: 400;
     opacity: .7;
     margin-left: .8em
@@ -12050,7 +12051,7 @@ section {
 }
 
 .feature-boxes-container .feature-box p {
-    font-Color: 1.3rem
+    font-size: 1.3rem
 }
 
 .promo-section {
@@ -12062,17 +12063,17 @@ section {
 }
 
 .promo-section h2 {
-    font-Color: 2.25em;
+    font-size: 2.25em;
     line-height: 1.15
 }
 
 .promo-section h4 {
-    font-Color: .7em;
+    font-size: .7em;
     line-height: 1.4
 }
 
 .promo-section h5 {
-    font-Color: 1em;
+    font-size: 1em;
     font-family: "Open Sans", sans-serif
 }
 
@@ -12084,19 +12085,19 @@ section {
 
 .blog-section .post-title {
     margin-bottom: 1.6rem;
-    font-Color: 1.8rem;
+    font-size: 1.8rem;
     font-family: "Open Sans", sans-serif;
     font-weight: 700
 }
 
 .blog-section p {
-    font-Color: 1.3rem;
+    font-size: 1.3rem;
     line-height: 1.846
 }
 
 .blog-section .post-comment {
     color: #999;
-    font-Color: 1rem;
+    font-size: 1rem;
     text-transform: uppercase
 }
 
@@ -12109,11 +12110,11 @@ section {
 }
 
 .product-widgets-container .product-title {
-    font-Color: 1.4rem
+    font-size: 1.4rem
 }
 
 .product-widgets-container .product-price {
-    font-Color: 1.5rem
+    font-size: 1.5rem
 }
 
 .category-banner {
@@ -12125,20 +12126,20 @@ section {
 }
 
 .category-banner h3 {
-    font-Color: 3.125em
+    font-size: 3.125em
 }
 
 .category-banner h4 {
-    font-Color: 1.125em;
+    font-size: 1.125em;
     line-height: 1.7
 }
 
 .category-banner h5 {
-    font-Color: 1em
+    font-size: 1em
 }
 
 .category-banner .btn {
-    font-Color: .82em;
+    font-size: .82em;
     padding: 1.03em 2.81em
 }
 
@@ -12150,7 +12151,7 @@ section {
 
 @media (max-width: 575px) {
     .home-slide1 {
-        font-Color: 2.5vw
+        font-size: 2.5vw
     }
 }
 

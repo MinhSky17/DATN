@@ -544,15 +544,15 @@
 
 }).apply(this, [jQuery]);
 
-// TextArea AutoColor
+// TextArea AutoSize
 (function($) {
 
 	'use strict';
 
-	if ( typeof autoColor === 'function' ) {
+	if ( typeof autosize === 'function' ) {
 
 		$(function() {
-			$('[data-plugin-textarea-autoColor]').each(function() {
+			$('[data-plugin-textarea-autosize]').each(function() {
 				var $this = $( this ),
 					opts = {};
 
@@ -560,7 +560,7 @@
 				if (pluginOptions)
 					opts = pluginOptions;
 
-				$this.themePluginTextAreaAutoColor(opts);
+				$this.themePluginTextAreaAutoSize(opts);
 			});
 		});
 

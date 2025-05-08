@@ -2158,14 +2158,14 @@ S2.define('select2/selection/search',[
     this.$selection.find('.select2-selection__rendered')
                    .append(this.$searchContainer);
 
-    this.reColorSearch();
+    this.resizeSearch();
     if (searchHadFocus) {
       this.$search.trigger('focus');
     }
   };
 
   Search.prototype.handleSearch = function () {
-    this.reColorSearch();
+    this.resizeSearch();
 
     if (!this._keyUpPrevented) {
       var input = this.$search.val();
@@ -2187,7 +2187,7 @@ S2.define('select2/selection/search',[
     this.handleSearch();
   };
 
-  Search.prototype.reColorSearch = function () {
+  Search.prototype.resizeSearch = function () {
     this.$search.css('width', '25px');
 
     var width = '';
@@ -4403,27 +4403,27 @@ S2.define('select2/dropdown/attachBody',[
 
     container.on('results:all', function () {
       self._positionDropdown();
-      self._reColorDropdown();
+      self._resizeDropdown();
     });
 
     container.on('results:append', function () {
       self._positionDropdown();
-      self._reColorDropdown();
+      self._resizeDropdown();
     });
 
     container.on('results:message', function () {
       self._positionDropdown();
-      self._reColorDropdown();
+      self._resizeDropdown();
     });
 
     container.on('select', function () {
       self._positionDropdown();
-      self._reColorDropdown();
+      self._resizeDropdown();
     });
 
     container.on('unselect', function () {
       self._positionDropdown();
-      self._reColorDropdown();
+      self._resizeDropdown();
     });
 
     this._containerResultsHandlersBound = true;
@@ -4434,7 +4434,7 @@ S2.define('select2/dropdown/attachBody',[
     var self = this;
 
     var scrollEvent = 'scroll.select2.' + container.id;
-    var reColorEvent = 'reColor.select2.' + container.id;
+    var resizeEvent = 'resize.select2.' + container.id;
     var orientationEvent = 'orientationchange.select2.' + container.id;
 
     var $watchers = this.$container.parents().filter(Utils.hasScroll);
@@ -4450,23 +4450,23 @@ S2.define('select2/dropdown/attachBody',[
       $(this).scrollTop(position.y);
     });
 
-    $(window).on(scrollEvent + ' ' + reColorEvent + ' ' + orientationEvent,
+    $(window).on(scrollEvent + ' ' + resizeEvent + ' ' + orientationEvent,
       function (e) {
       self._positionDropdown();
-      self._reColorDropdown();
+      self._resizeDropdown();
     });
   };
 
   AttachBody.prototype._detachPositioningHandler =
       function (decorated, container) {
     var scrollEvent = 'scroll.select2.' + container.id;
-    var reColorEvent = 'reColor.select2.' + container.id;
+    var resizeEvent = 'resize.select2.' + container.id;
     var orientationEvent = 'orientationchange.select2.' + container.id;
 
     var $watchers = this.$container.parents().filter(Utils.hasScroll);
     $watchers.off(scrollEvent);
 
-    $(window).off(scrollEvent + ' ' + reColorEvent + ' ' + orientationEvent);
+    $(window).off(scrollEvent + ' ' + resizeEvent + ' ' + orientationEvent);
   };
 
   AttachBody.prototype._positionDropdown = function () {
@@ -4556,7 +4556,7 @@ S2.define('select2/dropdown/attachBody',[
     this.$dropdownContainer.css(css);
   };
 
-  AttachBody.prototype._reColorDropdown = function () {
+  AttachBody.prototype._resizeDropdown = function () {
     var css = {
       width: this.$container.outerWidth(false) + 'px'
     };
@@ -4574,7 +4574,7 @@ S2.define('select2/dropdown/attachBody',[
     this.$dropdownContainer.appendTo(this.$dropdownParent);
 
     this._positionDropdown();
-    this._reColorDropdown();
+    this._resizeDropdown();
   };
 
   return AttachBody;

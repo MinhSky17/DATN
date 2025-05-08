@@ -21,7 +21,7 @@
 		stroke: '#23282F',
 		textColor: '#FFFFFF',
 		fontFamily: 'Open Sans',
-		fontColor: '24px',
+		fontSize: '24px',
 		fontWeight: '600',
 		liquidOpacity: 0.9,
 		liquidPalette: ['#82BF41'],
@@ -149,13 +149,13 @@
 				fill: this.options.textColor,
 				dy: '.4em',
 				'font-family': this.options.fontFamily,
-				'font-Color': this.options.fontColor,
+				'font-size': this.options.fontSize,
 				'font-weight': this.options.fontWeight,
 				'text-anchor': 'middle',
 				stroke: this.options.textColor
 			});
 			this.label.selectAll('tspan:nth-child(2)').attr({
-				'font-Color': '24',
+				'font-size': '24',
 				stroke: 'none'
 			});
 

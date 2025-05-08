@@ -2520,8 +2520,8 @@ var cssAttr = {
     "flood-opacity": 0,
     "font": 0,
     "font-family": 0,
-    "font-Color": 0,
-    "font-Color-adjust": 0,
+    "font-size": 0,
+    "font-size-adjust": 0,
     "font-stretch": 0,
     "font-style": 0,
     "font-variant": 0,
@@ -4410,15 +4410,15 @@ Snap.plugin(function (Snap, Element, Paper, glob, Fragment) {
         }
         eve.stop();
     })(-1);
-    function setFontColor(value) {
+    function setFontSize(value) {
         eve.stop();
         if (value == +value) {
             value += "px";
         }
-        this.node.style.fontColor = value;
+        this.node.style.fontSize = value;
     }
-    eve.on("snap.util.attr.fontColor", setFontColor)(-1);
-    eve.on("snap.util.attr.font-Color", setFontColor)(-1);
+    eve.on("snap.util.attr.fontSize", setFontSize)(-1);
+    eve.on("snap.util.attr.font-size", setFontSize)(-1);
 
 
     eve.on("snap.util.getattr.transform", function () {
@@ -4550,12 +4550,12 @@ Snap.plugin(function (Snap, Element, Paper, glob, Fragment) {
     eve.on("snap.util.getattr.class", function () {
         return this.node.className.baseVal;
     })(-1);
-    function getFontColor() {
+    function getFontSize() {
         eve.stop();
-        return this.node.style.fontColor;
+        return this.node.style.fontSize;
     }
-    eve.on("snap.util.getattr.fontColor", getFontColor)(-1);
-    eve.on("snap.util.getattr.font-Color", getFontColor)(-1);
+    eve.on("snap.util.getattr.fontSize", getFontSize)(-1);
+    eve.on("snap.util.getattr.font-size", getFontSize)(-1);
 });
 
 // Copyright (c) 2014 Adobe Systems Incorporated. All rights reserved.

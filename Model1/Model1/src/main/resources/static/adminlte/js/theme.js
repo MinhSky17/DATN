@@ -372,7 +372,7 @@ window.theme.fn = {
 		scaleLength: 5,
 		lineCap: 'round',
 		lineWidth: 13,
-		Color: 175,
+		size: 175,
 		rotate: 0,
 		animate: ({
 			duration: 2500,
@@ -1786,8 +1786,8 @@ window.theme.fn = {
 		mapEvents: function() {
 			var _self = this;
 
-			google.maps.event.addDomListener( _self.map, 'reColor', function() {
-				google.maps.event.trigger( _self.map, 'reColor' );
+			google.maps.event.addDomListener( _self.map, 'resize', function() {
+				google.maps.event.trigger( _self.map, 'resize' );
 			});
 
 			google.maps.event.addListener( this.map, 'center_changed', function() {
@@ -2932,8 +2932,8 @@ window.theme.fn = {
 		opacity: 0.7,
 		placeholder: 'portlet-placeholder',
 		cancel: 'portlet-cancel',
-		forcePlaceholderColor: true,
-		forceHelperColor: true,
+		forcePlaceholderSize: true,
+		forceHelperSize: true,
 		tolerance: 'pointer',
 		helper: 'original',
 		revert: 200
@@ -3669,22 +3669,22 @@ window.theme.fn = {
 
 }).apply(this, [window.theme, jQuery]);
 
-// TextArea AutoColor
+// TextArea AutoSize
 (function(theme, $) {
 
 	theme = theme || {};
 
 	var initialized = false;
-	var instanceName = '__textareaAutoColor';
+	var instanceName = '__textareaAutosize';
 
-	var PluginTextAreaAutoColor = function($el, opts) {
+	var PluginTextAreaAutoSize = function($el, opts) {
 		return this.initialize($el, opts);
 	};
 
-	PluginTextAreaAutoColor.defaults = {
+	PluginTextAreaAutoSize.defaults = {
 	};
 
-	PluginTextAreaAutoColor.prototype = {
+	PluginTextAreaAutoSize.prototype = {
 		initialize: function($el, opts) {
 			if (initialized) {
 				return this;
@@ -3707,14 +3707,14 @@ window.theme.fn = {
 		},
 
 		setOptions: function(opts) {
-			this.options = $.extend( true, {}, PluginTextAreaAutoColor.defaults, opts );
+			this.options = $.extend( true, {}, PluginTextAreaAutoSize.defaults, opts );
 
 			return this;
 		},
 
 		build: function() {
 
-			autoColor($(this.$el));
+			autosize($(this.$el));
 
 			return this;
 		}
@@ -3722,18 +3722,18 @@ window.theme.fn = {
 
 	// expose to scope
 	$.extend(theme, {
-		PluginTextAreaAutoColor: PluginTextAreaAutoColor
+		PluginTextAreaAutoSize: PluginTextAreaAutoSize
 	});
 
 	// jquery plugin
-	$.fn.themePluginTextAreaAutoColor = function(opts) {
+	$.fn.themePluginTextAreaAutoSize = function(opts) {
 		return this.each(function() {
 			var $this = $(this);
 
 			if ($this.data(instanceName)) {
 				return $this.data(instanceName);
 			} else {
-				return new PluginTextAreaAutoColor($this, opts);
+				return new PluginTextAreaAutoSize($this, opts);
 			}
 
 		});
@@ -4436,7 +4436,7 @@ window.theme.fn = {
 					// Close Collapse if open
 					$(this).parents('.collapse.show').collapse('hide');
 
-					$window.trigger('reColor');
+					$window.trigger('resize');
 
 					scrollToTarget(target, offset);
 					
@@ -4675,7 +4675,7 @@ window.theme.fn = {
 				.on( 'click', function() {
 					updateNanoScroll();
 
-					$(window).trigger('reColor');
+					$(window).trigger('resize');
 				})
 				.on('touchend', function(e) {
 					_self.sidebars.left.isOpened = !$html.hasClass( 'sidebar-left-collapsed' ) || $html.hasClass( 'sidebar-left-opened' );
@@ -4685,7 +4685,7 @@ window.theme.fn = {
 						open();
 					}
 
-					$(window).trigger('reColor');
+					$(window).trigger('resize');
 				});
 
 			$nano
@@ -4706,7 +4706,7 @@ window.theme.fn = {
 					$html.off( 'click.close-left-sidebar' );
 				}
 				
-				// Recalculate Owl Carousel Colors
+				// Recalculate Owl Carousel sizes
 				$('.owl-carousel').trigger('refresh.owl.carousel');
 			});
 
@@ -5182,7 +5182,7 @@ window.theme.fn = {
 			$html			= $( 'html' );
 			$innerBody		= $( '.inner-body' );
 
-			var adjustComposeColor = function() {
+			var adjustComposeSize = function() {
 				var composerHeight,
 					composerTop,
 					contentBodyPaddingBottom,
@@ -5218,14 +5218,14 @@ window.theme.fn = {
 
 			var timer;
 			$(window)
-				.on( 'reColor orientationchange sidebar-left-toggle mailbox-recalc', function() {
+				.on( 'resize orientationchange sidebar-left-toggle mailbox-recalc', function() {
 					clearTimeout( timer );
 					timer = setTimeout(function() {
-						adjustComposeColor();
+						adjustComposeSize();
 					}, 100);
 				});
 
-			adjustComposeColor();
+			adjustComposeSize();
 		}
 	};
 

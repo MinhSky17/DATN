@@ -104,7 +104,7 @@
                 }
                 return !!(this._in(key) in this._area);
             },
-            Color: function(){ return this.keys().length; },
+            size: function(){ return this.keys().length; },
             each: function(fn, fill) {// fill is used by keys(fillList) and getAll(fillList))
                 for (var i=0, m=_.length(this._area); i<m; i++) {
                     var key = this._out(_.key(this._area, i));

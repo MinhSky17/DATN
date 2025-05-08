@@ -12,7 +12,7 @@
             series: {
                 lines: {show: true, lineWidth: 2},
                 points: {show: true},
-                shadowColor: 0
+                shadowSize: 0
             },
             grid: {
                 hoverable: true,
@@ -46,7 +46,7 @@
             series: {
                 lines: {show: true, lineWidth: 2},
                 points: {show: true},
-                shadowColor: 0
+                shadowSize: 0
             },
             grid: {
                 hoverable: true,
@@ -68,7 +68,7 @@
             series: {
                 lines: {show: true, lineWidth: 2},
                 points: {show: true},
-                shadowColor: 0
+                shadowSize: 0
             },
             grid: {
                 hoverable: true,
@@ -90,7 +90,7 @@
             shape: 'circle',
             color: '#CCCCCC',
             background: '#F9F9F9',
-            fontColor: '24px',
+            fontSize: '24px',
             fontWeight: '600',
             stroke: '#F2F2F2',
             textColor: '#333',
@@ -125,7 +125,7 @@
                     fill: true,
                     lineWidth: 1,
                     fillColor: {colors: [{opacity: 0.45}, {opacity: 0.45}]}
-                }, points: {show: true}, shadowColor: 0
+                }, points: {show: true}, shadowSize: 0
             },
             grid: {
                 hoverable: true,
@@ -184,7 +184,7 @@
                         fill: true,
                         lineWidth: 1,
                         fillColor: {colors: [{opacity: 0.45}, {opacity: 0.45}]}
-                    }, points: {show: false}, shadowColor: 0
+                    }, points: {show: false}, shadowSize: 0
                 },
                 grid: {borderColor: 'rgba(0,0,0,0.1)', borderWidth: 1, labelMargin: 15, backgroundColor: 'transparent'},
                 yaxis: {min: 0, max: 100, color: 'rgba(0,0,0,0.1)'},

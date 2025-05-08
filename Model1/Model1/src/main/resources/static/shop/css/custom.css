@@ -7,7 +7,7 @@
 }
 .common-info .name {
     font-weight: 500;
-    font-Color: 2.5rem;
+    font-size: 2.5rem;
     line-height: 2.9375rem;
     margin-bottom: 0.9375rem;
 }
@@ -43,7 +43,7 @@
 .btns .sell:last-child {
     margin-bottom: 0px;
 }
-.btns .Color.btn-primary {
+.btns .size.btn-primary {
     padding: 3rem;
     background-color: #ffffff;
     border-radius: 5px;
@@ -52,12 +52,12 @@
     align-items: center;
     justify-content: space-between;
 }
-.btns .Color.btn-primary:active {
+.btns .size.btn-primary:active {
     background-color: #ffffff !important;
     border-color: #D5D6D6;
     color: #333333 !important;
 }
-.btns .Color.btn-primary:hover {
+.btns .size.btn-primary:hover {
     background-color: #ffffff !important;
     border-color: #333333;
     color: #333333 !important;
@@ -89,19 +89,19 @@
 .btns .sell.btn-primary .sub-content {
     color: #FEE8D8;
 }
-.btns .Color-details,
+.btns .size-details,
 .btns .main-content {
-    font-Color: 1.875rem;
+    font-size: 1.875rem;
     font-weight: bold;
     line-height: 2.625rem;
 }
-.btns .Color-text,
+.btns .size-text,
 .btns .dropdown-arrow {
-    font-Color: 1.25rem;
+    font-size: 1.25rem;
     color: #ABACAD;
     line-height: 1.75rem;
 }
-.btns .Color-details {
+.btns .size-details {
     color: #333333;
 }
 .btns .left-content,
@@ -118,24 +118,24 @@
     padding-left: 1.25rem;
 }
 
-#ColorChooseModal a:hover,
-#ColorGuideModal a:hover {
+#sizeChooseModal a:hover,
+#sizeGuideModal a:hover {
     color: #035983;
 }
-#modal-Color-Choose .modal-header, #ColorChooseModal .modal-body,
-#ColorGuideModal .modal-header,
-#ColorGuideModal .modal-body {
+#modal-size-Choose .modal-header, #sizeChooseModal .modal-body,
+#sizeGuideModal .modal-header,
+#sizeGuideModal .modal-body {
     padding: 1.875rem;
     border: 0px;
 }
-#modal-Color-Choose .Color .select-filter,
-#ColorGuideModal .Color .select-filter {
+#modal-size-Choose .size .select-filter,
+#sizeGuideModal .size .select-filter {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 1.25rem;
 }
-#modal-Color-Choose .Color .select-filter .item,
-#ColorGuideModal .Color .select-filter .item {
+#modal-size-Choose .size .select-filter .item,
+#sizeGuideModal .size .select-filter .item {
     width: 100%;
     min-height: 70px;
     margin: 0px;
@@ -147,8 +147,8 @@
     justify-content: center;
     cursor: pointer;
 }
-#modal-Color-Choose .Color .select-filter .item:after,
-#ColorGuideModal .Color .select-filter .item:after {
+#modal-size-Choose .size .select-filter .item:after,
+#sizeGuideModal .size .select-filter .item:after {
     content: "";
     display: block;
     padding-bottom: 100%;
@@ -169,7 +169,7 @@ body.modal2-on {
     text-align: center;
 }
 
-.Color-choose {
+.size-choose {
     background-color: #08C;
     color: #ffffff;
     border: none !important;
@@ -219,7 +219,7 @@ body.modal2-on {
 .pricing .sell:last-child {
     margin-bottom: 0px;
 }
-.pricing .Color.btn-primary {
+.pricing .size.btn-primary {
     padding: 2.25rem;
     background-color: #ffffff;
     border: 1px solid #D5D6D6;
@@ -227,22 +227,22 @@ body.modal2-on {
     align-items: center;
     justify-content: space-between;
 }
-.pricing .Color.btn-primary:active {
+.pricing .size.btn-primary:active {
     background-color: #ffffff !important;
     border-color: #D5D6D6;
     color: #333333 !important;
 }
-.pricing .Color.btn-primary:hover {
+.pricing .size.btn-primary:hover {
     background-color: #ffffff !important;
     border-color: #333333;
     color: #333333 !important;
 }
-.pricing .Color-text,
+.pricing .size-text,
 .pricing .dropdown-arrow {
     color: #ABACAD;
     line-height: 1.75rem;
 }
-.pricing .Color-details {
+.pricing .size-details {
     color: #333333;
     font-weight: bold;
 }
@@ -326,7 +326,7 @@ body.modal2-on {
 }
 
 .total-price-showing {
-    font-Color: 1.5rem;
+    font-size: 1.5rem;
     line-height: 1.5rem;
     color: #007bff;
     font-weight: bold;
@@ -356,7 +356,7 @@ body.modal2-on {
 
 .user-name {
     font-weight: bold;
-    font-Color: 21px;
+    font-size: 21px;
 }
 
 .break-line {
@@ -366,11 +366,11 @@ body.modal2-on {
 
 .edit-profile {
     color: #ABACAD;
-    font-Color: 0.75rem;
+    font-size: 0.75rem;
 }
 
 .account-title {
-    font-Color: 2.5rem;
+    font-size: 2.5rem;
 }
 
 .nav-sidebar {
@@ -380,7 +380,7 @@ body.modal2-on {
 
 .nav-item {
     cursor: pointer;
-    font-Color: 16px;
+    font-size: 16px;
 }
 .nav-item:hover {
     color: #043b51;
@@ -832,19 +832,19 @@ input[type=radio] + label .radio-dot:before {
     margin: 1.25rem 0px;
 }
 
-.Color .select-filter {
+.size .select-filter {
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-flow: wrap;
 }
 
-#Color-collapse {
+#size-collapse {
     margin-top: 15px;
 }
 
-.Color .select-filter .item {
-    font-Color: 1.75rem;
+.size .select-filter .item {
+    font-size: 1.75rem;
     width: calc(100% / 4 - 10px);
     text-align: center;
     border: 1px solid #333333;
@@ -886,7 +886,7 @@ input[type=radio] + label .radio-dot:before {
     display: block;
 }
 
-.modal-body .Color .select-filter {
+.modal-body .size .select-filter {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-gap: 1.25rem;
@@ -896,19 +896,19 @@ input[type=radio] + label .radio-dot:before {
     height: auto;
 }
 
-.modal-body .Color .select-filter .item {
+.modal-body .size .select-filter .item {
     width: 100%;
     margin: 0px;
 }
 
-.modal-body .Color .select-filter .item:after {
+.modal-body .size .select-filter .item:after {
     content: "";
     display: block;
     padding-bottom: 100%;
 }
 
 @media (max-width: 575.98px) {
-    .modal-body .filter-bar .Color .select-filter {
+    .modal-body .filter-bar .size .select-filter {
         grid-template-columns: 1fr 1fr 1fr 1fr;
     }
 }

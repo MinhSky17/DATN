@@ -77,7 +77,7 @@
                                     <div class="product-info-wrapper">
                                         <div class="thumbnails"><img class="img-fluid" th:src="@{${item.productImg}}" th:alt="${item.productName}"/></div>
                                         <div class="product-info"><span class="name" th:text="${item.productName}"></span>
-                                            <div class="Color"><span th:text="${item.ColorUs}"></span>US | <span th:text="${item.ColorVn}"></span>VN | <span th:text="${item.ColorCm}"></span>CM</div>
+                                            <div class="size"><span th:text="${item.sizeUs}"></span>US | <span th:text="${item.sizeVn}"></span>VN | <span th:text="${item.sizeCm}"></span>CM</div>
                                         </div>
                                     </div>
                                     <div class="price bid-price"><span class="text-price" th:text="${item.totalPrice}"></span> &#x20AB;</div>
@@ -92,8 +92,8 @@
                                     <div class="product-info-wrapper">
                                         <div class="product-info">
                                             <a class="name" th:href="@{/tai-khoan/lich-su-giao-dich/{id}(id=${item.id})}" th:text="${item.productName}"></a>
-                                            <div class="Color">
-                                                <span th:text="${item.ColorUs}"></span>US | <span th:text="${item.ColorVn}"></span>VN | <span th:text="${item.ColorCm}"></span>CM
+                                            <div class="size">
+                                                <span th:text="${item.sizeUs}"></span>US | <span th:text="${item.sizeVn}"></span>VN | <span th:text="${item.sizeCm}"></span>CM
                                             </div>
                                         </div>
                                     </div>
@@ -144,7 +144,7 @@
                                     <div class="product-info-wrapper">
                                         <div class="thumbnails"><img class="img-fluid" src="${order.productImg}" alt="${order.productName}"/></div>
                                         <div class="product-info"><span class="name">${order.productName}</span>
-                                            <div class="Color"><span>${order.ColorUs}</span>US | <span>${order.ColorVn}</span>VN | <span>${order.ColorCm}</span>CM</div>
+                                            <div class="size"><span>${order.sizeUs}</span>US | <span>${order.sizeVn}</span>VN | <span>${order.sizeCm}</span>CM</div>
                                         </div>
                                     </div>
                                     <div class="price bid-price"><span class="text-price">${order.totalPrice}</span> &#x20AB;</div>
@@ -158,8 +158,8 @@
                                     <div class="product-info-wrapper">
                                         <div class="product-info">
                                             <a class="name" href="/tai-khoan/lich-su-giao-dich/${order.id}">${order.productName}</a>
-                                            <div class="Color">
-                                                <span>${order.ColorUs}</span>US | <span>${order.ColorVn}</span>VN | <span>${order.ColorCm}</span>CM
+                                            <div class="size">
+                                                <span>${order.sizeUs}</span>US | <span>${order.sizeVn}</span>VN | <span>${order.sizeCm}</span>CM
                                             </div>
                                         </div>
                                     </div>

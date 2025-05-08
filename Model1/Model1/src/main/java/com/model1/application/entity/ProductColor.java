@@ -13,18 +13,20 @@ import javax.persistence.*;
 @Getter
 @Entity
 @Table(name = "product_color")
-@IdClass(ProductColorId.class)
 public class ProductColor {
     @Id
-    @Column(name = "color")
-    private String color;
-    @Id
-    @Column(name = "product_id")
-    private String productId;
-    @Column(name = "name")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name = "code", nullable = false)
+    private String code;
+    @Column(name = "name", nullable = false)
     private String name;
-    @Column(name = "description")
-    private String description;
-    @Column(name = "quantity")
+    @Column(name = "quantity", nullable = false)
     private int quantity;
+
+    @Column(name = "product_id", nullable = false)
+    private String productId;
+//    @ManyToOne
+//    @JoinColumn(name="product_id", nullable = false)
+//    private Product productId;
 }

@@ -1,9 +1,9 @@
-<th:block th:fragment="Color-choose-modal">
-    <div class="modal fade" id="ColorGuideModal" tabindex="-1" role="dialog" aria-labelledby="ColorGuideModalTitle" aria-hidden="true">
+<th:block th:fragment="size-choose-modal">
+    <div class="modal fade" id="sizeGuideModal" tabindex="-1" role="dialog" aria-labelledby="sizeGuideModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
-                <div class="modal-header"><a class="go-back-Color-choose text-btn" data-toggle="modal" href="#modal-Color-Choose" data-dismiss="modal"><i class="fas fa-chevron-left"></i> Trở lại</a>
-                    <h5 class="modal-title" id="ColorGuideModalTitle">Bảng Color</h5>
+                <div class="modal-header"><a class="go-back-size-choose text-btn" data-toggle="modal" href="#modal-size-Choose" data-dismiss="modal"><i class="fas fa-chevron-left"></i> Trở lại</a>
+                    <h5 class="modal-title" id="sizeGuideModalTitle">Bảng size</h5>
                 </div>
                 <div class="modal-body">
                     <table class="side-guide-table table">
@@ -32,14 +32,14 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modal-Color-Choose" tabindex="-1" role="dialog" aria-labelledby="ColorChooseModalTitle" aria-hidden="true">
+    <div class="modal fade" id="modal-size-Choose" tabindex="-1" role="dialog" aria-labelledby="sizeChooseModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-sm" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ColorChooseModalTitle">Chọn Color</h5><a class="Color-guide text-btn" data-toggle="modal" href="#ColorGuideModal" data-dismiss="modal">Bảng Color</a>
+                    <h5 class="modal-title" id="sizeChooseModalTitle">Chọn size</h5><a class="size-guide text-btn" data-toggle="modal" href="#sizeGuideModal" data-dismiss="modal">Bảng size</a>
                 </div>
                 <div class="modal-body">
-                    <div class="Color content">
+                    <div class="size content">
                         <div class="select-filter"></div>
                     </div>
                 </div>

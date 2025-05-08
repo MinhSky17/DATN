@@ -129,7 +129,7 @@ input#upload-thumbnail {
 
 #list-user-img .pagination li a {
     color: #8c8a8a;
-    font-Color: 15px;
+    font-size: 15px;
 }
 
 #list-user-img .pagination li.active a {

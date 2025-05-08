@@ -1,25 +1,25 @@
 $(document).on('click', function (e) {
   let target = e.target;
 
-  if (target.closest('.Color .item')) {
-    $('.Color .item').removeClass('Color-choose');
-    $(target).addClass('Color-choose');
-    $('#modal-Color-Choose').modal('hide');
-    $('.Color-details').text($(target).attr('data-Color'));
-    $('.not-found-Color').hide();
+  if (target.closest('.size .item')) {
+    $('.size .item').removeClass('size-choose');
+    $(target).addClass('size-choose');
+    $('#modal-size-Choose').modal('hide');
+    $('.size-details').text($(target).attr('data-size'));
+    $('.not-found-size').hide();
     $('#btn-buy-now').show();
   }
 })
 
-$('.Color-guide').click(function () {
+$('.size-guide').click(function () {
   $('body').addClass('modal1-on')
 });
 
-$('.go-back-Color-choose').click(function () {
+$('.go-back-size-choose').click(function () {
   $('body').addClass('modal2-on')
 });
 
-$('#ColorChooseModal').on('hidden.bs.modal', function () {
+$('#sizeChooseModal').on('hidden.bs.modal', function () {
   $('body').addClass('modal1-on');
 
   if (!$('.modal.fade').hasClass('show')) {
@@ -27,7 +27,7 @@ $('#ColorChooseModal').on('hidden.bs.modal', function () {
   }
 });
 
-$('#ColorGuideModal').on('hidden.bs.modal', function () {
+$('#sizeGuideModal').on('hidden.bs.modal', function () {
   $('body').addClass('modal2-on');
 
   if (!$('.modal.fade').hasClass('show')) {

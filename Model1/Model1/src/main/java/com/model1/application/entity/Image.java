@@ -22,8 +22,8 @@ public class Image {
     private String name;
     @Column(name = "type")
     private String type;
-    @Column(name = "Color")
-    private long Color;
+    @Column(name = "size")
+    private long size;
     @Column(name = "link",unique = true)
     private String link;
     @Column(name = "created_at")

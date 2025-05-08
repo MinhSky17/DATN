@@ -19,7 +19,7 @@
   display: flex;
   flex-direction: column;
 
-  font-Color: 1em
+  font-size: 1em
 }
 .fc,
   .fc *,
@@ -30,7 +30,7 @@
 .fc table {
     border-collapse: collapse;
     border-spacing: 0;
-    font-Color: 1em; /* normalize cross-browser */
+    font-size: 1em; /* normalize cross-browser */
   }
 .fc th {
     text-align: center;
@@ -143,7 +143,7 @@ When it's NOT activated, the fc-button classes won't even be in the DOM.
     text-transform: none;
     margin: 0;
     font-family: inherit;
-    font-Color: inherit;
+    font-size: inherit;
     line-height: inherit;
   }
 .fc .fc-button:focus {
@@ -177,7 +177,7 @@ When it's NOT activated, the fc-button classes won't even be in the DOM.
     background-color: transparent;
     border: 1px solid transparent;
     padding: 0.4em 0.65em;
-    font-Color: 1em;
+    font-size: 1em;
     line-height: 1.5;
     border-radius: 0.25em;
   }
@@ -243,7 +243,7 @@ When it's NOT activated, the fc-button classes won't even be in the DOM.
 }
 .fc .fc-button .fc-icon {
     vertical-align: middle;
-    font-Color: 1.5em; /* bump up the Color (but don't make it bigger than line-height of button, which is 1.5em also) */
+    font-size: 1.5em; /* bump up the size (but don't make it bigger than line-height of button, which is 1.5em also) */
   }
 .fc .fc-button-group {
     position: relative;
@@ -292,7 +292,7 @@ When it's NOT activated, the fc-button classes won't even be in the DOM.
     margin-top: 1.5em;
   }
 .fc .fc-toolbar-title {
-    font-Color: 1.75em;
+    font-size: 1.75em;
     margin: 0;
   }
 .fc-direction-ltr .fc-toolbar > * > :not(:first-child) {
@@ -456,8 +456,8 @@ When it's NOT activated, the fc-button classes won't even be in the DOM.
   }
 .fc .fc-bg-event .fc-event-title {
       margin: .5em;
-      font-Color: .85em;
-      font-Color: var(--fc-small-font-Color, .85em);
+      font-size: .85em;
+      font-size: var(--fc-small-font-size, .85em);
       font-style: italic;
     }
 .fc .fc-highlight {
@@ -497,7 +497,7 @@ a.fc-event:hover {
 /* resizing */
 /* ---------------------------------------------------------------------------------------------------- */
 /* (subclasses should hone positioning for touch and non-touch) */
-.fc-event .fc-event-reColorr {
+.fc-event .fc-event-resizer {
     display: none;
     position: absolute;
     z-index: 4;
@@ -506,18 +506,18 @@ a.fc-event:hover {
 .fc-event-selected { /* TOUCH */
 
 }
-.fc-event:hover .fc-event-reColorr, .fc-event-selected .fc-event-reColorr {
+.fc-event:hover .fc-event-resizer, .fc-event-selected .fc-event-resizer {
     display: block;
   }
-.fc-event-selected .fc-event-reColorr {
+.fc-event-selected .fc-event-resizer {
     border-radius: 4px;
-    border-radius: calc(var(--fc-event-reColorr-dot-total-width, 8px) / 2);
+    border-radius: calc(var(--fc-event-resizer-dot-total-width, 8px) / 2);
     border-width: 1px;
-    border-width: var(--fc-event-reColorr-dot-border-width, 1px);
+    border-width: var(--fc-event-resizer-dot-border-width, 1px);
     width: 8px;
-    width: var(--fc-event-reColorr-dot-total-width, 8px);
+    width: var(--fc-event-resizer-dot-total-width, 8px);
     height: 8px;
-    height: var(--fc-event-reColorr-dot-total-width, 8px);
+    height: var(--fc-event-resizer-dot-total-width, 8px);
     border-style: solid;
     border-color: inherit;
     background: #fff;
@@ -526,7 +526,7 @@ a.fc-event:hover {
     /* expand hit area */
 
   }
-.fc-event-selected .fc-event-reColorr:before {
+.fc-event-selected .fc-event-resizer:before {
       content: '';
       position: absolute;
       top: -20px;
@@ -624,40 +624,40 @@ A HORIZONTAL event
   border-bottom-right-radius: 0;
   border-right-width: 0;
 }
-/* reColorrs */
-.fc-h-event:not(.fc-event-selected) .fc-event-reColorr {
+/* resizers */
+.fc-h-event:not(.fc-event-selected) .fc-event-resizer {
   top: 0;
   bottom: 0;
   width: 8px;
-  width: var(--fc-event-reColorr-thickness, 8px);
+  width: var(--fc-event-resizer-thickness, 8px);
 }
-.fc-direction-ltr .fc-h-event:not(.fc-event-selected) .fc-event-reColorr-start,
-.fc-direction-rtl .fc-h-event:not(.fc-event-selected) .fc-event-reColorr-end {
-  cursor: w-reColor;
+.fc-direction-ltr .fc-h-event:not(.fc-event-selected) .fc-event-resizer-start,
+.fc-direction-rtl .fc-h-event:not(.fc-event-selected) .fc-event-resizer-end {
+  cursor: w-resize;
   left: -4px;
-  left: calc(var(--fc-event-reColorr-thickness, 8px) / -2);
+  left: calc(var(--fc-event-resizer-thickness, 8px) / -2);
 }
-.fc-direction-ltr .fc-h-event:not(.fc-event-selected) .fc-event-reColorr-end,
-.fc-direction-rtl .fc-h-event:not(.fc-event-selected) .fc-event-reColorr-start {
-  cursor: e-reColor;
+.fc-direction-ltr .fc-h-event:not(.fc-event-selected) .fc-event-resizer-end,
+.fc-direction-rtl .fc-h-event:not(.fc-event-selected) .fc-event-resizer-start {
+  cursor: e-resize;
   right: -4px;
-  right: calc(var(--fc-event-reColorr-thickness, 8px) / -2);
+  right: calc(var(--fc-event-resizer-thickness, 8px) / -2);
 }
-/* reColorrs for TOUCH */
-.fc-h-event.fc-event-selected .fc-event-reColorr {
+/* resizers for TOUCH */
+.fc-h-event.fc-event-selected .fc-event-resizer {
   top: 50%;
   margin-top: -4px;
-  margin-top: calc(var(--fc-event-reColorr-dot-total-width, 8px) / -2);
+  margin-top: calc(var(--fc-event-resizer-dot-total-width, 8px) / -2);
 }
-.fc-direction-ltr .fc-h-event.fc-event-selected .fc-event-reColorr-start,
-.fc-direction-rtl .fc-h-event.fc-event-selected .fc-event-reColorr-end {
+.fc-direction-ltr .fc-h-event.fc-event-selected .fc-event-resizer-start,
+.fc-direction-rtl .fc-h-event.fc-event-selected .fc-event-resizer-end {
   left: -4px;
-  left: calc(var(--fc-event-reColorr-dot-total-width, 8px) / -2);
+  left: calc(var(--fc-event-resizer-dot-total-width, 8px) / -2);
 }
-.fc-direction-ltr .fc-h-event.fc-event-selected .fc-event-reColorr-end,
-.fc-direction-rtl .fc-h-event.fc-event-selected .fc-event-reColorr-start {
+.fc-direction-ltr .fc-h-event.fc-event-selected .fc-event-resizer-end,
+.fc-direction-rtl .fc-h-event.fc-event-selected .fc-event-resizer-start {
   right: -4px;
-  right: calc(var(--fc-event-reColorr-dot-total-width, 8px) / -2);
+  right: calc(var(--fc-event-resizer-dot-total-width, 8px) / -2);
 }
 
 
@@ -682,7 +682,7 @@ A HORIZONTAL event
 .fc .fc-popover-close {
     cursor: pointer;
     opacity: 0.65;
-    font-Color: 1.1em;
+    font-size: 1.1em;
   }
 .fc-theme-standard .fc-popover {
     border: 1px solid #ddd;
@@ -813,7 +813,7 @@ A HORIZONTAL event
 
 }
 .fc .fc-daygrid-day-bottom {
-    font-Color: .85em;
+    font-size: .85em;
     margin: 2px 3px 0;
   }
 .fc .fc-daygrid-more-link {
@@ -873,8 +873,8 @@ A HORIZONTAL event
   position: relative; /* for z-indexes assigned later */
   white-space: nowrap;
   border-radius: 3px; /* dot event needs this to when selected */
-  font-Color: .85em;
-  font-Color: var(--fc-small-font-Color, .85em);
+  font-size: .85em;
+  font-size: var(--fc-small-font-size, .85em);
 }
 /* --- the rectangle ("block") style of event --- */
 .fc-daygrid-block-event .fc-event-time {
@@ -991,61 +991,61 @@ A VERTICAL event
 
 .fc-v-event {
 
-  /* reColorr (mouse AND touch) */
+  /* resizer (mouse AND touch) */
 
 }
 
-.fc-v-event .fc-event-reColorr-start {
-    cursor: n-reColor;
+.fc-v-event .fc-event-resizer-start {
+    cursor: n-resize;
   }
 
-.fc-v-event .fc-event-reColorr-end {
-    cursor: s-reColor;
+.fc-v-event .fc-event-resizer-end {
+    cursor: s-resize;
   }
 
 .fc-v-event {
 
-  /* reColorr for MOUSE */
+  /* resizer for MOUSE */
 
 }
 
-.fc-v-event:not(.fc-event-selected) .fc-event-reColorr {
+.fc-v-event:not(.fc-event-selected) .fc-event-resizer {
       height: 8px;
-      height: var(--fc-event-reColorr-thickness, 8px);
+      height: var(--fc-event-resizer-thickness, 8px);
       left: 0;
       right: 0;
     }
 
-.fc-v-event:not(.fc-event-selected) .fc-event-reColorr-start {
+.fc-v-event:not(.fc-event-selected) .fc-event-resizer-start {
       top: -4px;
-      top: calc(var(--fc-event-reColorr-thickness, 8px) / -2);
+      top: calc(var(--fc-event-resizer-thickness, 8px) / -2);
     }
 
-.fc-v-event:not(.fc-event-selected) .fc-event-reColorr-end {
+.fc-v-event:not(.fc-event-selected) .fc-event-resizer-end {
       bottom: -4px;
-      bottom: calc(var(--fc-event-reColorr-thickness, 8px) / -2);
+      bottom: calc(var(--fc-event-resizer-thickness, 8px) / -2);
     }
 
 .fc-v-event {
 
-  /* reColorr for TOUCH (when event is "selected") */
+  /* resizer for TOUCH (when event is "selected") */
 
 }
 
-.fc-v-event.fc-event-selected .fc-event-reColorr {
+.fc-v-event.fc-event-selected .fc-event-resizer {
       left: 50%;
       margin-left: -4px;
-      margin-left: calc(var(--fc-event-reColorr-dot-total-width, 8px) / -2);
+      margin-left: calc(var(--fc-event-resizer-dot-total-width, 8px) / -2);
     }
 
-.fc-v-event.fc-event-selected .fc-event-reColorr-start {
+.fc-v-event.fc-event-selected .fc-event-resizer-start {
       top: -4px;
-      top: calc(var(--fc-event-reColorr-dot-total-width, 8px) / -2);
+      top: calc(var(--fc-event-resizer-dot-total-width, 8px) / -2);
     }
 
-.fc-v-event.fc-event-selected .fc-event-reColorr-end {
+.fc-v-event.fc-event-selected .fc-event-resizer-end {
       bottom: -4px;
-      bottom: calc(var(--fc-event-reColorr-dot-total-width, 8px) / -2);
+      bottom: calc(var(--fc-event-resizer-dot-total-width, 8px) / -2);
     }
 .fc .fc-timegrid .fc-daygrid-body { /* the all-day daygrid within the timegrid view */
     z-index: 2; /* put above the timegrid-body so that more-popover is above everything. TODO: better solution */
@@ -1218,9 +1218,9 @@ A VERTICAL event
 }
 .fc-timegrid-event { /* events need to be root */
 
-  font-Color: .85em;
+  font-size: .85em;
 
-  font-Color: var(--fc-small-font-Color, .85em);
+  font-size: var(--fc-small-font-size, .85em);
   border-radius: 3px
 
 }
@@ -1229,8 +1229,8 @@ A VERTICAL event
   }
 .fc-timegrid-event .fc-event-time {
     white-space: nowrap;
-    font-Color: .85em;
-    font-Color: var(--fc-small-font-Color, .85em);
+    font-size: .85em;
+    font-size: var(--fc-small-font-size, .85em);
     margin-bottom: 1px;
   }
 .fc-timegrid-event-condensed .fc-event-main-frame {
@@ -1241,8 +1241,8 @@ A VERTICAL event
     content: '\00a0-\00a0'; /* dash surrounded by non-breaking spaces */
   }
 .fc-timegrid-event-condensed .fc-event-title {
-    font-Color: .85em;
-    font-Color: var(--fc-small-font-Color, .85em)
+    font-size: .85em;
+    font-size: var(--fc-small-font-size, .85em)
   }
 .fc-media-screen .fc-timegrid-event {
     position: absolute; /* absolute WITHIN the harness */

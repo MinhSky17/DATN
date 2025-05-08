@@ -49,7 +49,7 @@ public class ImageController {
                 Image image = new Image();
                 image.setId(UUID.randomUUID().toString());
                 image.setName(file.getName());
-                image.setColor(file.getSize());
+                image.setSize(file.getSize());
                 image.setType(extension);
                 String link = "/media/static/" + image.getId() + "." + extension;
                 image.setLink(link);

@@ -1,6 +1,7 @@
 package com.model1.application.service.impl;
 
 import com.model1.application.entity.*;
+
 import com.model1.application.exception.BadRequestException;
 import com.model1.application.exception.InternalServerException;
 import com.model1.application.exception.NotFoundException;
@@ -11,7 +12,7 @@ import com.model1.application.model.request.UpdateDetailOrder;
 import com.model1.application.model.request.UpdateStatusOrderRequest;
 import com.model1.application.repository.OrderRepository;
 import com.model1.application.repository.ProductRepository;
-import com.model1.application.repository.ProductColorRepository;
+import com.model1.application.repository.ProductSizeRepository;
 import com.model1.application.repository.StatisticRepository;
 import com.model1.application.service.OrderService;
 import com.model1.application.service.PromotionService;
@@ -35,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
     private ProductRepository productRepository;
 
     @Autowired
-    private ProductColorRepository productColorRepository;
+    private ProductSizeRepository productSizeRepository;
 
     @Autowired
     private OrderRepository orderRepository;
@@ -66,10 +67,10 @@ public class OrderServiceImpl implements OrderService {
             throw new NotFoundException("Sản phẩm không tồn tại!");
         }
 
-        //Kiểm tra color có sẵn
-        ProductColor productColor = productColorRepository.checkProductAndColorAvailable(createOrderRequest.getProductId(), createOrderRequest.getColor());
-        if (productColor == null) {
-            throw new BadRequestException("Color giày sản phẩm tạm hết, Vui lòng chọn sản phẩm khác!");
+        //Kiểm tra size có sẵn
+        ProductSize productSize = productSizeRepository.checkProductAndSizeAvailable(createOrderRequest.getProductId(), createOrderRequest.getSize());
+        if (productSize == null) {
+            throw new BadRequestException("Size giày sản phẩm tạm hết, Vui lòng chọn sản phẩm khác!");
         }
 
         //Kiểm tra giá sản phẩm
@@ -86,7 +87,7 @@ public class OrderServiceImpl implements OrderService {
         order.setReceiverName(createOrderRequest.getReceiverName());
         order.setReceiverPhone(createOrderRequest.getReceiverPhone());
         order.setNote(createOrderRequest.getNote());
-        order.setColor(createOrderRequest.getColor());
+        order.setSize(createOrderRequest.getSize());
         order.setPrice(createOrderRequest.getProductPrice());
         order.setTotalPrice(createOrderRequest.getTotalPrice());
         order.setStatus(ORDER_STATUS);
@@ -112,7 +113,7 @@ public class OrderServiceImpl implements OrderService {
             throw new BadRequestException("Chỉ cập nhật đơn hàng ở trạng thái chờ lấy hàng");
         }
 
-        //Kiểm tra Color sản phẩm
+        //Kiểm tra size sản phẩm
         Optional<Product> product = productRepository.findById(updateDetailOrder.getProductId());
         if (product.isEmpty()) {
             throw new BadRequestException("Sản phẩm không tồn tại");
@@ -122,9 +123,9 @@ public class OrderServiceImpl implements OrderService {
             throw new BadRequestException("Giá sản phẩm thay đổi vui lòng đặt hàng lại");
         }
 
-        ProductColor productColor = productColorRepository.checkProductAndColorAvailable(updateDetailOrder.getProductId(), updateDetailOrder.getColor());
-        if (productColor == null) {
-            throw new BadRequestException("Color giày sản phẩm tạm hết, Vui lòng chọn sản phẩm khác");
+        ProductSize productSize = productSizeRepository.checkProductAndSizeAvailable(updateDetailOrder.getProductId(), updateDetailOrder.getSize());
+        if (productSize == null) {
+            throw new BadRequestException("Size giày sản phẩm tạm hết, Vui lòng chọn sản phẩm khác");
         }
 
         //Kiểm tra khuyến mại
@@ -143,7 +144,7 @@ public class OrderServiceImpl implements OrderService {
 
         order.setModifiedAt(new Timestamp(System.currentTimeMillis()));
         order.setProduct(product.get());
-        order.setColor(updateDetailOrder.getColor());
+        order.setSize(updateDetailOrder.getSize());
         order.setPrice(updateDetailOrder.getProductPrice());
         order.setTotalPrice(updateDetailOrder.getTotalPrice());
 
@@ -197,11 +198,11 @@ public class OrderServiceImpl implements OrderService {
                 //Đơn hàng ở trạng thái đang vận chuyển
             } else if (updateStatusOrderRequest.getStatus() == DELIVERY_STATUS) {
                 //Trừ đi một sản phẩm
-                productColorRepository.minusOneProductByColor(order.getProduct().getId(), order.getColor());
+                productSizeRepository.minusOneProductBySize(order.getProduct().getId(), order.getSize());
                 //Đơn hàng ở trạng thái đã giao hàng
             } else if (updateStatusOrderRequest.getStatus() == COMPLETED_STATUS) {
                 //Trừ đi một sản phẩm và cộng một sản phẩm vào sản phẩm đã bán và cộng tiền
-                productColorRepository.minusOneProductByColor(order.getProduct().getId(), order.getColor());
+                productSizeRepository.minusOneProductBySize(order.getProduct().getId(), order.getSize());
                 productRepository.plusOneProductTotalSold(order.getProduct().getId());
                 statistic(order.getTotalPrice(), order.getQuantity(), order);
             } else if (updateStatusOrderRequest.getStatus() != CANCELED_STATUS) {
@@ -217,11 +218,11 @@ public class OrderServiceImpl implements OrderService {
                 //Đơn hàng ở trạng thái đã hủy
             } else if (updateStatusOrderRequest.getStatus() == RETURNED_STATUS) {
                 //Cộng lại một sản phẩm đã bị trừ
-                productColorRepository.plusOneProductByColor(order.getProduct().getId(), order.getColor());
+                productSizeRepository.plusOneProductBySize(order.getProduct().getId(), order.getSize());
                 //Đơn hàng ở trạng thái đã trả hàng
             } else if (updateStatusOrderRequest.getStatus() == CANCELED_STATUS) {
                 //Cộng lại một sản phẩm đã bị trừ
-                productColorRepository.plusOneProductByColor(order.getProduct().getId(), order.getColor());
+                productSizeRepository.plusOneProductBySize(order.getProduct().getId(), order.getSize());
             } else if (updateStatusOrderRequest.getStatus() != DELIVERY_STATUS) {
                 throw new BadRequestException("Không thế chuyển sang trạng thái này");
             }
@@ -230,7 +231,7 @@ public class OrderServiceImpl implements OrderService {
             //Đơn hàng đang ở trạng thái đã hủy
             if (updateStatusOrderRequest.getStatus() == RETURNED_STATUS) {
                 //Cộng một sản phẩm đã bị trừ và trừ đi một sản phẩm đã bán và trừ số tiền
-                productColorRepository.plusOneProductByColor(order.getProduct().getId(), order.getColor());
+                productSizeRepository.plusOneProductBySize(order.getProduct().getId(), order.getSize());
                 productRepository.minusOneProductTotalSold(order.getProduct().getId());
                 updateStatistic(order.getTotalPrice(), order.getQuantity(), order);
             } else if (updateStatusOrderRequest.getStatus() != COMPLETED_STATUS) {
@@ -258,6 +259,15 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderInfoDTO> getListOrderOfPersonByStatus(int status, long userId) {
         List<OrderInfoDTO> list = orderRepository.getListOrderOfPersonByStatus(status, userId);
+
+        for (OrderInfoDTO dto : list) {
+            for (int i = 0; i < SIZE_VN.size(); i++) {
+                if (SIZE_VN.get(i) == dto.getSizeVn()) {
+                    dto.setSizeUs(SIZE_US[i]);
+                    dto.setSizeCm(SIZE_CM[i]);
+                }
+            }
+        }
         return list;
     }
 
@@ -278,6 +288,13 @@ public class OrderServiceImpl implements OrderService {
             order.setStatusText("Đơn hàng đã trả lại");
         } else if (order.getStatus() == RETURNED_STATUS) {
             order.setStatusText("Đơn hàng đã hủy");
+        }
+
+        for (int i = 0; i < SIZE_VN.size(); i++) {
+            if (SIZE_VN.get(i) == order.getSizeVn()) {
+                order.setSizeUs(SIZE_US[i]);
+                order.setSizeCm(SIZE_CM[i]);
+            }
         }
 
         return order;

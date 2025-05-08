@@ -54,7 +54,7 @@ var FullCalendar = (function (exports) {
         return r;
     }
 
-    var n,u,i,t,o,r,f={},e=[],c=/acit|ex(?:s|g|n|p|$)|rph|grid|ows|mnc|ntw|ine[ch]|zoo|^ord|itera/i;function s(n,l){for(var u in l)n[u]=l[u];return n}function a(n){var l=n.parentNode;l&&l.removeChild(n);}function v(n,l,u){var i,t,o,r=arguments,f={};for(o in l)"key"==o?i=l[o]:"ref"==o?t=l[o]:f[o]=l[o];if(arguments.length>3)for(u=[u],o=3;o<arguments.length;o++)u.push(r[o]);if(null!=u&&(f.children=u),"function"==typeof n&&null!=n.defaultProps)for(o in n.defaultProps)void 0===f[o]&&(f[o]=n.defaultProps[o]);return h(n,f,i,t,null)}function h(l,u,i,t,o){var r={type:l,props:u,key:i,ref:t,__k:null,__:null,__b:0,__e:null,__d:void 0,__c:null,__h:null,constructor:void 0,__v:null==o?++n.__v:o};return null!=n.vnode&&n.vnode(r),r}function y(){return {current:null}}function p(n){return n.children}function d(n,l){this.props=n,this.context=l;}function _(n,l){if(null==l)return n.__?_(n.__,n.__.__k.indexOf(n)+1):null;for(var u;l<n.__k.length;l++)if(null!=(u=n.__k[l])&&null!=u.__e)return u.__e;return "function"==typeof n.type?_(n):null}function w(n){var l,u;if(null!=(n=n.__)&&null!=n.__c){for(n.__e=n.__c.base=null,l=0;l<n.__k.length;l++)if(null!=(u=n.__k[l])&&null!=u.__e){n.__e=n.__c.base=u.__e;break}return w(n)}}function k(l){(!l.__d&&(l.__d=!0)&&u.push(l)&&!g.__r++||t!==n.debounceRendering)&&((t=n.debounceRendering)||i)(g);}function g(){for(var n;g.__r=u.length;)n=u.sort(function(n,l){return n.__v.__b-l.__v.__b}),u=[],n.some(function(n){var l,u,i,t,o,r,f;n.__d&&(r=(o=(l=n).__v).__e,(f=l.__P)&&(u=[],(i=s({},o)).__v=o.__v+1,t=$(f,o,i,l.__n,void 0!==f.ownerSVGElement,null!=o.__h?[r]:null,u,null==r?_(o):r,o.__h),j(u,o),t!=r&&w(o)));});}function m(n,l,u,i,t,o,r,c,s,v){var y,d,w,k,g,m,b,A=i&&i.__k||e,P=A.length;for(s==f&&(s=null!=r?r[0]:P?_(i,0):null),u.__k=[],y=0;y<l.length;y++)if(null!=(k=u.__k[y]=null==(k=l[y])||"boolean"==typeof k?null:"string"==typeof k||"number"==typeof k?h(null,k,null,null,k):Array.isArray(k)?h(p,{children:k},null,null,null):null!=k.__e||null!=k.__c?h(k.type,k.props,k.key,null,k.__v):k)){if(k.__=u,k.__b=u.__b+1,null===(w=A[y])||w&&k.key==w.key&&k.type===w.type)A[y]=void 0;else for(d=0;d<P;d++){if((w=A[d])&&k.key==w.key&&k.type===w.type){A[d]=void 0;break}w=null;}g=$(n,k,w=w||f,t,o,r,c,s,v),(d=k.ref)&&w.ref!=d&&(b||(b=[]),w.ref&&b.push(w.ref,null,k),b.push(d,k.__c||g,k)),null!=g?(null==m&&(m=g),s=x(n,k,w,A,r,g,s),v||"option"!=u.type?"function"==typeof u.type&&(u.__d=s):n.value=""):s&&w.__e==s&&s.parentNode!=n&&(s=_(w));}if(u.__e=m,null!=r&&"function"!=typeof u.type)for(y=r.length;y--;)null!=r[y]&&a(r[y]);for(y=P;y--;)null!=A[y]&&L(A[y],A[y]);if(b)for(y=0;y<b.length;y++)I(b[y],b[++y],b[++y]);}function x(n,l,u,i,t,o,r){var f,e,c;if(void 0!==l.__d)f=l.__d,l.__d=void 0;else if(t==u||o!=r||null==o.parentNode)n:if(null==r||r.parentNode!==n)n.appendChild(o),f=null;else {for(e=r,c=0;(e=e.nextSibling)&&c<i.length;c+=2)if(e==o)break n;n.insertBefore(o,r),f=r;}return void 0!==f?f:o.nextSibling}function A(n,l,u,i,t){var o;for(o in u)"children"===o||"key"===o||o in l||C(n,o,null,u[o],i);for(o in l)t&&"function"!=typeof l[o]||"children"===o||"key"===o||"value"===o||"checked"===o||u[o]===l[o]||C(n,o,l[o],u[o],i);}function P(n,l,u){"-"===l[0]?n.setProperty(l,u):n[l]=null==u?"":"number"!=typeof u||c.test(l)?u:u+"px";}function C(n,l,u,i,t){var o,r,f;if(t&&"className"==l&&(l="class"),"style"===l)if("string"==typeof u)n.style.cssText=u;else {if("string"==typeof i&&(n.style.cssText=i=""),i)for(l in i)u&&l in u||P(n.style,l,"");if(u)for(l in u)i&&u[l]===i[l]||P(n.style,l,u[l]);}else "o"===l[0]&&"n"===l[1]?(o=l!==(l=l.replace(/Capture$/,"")),(r=l.toLowerCase())in n&&(l=r),l=l.slice(2),n.l||(n.l={}),n.l[l+o]=u,f=o?N:z,u?i||n.addEventListener(l,f,o):n.removeEventListener(l,f,o)):"list"!==l&&"tagName"!==l&&"form"!==l&&"type"!==l&&"Color"!==l&&"download"!==l&&"href"!==l&&!t&&l in n?n[l]=null==u?"":u:"function"!=typeof u&&"dangerouslySetInnerHTML"!==l&&(l!==(l=l.replace(/xlink:?/,""))?null==u||!1===u?n.removeAttributeNS("http://www.w3.org/1999/xlink",l.toLowerCase()):n.setAttributeNS("http://www.w3.org/1999/xlink",l.toLowerCase(),u):null==u||!1===u&&!/^ar/.test(l)?n.removeAttribute(l):n.setAttribute(l,u));}function z(l){this.l[l.type+!1](n.event?n.event(l):l);}function N(l){this.l[l.type+!0](n.event?n.event(l):l);}function T(n,l,u){var i,t;for(i=0;i<n.__k.length;i++)(t=n.__k[i])&&(t.__=n,t.__e&&("function"==typeof t.type&&t.__k.length>1&&T(t,l,u),l=x(u,t,t,n.__k,null,t.__e,l),"function"==typeof n.type&&(n.__d=l)));}function $(l,u,i,t,o,r,f,e,c){var a,v,h,y,_,w,k,g,b,x,A,P=u.type;if(void 0!==u.constructor)return null;null!=i.__h&&(c=i.__h,e=u.__e=i.__e,u.__h=null,r=[e]),(a=n.__b)&&a(u);try{n:if("function"==typeof P){if(g=u.props,b=(a=P.contextType)&&t[a.__c],x=a?b?b.props.value:a.__:t,i.__c?k=(v=u.__c=i.__c).__=v.__E:("prototype"in P&&P.prototype.render?u.__c=v=new P(g,x):(u.__c=v=new d(g,x),v.constructor=P,v.render=M),b&&b.sub(v),v.props=g,v.state||(v.state={}),v.context=x,v.__n=t,h=v.__d=!0,v.__h=[]),null==v.__s&&(v.__s=v.state),null!=P.getDerivedStateFromProps&&(v.__s==v.state&&(v.__s=s({},v.__s)),s(v.__s,P.getDerivedStateFromProps(g,v.__s))),y=v.props,_=v.state,h)null==P.getDerivedStateFromProps&&null!=v.componentWillMount&&v.componentWillMount(),null!=v.componentDidMount&&v.__h.push(v.componentDidMount);else {if(null==P.getDerivedStateFromProps&&g!==y&&null!=v.componentWillReceiveProps&&v.componentWillReceiveProps(g,x),!v.__e&&null!=v.shouldComponentUpdate&&!1===v.shouldComponentUpdate(g,v.__s,x)||u.__v===i.__v){v.props=g,v.state=v.__s,u.__v!==i.__v&&(v.__d=!1),v.__v=u,u.__e=i.__e,u.__k=i.__k,v.__h.length&&f.push(v),T(u,e,l);break n}null!=v.componentWillUpdate&&v.componentWillUpdate(g,v.__s,x),null!=v.componentDidUpdate&&v.__h.push(function(){v.componentDidUpdate(y,_,w);});}v.context=x,v.props=g,v.state=v.__s,(a=n.__r)&&a(u),v.__d=!1,v.__v=u,v.__P=l,a=v.render(v.props,v.state,v.context),v.state=v.__s,null!=v.getChildContext&&(t=s(s({},t),v.getChildContext())),h||null==v.getSnapshotBeforeUpdate||(w=v.getSnapshotBeforeUpdate(y,_)),A=null!=a&&a.type==p&&null==a.key?a.props.children:a,m(l,Array.isArray(A)?A:[A],u,i,t,o,r,f,e,c),v.base=u.__e,u.__h=null,v.__h.length&&f.push(v),k&&(v.__E=v.__=null),v.__e=!1;}else null==r&&u.__v===i.__v?(u.__k=i.__k,u.__e=i.__e):u.__e=H(i.__e,u,i,t,o,r,f,c);(a=n.diffed)&&a(u);}catch(l){u.__v=null,(c||null!=r)&&(u.__e=e,u.__h=!!c,r[r.indexOf(e)]=null),n.__e(l,u,i);}return u.__e}function j(l,u){n.__c&&n.__c(u,l),l.some(function(u){try{l=u.__h,u.__h=[],l.some(function(n){n.call(u);});}catch(l){n.__e(l,u.__v);}});}function H(n,l,u,i,t,o,r,c){var s,a,v,h,y,p=u.props,d=l.props;if(t="svg"===l.type||t,null!=o)for(s=0;s<o.length;s++)if(null!=(a=o[s])&&((null===l.type?3===a.nodeType:a.localName===l.type)||n==a)){n=a,o[s]=null;break}if(null==n){if(null===l.type)return document.createTextNode(d);n=t?document.createElementNS("http://www.w3.org/2000/svg",l.type):document.createElement(l.type,d.is&&{is:d.is}),o=null,c=!1;}if(null===l.type)p===d||c&&n.data===d||(n.data=d);else {if(null!=o&&(o=e.slice.call(n.childNodes)),v=(p=u.props||f).dangerouslySetInnerHTML,h=d.dangerouslySetInnerHTML,!c){if(null!=o)for(p={},y=0;y<n.attributes.length;y++)p[n.attributes[y].name]=n.attributes[y].value;(h||v)&&(h&&(v&&h.__html==v.__html||h.__html===n.innerHTML)||(n.innerHTML=h&&h.__html||""));}A(n,d,p,t,c),h?l.__k=[]:(s=l.props.children,m(n,Array.isArray(s)?s:[s],l,u,i,"foreignObject"!==l.type&&t,o,r,f,c)),c||("value"in d&&void 0!==(s=d.value)&&(s!==n.value||"progress"===l.type&&!s)&&C(n,"value",s,p.value,!1),"checked"in d&&void 0!==(s=d.checked)&&s!==n.checked&&C(n,"checked",s,p.checked,!1));}return n}function I(l,u,i){try{"function"==typeof l?l(u):l.current=u;}catch(l){n.__e(l,i);}}function L(l,u,i){var t,o,r;if(n.unmount&&n.unmount(l),(t=l.ref)&&(t.current&&t.current!==l.__e||I(t,null,u)),i||"function"==typeof l.type||(i=null!=(o=l.__e)),l.__e=l.__d=void 0,null!=(t=l.__c)){if(t.componentWillUnmount)try{t.componentWillUnmount();}catch(l){n.__e(l,u);}t.base=t.__P=null;}if(t=l.__k)for(r=0;r<t.length;r++)t[r]&&L(t[r],u,i);null!=o&&a(o);}function M(n,l,u){return this.constructor(n,u)}function O(l,u,i){var t,r,c;n.__&&n.__(l,u),r=(t=i===o)?null:i&&i.__k||u.__k,l=v(p,null,[l]),c=[],$(u,(t?u:i||u).__k=l,r||f,f,void 0!==u.ownerSVGElement,i&&!t?[i]:r?null:u.childNodes.length?e.slice.call(u.childNodes):null,c,i||f,t),j(c,l);}function B(n,l){var u={__c:l="__cC"+r++,__:n,Consumer:function(n,l){return n.children(l)},Provider:function(n,u,i){return this.getChildContext||(u=[],(i={})[l]=this,this.getChildContext=function(){return i},this.shouldComponentUpdate=function(n){this.props.value!==n.value&&u.some(k);},this.sub=function(n){u.push(n);var l=n.componentWillUnmount;n.componentWillUnmount=function(){u.splice(u.indexOf(n),1),l&&l.call(n);};}),n.children}};return u.Provider.__=u.Consumer.contextType=u}n={__e:function(n,l){for(var u,i,t,o=l.__h;l=l.__;)if((u=l.__c)&&!u.__)try{if((i=u.constructor)&&null!=i.getDerivedStateFromError&&(u.setState(i.getDerivedStateFromError(n)),t=u.__d),null!=u.componentDidCatch&&(u.componentDidCatch(n),t=u.__d),t)return l.__h=o,u.__E=u}catch(l){n=l;}throw n},__v:0},d.prototype.setState=function(n,l){var u;u=null!=this.__s&&this.__s!==this.state?this.__s:this.__s=s({},this.state),"function"==typeof n&&(n=n(s({},u),this.props)),n&&s(u,n),null!=n&&this.__v&&(l&&this.__h.push(l),k(this));},d.prototype.forceUpdate=function(n){this.__v&&(this.__e=!0,n&&this.__h.push(n),k(this));},d.prototype.render=p,u=[],i="function"==typeof Promise?Promise.prototype.then.bind(Promise.resolve()):setTimeout,g.__r=0,o=f,r=0;
+    var n,u,i,t,o,r,f={},e=[],c=/acit|ex(?:s|g|n|p|$)|rph|grid|ows|mnc|ntw|ine[ch]|zoo|^ord|itera/i;function s(n,l){for(var u in l)n[u]=l[u];return n}function a(n){var l=n.parentNode;l&&l.removeChild(n);}function v(n,l,u){var i,t,o,r=arguments,f={};for(o in l)"key"==o?i=l[o]:"ref"==o?t=l[o]:f[o]=l[o];if(arguments.length>3)for(u=[u],o=3;o<arguments.length;o++)u.push(r[o]);if(null!=u&&(f.children=u),"function"==typeof n&&null!=n.defaultProps)for(o in n.defaultProps)void 0===f[o]&&(f[o]=n.defaultProps[o]);return h(n,f,i,t,null)}function h(l,u,i,t,o){var r={type:l,props:u,key:i,ref:t,__k:null,__:null,__b:0,__e:null,__d:void 0,__c:null,__h:null,constructor:void 0,__v:null==o?++n.__v:o};return null!=n.vnode&&n.vnode(r),r}function y(){return {current:null}}function p(n){return n.children}function d(n,l){this.props=n,this.context=l;}function _(n,l){if(null==l)return n.__?_(n.__,n.__.__k.indexOf(n)+1):null;for(var u;l<n.__k.length;l++)if(null!=(u=n.__k[l])&&null!=u.__e)return u.__e;return "function"==typeof n.type?_(n):null}function w(n){var l,u;if(null!=(n=n.__)&&null!=n.__c){for(n.__e=n.__c.base=null,l=0;l<n.__k.length;l++)if(null!=(u=n.__k[l])&&null!=u.__e){n.__e=n.__c.base=u.__e;break}return w(n)}}function k(l){(!l.__d&&(l.__d=!0)&&u.push(l)&&!g.__r++||t!==n.debounceRendering)&&((t=n.debounceRendering)||i)(g);}function g(){for(var n;g.__r=u.length;)n=u.sort(function(n,l){return n.__v.__b-l.__v.__b}),u=[],n.some(function(n){var l,u,i,t,o,r,f;n.__d&&(r=(o=(l=n).__v).__e,(f=l.__P)&&(u=[],(i=s({},o)).__v=o.__v+1,t=$(f,o,i,l.__n,void 0!==f.ownerSVGElement,null!=o.__h?[r]:null,u,null==r?_(o):r,o.__h),j(u,o),t!=r&&w(o)));});}function m(n,l,u,i,t,o,r,c,s,v){var y,d,w,k,g,m,b,A=i&&i.__k||e,P=A.length;for(s==f&&(s=null!=r?r[0]:P?_(i,0):null),u.__k=[],y=0;y<l.length;y++)if(null!=(k=u.__k[y]=null==(k=l[y])||"boolean"==typeof k?null:"string"==typeof k||"number"==typeof k?h(null,k,null,null,k):Array.isArray(k)?h(p,{children:k},null,null,null):null!=k.__e||null!=k.__c?h(k.type,k.props,k.key,null,k.__v):k)){if(k.__=u,k.__b=u.__b+1,null===(w=A[y])||w&&k.key==w.key&&k.type===w.type)A[y]=void 0;else for(d=0;d<P;d++){if((w=A[d])&&k.key==w.key&&k.type===w.type){A[d]=void 0;break}w=null;}g=$(n,k,w=w||f,t,o,r,c,s,v),(d=k.ref)&&w.ref!=d&&(b||(b=[]),w.ref&&b.push(w.ref,null,k),b.push(d,k.__c||g,k)),null!=g?(null==m&&(m=g),s=x(n,k,w,A,r,g,s),v||"option"!=u.type?"function"==typeof u.type&&(u.__d=s):n.value=""):s&&w.__e==s&&s.parentNode!=n&&(s=_(w));}if(u.__e=m,null!=r&&"function"!=typeof u.type)for(y=r.length;y--;)null!=r[y]&&a(r[y]);for(y=P;y--;)null!=A[y]&&L(A[y],A[y]);if(b)for(y=0;y<b.length;y++)I(b[y],b[++y],b[++y]);}function x(n,l,u,i,t,o,r){var f,e,c;if(void 0!==l.__d)f=l.__d,l.__d=void 0;else if(t==u||o!=r||null==o.parentNode)n:if(null==r||r.parentNode!==n)n.appendChild(o),f=null;else {for(e=r,c=0;(e=e.nextSibling)&&c<i.length;c+=2)if(e==o)break n;n.insertBefore(o,r),f=r;}return void 0!==f?f:o.nextSibling}function A(n,l,u,i,t){var o;for(o in u)"children"===o||"key"===o||o in l||C(n,o,null,u[o],i);for(o in l)t&&"function"!=typeof l[o]||"children"===o||"key"===o||"value"===o||"checked"===o||u[o]===l[o]||C(n,o,l[o],u[o],i);}function P(n,l,u){"-"===l[0]?n.setProperty(l,u):n[l]=null==u?"":"number"!=typeof u||c.test(l)?u:u+"px";}function C(n,l,u,i,t){var o,r,f;if(t&&"className"==l&&(l="class"),"style"===l)if("string"==typeof u)n.style.cssText=u;else {if("string"==typeof i&&(n.style.cssText=i=""),i)for(l in i)u&&l in u||P(n.style,l,"");if(u)for(l in u)i&&u[l]===i[l]||P(n.style,l,u[l]);}else "o"===l[0]&&"n"===l[1]?(o=l!==(l=l.replace(/Capture$/,"")),(r=l.toLowerCase())in n&&(l=r),l=l.slice(2),n.l||(n.l={}),n.l[l+o]=u,f=o?N:z,u?i||n.addEventListener(l,f,o):n.removeEventListener(l,f,o)):"list"!==l&&"tagName"!==l&&"form"!==l&&"type"!==l&&"size"!==l&&"download"!==l&&"href"!==l&&!t&&l in n?n[l]=null==u?"":u:"function"!=typeof u&&"dangerouslySetInnerHTML"!==l&&(l!==(l=l.replace(/xlink:?/,""))?null==u||!1===u?n.removeAttributeNS("http://www.w3.org/1999/xlink",l.toLowerCase()):n.setAttributeNS("http://www.w3.org/1999/xlink",l.toLowerCase(),u):null==u||!1===u&&!/^ar/.test(l)?n.removeAttribute(l):n.setAttribute(l,u));}function z(l){this.l[l.type+!1](n.event?n.event(l):l);}function N(l){this.l[l.type+!0](n.event?n.event(l):l);}function T(n,l,u){var i,t;for(i=0;i<n.__k.length;i++)(t=n.__k[i])&&(t.__=n,t.__e&&("function"==typeof t.type&&t.__k.length>1&&T(t,l,u),l=x(u,t,t,n.__k,null,t.__e,l),"function"==typeof n.type&&(n.__d=l)));}function $(l,u,i,t,o,r,f,e,c){var a,v,h,y,_,w,k,g,b,x,A,P=u.type;if(void 0!==u.constructor)return null;null!=i.__h&&(c=i.__h,e=u.__e=i.__e,u.__h=null,r=[e]),(a=n.__b)&&a(u);try{n:if("function"==typeof P){if(g=u.props,b=(a=P.contextType)&&t[a.__c],x=a?b?b.props.value:a.__:t,i.__c?k=(v=u.__c=i.__c).__=v.__E:("prototype"in P&&P.prototype.render?u.__c=v=new P(g,x):(u.__c=v=new d(g,x),v.constructor=P,v.render=M),b&&b.sub(v),v.props=g,v.state||(v.state={}),v.context=x,v.__n=t,h=v.__d=!0,v.__h=[]),null==v.__s&&(v.__s=v.state),null!=P.getDerivedStateFromProps&&(v.__s==v.state&&(v.__s=s({},v.__s)),s(v.__s,P.getDerivedStateFromProps(g,v.__s))),y=v.props,_=v.state,h)null==P.getDerivedStateFromProps&&null!=v.componentWillMount&&v.componentWillMount(),null!=v.componentDidMount&&v.__h.push(v.componentDidMount);else {if(null==P.getDerivedStateFromProps&&g!==y&&null!=v.componentWillReceiveProps&&v.componentWillReceiveProps(g,x),!v.__e&&null!=v.shouldComponentUpdate&&!1===v.shouldComponentUpdate(g,v.__s,x)||u.__v===i.__v){v.props=g,v.state=v.__s,u.__v!==i.__v&&(v.__d=!1),v.__v=u,u.__e=i.__e,u.__k=i.__k,v.__h.length&&f.push(v),T(u,e,l);break n}null!=v.componentWillUpdate&&v.componentWillUpdate(g,v.__s,x),null!=v.componentDidUpdate&&v.__h.push(function(){v.componentDidUpdate(y,_,w);});}v.context=x,v.props=g,v.state=v.__s,(a=n.__r)&&a(u),v.__d=!1,v.__v=u,v.__P=l,a=v.render(v.props,v.state,v.context),v.state=v.__s,null!=v.getChildContext&&(t=s(s({},t),v.getChildContext())),h||null==v.getSnapshotBeforeUpdate||(w=v.getSnapshotBeforeUpdate(y,_)),A=null!=a&&a.type==p&&null==a.key?a.props.children:a,m(l,Array.isArray(A)?A:[A],u,i,t,o,r,f,e,c),v.base=u.__e,u.__h=null,v.__h.length&&f.push(v),k&&(v.__E=v.__=null),v.__e=!1;}else null==r&&u.__v===i.__v?(u.__k=i.__k,u.__e=i.__e):u.__e=H(i.__e,u,i,t,o,r,f,c);(a=n.diffed)&&a(u);}catch(l){u.__v=null,(c||null!=r)&&(u.__e=e,u.__h=!!c,r[r.indexOf(e)]=null),n.__e(l,u,i);}return u.__e}function j(l,u){n.__c&&n.__c(u,l),l.some(function(u){try{l=u.__h,u.__h=[],l.some(function(n){n.call(u);});}catch(l){n.__e(l,u.__v);}});}function H(n,l,u,i,t,o,r,c){var s,a,v,h,y,p=u.props,d=l.props;if(t="svg"===l.type||t,null!=o)for(s=0;s<o.length;s++)if(null!=(a=o[s])&&((null===l.type?3===a.nodeType:a.localName===l.type)||n==a)){n=a,o[s]=null;break}if(null==n){if(null===l.type)return document.createTextNode(d);n=t?document.createElementNS("http://www.w3.org/2000/svg",l.type):document.createElement(l.type,d.is&&{is:d.is}),o=null,c=!1;}if(null===l.type)p===d||c&&n.data===d||(n.data=d);else {if(null!=o&&(o=e.slice.call(n.childNodes)),v=(p=u.props||f).dangerouslySetInnerHTML,h=d.dangerouslySetInnerHTML,!c){if(null!=o)for(p={},y=0;y<n.attributes.length;y++)p[n.attributes[y].name]=n.attributes[y].value;(h||v)&&(h&&(v&&h.__html==v.__html||h.__html===n.innerHTML)||(n.innerHTML=h&&h.__html||""));}A(n,d,p,t,c),h?l.__k=[]:(s=l.props.children,m(n,Array.isArray(s)?s:[s],l,u,i,"foreignObject"!==l.type&&t,o,r,f,c)),c||("value"in d&&void 0!==(s=d.value)&&(s!==n.value||"progress"===l.type&&!s)&&C(n,"value",s,p.value,!1),"checked"in d&&void 0!==(s=d.checked)&&s!==n.checked&&C(n,"checked",s,p.checked,!1));}return n}function I(l,u,i){try{"function"==typeof l?l(u):l.current=u;}catch(l){n.__e(l,i);}}function L(l,u,i){var t,o,r;if(n.unmount&&n.unmount(l),(t=l.ref)&&(t.current&&t.current!==l.__e||I(t,null,u)),i||"function"==typeof l.type||(i=null!=(o=l.__e)),l.__e=l.__d=void 0,null!=(t=l.__c)){if(t.componentWillUnmount)try{t.componentWillUnmount();}catch(l){n.__e(l,u);}t.base=t.__P=null;}if(t=l.__k)for(r=0;r<t.length;r++)t[r]&&L(t[r],u,i);null!=o&&a(o);}function M(n,l,u){return this.constructor(n,u)}function O(l,u,i){var t,r,c;n.__&&n.__(l,u),r=(t=i===o)?null:i&&i.__k||u.__k,l=v(p,null,[l]),c=[],$(u,(t?u:i||u).__k=l,r||f,f,void 0!==u.ownerSVGElement,i&&!t?[i]:r?null:u.childNodes.length?e.slice.call(u.childNodes):null,c,i||f,t),j(c,l);}function B(n,l){var u={__c:l="__cC"+r++,__:n,Consumer:function(n,l){return n.children(l)},Provider:function(n,u,i){return this.getChildContext||(u=[],(i={})[l]=this,this.getChildContext=function(){return i},this.shouldComponentUpdate=function(n){this.props.value!==n.value&&u.some(k);},this.sub=function(n){u.push(n);var l=n.componentWillUnmount;n.componentWillUnmount=function(){u.splice(u.indexOf(n),1),l&&l.call(n);};}),n.children}};return u.Provider.__=u.Consumer.contextType=u}n={__e:function(n,l){for(var u,i,t,o=l.__h;l=l.__;)if((u=l.__c)&&!u.__)try{if((i=u.constructor)&&null!=i.getDerivedStateFromError&&(u.setState(i.getDerivedStateFromError(n)),t=u.__d),null!=u.componentDidCatch&&(u.componentDidCatch(n),t=u.__d),t)return l.__h=o,u.__E=u}catch(l){n=l;}throw n},__v:0},d.prototype.setState=function(n,l){var u;u=null!=this.__s&&this.__s!==this.state?this.__s:this.__s=s({},this.state),"function"==typeof n&&(n=n(s({},u),this.props)),n&&s(u,n),null!=n&&this.__v&&(l&&this.__h.push(l),k(this));},d.prototype.forceUpdate=function(n){this.__v&&(this.__e=!0,n&&this.__h.push(n),k(this));},d.prototype.render=p,u=[],i="function"==typeof Promise?Promise.prototype.then.bind(Promise.resolve()):setTimeout,g.__r=0,o=f,r=0;
 
     var globalObj = typeof globalThis !== 'undefined' ? globalThis : window; // // TODO: streamline when killing IE11 support
     if (globalObj.FullCalendarVDom) {
@@ -1589,8 +1589,8 @@ var FullCalendar = (function (exports) {
         unselectAuto: Boolean,
         dropAccept: identity,
         eventOrder: parseFieldSpecs,
-        handleWindowReColor: Boolean,
-        windowReColorDelay: Number,
+        handleWindowResize: Boolean,
+        windowResizeDelay: Number,
         longPressDelay: Number,
         eventDragMinDistance: Number,
         expandRows: Boolean,
@@ -1718,8 +1718,8 @@ var FullCalendar = (function (exports) {
         dropAccept: '*',
         eventOrder: 'start,-duration,allDay,title',
         dayPopoverFormat: { month: 'long', day: 'numeric', year: 'numeric' },
-        handleWindowReColor: true,
-        windowReColorDelay: 100,
+        handleWindowResize: true,
+        windowResizeDelay: 100,
         longPressDelay: 1000,
         eventDragMinDistance: 5,
         expandRows: false,
@@ -1734,7 +1734,7 @@ var FullCalendar = (function (exports) {
         eventAdd: identity,
         eventChange: identity,
         eventRemove: identity,
-        windowReColor: identity,
+        windowResize: identity,
         eventClick: identity,
         eventMouseEnter: identity,
         eventMouseLeave: identity,
@@ -1746,8 +1746,8 @@ var FullCalendar = (function (exports) {
         _beforeprint: identity,
         _afterprint: identity,
         _noEventDrop: identity,
-        _noEventReColor: identity,
-        _reColor: identity,
+        _noEventResize: identity,
+        _resize: identity,
         _scrollRequest: identity,
     };
     // calendar-specific options
@@ -2855,8 +2855,8 @@ var FullCalendar = (function (exports) {
         CalendarApi.prototype.batchRendering = function (callback) {
             callback();
         };
-        CalendarApi.prototype.updateColor = function () {
-            this.trigger('_reColor', true);
+        CalendarApi.prototype.updateSize = function () {
+            this.trigger('_resize', true);
         };
         // Options
         // -----------------------------------------------------------------------------------------------------------------
@@ -4283,7 +4283,7 @@ var FullCalendar = (function (exports) {
             this.splitEventStore = memoize(this._splitEventStore);
             this.splitIndividualUi = memoize(this._splitIndividualUi);
             this.splitEventDrag = memoize(this._splitInteraction);
-            this.splitEventReColor = memoize(this._splitInteraction);
+            this.splitEventResize = memoize(this._splitInteraction);
             this.eventUiBuilders = {}; // TODO: typescript protection
         }
         Splitter.prototype.splitProps = function (props) {
@@ -4294,7 +4294,7 @@ var FullCalendar = (function (exports) {
             var individualUi = this.splitIndividualUi(props.eventUiBases, defKeys); // the individual *bases*
             var eventStores = this.splitEventStore(props.eventStore, defKeys);
             var eventDrags = this.splitEventDrag(props.eventDrag);
-            var eventReColors = this.splitEventReColor(props.eventReColor);
+            var eventResizes = this.splitEventResize(props.eventResize);
             var splitProps = {};
             this.eventUiBuilders = mapHash(keyInfos, function (info, key) { return _this.eventUiBuilders[key] || memoize(buildEventUiForKey); });
             for (var key in keyInfos) {
@@ -4308,7 +4308,7 @@ var FullCalendar = (function (exports) {
                     eventUiBases: buildEventUi(props.eventUiBases[''], keyInfo.ui, individualUi[key]),
                     eventSelection: eventStore.instances[props.eventSelection] ? props.eventSelection : '',
                     eventDrag: eventDrags[key] || null,
-                    eventReColor: eventReColors[key] || null,
+                    eventResize: eventResizes[key] || null,
                 };
             }
             return splitProps;
@@ -4995,11 +4995,11 @@ var FullCalendar = (function (exports) {
             dateProfileGenerator: dateProfileGenerator,
             theme: theme,
             isRtl: viewOptions.direction === 'rtl',
-            addReColorHandler: function (handler) {
-                emitter.on('_reColor', handler);
+            addResizeHandler: function (handler) {
+                emitter.on('_resize', handler);
             },
-            removeReColorHandler: function (handler) {
-                emitter.off('_reColor', handler);
+            removeResizeHandler: function (handler) {
+                emitter.off('_resize', handler);
             },
             createScrollResponder: function (execFunc) {
                 return new ScrollResponder(execFunc, emitter, createDuration(viewOptions.scrollTime));
@@ -5175,7 +5175,7 @@ var FullCalendar = (function (exports) {
     }
     function isNewPropsValid(newProps, context) {
         var calendarState = context.getCurrentData();
-        var props = __assign({ businessHours: calendarState.businessHours, dateSelection: '', eventStore: calendarState.eventStore, eventUiBases: calendarState.eventUiBases, eventSelection: '', eventDrag: null, eventReColor: null }, newProps);
+        var props = __assign({ businessHours: calendarState.businessHours, dateSelection: '', eventStore: calendarState.eventStore, eventUiBases: calendarState.eventUiBases, eventSelection: '', eventDrag: null, eventResize: null }, newProps);
         return (context.pluginHooks.isPropsValid || isPropsValid)(props, context);
     }
     function isPropsValid(state, context, dateSpanMeta, filterConfig) {
@@ -5392,7 +5392,7 @@ var FullCalendar = (function (exports) {
         // -----------------------------------------------------------------------------------------------------------------
         DateComponent.prototype.isValidSegDownEl = function (el) {
             return !this.props.eventDrag && // HACK
-                !this.props.eventReColor && // HACK
+                !this.props.eventResize && // HACK
                 !elementClosest(el, '.fc-event-mirror');
         };
         DateComponent.prototype.isValidDateDownEl = function (el) {
@@ -5425,7 +5425,7 @@ var FullCalendar = (function (exports) {
             viewPropsTransformers: input.viewPropsTransformers || [],
             isPropsValid: input.isPropsValid || null,
             externalDefTransforms: input.externalDefTransforms || [],
-            eventReColorJoinTransforms: input.eventReColorJoinTransforms || [],
+            eventResizeJoinTransforms: input.eventResizeJoinTransforms || [],
             viewContainerAppends: input.viewContainerAppends || [],
             eventDropTransformers: input.eventDropTransformers || [],
             componentInteractions: input.componentInteractions || [],
@@ -5464,7 +5464,7 @@ var FullCalendar = (function (exports) {
             viewPropsTransformers: [],
             isPropsValid: null,
             externalDefTransforms: [],
-            eventReColorJoinTransforms: [],
+            eventResizeJoinTransforms: [],
             viewContainerAppends: [],
             eventDropTransformers: [],
             componentInteractions: [],
@@ -5530,7 +5530,7 @@ var FullCalendar = (function (exports) {
             viewPropsTransformers: hooks0.viewPropsTransformers.concat(hooks1.viewPropsTransformers),
             isPropsValid: hooks1.isPropsValid || hooks0.isPropsValid,
             externalDefTransforms: hooks0.externalDefTransforms.concat(hooks1.externalDefTransforms),
-            eventReColorJoinTransforms: hooks0.eventReColorJoinTransforms.concat(hooks1.eventReColorJoinTransforms),
+            eventResizeJoinTransforms: hooks0.eventResizeJoinTransforms.concat(hooks1.eventResizeJoinTransforms),
             viewContainerAppends: hooks0.viewContainerAppends.concat(hooks1.viewContainerAppends),
             eventDropTransformers: hooks0.eventDropTransformers.concat(hooks1.eventDropTransformers),
             calendarInteractions: hooks0.calendarInteractions.concat(hooks1.calendarInteractions),
@@ -5941,7 +5941,7 @@ var FullCalendar = (function (exports) {
             // or if the range is completely outside of the valid range.
             isValid = rangesIntersect(currentInfo.range, validRange);
             return {
-                // constraint for where prev/next operations can go and where events can be dragged/reColord to.
+                // constraint for where prev/next operations can go and where events can be dragged/resized to.
                 // an object with optional start and end properties.
                 validRange: validRange,
                 // range the view is formally responsible for.
@@ -6443,20 +6443,20 @@ var FullCalendar = (function (exports) {
         }
     }
 
-    function reduceEventReColor(currentReColor, action) {
-        var newReColor;
+    function reduceEventResize(currentResize, action) {
+        var newResize;
         switch (action.type) {
-            case 'UNSET_EVENT_REColor':
+            case 'UNSET_EVENT_RESIZE':
                 return null;
-            case 'SET_EVENT_REColor':
-                newReColor = action.state;
+            case 'SET_EVENT_RESIZE':
+                newResize = action.state;
                 return {
-                    affectedEvents: newReColor.affectedEvents,
-                    mutatedEvents: newReColor.mutatedEvents,
-                    isEvent: newReColor.isEvent,
+                    affectedEvents: newResize.affectedEvents,
+                    mutatedEvents: newResize.mutatedEvents,
+                    isEvent: newResize.isEvent,
                 };
             default:
-                return currentReColor;
+                return currentResize;
         }
     }
 
@@ -7074,7 +7074,7 @@ var FullCalendar = (function (exports) {
                 dateSelection: null,
                 eventSelection: '',
                 eventDrag: null,
-                eventReColor: null,
+                eventResize: null,
                 selectionConfig: this.buildViewUiProps(calendarContext).selectionConfig,
             };
             var contextAndState = __assign(__assign({}, calendarContext), initialState);
@@ -7149,7 +7149,7 @@ var FullCalendar = (function (exports) {
                 dateSelection: reduceDateSelection(state.dateSelection, action),
                 eventSelection: reduceSelectedEvent(state.eventSelection, action),
                 eventDrag: reduceEventDrag(state.eventDrag, action),
-                eventReColor: reduceEventReColor(state.eventReColor, action),
+                eventResize: reduceEventResize(state.eventResize, action),
             };
             var contextAndState = __assign(__assign({}, calendarContext), newState);
             for (var _i = 0, _c = optionsData.pluginHooks.reducers; _i < _c.length; _i++) {
@@ -7651,7 +7651,7 @@ var FullCalendar = (function (exports) {
                 setRef(_this.props.elRef, el);
                 _this.updateAvailableWidth();
             };
-            _this.handleReColor = function () {
+            _this.handleResize = function () {
                 _this.updateAvailableWidth();
             };
             return _this;
@@ -7685,10 +7685,10 @@ var FullCalendar = (function (exports) {
             return (createElement("div", { ref: this.handleEl, onClick: props.onClick, className: classNames.join(' '), style: { height: height, paddingBottom: paddingBottom } }, props.children));
         };
         ViewContainer.prototype.componentDidMount = function () {
-            this.context.addReColorHandler(this.handleReColor);
+            this.context.addResizeHandler(this.handleResize);
         };
         ViewContainer.prototype.componentWillUnmount = function () {
-            this.context.removeReColorHandler(this.handleReColor);
+            this.context.removeResizeHandler(this.handleResize);
         };
         ViewContainer.prototype.updateAvailableWidth = function () {
             if (this.el && // needed. but why?
@@ -7818,16 +7818,16 @@ var FullCalendar = (function (exports) {
             };
             // Resizing
             // -----------------------------------------------------------------------------------------------------------------
-            _this.reColorRunner = new DelayedRunner(function () {
-                _this.props.emitter.trigger('_reColor', true); // should window reColors be considered "forced" ?
-                _this.props.emitter.trigger('windowReColor', { view: _this.props.viewApi });
+            _this.resizeRunner = new DelayedRunner(function () {
+                _this.props.emitter.trigger('_resize', true); // should window resizes be considered "forced" ?
+                _this.props.emitter.trigger('windowResize', { view: _this.props.viewApi });
             });
-            _this.handleWindowReColor = function (ev) {
+            _this.handleWindowResize = function (ev) {
                 var options = _this.props.options;
-                if (options.handleWindowReColor &&
+                if (options.handleWindowResize &&
                     ev.target === window // avoid jqui events
                 ) {
-                    _this.reColorRunner.request(options.windowReColorDelay);
+                    _this.resizeRunner.request(options.windowResizeDelay);
                 }
             };
             return _this;
@@ -7867,7 +7867,7 @@ var FullCalendar = (function (exports) {
             var props = this.props;
             this.calendarInteractions = props.pluginHooks.calendarInteractions
                 .map(function (CalendarInteractionClass) { return new CalendarInteractionClass(props); });
-            window.addEventListener('reColor', this.handleWindowReColor);
+            window.addEventListener('resize', this.handleWindowResize);
             var propSetHandlers = props.pluginHooks.propSetHandlers;
             for (var propName in propSetHandlers) {
                 propSetHandlers[propName](props[propName], props);
@@ -7883,8 +7883,8 @@ var FullCalendar = (function (exports) {
             }
         };
         CalendarContent.prototype.componentWillUnmount = function () {
-            window.removeEventListener('reColor', this.handleWindowReColor);
-            this.reColorRunner.clear();
+            window.removeEventListener('resize', this.handleWindowResize);
+            this.resizeRunner.clear();
             for (var _i = 0, _a = this.calendarInteractions; _i < _a.length; _i++) {
                 var interaction = _a[_i];
                 interaction.destroy();
@@ -7925,7 +7925,7 @@ var FullCalendar = (function (exports) {
                 dateSelection: props.dateSelection,
                 eventSelection: props.eventSelection,
                 eventDrag: props.eventDrag,
-                eventReColor: props.eventReColor,
+                eventResize: props.eventResize,
                 isHeightAuto: props.isHeightAuto,
                 forPrint: props.forPrint,
             };
@@ -8303,7 +8303,7 @@ var FullCalendar = (function (exports) {
             this.sliceDateSelection = memoize(this._sliceDateSpan);
             this.sliceEventStore = memoize(this._sliceEventStore);
             this.sliceEventDrag = memoize(this._sliceInteraction);
-            this.sliceEventReColor = memoize(this._sliceInteraction);
+            this.sliceEventResize = memoize(this._sliceInteraction);
             this.forceDayIfListItem = false; // hack
         }
         Slicer.prototype.sliceProps = function (props, dateProfile, nextDayThreshold, context) {
@@ -8319,7 +8319,7 @@ var FullCalendar = (function (exports) {
                 fgEventSegs: eventSegs.fg,
                 bgEventSegs: eventSegs.bg,
                 eventDrag: this.sliceEventDrag.apply(this, __spreadArrays([props.eventDrag, eventUiBases, dateProfile, nextDayThreshold], extraArgs)),
-                eventReColor: this.sliceEventReColor.apply(this, __spreadArrays([props.eventReColor, eventUiBases, dateProfile, nextDayThreshold], extraArgs)),
+                eventResize: this.sliceEventResize.apply(this, __spreadArrays([props.eventResize, eventUiBases, dateProfile, nextDayThreshold], extraArgs)),
                 eventSelection: props.eventSelection,
             }; // TODO: give interactionSegs?
         };
@@ -8805,14 +8805,14 @@ var FullCalendar = (function (exports) {
         };
         SimpleScrollGrid.prototype.componentDidMount = function () {
             this.handleSizing();
-            this.context.addReColorHandler(this.handleSizing);
+            this.context.addResizeHandler(this.handleSizing);
         };
         SimpleScrollGrid.prototype.componentDidUpdate = function () {
             // TODO: need better solution when state contains non-sizing things
             this.handleSizing();
         };
         SimpleScrollGrid.prototype.componentWillUnmount = function () {
-            this.context.removeReColorHandler(this.handleSizing);
+            this.context.removeResizeHandler(this.handleSizing);
         };
         SimpleScrollGrid.prototype.computeShrinkWidth = function () {
             return hasShrinkWidth(this.props.cols)
@@ -8930,9 +8930,9 @@ var FullCalendar = (function (exports) {
                 }, ref: rootElRef }, getSegAnchorAttrs(seg)),
                 createElement("div", { className: "fc-event-main", ref: innerElRef, style: { color: hookProps.textColor } }, innerContent),
                 hookProps.isStartResizable &&
-                    createElement("div", { className: "fc-event-reColorr fc-event-reColorr-start" }),
+                    createElement("div", { className: "fc-event-resizer fc-event-resizer-start" }),
                 hookProps.isEndResizable &&
-                    createElement("div", { className: "fc-event-reColorr fc-event-reColorr-end" }))); }));
+                    createElement("div", { className: "fc-event-resizer fc-event-resizer-end" }))); }));
         };
         return StandardEvent;
     }(BaseComponent));
@@ -9057,7 +9057,7 @@ var FullCalendar = (function (exports) {
                 // actions we know we want to render immediately
                 switch (action.type) {
                     case 'SET_EVENT_DRAG':
-                    case 'SET_EVENT_REColor':
+                    case 'SET_EVENT_RESIZE':
                         _this.renderRunner.tryDrain();
                 }
             };
@@ -9110,7 +9110,7 @@ var FullCalendar = (function (exports) {
             }
             this.renderRunner.request();
             if (wasRendering) {
-                this.updateColor();
+                this.updateSize();
             }
         };
         Calendar.prototype.destroy = function () {
@@ -9119,8 +9119,8 @@ var FullCalendar = (function (exports) {
                 this.renderRunner.request();
             }
         };
-        Calendar.prototype.updateColor = function () {
-            _super.prototype.updateColor.call(this);
+        Calendar.prototype.updateSize = function () {
+            _super.prototype.updateSize.call(this);
             flushToDom$1();
         };
         Calendar.prototype.batchRendering = function (func) {
@@ -10425,7 +10425,7 @@ var FullCalendar = (function (exports) {
                 }
                 mirror.revertDuration = options.dragRevertDuration;
                 var isValid = component.isValidSegDownEl(origTarget) &&
-                    !elementClosest(origTarget, '.fc-event-reColorr'); // NOT on a reColorr
+                    !elementClosest(origTarget, '.fc-event-resizer'); // NOT on a resizer
                 dragging.setIgnoreMove(!isValid);
                 // disable dragging for elements that are resizable (ie, selectable)
                 // but are not draggable
@@ -10758,7 +10758,7 @@ var FullCalendar = (function (exports) {
                 _this.draggingSegEl = segEl;
                 _this.draggingSeg = getElSeg(segEl);
                 context.calendarApi.unselect();
-                context.emitter.trigger('eventReColorStart', {
+                context.emitter.trigger('eventResizeStart', {
                     el: segEl,
                     event: new EventApi(context, eventRange.def, eventRange.instance),
                     jsEvent: ev.origEvent,
@@ -10779,7 +10779,7 @@ var FullCalendar = (function (exports) {
                     isEvent: true,
                 };
                 if (hit) {
-                    mutation = computeMutation(initialHit, hit, ev.subjectEl.classList.contains('fc-event-reColorr-start'), eventInstance.range, context.pluginHooks.eventReColorJoinTransforms);
+                    mutation = computeMutation(initialHit, hit, ev.subjectEl.classList.contains('fc-event-resizer-start'), eventInstance.range, context.pluginHooks.eventResizeJoinTransforms);
                 }
                 if (mutation) {
                     mutatedRelevantEvents = applyMutationToEventStore(relevantEvents, context.getCurrentData().eventUiBases, mutation, context);
@@ -10793,12 +10793,12 @@ var FullCalendar = (function (exports) {
                 }
                 if (mutatedRelevantEvents) {
                     context.dispatch({
-                        type: 'SET_EVENT_REColor',
+                        type: 'SET_EVENT_RESIZE',
                         state: interaction,
                     });
                 }
                 else {
-                    context.dispatch({ type: 'UNSET_EVENT_REColor' });
+                    context.dispatch({ type: 'UNSET_EVENT_RESIZE' });
                 }
                 if (!isInvalid) {
                     enableCursor();
@@ -10821,7 +10821,7 @@ var FullCalendar = (function (exports) {
                 var eventApi = new EventApi(context, eventDef, eventInstance);
                 var relevantEvents = _this.relevantEvents;
                 var mutatedRelevantEvents = _this.mutatedRelevantEvents;
-                context.emitter.trigger('eventReColorStop', {
+                context.emitter.trigger('eventResizeStop', {
                     el: _this.draggingSegEl,
                     event: eventApi,
                     jsEvent: ev.origEvent,
@@ -10844,11 +10844,11 @@ var FullCalendar = (function (exports) {
                             });
                         },
                     };
-                    context.emitter.trigger('eventReColor', __assign(__assign({}, eventChangeArg), { el: _this.draggingSegEl, startDelta: _this.validMutation.startDelta || createDuration(0), endDelta: _this.validMutation.endDelta || createDuration(0), jsEvent: ev.origEvent, view: context.viewApi }));
+                    context.emitter.trigger('eventResize', __assign(__assign({}, eventChangeArg), { el: _this.draggingSegEl, startDelta: _this.validMutation.startDelta || createDuration(0), endDelta: _this.validMutation.endDelta || createDuration(0), jsEvent: ev.origEvent, view: context.viewApi }));
                     context.emitter.trigger('eventChange', eventChangeArg);
                 }
                 else {
-                    context.emitter.trigger('_noEventReColor');
+                    context.emitter.trigger('_noEventResize');
                 }
                 // reset all internal state
                 _this.draggingSeg = null;
@@ -10858,7 +10858,7 @@ var FullCalendar = (function (exports) {
             };
             var component = settings.component;
             var dragging = _this.dragging = new FeaturefulElementDragging(settings.el);
-            dragging.pointer.selector = '.fc-event-reColorr';
+            dragging.pointer.selector = '.fc-event-resizer';
             dragging.touchScrollAllowed = false;
             dragging.autoScroller.isEnabled = component.context.options.dragScroll;
             var hitDragging = _this.hitDragging = new HitDragging(_this.dragging, interactionSettingsToStore(settings));
@@ -10970,9 +10970,9 @@ var FullCalendar = (function (exports) {
         eventDragStart: identity,
         eventDragStop: identity,
         eventDrop: identity,
-        eventReColorStart: identity,
-        eventReColorStop: identity,
-        eventReColor: identity,
+        eventResizeStart: identity,
+        eventResizeStop: identity,
+        eventResize: identity,
         drop: identity,
         eventReceive: identity,
         eventLeave: identity,
@@ -11831,14 +11831,14 @@ var FullCalendar = (function (exports) {
             var _b = computeFgSegPlacement(props.cells, props.fgEventSegs, props.dayMaxEvents, props.dayMaxEventRows, state.segHeights, state.maxContentHeight, colCnt, context.options.eventOrder), paddingBottoms = _b.paddingBottoms, segsByFirstCol = _b.segsByFirstCol, segsByEachCol = _b.segsByEachCol, segIsHidden = _b.segIsHidden, segTops = _b.segTops, segMarginTops = _b.segMarginTops, moreCnts = _b.moreCnts, moreTops = _b.moreTops;
             var selectedInstanceHash = // TODO: messy way to compute this
              (props.eventDrag && props.eventDrag.affectedInstances) ||
-                (props.eventReColor && props.eventReColor.affectedInstances) ||
+                (props.eventResize && props.eventResize.affectedInstances) ||
                 {};
             return (createElement("tr", { ref: this.rootElRef },
                 props.renderIntro && props.renderIntro(),
                 props.cells.map(function (cell, col) {
                     var normalFgNodes = _this.renderFgSegs(segsByFirstCol[col], segIsHidden, segTops, segMarginTops, selectedInstanceHash, props.todayRange);
                     var mirrorFgNodes = _this.renderFgSegs(mirrorSegsByCol[col], {}, segTops, // use same tops as real rendering
-                    {}, {}, props.todayRange, Boolean(props.eventDrag), Boolean(props.eventReColor), false);
+                    {}, {}, props.todayRange, Boolean(props.eventDrag), Boolean(props.eventResize), false);
                     return (createElement(TableCell, { key: cell.key, elRef: _this.cellElRefs.createRef(cell.key), innerElRef: _this.frameElRefs.createRef(cell.key) /* FF <td> problem, but okay to use for left/right. TODO: rename prop */, dateProfile: props.dateProfile, date: cell.date, showDayNumber: props.showDayNumbers, showWeekNumber: props.showWeekNumbers && col === 0, forceDayTop: props.showWeekNumbers /* even displaying weeknum for row, not necessarily day */, todayRange: props.todayRange, extraHookProps: cell.extraHookProps, extraDataAttrs: cell.extraDataAttrs, extraClassNames: cell.extraClassNames, moreCnt: moreCnts[col], buildMoreLinkText: props.buildMoreLinkText, onMoreClick: function (arg) {
                             props.onMoreClick(__assign(__assign({}, arg), { fromCol: col }));
                         }, segIsHidden: segIsHidden, moreMarginTop: moreTops[col] /* rename */, segsByEachCol: segsByEachCol[col], fgPaddingBottom: paddingBottoms[col], fgContentElRef: _this.fgElRefs.createRef(cell.key), fgContent: ( // Fragment scopes the keys
@@ -11863,15 +11863,15 @@ var FullCalendar = (function (exports) {
             if (props.eventDrag && props.eventDrag.segs.length) { // messy check
                 return props.eventDrag.segs;
             }
-            if (props.eventReColor && props.eventReColor.segs.length) { // messy check
-                return props.eventReColor.segs;
+            if (props.eventResize && props.eventResize.segs.length) { // messy check
+                return props.eventResize.segs;
             }
             return props.dateSelectionSegs;
         };
         TableRow.prototype.getMirrorSegs = function () {
             var props = this.props;
-            if (props.eventReColor && props.eventReColor.segs.length) { // messy check
-                return props.eventReColor.segs;
+            if (props.eventResize && props.eventResize.segs.length) { // messy check
+                return props.eventResize.segs;
             }
             return [];
         };
@@ -11995,7 +11995,7 @@ var FullCalendar = (function (exports) {
         __extends(Popover, _super);
         function Popover() {
             var _this = _super !== null && _super.apply(this, arguments) || this;
-            _this.repositioner = new DelayedRunner(_this.updateColor.bind(_this));
+            _this.repositioner = new DelayedRunner(_this.updateSize.bind(_this));
             _this.handleRootEl = function (el) {
                 _this.rootEl = el;
                 if (_this.props.elRef) {
@@ -12037,23 +12037,23 @@ var FullCalendar = (function (exports) {
         Popover.prototype.componentDidMount = function () {
             document.addEventListener('mousedown', this.handleDocumentMousedown);
             document.addEventListener('scroll', this.handleDocumentScroll);
-            this.updateColor();
+            this.updateSize();
         };
         Popover.prototype.componentWillUnmount = function () {
             document.removeEventListener('mousedown', this.handleDocumentMousedown);
             document.removeEventListener('scroll', this.handleDocumentScroll);
         };
-        // TODO: adjust on window reColor
+        // TODO: adjust on window resize
         /*
         NOTE: the popover is position:fixed, so coordinates are relative to the viewport
-        NOTE: the PARENT calls this as well, on window reColor. we would have wanted to use the repositioner,
-              but need to ensure that all other components have updated Color first (for alignmentEl)
+        NOTE: the PARENT calls this as well, on window resize. we would have wanted to use the repositioner,
+              but need to ensure that all other components have updated size first (for alignmentEl)
         */
-        Popover.prototype.updateColor = function () {
+        Popover.prototype.updateSize = function () {
             var _a = this.props, alignmentEl = _a.alignmentEl, topAlignmentEl = _a.topAlignmentEl;
             var rootEl = this.rootEl;
             if (!rootEl) {
-                return; // not sure why this was null, but we shouldn't let external components call updateColor() anyway
+                return; // not sure why this was null, but we shouldn't let external components call updateSize() anyway
             }
             var dims = rootEl.getBoundingClientRect(); // only used for width,height
             var alignment = alignmentEl.getBoundingClientRect();
@@ -12140,7 +12140,7 @@ var FullCalendar = (function (exports) {
             _this.splitFgEventSegs = memoize(splitSegsByRow);
             _this.splitDateSelectionSegs = memoize(splitSegsByRow);
             _this.splitEventDrag = memoize(splitInteractionByRow);
-            _this.splitEventReColor = memoize(splitInteractionByRow);
+            _this.splitEventResize = memoize(splitInteractionByRow);
             _this.buildBuildMoreLinkText = memoize(buildBuildMoreLinkText);
             _this.morePopoverRef = createRef();
             _this.rowRefs = new RefMap();
@@ -12203,7 +12203,7 @@ var FullCalendar = (function (exports) {
             var fgEventSegsByRow = this.splitFgEventSegs(props.fgEventSegs, rowCnt);
             var dateSelectionSegsByRow = this.splitDateSelectionSegs(props.dateSelectionSegs, rowCnt);
             var eventDragByRow = this.splitEventDrag(props.eventDrag, rowCnt);
-            var eventReColorByRow = this.splitEventReColor(props.eventReColor, rowCnt);
+            var eventResizeByRow = this.splitEventResize(props.eventResize, rowCnt);
             var buildMoreLinkText = this.buildBuildMoreLinkText(this.context.options.moreLinkText);
             var limitViaBalanced = dayMaxEvents === true || dayMaxEventRows === true;
             // if rows can't expand to fill fixed height, can't do balanced-height event limit
@@ -12234,12 +12234,12 @@ var FullCalendar = (function (exports) {
                         createElement("tbody", null, props.cells.map(function (cells, row) { return (createElement(TableRow, { ref: _this.rowRefs.createRef(row), key: cells.length
                                 ? cells[0].date.toISOString() /* best? or put key on cell? or use diff formatter? */
                                 : row // in case there are no cells (like when resource view is loading)
-                            , showDayNumbers: rowCnt > 1, showWeekNumbers: props.showWeekNumbers, todayRange: todayRange, dateProfile: dateProfile, cells: cells, renderIntro: props.renderRowIntro, businessHourSegs: businessHourSegsByRow[row], eventSelection: props.eventSelection, bgEventSegs: bgEventSegsByRow[row].filter(isSegAllDay) /* hack */, fgEventSegs: fgEventSegsByRow[row], dateSelectionSegs: dateSelectionSegsByRow[row], eventDrag: eventDragByRow[row], eventReColor: eventReColorByRow[row], dayMaxEvents: dayMaxEvents, dayMaxEventRows: dayMaxEventRows, clientWidth: props.clientWidth, clientHeight: props.clientHeight, buildMoreLinkText: buildMoreLinkText, onMoreClick: function (arg) {
+                            , showDayNumbers: rowCnt > 1, showWeekNumbers: props.showWeekNumbers, todayRange: todayRange, dateProfile: dateProfile, cells: cells, renderIntro: props.renderRowIntro, businessHourSegs: businessHourSegsByRow[row], eventSelection: props.eventSelection, bgEventSegs: bgEventSegsByRow[row].filter(isSegAllDay) /* hack */, fgEventSegs: fgEventSegsByRow[row], dateSelectionSegs: dateSelectionSegsByRow[row], eventDrag: eventDragByRow[row], eventResize: eventResizeByRow[row], dayMaxEvents: dayMaxEvents, dayMaxEventRows: dayMaxEventRows, clientWidth: props.clientWidth, clientHeight: props.clientHeight, buildMoreLinkText: buildMoreLinkText, onMoreClick: function (arg) {
                                 _this.handleMoreLinkClick(__assign(__assign({}, arg), { fromRow: row }));
                             } })); }))),
                     (!props.forPrint && morePopoverState && morePopoverState.currentFgEventSegs === props.fgEventSegs) && (createElement(MorePopover, { ref: _this.morePopoverRef, date: morePopoverState.date, dateProfile: dateProfile, segs: morePopoverState.allSegs, alignmentEl: morePopoverState.dayEl, topAlignmentEl: rowCnt === 1 ? props.headerAlignElRef.current : null, onCloseClick: _this.handleMorePopoverClose, selectedInstanceId: props.eventSelection, hiddenInstances: // yuck
                         (props.eventDrag ? props.eventDrag.affectedInstances : null) ||
-                            (props.eventReColor ? props.eventReColor.affectedInstances : null) ||
+                            (props.eventResize ? props.eventResize.affectedInstances : null) ||
                             {}, todayRange: todayRange })))); })));
         };
         // Hit System
@@ -12372,7 +12372,7 @@ var FullCalendar = (function (exports) {
             var props = this.props;
             var dayTableModel = this.buildDayTableModel(props.dateProfile, dateProfileGenerator);
             var headerContent = options.dayHeaders && (createElement(DayHeader, { ref: this.headerRef, dateProfile: props.dateProfile, dates: dayTableModel.headerDates, datesRepDistinctDays: dayTableModel.rowCnt === 1 }));
-            var bodyContent = function (contentArg) { return (createElement(DayTable, { ref: _this.tableRef, dateProfile: props.dateProfile, dayTableModel: dayTableModel, businessHours: props.businessHours, dateSelection: props.dateSelection, eventStore: props.eventStore, eventUiBases: props.eventUiBases, eventSelection: props.eventSelection, eventDrag: props.eventDrag, eventReColor: props.eventReColor, nextDayThreshold: options.nextDayThreshold, colGroupNode: contentArg.tableColGroupNode, tableMinWidth: contentArg.tableMinWidth, dayMaxEvents: options.dayMaxEvents, dayMaxEventRows: options.dayMaxEventRows, showWeekNumbers: options.weekNumbers, expandRows: !props.isHeightAuto, headerAlignElRef: _this.headerElRef, clientWidth: contentArg.clientWidth, clientHeight: contentArg.clientHeight, forPrint: props.forPrint })); };
+            var bodyContent = function (contentArg) { return (createElement(DayTable, { ref: _this.tableRef, dateProfile: props.dateProfile, dayTableModel: dayTableModel, businessHours: props.businessHours, dateSelection: props.dateSelection, eventStore: props.eventStore, eventUiBases: props.eventUiBases, eventSelection: props.eventSelection, eventDrag: props.eventDrag, eventResize: props.eventResize, nextDayThreshold: options.nextDayThreshold, colGroupNode: contentArg.tableColGroupNode, tableMinWidth: contentArg.tableMinWidth, dayMaxEvents: options.dayMaxEvents, dayMaxEventRows: options.dayMaxEventRows, showWeekNumbers: options.weekNumbers, expandRows: !props.isHeightAuto, headerAlignElRef: _this.headerElRef, clientWidth: contentArg.clientWidth, clientHeight: contentArg.clientHeight, forPrint: props.forPrint })); };
             return options.dayMinWidth
                 ? this.renderHScrollLayout(headerContent, bodyContent, dayTableModel.colCnt, options.dayMinWidth)
                 : this.renderSimpleLayout(headerContent, bodyContent);
@@ -13149,12 +13149,12 @@ var FullCalendar = (function (exports) {
             var _a = this, props = _a.props, context = _a.context;
             var isSelectMirror = context.options.selectMirror;
             var mirrorSegs = (props.eventDrag && props.eventDrag.segs) ||
-                (props.eventReColor && props.eventReColor.segs) ||
+                (props.eventResize && props.eventResize.segs) ||
                 (isSelectMirror && props.dateSelectionSegs) ||
                 [];
             var interactionAffectedInstances = // TODO: messy way to compute this
              (props.eventDrag && props.eventDrag.affectedInstances) ||
-                (props.eventReColor && props.eventReColor.affectedInstances) ||
+                (props.eventResize && props.eventResize.affectedInstances) ||
                 {};
             return (createElement(DayCellRoot, { elRef: props.elRef, date: props.date, dateProfile: props.dateProfile, todayRange: props.todayRange, extraHookProps: props.extraHookProps }, function (rootElRef, classNames, dataAttrs) { return (createElement("td", __assign({ ref: rootElRef, className: ['fc-timegrid-col'].concat(classNames, props.extraClassNames || []).join(' ') }, dataAttrs, props.extraDataAttrs),
                 createElement("div", { className: "fc-timegrid-col-frame" },
@@ -13163,7 +13163,7 @@ var FullCalendar = (function (exports) {
                         _this.renderFillSegs(props.bgEventSegs, 'bg-event'),
                         _this.renderFillSegs(props.dateSelectionSegs, 'highlight')),
                     createElement("div", { className: "fc-timegrid-col-events" }, _this.renderFgSegs(props.fgEventSegs, interactionAffectedInstances)),
-                    createElement("div", { className: "fc-timegrid-col-events" }, _this.renderFgSegs(mirrorSegs, {}, Boolean(props.eventDrag), Boolean(props.eventReColor), Boolean(isSelectMirror))),
+                    createElement("div", { className: "fc-timegrid-col-events" }, _this.renderFgSegs(mirrorSegs, {}, Boolean(props.eventDrag), Boolean(props.eventResize), Boolean(isSelectMirror))),
                     createElement("div", { className: "fc-timegrid-now-indicator-container" }, _this.renderNowIndicator(props.nowIndicatorSegs)),
                     createElement(TimeColMisc, { date: props.date, dateProfile: props.dateProfile, todayRange: props.todayRange, extraHookProps: props.extraHookProps })))); }));
         };
@@ -13248,7 +13248,7 @@ var FullCalendar = (function (exports) {
                 right: right * 100 + '%',
             };
             if (shouldOverlap && seg.forwardPressure) {
-                // add padding to the edge so that forward stacked events don't cover the reColorr's icon
+                // add padding to the edge so that forward stacked events don't cover the resizer's icon
                 props[isRtl ? 'marginLeft' : 'marginRight'] = 10 * 2; // 10 is a guesstimate of the icon's width
             }
             return __assign(__assign({}, props), this.computeSegTopBottomCss(seg));
@@ -13272,7 +13272,7 @@ var FullCalendar = (function (exports) {
             _this.splitNowIndicatorSegs = memoize(splitSegsByCol);
             _this.splitDateSelectionSegs = memoize(splitSegsByCol);
             _this.splitEventDrag = memoize(splitInteractionByCol);
-            _this.splitEventReColor = memoize(splitInteractionByCol);
+            _this.splitEventResize = memoize(splitInteractionByCol);
             _this.rootElRef = createRef();
             _this.cellElRefs = new RefMap();
             return _this;
@@ -13290,7 +13290,7 @@ var FullCalendar = (function (exports) {
             var nowIndicatorSegsByRow = this.splitNowIndicatorSegs(props.nowIndicatorSegs, colCnt);
             var dateSelectionSegsByRow = this.splitDateSelectionSegs(props.dateSelectionSegs, colCnt);
             var eventDragByRow = this.splitEventDrag(props.eventDrag, colCnt);
-            var eventReColorByRow = this.splitEventReColor(props.eventReColor, colCnt);
+            var eventResizeByRow = this.splitEventResize(props.eventResize, colCnt);
             return (createElement("div", { className: "fc-timegrid-cols", ref: this.rootElRef },
                 createElement("table", { style: {
                         minWidth: props.tableMinWidth,
@@ -13302,7 +13302,7 @@ var FullCalendar = (function (exports) {
                             props.axis && (createElement("td", { className: "fc-timegrid-col fc-timegrid-axis" },
                                 createElement("div", { className: "fc-timegrid-col-frame" },
                                     createElement("div", { className: "fc-timegrid-now-indicator-container" }, typeof nowIndicatorTop === 'number' && (createElement(NowIndicatorRoot, { isAxis: true, date: props.nowDate }, function (rootElRef, classNames, innerElRef, innerContent) { return (createElement("div", { ref: rootElRef, className: ['fc-timegrid-now-indicator-arrow'].concat(classNames).join(' '), style: { top: nowIndicatorTop } }, innerContent)); })))))),
-                            props.cells.map(function (cell, i) { return (createElement(TimeCol, { key: cell.key, elRef: _this.cellElRefs.createRef(cell.key), dateProfile: props.dateProfile, date: cell.date, nowDate: props.nowDate, todayRange: props.todayRange, extraHookProps: cell.extraHookProps, extraDataAttrs: cell.extraDataAttrs, extraClassNames: cell.extraClassNames, fgEventSegs: fgEventSegsByRow[i], bgEventSegs: bgEventSegsByRow[i], businessHourSegs: businessHourSegsByRow[i], nowIndicatorSegs: nowIndicatorSegsByRow[i], dateSelectionSegs: dateSelectionSegsByRow[i], eventDrag: eventDragByRow[i], eventReColor: eventReColorByRow[i], slatCoords: props.slatCoords, eventSelection: props.eventSelection, forPrint: props.forPrint })); }))))));
+                            props.cells.map(function (cell, i) { return (createElement(TimeCol, { key: cell.key, elRef: _this.cellElRefs.createRef(cell.key), dateProfile: props.dateProfile, date: cell.date, nowDate: props.nowDate, todayRange: props.todayRange, extraHookProps: cell.extraHookProps, extraDataAttrs: cell.extraDataAttrs, extraClassNames: cell.extraClassNames, fgEventSegs: fgEventSegsByRow[i], bgEventSegs: bgEventSegsByRow[i], businessHourSegs: businessHourSegsByRow[i], nowIndicatorSegs: nowIndicatorSegsByRow[i], dateSelectionSegs: dateSelectionSegsByRow[i], eventDrag: eventDragByRow[i], eventResize: eventResizeByRow[i], slatCoords: props.slatCoords, eventSelection: props.eventSelection, forPrint: props.forPrint })); }))))));
         };
         TimeColsContent.prototype.componentDidMount = function () {
             this.updateCoords();
@@ -13371,7 +13371,7 @@ var FullCalendar = (function (exports) {
                     minWidth: props.tableMinWidth,
                 } },
                 createElement(TimeColsSlats, { axis: props.axis, dateProfile: props.dateProfile, slatMetas: props.slatMetas, clientWidth: props.clientWidth, minHeight: props.expandRows ? props.clientHeight : '', tableMinWidth: props.tableMinWidth, tableColGroupNode: props.axis ? props.tableColGroupNode : null /* axis depends on the colgroup's shrinking */, onCoords: this.handleSlatCoords }),
-                createElement(TimeColsContent, { cells: props.cells, axis: props.axis, dateProfile: props.dateProfile, businessHourSegs: props.businessHourSegs, bgEventSegs: props.bgEventSegs, fgEventSegs: props.fgEventSegs, dateSelectionSegs: props.dateSelectionSegs, eventSelection: props.eventSelection, eventDrag: props.eventDrag, eventReColor: props.eventReColor, todayRange: props.todayRange, nowDate: props.nowDate, nowIndicatorSegs: props.nowIndicatorSegs, clientWidth: props.clientWidth, tableMinWidth: props.tableMinWidth, tableColGroupNode: props.tableColGroupNode, slatCoords: state.slatCoords, onColCoords: this.handleColCoords, forPrint: props.forPrint })));
+                createElement(TimeColsContent, { cells: props.cells, axis: props.axis, dateProfile: props.dateProfile, businessHourSegs: props.businessHourSegs, bgEventSegs: props.bgEventSegs, fgEventSegs: props.fgEventSegs, dateSelectionSegs: props.dateSelectionSegs, eventSelection: props.eventSelection, eventDrag: props.eventDrag, eventResize: props.eventResize, todayRange: props.todayRange, nowDate: props.nowDate, nowIndicatorSegs: props.nowIndicatorSegs, clientWidth: props.clientWidth, tableMinWidth: props.tableMinWidth, tableColGroupNode: props.tableColGroupNode, slatCoords: state.slatCoords, onColCoords: this.handleColCoords, forPrint: props.forPrint })));
         };
         TimeCols.prototype.componentDidMount = function () {
             this.scrollResponder = this.context.createScrollResponder(this.handleScrollRequest);

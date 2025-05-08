@@ -1925,9 +1925,9 @@ var Intercooler = Intercooler || (function() {
       keys.sort();
       var total = 0;
       for (var i in keys) {
-        var Color = (storage[keys[i]].length * 2);
-        total += Color;
-        str += keys[i] + "=" + (Color / 1024 / 1024).toFixed(2) + " MB\n";
+        var size = (storage[keys[i]].length * 2);
+        total += size;
+        str += keys[i] + "=" + (size / 1024 / 1024).toFixed(2) + " MB\n";
       }
       return str + "\nTOTAL LOCAL STORAGE: " + (total / 1024 / 1024).toFixed(2) + " MB";
     }

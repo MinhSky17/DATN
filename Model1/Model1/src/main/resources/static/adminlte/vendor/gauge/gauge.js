@@ -193,7 +193,7 @@
       }
       this.options = mergeObjects(this.options, options);
       if (this.textField) {
-        this.textField.el.style.fontColor = options.fontColor + 'px';
+        this.textField.el.style.fontSize = options.fontSize + 'px';
       }
       if (this.options.angle > .5) {
         this.options.angle = .5;
@@ -451,7 +451,7 @@
       angle: 0.15,
       lineWidth: 0.44,
       radiusScale: 1.0,
-      fontColor: 40,
+      fontSize: 40,
       limitMax: false,
       limitMin: false
     };
@@ -606,15 +606,15 @@
     };
 
     Gauge.prototype.renderStaticLabels = function(staticLabels, w, h, radius) {
-      var font, fontColor, j, len, match, re, ref, rest, rotationAngle, value;
+      var font, fontsize, j, len, match, re, ref, rest, rotationAngle, value;
       this.ctx.save();
       this.ctx.translate(w, h);
       font = staticLabels.font || "10px Times";
       re = /\d+\.?\d?/;
       match = font.match(re)[0];
       rest = font.slice(match.length);
-      fontColor = parseFloat(match) * this.displayScale;
-      this.ctx.font = fontColor + rest;
+      fontsize = parseFloat(match) * this.displayScale;
+      this.ctx.font = fontsize + rest;
       this.ctx.fillStyle = staticLabels.color || "#000000";
       this.ctx.textBaseline = "bottom";
       this.ctx.textAlign = "center";
@@ -626,8 +626,8 @@
             font = value.font || staticLabels.font;
             match = font.match(re)[0];
             rest = font.slice(match.length);
-            fontColor = parseFloat(match) * this.displayScale;
-            this.ctx.font = fontColor + rest;
+            fontsize = parseFloat(match) * this.displayScale;
+            this.ctx.font = fontsize + rest;
             rotationAngle = this.getAngle(value.label) - 3 * Math.PI / 2;
             this.ctx.rotate(rotationAngle);
             this.ctx.fillText(formatNumber(value.label, staticLabels.fractionDigits), 0, -radius - this.lineWidth / 2);
