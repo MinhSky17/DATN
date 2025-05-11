@@ -53,6 +53,71 @@
             .rating > input:not(:checked) ~ label:hover ~ label {
                 background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='126.729' height='126.73'%3e%3cpath fill='%23d8b11e' d='M121.215 44.212l-34.899-3.3c-2.2-.2-4.101-1.6-5-3.7l-12.5-30.3c-2-5-9.101-5-11.101 0l-12.4 30.3c-.8 2.1-2.8 3.5-5 3.7l-34.9 3.3c-5.2.5-7.3 7-3.4 10.5l26.3 23.1c1.7 1.5 2.4 3.7 1.9 5.9l-7.9 32.399c-1.2 5.101 4.3 9.3 8.9 6.601l29.1-17.101c1.9-1.1 4.2-1.1 6.1 0l29.101 17.101c4.6 2.699 10.1-1.4 8.899-6.601l-7.8-32.399c-.5-2.2.2-4.4 1.9-5.9l26.3-23.1c3.8-3.5 1.6-10-3.6-10.5z'/%3e%3c/svg%3e");
             }
+            .color-btn:disabled {
+                opacity: 0.5 !important;
+                cursor: not-allowed !important;
+            }
+        
+            .color-btn.active{
+                background-color: #007bff !important;
+                color: white !important;
+                border-color: #007bff !important;
+            }
+
+            input[type=number]::-webkit-outer-spin-button,
+            input[type=number]::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+
+            input[type=number] {
+                -moz-appearance: textfield;
+            }
+             
+            /* Giới hạn mô tả ban đầu */
+            .product-desc-wrapper {
+                max-height: 300px;
+                overflow: hidden;
+                position: relative;
+                transition: max-height 0.3s ease;
+            }
+
+            /* Khi mở rộng */
+            .product-desc-wrapper.expanded {
+                max-height: 30000px; /* Đủ lớn để chứa nội dung */
+            }
+
+            /* Lớp mờ phía dưới */
+            .fade-overlay {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 60px;
+                background: linear-gradient(to bottom, transparent, white);
+                pointer-events: none;
+            }
+
+            /* Ẩn overlay khi mở rộng */
+            .product-desc-wrapper.expanded .fade-overlay {
+                display: none;
+            }
+
+            /* Nút toggle */
+            .toggle-desc-btn {
+                margin-top: 12px;
+                background: none;
+                border: none;
+                font-weight: bold;
+                cursor: pointer;
+                text-align: center;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                color: black;
+            }
+
+            
         </style>
     </th:block>
 </head>
@@ -103,59 +168,141 @@
                             <span class="product-price price-box text-price" th:text="${product.price}"></span> &#x20AB;
                         </th:block>
                     </div><!-- End .price-box -->
+<!--                    <hr class="divider">-->
+<!--                    <div class="product-desc">-->
+<!--                        <span class="desc-sub-title">Đã bán: </span>-->
+<!--                        <span th:text="${product.totalSold} + ' đôi'"></span>-->
+<!--                    </div>-->
+<!--                    <hr class="divider">-->
+<!--                    <div class="product-desc">-->
+<!--                        <span class="desc-sub-title">Tình trạng: </span>-->
+<!--                        <span th:if="${canBuy}">Còn hàng</span>-->
+<!--                        <span th:unless="${canBuy}" style="color:#f04e40">Tạm hết hàng</span>-->
+<!--                    </div>-->
                     <hr class="divider">
                     <div class="product-desc">
-                        <span class="desc-sub-title">Đã bán: </span>
-                        <span th:text="${product.totalSold} + ' đôi'"></span>
+                        <span class="desc-sub-title">Màu: <span id="selectedColorName"></span></span>
+                        <div class="color-options">
+                            <ul class="color-list" style="list-style: none; padding: 0; display: flex; gap: 10px;">
+                                <li th:each="ps : ${availableColors}">
+                                    <button class="color-btn" 
+                                            th:name="${ps.code}"
+                                            th:text="${ps.code}"
+                                            th:data-color-name="${ps.name}"
+                                            th:data-quantity="${ps.quantity}"
+                                            th:disabled="${ps.quantity == 0}"
+                                            onclick="updateSelectedColor(this)"
+                                            style="padding: 4px 16px;
+                                                   margin-top: 10px;
+                                                   border: 1px solid #ddd;
+                                                   border-radius: 4px;
+                                                   background: white;
+                                                   cursor: pointer;
+                                                   transition: all 0.3s;">
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    <hr class="divider">
-                    <div class="product-desc">
-                        <span class="desc-sub-title">Tình trạng: </span>
-                        <span th:if="${canBuy}">Còn hàng</span>
-                        <span th:unless="${canBuy}" style="color:#f04e40">Tạm hết hàng</span>
-                    </div>
-                    <hr class="divider">
+                    <!-- Bộ chọn số lượng -->
+                    <div style="display: flex; align-items: center; gap: 10px; margin-top: 16px;">
+                        <div id="quantityWrapper" style="
+                        display: flex;
+                        align-items: center;
+                        border: 1px solid #e0e0e0;
+                        border-radius: 999px;
+                        padding: 4px 12px;
+                        gap: 16px;
+                        background-color: #fff;
+                        width: fit-content;
+                    ">
+                        <button type="button" onclick="decreaseQty()" style="
+                            background: none;
+                            border: none;
+                            font-size: 18px;
+                            cursor: pointer;
+                        ">−</button>
 
-                    <div class="btns">
-                        <div class="size-btn" data-toggle="modal" data-target="#modal-size-Choose">
-                            <button class="btn btn-primary size trans-btn">
-                                <span class="size-text">Size</span>
-                                <span class="size-details"></span>
-                                <i class="fas dropdown-arrow"></i>
-                            </button>
-                        </div>
-                        <div class="buy-btn">
-                            <button class="btn btn-primary buy red-btn" th:classappend="${canBuy} == true ? '' : 'not-buy'">
-                                <div class="ask-text left-content">
-                                    <th:block th:if="${product.promotionPrice}">
-                                        <div class="ask-desc sub-content old-price"><span class="text-price" th:text="${product.price}"></span> &#x20AB;</div>
-                                        <div class="ask-price "><span class="text-price" th:text="${product.promotionPrice}"></span> &#x20AB;</div>
-                                    </th:block>
-                                    <th:block th:unless="${product.promotionPrice}">
-                                        <div class="ask-desc sub-content">Giá bán ưu đãi</div>
-                                        <div class="ask-price "><span class="text-price" th:text="${product.price}"></span> &#x20AB;</div>
-                                    </th:block>
-                                </div>
-                                <div class="buy-text right-content">
-                                    <div class="buy-now ">Mua ngay</div>
-                                </div>
-                            </button>
+                        <input type="number" id="qtyDisplay" value="1" min="1"
+                        oninput="validateQtyInput(this)" 
+                        style="
+                            width: 30px;
+                            text-align: center;
+                            border: none;
+                            outline: none;
+                            font-weight: bold;
+                            font-size: 16px;
+                            background: none;
+                            -moz-appearance: textfield;
+                        ">
+
+                        <button type="button" onclick="increaseQty()" style="
+                            background: none;
+                            border: none;
+                            font-size: 18px;
+                            cursor: pointer;
+                        ">+</button>
+                    </div>
+
+                    
+                        <!-- Nút hành động -->
+                        <div style="display: flex; gap: 12px; ">
+                            <button class="btn btn-dark" style="border-radius: 38px">🛒 Thêm vào giỏ hàng</button>
+                            <button 
+                            class="btn buy-now "
+                            style="background: linear-gradient(to right, orange, purple);
+                                   color: white;
+                                   border-radius: 38px;">
+                            MUA NGAY</button>
                         </div>
                     </div>
+                    
+
+
+                    
+<!--                    <hr class="divider">-->
+
+<!--                    <div class="btns">-->
+<!--&lt;!&ndash;                        <div class="size-btn" data-toggle="modal" data-target="#modal-size-Choose">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <button class="btn btn-primary size trans-btn">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <span class="size-text">Size</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <span class="size-details"></span>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <i class="fas dropdown-arrow"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </button>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--                        <div class="buy-btn">-->
+<!--                            <button class="btn btn-primary buy red-btn" th:classappend="${canBuy} == true ? '' : 'not-buy'">-->
+<!--                                <div class="ask-text left-content">-->
+<!--                                    <th:block th:if="${product.promotionPrice}">-->
+<!--                                        <div class="ask-desc sub-content old-price"><span class="text-price" th:text="${product.price}"></span> &#x20AB;</div>-->
+<!--                                        <div class="ask-price "><span class="text-price" th:text="${product.promotionPrice}"></span> &#x20AB;</div>-->
+<!--                                    </th:block>-->
+<!--                                    <th:block th:unless="${product.promotionPrice}">-->
+<!--                                        <div class="ask-desc sub-content">Giá bán ưu đãi</div>-->
+<!--                                        <div class="ask-price "><span class="text-price" th:text="${product.price}"></span> &#x20AB;</div>-->
+<!--                                    </th:block>-->
+<!--                                </div>-->
+<!--                                <div class="buy-text right-content">-->
+<!--                                    <div class="buy-now ">Mua ngay</div>-->
+<!--                                </div>-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
                     <hr class="divider mb-1">
 
                     <div class="product-single-share">
-<!--                        <label class="sr-only">Share:</label>-->
+                        <label class="sr-only">Share:</label>
 
-<!--                        <div class="social-icons mr-2">-->
-<!--                            <a href="#" class="social-icon social-facebook icon-facebook" target="_blank" title="Facebook"></a>-->
-<!--                            <a href="#" class="social-icon social-twitter icon-twitter" target="_blank" title="Twitter"></a>-->
-<!--                            <a href="#" class="social-icon social-linkedin fab fa-linkedin-in" target="_blank" title="Linkedin"></a>-->
-<!--                            <a href="#" class="social-icon social-gplus fab fa-google-plus-g" target="_blank" title="Google +"></a>-->
-<!--                            <a href="#" class="social-icon social-mail icon-mail-alt" target="_blank" title="Mail"></a>-->
-<!--                        </div>&lt;!&ndash; End .social-icons &ndash;&gt;-->
+                        <div class="social-icons mr-2">
+                            <a href="#" class="social-icon social-facebook icon-facebook" target="_blank" title="Facebook"></a>
+                            <a href="#" class="social-icon social-twitter icon-twitter" target="_blank" title="Twitter"></a>
+                            <a href="#" class="social-icon social-linkedin fab fa-linkedin-in" target="_blank" title="Linkedin"></a>
+                            <a href="#" class="social-icon social-gplus fab fa-google-plus-g" target="_blank" title="Google +"></a>
+                            <a href="#" class="social-icon social-mail icon-mail-alt" target="_blank" title="Mail"></a>
+                        </div><!-- End .social-icons -->
 
-<!--                        <a href="#" class="add-wishlist" title="Add to Wishlist">Add to Wishlist</a>-->
+                        <!--<a href="#" class="add-wishlist" title="Add to Wishlist">Add to Wishlist</a>-->
                     </div><!-- End .product single-share -->
                 </div><!-- End .product-single-details -->
             </div><!-- End .row -->
@@ -175,10 +322,17 @@
             </ul>
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="product-desc-content" role="tabpanel" aria-labelledby="product-tab-desc">
-                    <div class="product-desc-content">
-                        <p th:utext="${product.description}"></p>
-                    </div><!-- End .product-desc-content -->
-                </div><!-- End .tab-pane -->
+                    <div class="product-desc-wrapper" id="descWrapper">
+                        <div class="product-desc-content" id="productDesc">
+                            <p th:utext="${product.description}"></p>
+                        </div>
+                        <div class="fade-overlay" id="descOverlay"></div>
+                    </div>
+                    <button class="toggle-desc-btn" id="toggleDescBtn" onclick="toggleDescription()">XEM THÊM NỘI DUNG</button>
+                </div>
+                
+                
+
 
                 <div class="tab-pane fade fade" id="product-more-info-content" role="tabpanel" aria-labelledby="product-tab-more-info">
                     <div class="products-slider owl-carousel owl-theme dots-top">
@@ -204,11 +358,11 @@
                                                 <img th:src="@{/shop/images/avatar/avatar.png}" width="65" height="65" alt="avatar"/>
                                             </div><!-- End .comment-avatar-->
                                             <div class="comment-box">
-<!--                                                <div class="ratings-container">-->
-<!--                                                    <div class="product-ratings">-->
-<!--                                                        <span class="ratings" style="width:80%"></span>&lt;!&ndash; End .ratings &ndash;&gt;-->
-<!--                                                    </div>&lt;!&ndash; End .product-ratings &ndash;&gt;-->
-<!--                                                </div>&lt;!&ndash; End .ratings-container &ndash;&gt;-->
+                                                <div class="ratings-container">
+                                                    <div class="product-ratings">
+                                                        <span class="ratings" style="width:80%"></span><!-- End .ratings -->
+                                                    </div><!-- End .product-ratings -->
+                                                </div><!-- End .ratings-container -->
 
                                                 <div class="comment-info mb-1">
                                                     <h4 class="avatar-name" th:text="${comment.user.fullName}"></h4> - <span class="comment-date" th:text="${#dates.format(comment.createdAt, 'dd-MM-yyyy')}">Novemeber 15, 2019</span>
@@ -226,25 +380,25 @@
                             <div class="col-xl-6">
                                 <div class="add-product-review">
                                     <form action="#" class="comment-form m-0" id="formCommentProduct">
-<!--                                        <div class="rating-form">-->
-<!--                                            <label for="rating">Đánh giá chất lượng sản phẩm</label>-->
-<!--                                            <div class="rating btn-rating">-->
-<!--                                                <input type="radio" name="rating" value="5" id="rating-5">-->
-<!--                                                <label for="rating-5"></label>-->
+                                        <div class="rating-form">
+                                            <label for="rating">Đánh giá chất lượng sản phẩm</label>
+                                            <div class="rating btn-rating">
+                                                <input type="radio" name="rating" value="5" id="rating-5">
+                                                <label for="rating-5"></label>
 
-<!--                                                <input type="radio" name="rating" value="4" id="rating-4">-->
-<!--                                                <label for="rating-4"></label>-->
+                                                <input type="radio" name="rating" value="4" id="rating-4">
+                                                <label for="rating-4"></label>
 
-<!--                                                <input type="radio" name="rating" value="3" id="rating-3">-->
-<!--                                                <label for="rating-3"></label>-->
+                                                <input type="radio" name="rating" value="3" id="rating-3">
+                                                <label for="rating-3"></label>
 
-<!--                                                <input type="radio" name="rating" value="2" id="rating-2">-->
-<!--                                                <label for="rating-2"></label>-->
+                                                <input type="radio" name="rating" value="2" id="rating-2">
+                                                <label for="rating-2"></label>
 
-<!--                                                <input type="radio" name="rating" value="1" id="rating-1">-->
-<!--                                                <label for="rating-1"></label>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
+                                                <input type="radio" name="rating" value="1" id="rating-1">
+                                                <label for="rating-1"></label>
+                                            </div>
+                                        </div>
                                         <div class="form-group">
                                             <label>Viết bình luận </label>
                                             <textarea cols="6" rows="6" name="product_comment" class="form-control form-control-sm product_comment"></textarea>
@@ -309,12 +463,82 @@
 
         let sizeCm = [[${sizeCm}]];
 
+        let qty = 1;
+        let maxQty = 0;
+
+
         $(function () {
             formatMoney();
-            render();
-            activeSize();
-            sizeGuideRender();
+            //render();
+            //activeSize();
+            //sizeGuideRender();
         });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Tìm nút đầu tiên KHÔNG bị disabled (còn hàng)
+            const firstAvailableBtn = document.querySelector(".color-btn:not([disabled])");
+            if (firstAvailableBtn) {
+                firstAvailableBtn.classList.add("active");
+                updateSelectedColor(firstAvailableBtn);
+            }
+        });
+
+        function updateSelectedColor(button) {
+            // Bỏ class active ở tất cả các button
+            document.querySelectorAll('.color-btn').forEach(btn => btn.classList.remove('active'));
+            // Gán class active cho button được chọn
+            button.classList.add('active');
+            //Lay so luong toi da cua mau chon
+            maxQty = parseInt(button.getAttribute('data-quantity')) || 1;
+            //Lay gia tri trong o input
+            let currentQty = parseInt(document.getElementById('qtyDisplay').value) || 1;
+            if(currentQty > maxQty) {
+                currentQty = maxQty;
+            }else if(currentQty < 1 || isNaN(currentQty)) {
+                currentQty = 1;
+            }
+            document.getElementById('qtyDisplay').value = currentQty;
+            qty = currentQty;
+
+            //document.getElementById('quantityWrapper').style.display = 'flex';
+
+            // Cập nhật tên màu được chọn
+            document.getElementById('selectedColorName').textContent = button.getAttribute('data-color-name');
+        }
+
+        function validateQtyInput(input) {
+            let currentQty = parseInt(input.value);
+            if(currentQty > maxQty) {
+                currentQty = maxQty;
+            }else if(currentQty < 1 || isNaN(currentQty)) {
+                currentQty = 1;
+            }
+            input.value = currentQty;
+            qty = currentQty;
+        }
+
+        function increaseQty() {
+            if(qty < maxQty) {
+              qty++;
+              document.getElementById('qtyDisplay').value = qty;
+            }
+        }
+
+      function decreaseQty() {
+          if (qty > 1) {
+              qty--;
+              document.getElementById('qtyDisplay').value = qty;
+            }
+        }
+
+        function toggleDescription() {
+            const wrapper = document.getElementById('descWrapper');
+            const btn = document.getElementById('toggleDescBtn');
+        
+            wrapper.classList.toggle('expanded');
+        
+            btn.textContent = wrapper.classList.contains('expanded') ? 'THU GỌN NỘI DUNG' : 'XEM THÊM NỘI DUNG';
+        }
 
         function render() {
             for (let i = 0; i < sizeVn.length; i++) {
@@ -362,11 +586,21 @@
 
         $('.buy-now').click(function() {
             if (isLogined == true) {
-                let size = $('.size-choose').data("id");
-                if (size == null || size == "") {
+                // Get selected color button
+                let selectedColorBtn = $('.color-btn.active');
+                
+                if (!selectedColorBtn.length) {
+                    toastr.warning("Vui lòng chọn màu sản phẩm");
+                    return;
+                }
+
+                let colorCode = selectedColorBtn.attr('name');
+                let quantity = selectedColorBtn.data('quantity');
+
+                if (quantity <= 0) {
                     toastr.warning("Sản phẩm tạm hết hàng. Vui lòng đặt hàng sau.");
                 } else {
-                    location.href = "/dat-hang?id="+[[${product.id}]]+"&size="+size;
+                    location.href = "/dat-hang?id=" + [[${product.id}]] + "&code=" + colorCode;
                 }
             } else {
                 toastr.warning("Vui lòng đăng nhập để đặt hàng");
@@ -374,7 +608,7 @@
                     $('#exampleModal').modal('show');
                 }, 500);
             }
-        })
+        });
 
         $("#formCommentProduct").submit(function (e) {
             e.preventDefault();
@@ -429,10 +663,17 @@
             }
         });
 
-        // $(".btn-rating").click(function (){
-        //     let rating = $("#rating").val()
-        //     console.log(rating)
-        // })
+        // Thay thế phần xử lý rating chưa hoàn chỉnh bằng:
+        $('.btn-rating input').on('change', function() {
+            let ratingValue = $(this).val();
+            // Xử lý giá trị rating
+            console.log("Đã chọn rating:", ratingValue);
+        });
+
+         //$(".btn-rating").click(function (){
+          //   let rating = $("#rating").val()
+          //   console.log(rating)
+         //})
         // $('.btn-rating input').on('change', function() {
         //     alert($('input[name=rating]:checked').val());
         // });

@@ -132,16 +132,18 @@
                         </h3>
 
                         <div class="collapse show" id="widget-body-2">
-                            <div class="widget-body">
-                                <ul class="cat-list">
-                                    <th:block th:each="category : ${categories}">
-                                        <li>
-                                            <input class="filter-checkbox check-category" type="checkbox"
-                                                   th:value="${category.id}"/>
-                                            <span th:text="${category.name}"></span>
-                                        </li>
-                                    </th:block>
-                                </ul>
+                            <div class="widget-body">                             
+                                <div style="max-height: 200px; overflow-y: auto;" >
+                                    <ul class="cat-list">
+                                        <th:block th:each="category : ${categories}">
+                                            <li>
+                                                <input class="filter-checkbox check-category" type="checkbox"
+                                                       th:value="${category.id}"/>
+                                                <span th:text="${category.name}"></span>
+                                            </li>
+                                        </th:block>
+                                    </ul>
+                                </div>
                             </div><!-- End .widget-body -->
                         </div><!-- End .collapse -->
                     </div><!-- End .widget -->
@@ -154,15 +156,17 @@
 
                         <div class="collapse show" id="widget-body-5">
                             <div class="widget-body">
-                                <ul class="cat-list">
-                                    <th:block th:each="brand : ${brands}">
-                                        <li>
-                                            <input class="filter-checkbox check-brand" type="checkbox"
-                                                   th:value="${brand.id}"/>
-                                            <span th:text="${brand.name}"></span>
-                                        </li>
-                                    </th:block>
-                                </ul>
+                                <div style="max-height: 200px; overflow-y: auto;">
+                                    <ul class="cat-list">
+                                        <th:block th:each="brand : ${brands}">
+                                            <li>
+                                                <input class="filter-checkbox check-brand" type="checkbox"
+                                                       th:value="${brand.id}"/>
+                                                <span th:text="${brand.name}"></span>
+                                            </li>
+                                        </th:block>
+                                    </ul>
+                                </div>
                             </div><!-- End .widget-body -->
                         </div><!-- End .collapse -->
                     </div><!-- End .widget -->

@@ -16,7 +16,7 @@
 
 <!--    <link th:href="@{/adminlte/fonts/css6525.css}" rel="stylesheet" type="text/css">-->
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" th:href="@{https://i.pinimg.com/736x/82/cf/7e/82cf7e7f4ff5c7cc7469b2aa98082f89.jpg}">
+    <link rel="icon" type="image/x-icon" th:href="@{/shop/images/logo-coshine.jpeg}">
     <link rel="stylesheet" th:href="@{/adminlte/vendor/bootstrap/css/bootstrap.css}"/>
     <link rel="stylesheet" th:href="@{/adminlte/vendor/animate/animate.compat.css}">
     <link rel="stylesheet" th:href="@{/adminlte/vendor/font-awesome/css/all.min.css}"/>
@@ -58,6 +58,8 @@
         <th:block th:replace="~{fragment/sidebar_admin :: ${sidebar}}"></th:block>
         <!-- BODY -->
         <th:block th:replace="${mainContent} ?: ~{}"></th:block>
+        <!-- CSS for this specific section -->
+        <link rel="stylesheet" th:href="@{/adminlte/css/inner-wrapper-styles.css}">
     </div>
 </section>
 

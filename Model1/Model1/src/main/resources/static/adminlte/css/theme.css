@@ -227,7 +227,8 @@ a:active {
     }
 
     html.fixed .sidebar-left .nano-content {
-        padding-bottom: 50px
+        padding-bottom: 50px;
+        /* background-color: blue; */
     }
 
     html.fixed.sidebar-left-collapsed .page-header {

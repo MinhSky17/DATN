@@ -1,7 +1,7 @@
 <th:block th:fragment="header">
 <header class="header">
     <div class="logo-container">
-        <a href="/admin" class="logo"> <img th:src="@{https://i.pinimg.com/736x/82/cf/7e/82cf7e7f4ff5c7cc7469b2aa98082f89.jpg}" width="75" height="35" alt="Porto Admin"/>
+        <a href="/admin" class="logo"> <img th:src="@{/shop/images/logo-coshine.jpeg}" width="75" height="35" alt="Porto Admin"/>
         </a>
     </div>
 
@@ -15,7 +15,7 @@
                 </figure>
                 <div class="profile-info" >
                     <span class="name">[[${#httpServletRequest.remoteUser}]]</span>
-                    <span class="role">Administrator</span>
+                    <span class="role">Admin</span>
                 </div>
                 <i class="fa custom-caret"></i>
             </a>

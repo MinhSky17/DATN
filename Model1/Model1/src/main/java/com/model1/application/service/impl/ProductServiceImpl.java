@@ -246,8 +246,8 @@ public class ProductServiceImpl implements ProductService {
 
     //Lay mau cua san pham
     @Override
-    public List<String> getListAvailableColor(String id) {
-        return productColorRepository.findAllColorOfProduct(id);
+    public List<ProductColor> getListAvailableColor(String id) {
+        return productColorRepository.findByProductId(id);
     }
 
     @Override
@@ -346,6 +346,13 @@ public class ProductServiceImpl implements ProductService {
             return true;
         }
         return false;
+    }
+
+    //lay mau san pham theo ma mau va ma sp
+    @Override
+    public ProductColor getProductColorAvailable(String id, String code) {
+        ProductColor productColor = productColorRepository.checkProductAndColorAvailable(id, code);
+        return productColor;
     }
 
     @Override

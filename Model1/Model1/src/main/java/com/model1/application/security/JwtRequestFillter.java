@@ -53,6 +53,9 @@ public class JwtRequestFillter extends OncePerRequestFilter {
             return;
         }
 
+//        authenticationToken.setDetails(new org.springframework.security.web.authentication.WebAuthenticationDetailsSource()
+//                .buildDetails(httpServletRequest));
+
         // Xác thực thành công, lưu object Authentication vào SecurityContextHolder
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         filterChain.doFilter(httpServletRequest, httpServletResponse);

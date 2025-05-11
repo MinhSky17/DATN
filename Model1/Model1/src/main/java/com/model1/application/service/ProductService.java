@@ -74,7 +74,7 @@ public interface ProductService {
 
 
     //Lấy màu có sẵn
-    List<String> getListAvailableColor(String id);
+    List<ProductColor> getListAvailableColor(String id);
 
     //Nhập số lượng theo màu
     void createColorCount(CreateColorCountRequest createColorCountRequest);
@@ -89,6 +89,9 @@ public interface ProductService {
 
     //Check màu sản phẩm
     boolean checkProductColorAvailable(String id, String code);
+
+    //Lay mau san pham tu ma mau va masp
+    ProductColor getProductColorAvailable(String id, String code);
 
 
 
