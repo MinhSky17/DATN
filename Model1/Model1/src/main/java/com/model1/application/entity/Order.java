@@ -10,6 +10,8 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @SqlResultSetMappings(
         value = {
@@ -90,8 +92,10 @@ public class Order {
     private long price;
     @Column(name = "total_price")
     private long totalPrice;
+    //An
     @Column(name = "size")
     private int size;
+    //An
     @Column(name = "quantity")
     private int quantity;
 
@@ -123,6 +127,7 @@ public class Order {
     @Type(type = "json")
     @Column(name = "promotion", columnDefinition = "json")
     private UsedPromotion promotion;
+
 
     @Getter
     @Setter

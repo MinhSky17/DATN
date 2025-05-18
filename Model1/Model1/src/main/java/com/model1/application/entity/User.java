@@ -48,4 +48,5 @@ public class User {
     private Timestamp createdAt;
     @Column(name = "modified_at")
     private Timestamp modifiedAt;
+
 }

@@ -1,14 +1,12 @@
 package com.model1.application.controller.shop;
 
 import com.model1.application.entity.*;
+import com.model1.application.model.dto.*;
+import com.model1.application.model.request.OrderDetailRequest;
 import com.model1.application.service.*;
 
 import com.model1.application.exception.BadRequestException;
 import com.model1.application.exception.NotFoundException;
-import com.model1.application.model.dto.CheckPromotion;
-import com.model1.application.model.dto.DetailProductInfoDTO;
-import com.model1.application.model.dto.PageableDTO;
-import com.model1.application.model.dto.ProductInfoDTO;
 import com.model1.application.model.request.CreateOrderRequest;
 import com.model1.application.model.request.FilterProductRequest;
 import com.model1.application.security.CustomUserDetails;
@@ -24,11 +22,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static com.model1.application.config.Contant.*;
 
 @Controller
-public class HomeController {
+class HomeController {
 
     @Autowired
     private ProductService productService;
@@ -50,6 +49,7 @@ public class HomeController {
 
     @Autowired
     private PromotionService promotionService;
+
 
     @GetMapping
     public String homePage(Model model){
@@ -182,38 +182,6 @@ public class HomeController {
 //    public List<CartItem> getCartItems(){
 //    }
 
-    @GetMapping("/dat-hang")
-    public String getCartPage(Model model, @RequestParam String id,@RequestParam String code){
-
-        //Lấy chi tiết sản phẩm
-        DetailProductInfoDTO product;
-        try {
-            product = productService.getDetailProductById(id);
-        } catch (NotFoundException ex) {
-            return "error/404";
-        } catch (Exception ex) {
-            return "error/500";
-        }
-        model.addAttribute("product", product);
-
-        //Lấy danh sách mau có sẵn
-        List<ProductColor> availableColors = productService.getListAvailableColor(id);
-        model.addAttribute("availableColors", availableColors);
-        boolean notFoundColor = true;
-        for (ProductColor availableColor : availableColors) {
-            if (availableColor.getCode() == code) {
-                notFoundColor = false;
-                break;
-            }
-        }
-        model.addAttribute("notFoundColor", notFoundColor);
-
-        //Lấy danh sách mau
-        model.addAttribute("code", code);
-
-        return "shop/payment";
-    }
-
     @PostMapping("/api/orders")
     public ResponseEntity<Object> createOrder(@Valid @RequestBody CreateOrderRequest createOrderRequest) {
         User user = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
@@ -221,6 +189,22 @@ public class HomeController {
 
         return ResponseEntity.ok(order.getId());
     }
+
+//    @PostMapping("/api/order-detail")
+//    public ResponseEntity<Map<String, String>> addToOrderDetail(@RequestBody List<OrderDetailRequest> orderDetailRequests) {
+//        try {
+//            for (OrderDetailRequest request : orderDetailRequests) {
+//                orderDetailService.addToOrderDetail(request);
+//            }
+//            return ResponseEntity.ok(Map.of("status", "success", "message", "Đã thêm các sản phẩm vào chi tiết đơn hàng."));
+//        } catch (IllegalArgumentException e) {
+//            return ResponseEntity.badRequest().body(Map.of("status", "error", "message", e.getMessage()));
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body(Map.of("status", "error", "message", "Đã xảy ra lỗi khi thêm vào chi tiết đơn hàng."));
+//        }
+//    }
+
 
     @GetMapping("/products")
     public ResponseEntity<Object> getListBestSellProducts(){

@@ -36,16 +36,4 @@ public class OrderDetailDTO {
 
     private String productImg;
 
-    public OrderDetailDTO (long id, long totalPrice, long productPrice, String receiverName, String receiverPhone, String receiverAddress, int status, int sizeVn, String productName, String productImg) {
-        this.id = id;
-        this.totalPrice = totalPrice;
-        this.productPrice = productPrice;
-        this.receiverName = receiverName;
-        this.receiverPhone = receiverPhone;
-        this.receiverAddress = receiverAddress;
-        this.status = status;
-        this.sizeVn = sizeVn;
-        this.productName = productName;
-        this.productImg = productImg;
-    }
 }

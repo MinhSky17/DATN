@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(
+                                                                     ~{:: title},
+                                                                    'header',
+                                                                    'footer',
+                                                                     ~{:: #css-resources},
+                                                                     ~{:: #js-resources},
+                                                                     ~{:: #main-content}
+                                                                    )}">
+<head>
+    <meta charset="UTF-8">
+    <title>Giỏ hàng</title>
+    <th:block id="css-resources">
+        <link rel="stylesheet" th:href="@{/shop/css/custom.css}">
+        <style>
+            .cart-table th, .cart-table td {
+                vertical-align: middle;
+                text-align: center;
+            }
+            .quantity-input {
+                width: 60px;
+                text-align: center;
+            }
+            .btn-remove {
+                color: #dc3545;
+                cursor: pointer;
+            }
+            .btn-remove:hover {
+                color: #a71d2a;
+            }
+            .alert {
+                margin-bottom: 20px;
+            }
+            .quantity-control {
+                display: flex;
+                align-items: center;
+                border: 1px solid #dee2e6;
+                border-radius: 999px;
+                padding: 4px 12px;
+                width: fit-content;
+                margin: 0 auto;
+            }
+            .quantity-btn {
+                background: none;
+                border: none;
+                font-size: 18px;
+                cursor: pointer;
+                padding: 0 8px;
+                color: #6c757d;
+            }
+            .quantity-btn:hover {
+                color: #000;
+            }
+            .quantity-input {
+                width: 40px;
+                text-align: center;
+                border: none;
+                outline: none;
+                font-weight: bold;
+                font-size: 16px;
+                background: none;
+                -moz-appearance: textfield;
+                cursor: default;
+                user-select: none;
+            }
+            .quantity-input::-webkit-outer-spin-button,
+            .quantity-input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+            .quantity-input:focus {
+                outline: none;
+            }
+            .btn {
+                padding: 10px 20px;
+                font-weight: 500;
+                transition: all 0.3s ease;
+            }
+            .btn-secondary {
+                background-color: #6c757d;
+                border-color: #6c757d;
+                color: white;
+            }
+            .btn-secondary:hover {
+                background-color: #5a6268;
+                border-color: #545b62;
+            }
+            .btn-primary {
+                background-color: #0d6efd;
+                border-color: #0d6efd;
+            }
+            .btn-primary:hover {
+                background-color: #0b5ed7;
+                border-color: #0a58ca;
+            }
+            .me-2 {
+                margin-right: 0.5rem;
+            }
+            .item-checkbox, #select-all {
+                cursor: pointer;
+            }
+        </style>
+    </th:block>
+</head>
+<body>
+<main id="main-content" class="container my-5">
+    <h1 class="mb-4" th:if="${isLogined}">Giỏ hàng của <span th:text="${user_fullname}"></span></h1>
+    <h1 class="mb-4" th:unless="${isLogined}">Giỏ hàng</h1>
+
+    <!-- Error or Message -->
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+    <div th:if="${message}" class="alert alert-info" th:text="${message}"></div>
+    <div id="js-error" class="alert alert-danger" style="display: none;"></div>
+    <div id="js-message" class="alert alert-info" style="display: none;"></div>
+
+    <!-- Cart Table -->
+    <div>
+        <table class="table table-bordered cart-table">
+            <thead class="table-light" style="color: black">
+                <tr>
+                    <th><input type="checkbox" id="select-all" title="Chọn tất cả"/></th>
+                    <th style="width: 500px">Sản phẩm</th>
+                    <th>Màu</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Tổng</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody id="cart-items" style="color: black;">
+                <!-- Cart items will be populated by JavaScript -->
+            </tbody>
+        </table>
+
+        <!-- Thêm các nút điều hướng -->
+        <div class="d-flex justify-content-between mt-4">
+            <a href="/" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-2"></i>Quay lại trang chủ
+            </a>
+            <button id="checkout-btn" class="btn btn-primary">
+                <i class="fas fa-shopping-cart me-2"></i>Tiến hành thanh toán
+            </button>
+        </div>
+    </div>
+</main>
+
+<th:block id="js-resources">
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchCartItems();
+
+            // Gắn sự kiện cho checkbox "Chọn tất cả"
+            document.getElementById('select-all').addEventListener('change', (e) => {
+                const checkboxes = document.querySelectorAll('.item-checkbox');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = e.target.checked;
+                });
+            });
+
+            // Gắn sự kiện cho nút thanh toán
+            document.getElementById('checkout-btn').addEventListener('click', () => {
+                const selectedItems = document.querySelectorAll('.item-checkbox:checked');
+                if (selectedItems.length === 0) {
+                    showError('Vui lòng chọn ít nhất một sản phẩm để thanh toán');
+                    return;
+                }
+
+                // Thu thập danh sách sản phẩm được chọn
+                const cartItems = Array.from(selectedItems).map(checkbox => {
+                    const row = checkbox.closest('tr');
+                    const productId = checkbox.dataset.productId;
+                    const colorId = checkbox.dataset.colorId;
+                    const quantity = parseInt(row.querySelector('.quantity-input').value);
+                    return {
+                        productId: productId,
+                        colorId: parseInt(colorId),
+                        quantity: quantity
+                    };
+                });
+
+                // Gửi yêu cầu POST đến API /api/donhang
+                fetch('/api/don-hang', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token') // Giả sử token lưu trong localStorage
+                    },
+                    body: JSON.stringify({
+                        cartItems: cartItems
+                    })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => {
+                            throw new Error(err.message || 'Tạo đơn hàng thất bại');
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    showMessage(`Đơn hàng #${data.id} đã được tạo thành công!`);
+                    fetchCartItems(); // Làm mới giỏ hàng
+                    // Chuyển hướng đến trang thanh toán
+                    setTimeout(() => {
+                        window.location.href = `dat-hang?orderId=${data.id}`;
+                    }, 2000);
+                })
+                .catch(error => {
+                    showError(error.message);
+                });
+            });
+
+            // Hàm lấy dữ liệu giỏ hàng từ API
+            function fetchCartItems() {
+                fetch('/api/cart', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Không thể lấy dữ liệu giỏ hàng');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    renderCartItems(data);
+                })
+                .catch(error => {
+                    showError(error.message);
+                });
+            }
+
+            // Hàm hiển thị sản phẩm trong bảng
+            function renderCartItems(items) {
+                const tbody = document.getElementById('cart-items');
+                tbody.innerHTML = ''; // Xóa nội dung cũ
+
+                if (items.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" class="text-center">Giỏ hàng trống</td></tr>';
+                    return;
+                }
+
+                items.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td><input type="checkbox" class="item-checkbox" 
+                            data-id="${item.cartId}"
+                            data-product-id="${item.productId}"
+                            data-color-id="${item.colorId}"></td>
+                        <td style="display: flex; align-items: center; gap: 10px; width: 500px;">
+                            ${item.productImage ? `<img src="${item.productImage}" alt="${item.productName}" width="50">` : 'N/A'}
+                            ${item.productName || 'N/A'}
+                        </td>
+                        <td>${item.color || 'N/A'}</td>
+                        <td>${formatPrice(item.price)}</td>
+                        <td>
+                            <div class="quantity-control">
+                                <button type="button" class="quantity-btn decrease" data-id="${item.cartId}">−</button>
+                                <input type="number" class="quantity-input" value="${item.quantity}" min="1" data-id="${item.cartId}" readonly>
+                                <button type="button" class="quantity-btn increase" data-id="${item.cartId}">+</button>
+                            </div>
+                        </td>
+                        <td>${formatPrice(item.price * item.quantity)}</td>
+                        <td>
+                            <span class="btn-remove" data-id="${item.cartId}"><i class="fas fa-trash"></i></span>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+
+                // Gắn sự kiện cho các nút tăng/giảm số lượng và xóa
+                document.querySelectorAll('.quantity-btn.decrease').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const input = e.target.nextElementSibling;
+                        const currentValue = parseInt(input.value);
+                        if (currentValue > 1) {
+                            input.value = currentValue - 1;
+                            updateCartItem(input.dataset.id, input.value);
+                        }
+                    });
+                });
+
+                document.querySelectorAll('.quantity-btn.increase').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const input = e.target.previousElementSibling;
+                        const currentValue = parseInt(input.value);
+                        input.value = currentValue + 1;
+                        updateCartItem(input.dataset.id, input.value);
+                    });
+                });
+
+                document.querySelectorAll('.quantity-input').forEach(input => {
+                    input.addEventListener('input', debounce((e) => {
+                        const value = parseInt(e.target.value);
+                        if (value >= 1) {
+                            updateCartItem(e.target.dataset.id, value);
+                        } else {
+                            e.target.value = 1;
+                            showError('Số lượng phải lớn hơn 0');
+                        }
+                    }, 500));
+                });
+
+                document.querySelectorAll('.btn-remove').forEach(button => {
+                    button.addEventListener('click', handleRemoveItem);
+                });
+            }
+
+            // Hàm debounce để tránh gọi API quá nhiều
+            function debounce(func, wait) {
+                let timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            }
+
+            // Hàm định dạng giá
+            function formatPrice(price) {
+                return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+            }
+
+            // Hàm cập nhật số lượng sản phẩm
+            function updateCartItem(cartId, quantity) {
+                fetch('/api/cart/update', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        cartId: cartId,
+                        quantity: quantity
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        //showMessage(data.message);
+                        fetchCartItems(); // Làm mới giỏ hàng
+                    } else {
+                        showError(data.message);
+                        fetchCartItems();
+                    }
+                })
+                .catch(error => {
+                    showError(error.message);
+                });
+            }
+
+            // Hàm xử lý xóa sản phẩm
+            function handleRemoveItem(event) {
+                if (!confirm('Bạn có chắc muốn xóa sản phẩm này khỏi giỏ hàng?')) {
+                    return;
+                }
+
+                const cartId = event.target.closest('.btn-remove').dataset.id;
+
+                fetch(`/api/cart/remove?cartId=${cartId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.text().then(text => {
+                            throw new Error(text || 'Xóa sản phẩm thất bại');
+                        });
+                    }
+                    return response.text();
+                })
+                .then(message => {
+                    showMessage(message);
+                    fetchCartItems(); // Làm mới giỏ hàng
+                })
+                .catch(error => {
+                    showError(error.message);
+                });
+            }
+
+            // Hàm hiển thị thông báo lỗi
+            function showError(message) {
+                const errorDiv = document.getElementById('js-error');
+                errorDiv.textContent = message;
+                errorDiv.style.display = 'block';
+                setTimeout(() => {
+                    errorDiv.style.display = 'none';
+                }, 5000);
+            }
+
+            // Hàm hiển thị thông báo thành công
+            function showMessage(message) {
+                const messageDiv = document.getElementById('js-message');
+                messageDiv.textContent = message;
+                messageDiv.style.display = 'block';
+                setTimeout(() => {
+                    messageDiv.style.display = 'none';
+                }, 5000);
+            }
+        });
+    </script>
+</th:block>
+</body>
+</html>

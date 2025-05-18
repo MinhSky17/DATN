@@ -188,6 +188,7 @@
                                     <button class="color-btn" 
                                             th:name="${ps.code}"
                                             th:text="${ps.code}"
+                                            th:data-color-id = "${ps.id}"
                                             th:data-color-name="${ps.name}"
                                             th:data-quantity="${ps.quantity}"
                                             th:disabled="${ps.quantity == 0}"
@@ -247,9 +248,9 @@
                     
                         <!-- Nút hành động -->
                         <div style="display: flex; gap: 12px; ">
-                            <button class="btn btn-dark" style="border-radius: 38px">🛒 Thêm vào giỏ hàng</button>
+                            <button class="btn btn-dark" style="border-radius: 38px" onclick="addToCart()">🛒 Thêm vào giỏ hàng</button>
                             <button 
-                            class="btn buy-now "
+                            class="btn buy-now"
                             style="background: linear-gradient(to right, orange, purple);
                                    color: white;
                                    border-radius: 38px;">
@@ -530,6 +531,99 @@
               document.getElementById('qtyDisplay').value = qty;
             }
         }
+
+            let selectedColorCode = null;
+            
+            function updateSelectedColor(element) {
+                // Xóa active class từ tất cả các nút màu
+                document.querySelectorAll('.color-btn').forEach(btn => btn.classList.remove('active'));
+                
+                // Thêm active class cho nút được chọn
+                element.classList.add('active');
+                
+                // Lưu mã màu được chọn
+                selectedColorCode = element.getAttribute('name');
+                
+                // Cập nhật tên màu hiển thị
+                const colorName = element.getAttribute('data-color-name');
+                document.getElementById('selectedColorName').textContent = colorName;
+            }
+            
+            function getCookie(name) {
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                if (parts.length === 2) return parts.pop().split(';').shift();
+                return null;
+            }
+            
+            function addToCart() {
+                let userId = [[${userId}]];
+                let productId = [[${product.id}]];
+                // Lấy nút màu đang được chọn
+                const selectedColorBtn = document.querySelector('.color-btn.active');
+                if (!selectedColorBtn) {
+                    alert("Vui lòng chọn màu sản phẩm");
+                    return;
+                }
+
+                const colorId = selectedColorBtn.getAttribute('data-color-id');
+                //const quantity = parseInt(selectedColorBtn.getAttribute('data-quantity'));
+                let quantity = document.getElementById('qtyDisplay').value;
+                let req;
+                req = {
+                    userId: userId,
+                    productId: productId,
+                    colorId: colorId,
+                    quantity: quantity
+                }
+                let myJson = JSON.stringify(req)
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/cart/add',
+                    data: myJson,
+                    contentType: 'application/json',
+                    success: function(response) {
+                        if(response.status == 'success') {
+                            alert('Thêm vào giỏ hàng thành công');
+                        }else {
+                            alert('Thêm vào giỏ hàng thất bại');}
+                    }
+                })
+            }
+            
+            // Hàm xử lý số lượng
+            function validateQtyInput(input) {
+                let value = parseInt(input.value);
+                if (isNaN(value) || value < 1) {
+                    input.value = 1;
+                }
+            }
+            
+            function decreaseQty() {
+                const input = document.getElementById('qtyDisplay');
+                const currentValue = parseInt(input.value);
+                if (currentValue > 1) {
+                    input.value = currentValue - 1;
+                }
+            }
+            
+            function increaseQty() {
+                const input = document.getElementById('qtyDisplay');
+                const currentValue = parseInt(input.value);
+                const selectedColorBtn = document.querySelector('.color-btn.active');
+                
+                if (selectedColorBtn) {
+                    const maxQty = parseInt(selectedColorBtn.getAttribute('data-quantity'));
+                    if (currentValue < maxQty) {
+                        input.value = currentValue + 1;
+                    } else {
+                        alert('Đã đạt số lượng tối đa của sản phẩm');
+                    }
+                } else {
+                    input.value = currentValue + 1;
+                }
+            }
 
         function toggleDescription() {
             const wrapper = document.getElementById('descWrapper');

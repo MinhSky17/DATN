@@ -7,23 +7,20 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 @Entity
-@Table(name = "carts")
-public class Cart {
+@Table(name = "order_detail")
+public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    @Column(name = "order_id", nullable = false)
+    private Long orderId;
 
     @Column(name = "product_id", nullable = false)
     private String productId;
@@ -32,11 +29,8 @@ public class Cart {
     private Long colorId;
 
     @Column(name = "quantity", nullable = false)
-    private Long quantity;
+    private int quantity;
 
     @Column(name = "create_at", nullable = true)
     private Timestamp createAt;
-
-    @Column(name = "update_at", nullable = true)
-    private Timestamp updateAt;
 }

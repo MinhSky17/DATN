@@ -12143,6 +12143,52 @@ section {
     padding: 1.03em 2.81em
 }
 
+.header-cart {
+    position: relative;
+    display: inline-block;
+    margin-right: 1rem;
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.header-cart:hover {
+    color: #0088cc;
+}
+
+.header-cart i {
+    font-size: 24px;
+}
+
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1;
+    color: #fff;
+    background-color: #ff5b5b;
+    border-radius: 10px;
+}
+
+.badge-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    font-size: 11px;
+    border-radius: 50%;
+}
+
 @media (max-width: 767px) {
     .category-content {
         padding: 1rem

@@ -16,6 +16,7 @@ public class ConfigInterceptor extends HandlerInterceptorAdapter {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ANONYMOUS"))) {
             CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
+            modelAndView.addObject("user_id", principal.getUser().getId());
             modelAndView.addObject("user_fullname", principal.getUser().getFullName());
             modelAndView.addObject("user_phone", principal.getUser().getPhone());
             modelAndView.addObject("user_email", principal.getUser().getEmail());

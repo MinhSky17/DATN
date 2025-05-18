@@ -12,7 +12,282 @@
     <meta charset="UTF-8">
     <title>Thanh toán</title>
     <th:block id="css-resources">
-        <link rel="stylesheet" th:href="@{/shop/css/custom.css}">
+        <style>
+            :root {
+                --primary: #dc3545;
+                --secondary: #333;
+                --gray: #666;
+                --light-gray: #eee;
+                --bg-light: #f8f9fa;
+                --shadow: 0 4px 12px rgba(0,0,0,0.08);
+                --shadow-hover: 0 6px 16px rgba(0,0,0,0.12);
+                --border-radius: 8px;
+                --padding: 15px;
+                --margin: 25px;
+            }
+
+            .container { max-width: 1200px; margin: auto; }
+
+            .breadcrumb-nav {
+                background: var(--bg-light);
+                padding: var(--padding);
+                margin-bottom: var(--margin);
+                border-bottom: 1px solid var(--light-gray);
+            }
+
+            .breadcrumb {
+                margin: 0;
+                padding: 0;
+                font-size: 14px;
+                background: none;
+            }
+
+            .breadcrumb-item a {
+                color: var(--gray);
+                text-decoration: none;
+            }
+
+            .breadcrumb-item.active { color: var(--secondary); }
+
+            .order-summary, .checkout-payment {
+                background: #fff;
+                border-radius: var(--border-radius);
+                box-shadow: var(--shadow);
+                padding: 25px;
+                margin-bottom: var(--margin);
+                transition: box-shadow 0.3s ease;
+            }
+
+            .order-summary:hover, .checkout-payment:hover {
+                box-shadow: var(--shadow-hover);
+            }
+
+            .step-title {
+                font-size: 22px;
+                font-weight: 600;
+                color: var(--secondary);
+                margin-bottom: var(--margin);
+                padding-bottom: var(--padding);
+                position: relative;
+            }
+
+            .step-title:after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 60px;
+                height: 3px;
+                background: var(--primary);
+            }
+
+            .product-col {
+                display: flex;
+                align-items: center;
+                padding: 15px 0;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .product-image-container {
+                width: 100px;
+                height: 100px;
+                margin-right: 20px;
+                border-radius: var(--border-radius);
+                overflow: hidden;
+            }
+
+            .product-image-container img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 0.3s ease;
+            }
+
+            .product-image-container img:hover { transform: scale(1.05); }
+
+            .product-title {
+                font-size: 16px;
+                font-weight: 600;
+                color: var(--secondary);
+                margin-bottom: 5px;
+            }
+
+            .product-details p { margin: 5px 0; color: var(--gray); }
+
+            .price-col {
+                font-size: 18px;
+                font-weight: 700;
+                color: var(--primary);
+            }
+
+            .pricing {
+                margin-top: var(--margin);
+                padding-top: var(--margin);
+                border-top: 1px solid #f0f0f0;
+            }
+
+            .price-include {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin: 10px 0;
+            }
+
+            .text { font-size: 15px; color: var(--gray); }
+
+            .text-price-input {
+                width: 140px;
+                text-align: right;
+                border: none;
+                font-weight: 600;
+                font-size: 15px;
+                color: var(--secondary);
+                background: none;
+            }
+
+            .input-group {
+                margin: var(--margin) 0;
+                display: flex;
+            }
+
+            .input-group .form-control {
+                border: 2px solid var(--light-gray);
+                border-radius: var(--border-radius) 0 0 var(--border-radius);
+                padding: 10px;
+                flex-grow: 1;
+            }
+
+            .input-group .btn {
+                border-radius: 0 var(--border-radius) var(--border-radius) 0;
+                padding: 10px 15px;
+                background: var(--secondary);
+                color: #fff;
+                font-weight: 500;
+            }
+
+            .form-group { margin-bottom: var(--margin); }
+
+            .form-control {
+                border: 2px solid var(--light-gray);
+                border-radius: var(--border-radius);
+                padding: 10px;
+                transition: border-color 0.3s ease;
+            }
+
+            .form-control:focus {
+                border-color: var(--primary);
+                box-shadow: none;
+            }
+
+            .confirm-btn {
+                padding: 10px 25px;
+                font-weight: 500;
+                border-radius: var(--border-radius);
+                transition: all 0.3s ease;
+            }
+
+            .red-btn {
+                background: var(--primary);
+                border-color: var(--primary);
+            }
+
+            .red-btn:hover {
+                background: #c82333;
+                border-color: #bd2130;
+                transform: translateY(-2px);
+            }
+
+            .payment-methods { margin-top: 30px; }
+
+            .payment-method-item {
+                border: 2px solid var(--light-gray);
+                border-radius: var(--border-radius);
+                padding: var(--padding);
+                margin-bottom: var(--padding);
+                cursor: pointer;
+                transition: border-color 0.3s ease;
+            }
+
+            .payment-method-item:hover { border-color: var(--primary); }
+
+            .payment-method-item input[type="radio"] { display: none; }
+
+            .payment-method-item input[type="radio"]:checked + .payment-label { color: var(--primary); }
+
+            .payment-method-item input[type="radio"]:checked + .payment-label::before {
+                border-color: var(--primary);
+                background-color: var(--primary);
+            }
+
+            .payment-label {
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                padding-left: 30px;
+                position: relative;
+            }
+
+            .payment-label::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 18px;
+                height: 18px;
+                border: 2px solid var(--gray);
+                border-radius: 50%;
+                transition: all 0.3s ease;
+            }
+
+            .payment-label::after {
+                content: '';
+                position: absolute;
+                left: 5px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 8px;
+                height: 8px;
+                background: #fff;
+                border-radius: 50%;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            input[type="radio"]:checked + .payment-label::after { opacity: 1; }
+
+            .method-name {
+                font-weight: 500;
+                flex-grow: 1;
+                margin-right: 10px;
+            }
+
+            .payment-logo { height: 22px; object-fit: contain; }
+
+            .discount-badge {
+                background: #28a745;
+                color: #fff;
+                padding: 3px 6px;
+                border-radius: 4px;
+                font-size: 12px;
+                margin: 0 8px;
+            }
+
+            .method-description {
+                margin: 8px 0 0 30px;
+                font-size: 13px;
+                color: var(--gray);
+            }
+
+            .alert {
+                padding: var(--padding);
+                margin-bottom: var(--margin);
+                border-radius: var(--border-radius);
+            }
+
+            .alert-danger { background: #f8d7da; color: #721c24; }
+            .alert-success { background: #d4edda; color: #155724; }
+        </style>
     </th:block>
 </head>
 <body>
@@ -21,9 +296,10 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/"><i class="icon-home"></i></a></li>
+                <li class="breadcrumb-item"><a href="/gio-hang">Giỏ hàng</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Thanh toán</li>
             </ol>
-        </div><!-- End .container -->
+        </div>
     </nav>
 
     <div class="container">
@@ -32,277 +308,299 @@
                 <div class="order-summary">
                     <h3>Đơn hàng</h3>
                     <div class="collapse show" id="order-cart-section">
-                        <table class="table table-mini-cart">
-                            <tbody>
-                            <tr>
-                                <td class="product-col">
-                                    <figure class="product-image-container">
-<!--                                        <a href="product.html" class="product-image">-->
-                                            <img th:src="@{${product.productImages[0]}}" th:alt="${product.name}">
-<!--                                        </a>-->
-                                    </figure>
-                                    <div>
-                                        <h2 class="product-title">
-                                            <span th:text="${product.name}"></span>
-                                        </h2>
-
-                                    </div>
-                                </td>
-                                <td class="price-col" th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT') +' đ'}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <!-- Pricing Section-->
-                        <div class="pricing childs">
-                            <h6 class="not-found-size" style="margin-top: 5px; color: #dc3545;"  th:styleappend="${notFoundSize} == true ? '' : 'display:none'">Size giày này đã hết. Vui lòng chọn size khác.</h6>
-                            <div class="size-btn" data-toggle="modal" data-target="#modal-size-Choose">
-                                <button class="btn btn-primary size trans-btn"><span class="size-text">Size</span><span th:data-size="${size}" class="size-details">9US | 42.5VN | 26.2CM</span><i class="fas dropdown-arrow"></i></button>
+                        <div class="cart-items"></div>
+                        <div class="pricing">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Nhập mã khuyến mãi" id="in-coupon">
+                                <button class="btn" type="button" id="btn-apply-coupon">Áp dụng</button>
                             </div>
-                            <div class="input-group" style="margin-top:30px">
-                                <input type="text" class="form-control" placeholder="Nhập mã khuyến mãi" id="in-coupon" th:value="${product.couponCode}">
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button" id="btn-apply-coupon">Áp dụng</button>
-                                </div>
-                            </div>
-                            <div class="coupon price-include">
+                            <div class="price-include">
                                 <div class="text">Tạm tính</div>
-                                <input class="form-control text-price-input" id="in-price" type="text" th:value="${product.price}" readonly/>
+                                <input class="text-price-input" id="in-price" type="text" readonly/>
                             </div>
-                            <div class="coupon price-include">
+                            <div class="price-include">
                                 <div class="text">Khuyến mãi</div>
-                                <input class="form-control text-price-input" id="in-promotion-value" type="text" readonly/>
+                                <input class="text-price-input" id="in-promotion-value" type="text" readonly/>
                             </div>
-                            <div class="coupon price-include">
+                            <div class="price-include">
                                 <div class="text">Tổng thanh toán</div>
-                                <input class="form-control text-price-input" id="in-total-price" type="text" readonly/>
+                                <input class="text-price-input" id="in-total-price" type="text" readonly/>
                             </div>
                         </div>
-                        <a th:href="@{/{slug}/{id}(id=${product.id}, slug=${product.slug})}">
-                            <button class="btn btn-secondary confirm-btn">Quay lại</button>
-                        </a>
-                        <button type="button" class="btn btn-primary confirm-btn red-btn" id="btn-buy-now" th:style="${notFoundSize} ? 'display:none': ''">ĐẶT HÀNG</button>
-                    </div><!-- End #order-cart-section -->
-                </div><!-- End .order-summary -->
-            </div><!-- End .col-lg-4 -->
+                        
+                        <button type="button" class="btn confirm-btn red-btn" id="btn-buy-now">ĐẶT HÀNG</button>
+                    </div>
+                </div>
+            </div>
 
             <div class="col-lg-6 order-lg-first">
                 <div class="checkout-payment">
                     <h2 class="step-title">Thông tin nhận hàng</h2>
-                    <div id="new-checkout-address" class="show">
-                        <form action="#">
-                            <div class="form-group required-field">
-                                <label>Tên người nhận </label>
-                                <input type="text" class="form-control" th:value="${user_fullname}" name="receiver_name" id="receiver_name" required>
-                                <div class="invalid-feedback"></div>
-                            </div><!-- End .form-group -->
-
-                            <div class="form-group required-field">
-                                <label>Số điện thoại </label>
-                                <input type="text" class="form-control" th:value="${user_phone}" name="receiver_phone" id="receiver_phone">
-                                <div class="invalid-feedback"></div>
-                            </div><!-- End .form-group -->
-
-                            <div class="form-group required-field">
-                                <label>Địa chỉ nhận hàng</label>
-                                <textarea type="text" class="form-control" th:text="${user_address}" name="receiver_address" id="receiver_address" required></textarea>
-                                <div class="invalid-feedback"></div>
-                            </div><!-- End .form-group -->
-
+                    <form action="#">
+                        <div class="form-group">
+                            <label>Tên người nhận *</label>
+                            <input type="text" class="form-control" th:value="${user_fullname}" name="receiver_name" id="receiver_name" required>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Số điện thoại *</label>
+                            <input type="text" class="form-control" th:value="${user_phone}" name="receiver_phone" id="receiver_phone" required>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Địa chỉ nhận hàng *</label>
+                            <textarea class="form-control" th:text="${user_address}" name="receiver_address" id="receiver_address" required></textarea>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Ghi chú</label>
+                            <textarea class="form-control" id="notes"></textarea>
+                        </div>
+                        <div class="payment-methods">
+                            <h2 class="step-title">Phương thức thanh toán</h2>
                             <div class="form-group">
-                                <label>Ghi chú </label>
-                                <textarea type="text" class="form-control" id="notes"></textarea>
-                            </div><!-- End .form-group -->
-                        </form>
-                    </div><!-- End #new-checkout-address -->
-                </div><!-- End .checkout-payment -->
-            </div><!-- End .col-lg-8 -->
-        </div><!-- End .row -->
-    </div><!-- End .container -->
+                                <select id="payment_method" name="payment_method" class="form-control">
+                                    <option value="cod">Thanh toán khi nhận hàng (COD)</option>
+                                    <option value="zalopay">ZaloPay</option>
+                                    <option value="aftee">Aftee</option>
+                                    <option value="card">Thẻ tín dụng</option>
+                                    <option value="momo">MoMo</option>
+                                    <option value="fundiin">Fundiin</option>
+                                </select>
+                                <span class="error-message" style="display: none; color: red;"></span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <div class="mb-6"></div><!-- margin -->
-    <!-- Modals-->
-    <th:block th:replace="~{fragment/size_choose_modal :: size-choose-modal}"></th:block>
-</main><!-- End .main -->
+    <div class="mb-6"></div>
+</main>
 
 <th:block id="js-resources">
-    <script th:src="@{/shop/js/size-choose.js}"></script>
-    <script th:inline="javascript">
-        let price = [[${product.price}]];
-
-        let promotionValue = 0;
-        let totalPrice = price;
-
-        if ([[${product.couponCode}]] != null && [[${product.couponCode}]] != "") {
-            totalPrice = [[${product.promotionPrice}]];
-            promotionValue = price - totalPrice;
-        }
-        $('#in-total-price').val(totalPrice);
-        $('#in-promotion-value').val(promotionValue);
-
-        let couponCode = [[${product.couponCode}]];
-
-        let sizeVn = [[${sizeVn}]];
-
-        let sizeUs = [[${sizeUs}]];
-
-        let sizeCm = [[${sizeCm}]];
-
-        $(function () {
-            formatMoney();
-            render();
-            activeSize();
-            sizeGuideRender();
-        });
-
-        function render() {
-            for (let i = 0; i < sizeVn.length; i++) {
-                let sizeChoose = `
-            <div class="item" data-size="${sizeUs[i]}US | ${sizeVn[i]}VN | ${sizeCm[i]}CM" data-id="${sizeVn[i]}">
-                ${sizeVn[i]}
-            </div>
-            `;
-
-                $('.size .select-filter').append(sizeChoose);
-            };
-        };
-
-        function sizeGuideRender() {
-            let tr = '';
-            for (let i = 0; i < sizeVn.length; i++) {
-                tr += `
-            <tr>
-              <td>${sizeVn[i]}</td>
-              <td>${sizeUs[i]}</td>
-              <td>${sizeCm[i]}</td>
-            </tr>
-            `;
-            }
-            $('.side-guide-table tbody').html(tr);
-        }
-
-        function activeSize() {
-            let availableSizes = [[${availableSizes}]]
-
-            for (let i = 0; i < sizeVn.length; i++) {
-                if (sizeVn[i] == [[${size}]]) {
-                    $('.size-details').text(sizeUs[i] + "US | " + sizeVn[i] + "VN | " + sizeCm[i] + "CM")
-                    break;
-                }
-            }
-
-            $('.size .item').addClass('cross')
-            if (![[${notFoundSize}]]) {
-                $(`.item[data-size='${$('.size-details').text()}']`).addClass('size-choose').removeClass('cross');
-            }
-
-            for (let i = 0; i < availableSizes.length; i++) {
-                $(`.item[data-id='${availableSizes[i]}']`).removeClass('cross');
-            }
-        }
-        $('#btn-apply-coupon').click(function() {
-            let coupon = $('#in-coupon').val();
-            if (coupon == "") {
-                $('#in-coupon').val(couponCode);
-                toastr.warning("Bạn chưa nhập mã khuyến mãi");
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('orderId');
+            let appliedCouponCode = null; // Lưu couponCode khi áp dụng mã
+        
+            if (!orderId) {
+                showError('Không tìm thấy đơn hàng');
                 return;
             }
-            $.ajax({
-                url: '/api/check-hidden-promotion?code='+coupon,
-                type: 'GET',
-                contentType: "application/json; charset=utf-8",
-                success: function(data) {
-                    couponCode = coupon;
-                    let tmp = data.discountValue;
-                    if (data.discountType == 1) {
-                        tmp = price * data.discountValue / 100;
+        
+            function fetchOrderDetails() {
+                fetch(`/api/don-hang/${orderId}`, { // Sửa endpoint
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
                     }
-                    if (tmp < data.maximumDiscountValue) {
-                        promotionValue = tmp;
-                    } else {
-                        promotionValue = data.maximumDiscountValue;
-                    }
-                    totalPrice = price - promotionValue;
-                    $('#in-price').val(price);
-                    $('#in-promotion-value').val(promotionValue);
-                    $('#in-total-price').val(totalPrice);
-                    formatMoney();
-                },
-                error: function(data) {
-                    $('#in-coupon').val(couponCode);
-                    toastr.warning(data.responseJSON.message);
-                },
-            });
-        })
-
-        $('#btn-buy-now').click(function() {
-            let receiverName = $('#receiver_name').val();
-            let receiverPhone = $('#receiver_phone').val();
-            let receiverAddress = $('#receiver_address').val();
-            let notes = $('#notes').val();
-            let isValid = true;
-            if (receiverName.length == 0) {
-                fullNameInvalid = $('#receiver_name').next();
-                fullNameInvalid.css('display', 'block');
-                fullNameInvalid.html('Vui lòng nhập họ tên người nhận hàng');
-                isValid = false;
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Không thể lấy chi tiết đơn hàng');
+                    return response.json();
+                })
+                .then(data => {
+                    renderOrderItems(data);
+                    updatePricing(data);
+                })
+                .catch(error => showError(error.message));
             }
-            if (receiverPhone.length == 0) {
-                phoneInvalid = $('#receiver_phone').next();
-                phoneInvalid.css('display', 'block');
-                phoneInvalid.html('Vui lòng nhập số điện thoại người nhận hàng');
-                isValid = false;
-            }
-            let phoneFormat = new RegExp(/((09|03|07|08|05)+([0-9]{8})\b)/g);
-            if (!phoneFormat.test(receiverPhone)) {
-                phoneInvalid = $('#in-user-phone').next();
-                phoneInvalid.css('display', 'block');
-                phoneInvalid.html('Số điện thoại không hợp lệ');
-                isValid = false;
-            }
-            if (receiverAddress.length == 0) {
-                addressInvalid = $('#receiver_address').next();
-                addressInvalid.css('display', 'block');
-                addressInvalid.html('Vui lòng nhập địa chỉ nhận hàng');
-                isValid = false;
-            }
-            let size = $('.size-choose').data("id");
-            if (size == null || size == "") {
-                $('.not-found-size').show();
-                isValid = false;
-            }
-
-            if (isValid) {
-                req = {
-                    product_id: [[${product.id}]],
-                    size: size,
-                    receiver_name: receiverName,
-                    receiver_phone: receiverPhone,
-                    receiver_address: receiverAddress,
-                    coupon_code: couponCode,
-                    total_price: totalPrice,
-                    product_price: price,
-                    note:notes
+        
+            function renderOrderItems(order) {
+                const cartItemsDiv = document.querySelector('.cart-items');
+                cartItemsDiv.innerHTML = '';
+        
+                if (!order.items || order.items.length === 0) {
+                    cartItemsDiv.innerHTML = '<p>Không có sản phẩm trong đơn hàng</p>';
+                    return;
                 }
-                var myJSON = JSON.stringify(req);
-                $.ajax({
-                    url: '/api/orders',
-                    type: 'POST',
-                    data: myJSON,
-                    contentType: "application/json; charset=utf-8",
-                    success: function(data) {
-                        toastr.success("Đặt hàng thành công");
-                        setTimeout(function() {
-                            location.href = "/tai-khoan/lich-su-giao-dich/"+data;
-                        }, 1000)
-                    },
-                    error: function(data) {
-                        toastr.warning(data.responseJSON.message);
-                    },
+        
+                order.items.forEach(item => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'product-col';
+                    itemDiv.innerHTML = `
+                        <div class="product-image-container">
+                            <img src="${item.productImage || '/images/placeholder.png'}" alt="${item.productName}">
+                        </div>
+                        <div class="product-details" style="flex-grow: 1;">
+                            <div class="product-title">${item.productName || 'N/A'}</div>
+                            <p>Màu: ${item.color || 'N/A'}</p> <!-- Sửa từ code thành color -->
+                            <p>Số lượng: ${item.quantity}</p>
+                        </div>
+                        <div class="price-col">${formatPrice(item.price * item.quantity)}</div>
+                    `;
+                    cartItemsDiv.appendChild(itemDiv);
                 });
             }
-        })
-
+        
+            function updatePricing(order) {
+                let totalPrice = order.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+                let promotionValue = 0;
+        
+                document.getElementById('in-price').value = formatPrice(totalPrice);
+                document.getElementById('in-promotion-value').value = formatPrice(promotionValue);
+                document.getElementById('in-total-price').value = formatPrice(totalPrice - promotionValue);
+            }
+        
+            function formatPrice(price) {
+                return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+            }
+        
+            function showError(message) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'alert alert-danger';
+                errorDiv.textContent = message;
+                document.querySelector('.container').prepend(errorDiv);
+                setTimeout(() => errorDiv.remove(), 5000);
+            }
+        
+            function showMessage(message) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'alert alert-success';
+                messageDiv.textContent = message;
+                document.querySelector('.container').prepend(messageDiv);
+                setTimeout(() => messageDiv.remove(), 5000);
+            }
+        
+            document.getElementById('btn-apply-coupon').addEventListener('click', () => {
+                const coupon = document.getElementById('in-coupon').value;
+                if (!coupon) {
+                    showError('Vui lòng nhập mã khuyến mãi');
+                    return;
+                }
+        
+                fetch(`/api/check-hidden-promotion?code=${coupon}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Mã khuyến mãi không hợp lệ');
+                    return response.json();
+                })
+                .then(data => {
+                    let totalPrice = parseFloat(document.getElementById('in-price').value.replace(/[^0-9]/g, ''));
+                    let promotionValue = data.discountValue;
+                    if (data.discountType === 1) promotionValue = totalPrice * data.discountValue / 100;
+                    if (data.maximumDiscountValue && promotionValue > data.maximumDiscountValue) {
+                        promotionValue = data.maximumDiscountValue;
+                    }
+                    appliedCouponCode = coupon; // Lưu couponCode
+                    document.getElementById('in-promotion-value').value = formatPrice(promotionValue);
+                    document.getElementById('in-total-price').value = formatPrice(totalPrice - promotionValue);
+                    showMessage('Áp dụng mã khuyến mãi thành công');
+                })
+                .catch(error => showError(error.message));
+            });
+        
+            document.getElementById('btn-buy-now').addEventListener('click', () => {
+                const receiverName = document.getElementById('receiver_name').value;
+                const receiverPhone = document.getElementById('receiver_phone').value;
+                const receiverAddress = document.getElementById('receiver_address').value;
+                const notes = document.getElementById('notes').value;
+                const paymentMethod = document.getElementById('payment_method').value;
+                const totalPrice = parseFloat(document.getElementById('in-total-price').value.replace(/[^0-9]/g, ''));
+        
+                let isValid = true;
+        
+                if (!receiverName) {
+                    document.getElementById('receiver_name').nextElementSibling.textContent = 'Vui lòng nhập tên người nhận';
+                    document.getElementById('receiver_name').nextElementSibling.style.display = 'block';
+                    isValid = false;
+                }
+        
+                const phoneFormat = /^((09|03|07|08|05)+([0-9]{8})\b)$/;
+                if (!receiverPhone || !phoneFormat.test(receiverPhone)) {
+                    document.getElementById('receiver_phone').nextElementSibling.textContent = 'Số điện thoại không hợp lệ';
+                    document.getElementById('receiver_phone').nextElementSibling.style.display = 'block';
+                    isValid = false;
+                }
+        
+                if (!receiverAddress) {
+                    document.getElementById('receiver_address').nextElementSibling.textContent = 'Vui lòng nhập địa chỉ nhận hàng';
+                    document.getElementById('receiver_address').nextElementSibling.style.display = 'block';
+                    isValid = false;
+                }
+        
+                if (!paymentMethod) {
+                    document.getElementById('payment_method').nextElementSibling.textContent = 'Vui lòng chọn phương thức thanh toán';
+                    document.getElementById('payment_method').nextElementSibling.style.display = 'block';
+                    isValid = false;
+                }
+        
+                if (isValid) {
+                    const request = {
+                        orderId: orderId,
+                        receiverName: receiverName,
+                        receiverPhone: receiverPhone,
+                        receiverAddress: receiverAddress,
+                        note: notes,
+                        couponCode: appliedCouponCode, // Sử dụng couponCode đã lưu
+                        totalPrice: totalPrice,
+                        paymentMethod: paymentMethod
+                    };
+        
+                    fetch('/api/don-hang/confirm', { // Sửa endpoint
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + localStorage.getItem('token')
+                        },
+                        body: JSON.stringify(request)
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(err => {
+                                throw new Error(err.message || 'Xác nhận đơn hàng thất bại');
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        showMessage('Đặt hàng thành công');
+                        setTimeout(() => {
+                            window.location.href = `/tai-khoan/lich-su-giao-dich/${data.orderId}`;
+                        }, 1000);
+                    })
+                    .catch(error => showError(error.message));
+                }
+            });
+        
+            fetchOrderDetails();
+        });
+            
+        
     </script>
 </th:block>
 </body>
 </html>
+
+<style>
+select#payment_method {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid var(--light-gray);
+    border-radius: var(--border-radius);
+    background-color: #fff;
+    font-size: 15px;
+    color: var(--secondary);
+    transition: border-color 0.3s ease;
+}
+
+select#payment_method:focus {
+    border-color: var(--primary);
+    outline: none;
+}
+
+.error-message {
+    font-size: 13px;
+    margin-top: 5px;
+    display: none;
+}
+</style>

@@ -5,6 +5,7 @@ import com.model1.application.entity.ProductSize;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +13,6 @@ import java.util.List;
 
 @Repository
 public interface ProductColorRepository extends JpaRepository<ProductColor,Long> {
-
     //Lấy color của sản phẩm
     @Query(nativeQuery = true,value = "SELECT ps.code FROM product_color ps WHERE ps.product_id = ?1 AND ps.quantity > 0")
     List<String> findAllColorOfProduct(String id);
