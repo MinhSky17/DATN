@@ -34,7 +34,7 @@ public class DonHang {
     @Column(name = "quantity")
     private int quantity;
     @Column(name = "status")
-    private String status;
+    private int status;
     @Column(name = "created_at")
     private Timestamp createdAt;
     @Column(name = "modified_at")

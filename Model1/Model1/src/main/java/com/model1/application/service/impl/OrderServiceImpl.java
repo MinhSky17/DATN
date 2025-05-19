@@ -290,13 +290,6 @@ public class OrderServiceImpl implements OrderService {
             order.setStatusText("Đơn hàng đã hủy");
         }
 
-        for (int i = 0; i < SIZE_VN.size(); i++) {
-            if (SIZE_VN.get(i) == order.getSizeVn()) {
-                order.setSizeUs(SIZE_US[i]);
-                order.setSizeCm(SIZE_CM[i]);
-            }
-        }
-
         return order;
     }
 

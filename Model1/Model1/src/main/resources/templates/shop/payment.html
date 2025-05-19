@@ -505,6 +505,7 @@
                 const receiverAddress = document.getElementById('receiver_address').value;
                 const notes = document.getElementById('notes').value;
                 const paymentMethod = document.getElementById('payment_method').value;
+                const price = parseFloat(document.getElementById('in-price').value.replace(/[^0-9]/g, ''));
                 const totalPrice = parseFloat(document.getElementById('in-total-price').value.replace(/[^0-9]/g, ''));
         
                 let isValid = true;
@@ -541,7 +542,8 @@
                         receiverPhone: receiverPhone,
                         receiverAddress: receiverAddress,
                         note: notes,
-                        couponCode: appliedCouponCode, // Sử dụng couponCode đã lưu
+                        couponCode: appliedCouponCode,
+                        price: price, // Sử dụng couponCode đã lưu
                         totalPrice: totalPrice,
                         paymentMethod: paymentMethod
                     };
@@ -565,7 +567,7 @@
                     .then(data => {
                         showMessage('Đặt hàng thành công');
                         setTimeout(() => {
-                            window.location.href = `/tai-khoan/lich-su-giao-dich/${data.orderId}`;
+                            window.location.href = `/tai-khoan/lich-su-giao-dich/${orderId}`;
                         }, 1000);
                     })
                     .catch(error => showError(error.message));

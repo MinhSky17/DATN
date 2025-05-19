@@ -1,16 +1,16 @@
 package com.model1.application.controller.admin;
 
+import com.model1.application.entity.DonHang;
 import com.model1.application.entity.Order;
 import com.model1.application.entity.Promotion;
 import com.model1.application.entity.User;
 import com.model1.application.exception.BadRequestException;
-import com.model1.application.model.dto.OrderDetailDTO;
-import com.model1.application.model.dto.OrderInfoDTO;
-import com.model1.application.model.dto.ShortProductInfoDTO;
+import com.model1.application.model.dto.*;
 import com.model1.application.model.request.CreateOrderRequest;
 import com.model1.application.model.request.UpdateDetailOrder;
 import com.model1.application.model.request.UpdateStatusOrderRequest;
 import com.model1.application.security.CustomUserDetails;
+import com.model1.application.service.DonHangService;
 import com.model1.application.service.OrderService;
 import com.model1.application.service.ProductService;
 import com.model1.application.service.PromotionService;
@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 import static com.model1.application.config.Contant.*;
 
@@ -38,6 +39,9 @@ public class OrderController {
 
     @Autowired
     private PromotionService promotionService;
+
+    @Autowired
+    private DonHangService donHangService;
 
     @GetMapping("/admin/orders")
     public String getListOrderPage(Model model,
@@ -153,22 +157,21 @@ public class OrderController {
         }
 
         User user = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
-        List<OrderInfoDTO> orders = orderService.getListOrderOfPersonByStatus(status, user.getId());
-
+        //List<OrderInfoDTO> orders = orderService.getListOrderOfPersonByStatus(status, user.getId());
+        List<DonHang> orders = donHangService.getListOrderOfPersonByStatus(status, user.getId());
         return ResponseEntity.ok(orders);
     }
 
     @GetMapping("/tai-khoan/lich-su-giao-dich/{id}")
-    public String getDetailOrderPage(Model model, @PathVariable int id) {
-        User user = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+    public String getDetailOrderPage(Model model, @PathVariable Long id) {
 
-        OrderDetailDTO order = orderService.userGetDetailById(id, user.getId());
+        DonHang order = donHangService.getDonHangByOrderId(id);
         if (order == null) {
             return "error/404";
         }
         model.addAttribute("order", order);
 
-        if (order.getStatus() == ORDER_STATUS) {
+        if (order.getStatus() == 1) {
             model.addAttribute("canCancel", true);
         } else {
             model.addAttribute("canCancel", false);

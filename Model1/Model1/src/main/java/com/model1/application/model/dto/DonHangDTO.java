@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class DonHangDTO {
     private Long id;
-    private String status;
+    private int status;
     private Timestamp createdAt;
     private List<OrderItemDTO> items;
 }

@@ -5,16 +5,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import java.sql.Timestamp;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderDetailDTO {
+
     private long id;
-
-    private long totalPrice;
-
-    private long productPrice;
 
     private String receiverName;
 
@@ -22,18 +25,27 @@ public class OrderDetailDTO {
 
     private String receiverAddress;
 
+    private String note;
+
+    private long price;
+
+    private long totalPrice;
+
+    private int quantity;
+
     private int status;
 
     private String statusText;
 
-    private int sizeVn;
+    private Timestamp createdAt;
 
-    private double sizeUs;
+    private Timestamp modifiedAt;
 
-    private double sizeCm;
+    private Long userId;
 
-    private String productName;
+    private Long voucherId;
 
-    private String productImg;
+    private String couponCode;
+    private String paymentMethod;
 
 }

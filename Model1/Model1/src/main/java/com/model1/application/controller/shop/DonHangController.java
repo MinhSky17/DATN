@@ -2,22 +2,25 @@ package com.model1.application.controller.shop;
 
 import com.model1.application.entity.DonHang;
 import com.model1.application.entity.ProductColor;
+import com.model1.application.entity.User;
+import com.model1.application.exception.BadRequestException;
 import com.model1.application.exception.NotFoundException;
-import com.model1.application.model.dto.ConfirmOrderDTO;
-import com.model1.application.model.dto.CreateOrderDTO;
-import com.model1.application.model.dto.DetailProductInfoDTO;
-import com.model1.application.model.dto.DonHangDTO;
+import com.model1.application.model.dto.*;
+import com.model1.application.security.CustomUserDetails;
 import com.model1.application.service.DonHangService;
 import com.model1.application.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.model1.application.config.Contant.LIST_ORDER_STATUS;
 
 @Controller
 @RequiredArgsConstructor
@@ -55,4 +58,5 @@ public class DonHangController {
         DonHang donHang = donHangService.confirmOrder(dto);
         return  ResponseEntity.ok(donHang);
     }
+
 }

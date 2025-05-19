@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.model1.application.config.Contant.*;
+
 @Component
 public class DonHangServiceImpl implements DonHangService {
     @Autowired
@@ -62,7 +64,7 @@ public class DonHangServiceImpl implements DonHangService {
         DonHang donHang = new DonHang();
         donHang.setUserId(userId);
         donHang.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
-        donHang.setStatus("PENDING");
+        donHang.setStatus(1);
         donHang = donHangRepository.save(donHang);
 
         // 4. Duyệt qua từng item trong giỏ hàng
@@ -135,6 +137,13 @@ public class DonHangServiceImpl implements DonHangService {
         return dto;
     }
 
+
+    @Transactional
+    public DonHang getDonHangByOrderId(Long id){
+        return donHangRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng"));
+    }
+
     @Transactional
     public DonHang confirmOrder(ConfirmOrderDTO dto) {
         DonHang donHang = donHangRepository.findById(dto.getOrderId())
@@ -167,11 +176,18 @@ public class DonHangServiceImpl implements DonHangService {
         donHang.setReceiverAddress(dto.getReceiverAddress());
         donHang.setNote(dto.getNote());
         donHang.setCouponCode(dto.getCouponCode());
+        donHang.setPrice(dto.getPrice());
         donHang.setTotalPrice(dto.getTotalPrice());
         donHang.setPaymentMethod(dto.getPaymentMethod());
-        donHang.setStatus("CONFIRMED");
+        donHang.setStatus(2);
         donHang.setModifiedAt(new Timestamp(System.currentTimeMillis()));
 
         return donHangRepository.save(donHang);
+    }
+
+    @Override
+    public List<DonHang> getListOrderOfPersonByStatus(int status, long userId) {
+        List<DonHang> list = donHangRepository.findByStatusAndUserId(status, userId);
+        return list;
     }
 }

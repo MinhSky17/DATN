@@ -18,6 +18,7 @@ public class ConfirmOrderDTO {
     private String receiverAddress;
     private String note;
     private String couponCode;
+    private Long price;
     private Long totalPrice;
     private String paymentMethod;
 }
