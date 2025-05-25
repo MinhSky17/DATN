@@ -586,6 +586,7 @@
                     success: function(response) {
                         if(response.status == 'success') {
                             alert('Thêm vào giỏ hàng thành công');
+                            document.dispatchEvent(new Event('cart-updated'));
                         }else {
                             alert('Thêm vào giỏ hàng thất bại');}
                     }
@@ -679,23 +680,59 @@
         }
 
         $('.buy-now').click(function() {
-            if (isLogined == true) {
+            if (isLogined === true) {
                 // Get selected color button
-                let selectedColorBtn = $('.color-btn.active');
-                
-                if (!selectedColorBtn.length) {
-                    toastr.warning("Vui lòng chọn màu sản phẩm");
+                const selectedColorBtn = document.querySelector('.color-btn.active');
+                if (!selectedColorBtn) {
+                    alert("Vui lòng chọn màu sản phẩm");
                     return;
                 }
 
-                let colorCode = selectedColorBtn.attr('name');
-                let quantity = selectedColorBtn.data('quantity');
-
+                const colorId = selectedColorBtn.getAttribute('data-color-id');
+                let quantity = document.getElementById('qtyDisplay').value;
+                let productId = [[${product.id}]]; // Assuming product.id is available as in original code
+    
                 if (quantity <= 0) {
                     toastr.warning("Sản phẩm tạm hết hàng. Vui lòng đặt hàng sau.");
-                } else {
-                    location.href = "/dat-hang?id=" + [[${product.id}]] + "&code=" + colorCode;
+                    return;
                 }
+    
+                // Create listItems array with one item
+                const listItems = [{
+                    productId: productId,
+                    colorId: colorId, // Assuming colorCode can be used as colorId
+                    quantity: quantity // Default to 1 for "Buy Now"
+                }];
+    
+                // Send POST request to /api/don-hang
+                fetch('/api/don-hang', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token') // Token from localStorage
+                    },
+                    body: JSON.stringify({
+                        cartItems: listItems
+                    })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => {
+                            throw new Error(err.message || 'Tạo đơn hàng thất bại');
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    toastr.success(`Đơn hàng #${data.id} đã được tạo thành công!`);
+                    // Redirect to order page
+                    setTimeout(() => {
+                        window.location.href = `/dat-hang?orderId=${data.id}`;
+                    }, 2000);
+                })
+                .catch(error => {
+                    toastr.error(error.message);
+                });
             } else {
                 toastr.warning("Vui lòng đăng nhập để đặt hàng");
                 setTimeout(function() {

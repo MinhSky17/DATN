@@ -14,6 +14,7 @@ import com.model1.application.security.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.model1.application.config.Contant.*;
 
@@ -73,6 +75,23 @@ class HomeController {
         //Lấy 5 bài viết mới nhất
         List<Post> posts = postService.getLatesPost();
         model.addAttribute("posts", posts);
+
+        // Lấy số lượng cartItem
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication != null && authentication.isAuthenticated() && !(authentication.getPrincipal() instanceof String)) {
+                CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+                Long userId = userDetails.getUser().getId();
+                int itemCount = cartService.getCartItemsByUserId(userId).size();
+                model.addAttribute("cartItemCount", itemCount);
+                System.out.println("Fetching cart count for userId: " + userId + ", itemCount: " + itemCount); // Debug
+            } else {
+                model.addAttribute("cartItemCount", 0);
+            }
+        } catch (Exception e) {
+            model.addAttribute("cartItemCount", 0);
+            System.err.println("Error fetching cart count: " + e.getMessage()); // Debug
+        }
 
         return "shop/index";
     }
@@ -238,6 +257,68 @@ class HomeController {
 
         //Lấy danh sách sản phẩm
         FilterProductRequest req = new FilterProductRequest(brandIds, categoryIds, new ArrayList<>(), (long) 0, Long.MAX_VALUE, 1);
+        PageableDTO result = productService.filterProduct(req);
+        model.addAttribute("totalPages", result.getTotalPages());
+        model.addAttribute("currentPage", result.getCurrentPage());
+        model.addAttribute("listProduct", result.getItems());
+
+        return "shop/product";
+    }
+
+    @GetMapping("/{categorySlug}")
+    public String getProductShopPages(Model model, @PathVariable String categorySlug) {
+
+        // Lấy danh sách nhãn hiệu
+        List<Brand> brands = brandService.getListBrand();
+        model.addAttribute("brands", brands);
+        List<Long> brandIds = new ArrayList<>();
+        for (Brand brand : brands) {
+            brandIds.add(brand.getId());
+        }
+        model.addAttribute("brandIds", brandIds);
+
+        // Lấy danh sách danh mục (dùng để hiển thị sidebar)
+        List<Category> categories = categoryService.getListCategories();
+        model.addAttribute("categories", categories);
+
+        // Tìm danh mục cha dựa trên slug
+        List<Long> categoryIds = new ArrayList<>();
+        Category parentCategory = categories.stream()
+                .filter(category -> category.getSlug().equalsIgnoreCase(categorySlug))
+                .findFirst()
+                .orElse(null);
+
+        if (parentCategory != null) {
+            // Thêm id của danh mục cha
+            categoryIds.add(parentCategory.getId());
+            // Tìm các danh mục con có parentId bằng id của danh mục cha
+            List<Category> subCategories = categories.stream()
+                    .filter(category -> category.getParentId() != null && category.getParentId().equals(parentCategory.getId()))
+                    .collect(Collectors.toList());
+            // Thêm id của các danh mục con
+            model.addAttribute("categories", subCategories);
+            categoryIds.addAll(subCategories.stream().map(Category::getId).collect(Collectors.toList()));
+        } else {
+            // Nếu không tìm thấy danh mục cha, lấy tất cả danh mục
+            categoryIds = categories.stream()
+                    .map(Category::getId)
+                    .collect(Collectors.toList());
+        }
+        model.addAttribute("categoryIds", categoryIds);
+
+
+        // Danh sách size của sản phẩm
+        model.addAttribute("sizeVn", SIZE_VN);
+
+        // Lấy danh sách sản phẩm
+        FilterProductRequest req = new FilterProductRequest(
+                brandIds,
+                categoryIds,
+                new ArrayList<>(),
+                0L,
+                Long.MAX_VALUE,
+                1
+        );
         PageableDTO result = productService.filterProduct(req);
         model.addAttribute("totalPages", result.getTotalPages());
         model.addAttribute("currentPage", result.getCurrentPage());

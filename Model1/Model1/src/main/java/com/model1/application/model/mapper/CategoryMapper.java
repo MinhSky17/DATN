@@ -25,8 +25,17 @@ public class CategoryMapper {
         category.setOrder(0);
         category.setStatus(createCategoryRequest.isStatus());
         category.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-        Slugify slug = new Slugify();
-        category.setSlug(slug.slugify(createCategoryRequest.getName()));
+//        Slugify slug = new Slugify();
+//        category.setSlug(slug.slugify(createCategoryRequest.getName()));
+        Slugify slugify = new Slugify();
+        // Tùy chỉnh quy tắc để xử lý tiếng Việt
+        slugify.withCustomReplacement("đ", "d"); // Đảm bảo "đ" được thay bằng "d" đúng
+        slugify.withCustomReplacement("Đ", "d"); // Xử lý chữ hoa
+        slugify.withLowerCase(true); // Chuyển về chữ thường
+        slugify.withTransliterator(true); // Chuyển đổi ký tự có dấu sang không dấu
+
+        String slug = slugify.slugify(createCategoryRequest.getName());
+        category.setSlug(slug);
         category.setParentId(createCategoryRequest.getParentId());
 
         return category;

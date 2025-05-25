@@ -10,6 +10,7 @@ import com.model1.application.model.request.LoginRequest;
 import com.model1.application.model.request.UpdateProfileRequest;
 import com.model1.application.security.CustomUserDetails;
 import com.model1.application.security.JwtTokenUtil;
+import com.model1.application.service.CartService;
 import com.model1.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +44,9 @@ public class UserController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private CartService cartService;
 
     @GetMapping("/users")
     public ResponseEntity<Object> getListUsers() {
@@ -90,6 +94,14 @@ public class UserController {
             cookie.setMaxAge(MAX_AGE_COOKIE);
             cookie.setPath("/");
             response.addCookie(cookie);
+
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            Long userId = userDetails.getUser().getId();
+            int cartItemCount = cartService.getCartItemsByUserId(userId).size();
+            Cookie cartCookie = new Cookie("CART_ITEM_COUNT", String.valueOf(cartItemCount));
+            cartCookie.setMaxAge(MAX_AGE_COOKIE);
+            cartCookie.setPath("/");
+            response.addCookie(cartCookie);
 
             return ResponseEntity.ok(UserMapper.toUserDTO(((CustomUserDetails) authentication.getPrincipal()).getUser()));
         } catch (Exception ex) {

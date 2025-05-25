@@ -63,7 +63,7 @@
     color: #333333 !important;
 }
 .btns .buy.btn-primary {
-    background-color: #08C;
+    background-color: #CC3388;
     border-radius: 5px;
     display: flex;
     align-items: center;
@@ -170,7 +170,7 @@ body.modal2-on {
 }
 
 .size-choose {
-    background-color: #08C;
+    background-color: #CC3388;
     color: #ffffff;
     border: none !important;
 }

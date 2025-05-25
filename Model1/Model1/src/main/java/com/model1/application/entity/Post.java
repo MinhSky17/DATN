@@ -57,7 +57,7 @@ public class Post {
     private long id;
     @Column(name = "title",nullable = false,length = 300)
     private String title;
-    @Column(name = "content",columnDefinition = "TEXT")
+    @Column(name = "content",columnDefinition = "LONGTEXT")
     private String content;
     @Column(name = "description",columnDefinition = "TEXT")
     private String description;

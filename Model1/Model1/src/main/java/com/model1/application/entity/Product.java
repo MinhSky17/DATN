@@ -178,7 +178,7 @@ public class Product {
     private String id;
     @Column(name = "name",nullable = false,length = 300)
     private String name;
-    @Column(name = "description",columnDefinition = "TEXT")
+    @Column(name = "description",columnDefinition = "LONGTEXT")
     private String description;
     @Column(name = "price")
     private long price;

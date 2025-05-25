@@ -39,6 +39,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findByUserId(Long id){
+        return userRepository.findById(id).orElseThrow(()-> new RuntimeException("Khong tim thay user"));
+    }
+
+    @Override
     public Page<User> adminListUserPages(String fullName, String phone, String email, Integer page) {
         page--;
         if (page < 0) {

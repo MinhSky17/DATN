@@ -1,5 +1,6 @@
 package com.model1.application.service.impl;
 
+import com.github.slugify.Slugify;
 import com.model1.application.entity.Category;
 import com.model1.application.exception.BadRequestException;
 import com.model1.application.exception.InternalServerException;
@@ -100,6 +101,14 @@ public class CategoryServiceImpl implements CategoryService {
         }
         Category category = result.get();
         category.setName(createCategoryRequest.getName());
+        Slugify slugify = new Slugify();
+        // Tùy chỉnh quy tắc để xử lý tiếng Việt
+        slugify.withCustomReplacement("đ", "d"); // Đảm bảo "đ" được thay bằng "d" đúng
+        slugify.withCustomReplacement("Đ", "d"); // Xử lý chữ hoa
+        slugify.withLowerCase(true); // Chuyển về chữ thường
+        slugify.withTransliterator(true); // Chuyển đổi ký tự có dấu sang không dấu
+        String slug = slugify.slugify(createCategoryRequest.getName());
+        category.setSlug(slug);
         category.setStatus(createCategoryRequest.isStatus());
         category.setParentId(createCategoryRequest.getParentId());
         category.setModifiedAt(new Timestamp(System.currentTimeMillis()));

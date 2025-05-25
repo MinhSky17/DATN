@@ -6,6 +6,10 @@ import com.model1.application.repository.*;
 import com.model1.application.security.CustomUserDetails;
 import com.model1.application.service.DonHangService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -64,7 +68,7 @@ public class DonHangServiceImpl implements DonHangService {
         DonHang donHang = new DonHang();
         donHang.setUserId(userId);
         donHang.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
-        donHang.setStatus(1);
+        //donHang.setStatus(1);
         donHang = donHangRepository.save(donHang);
 
         // 4. Duyệt qua từng item trong giỏ hàng
@@ -179,7 +183,7 @@ public class DonHangServiceImpl implements DonHangService {
         donHang.setPrice(dto.getPrice());
         donHang.setTotalPrice(dto.getTotalPrice());
         donHang.setPaymentMethod(dto.getPaymentMethod());
-        donHang.setStatus(2);
+        donHang.setStatus(1);
         donHang.setModifiedAt(new Timestamp(System.currentTimeMillis()));
 
         return donHangRepository.save(donHang);
@@ -187,7 +191,47 @@ public class DonHangServiceImpl implements DonHangService {
 
     @Override
     public List<DonHang> getListOrderOfPersonByStatus(int status, long userId) {
-        List<DonHang> list = donHangRepository.findByStatusAndUserId(status, userId);
+        List<DonHang> list = donHangRepository.findByStatusAndUserIdOrderByCreatedAtDesc(status, userId);
         return list;
+    }
+
+    @Transactional
+    public void huyDonHang(Long id){
+        DonHang donHang = donHangRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng"));
+        donHang.setStatus(5);
+        donHangRepository.save(donHang);
+    }
+
+    @Transactional
+    public void capnhatDonHang(Long id, int status){
+        DonHang donHang = donHangRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng"));
+        donHang.setStatus(status);
+        donHangRepository.save(donHang);
+    }
+
+    @Transactional
+    public Page<DonHang> adminGetListOrders(String id, String name, String phone, String status, Long total, String sort, int page) {
+        if (page < 1) {
+            page = 1;
+        }
+        int limit = 10;
+        Sort sortBy = Sort.by("created_at").descending();
+        if ("price-asc".equals(sort)) {
+            sortBy = Sort.by("total_price").ascending();
+        } else if ("price-desc".equals(sort)) {
+            sortBy = Sort.by("total_price").descending();
+        }
+        Pageable pageable = PageRequest.of(page - 1, limit, sortBy);
+        Integer statusInt = status != null && !status.isEmpty() ? Integer.parseInt(status) : null;
+        return donHangRepository.adminGetListOrder(
+                id != null && !id.isEmpty() ? id : null,
+                name != null && !name.isEmpty() ? name : null,
+                phone != null && !phone.isEmpty() ? phone : null,
+                statusInt,
+                total,
+                pageable
+        );
     }
 }

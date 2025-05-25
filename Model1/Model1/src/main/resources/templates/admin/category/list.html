@@ -80,7 +80,13 @@
                             </select>
                         </th>
                         <th>
-                            <input type="text" name="name" id="name" class="form-control search-input">
+                            
+                            <select name="name" class="form-control search-select" id="name">
+                                <option value="">-- Chọn danh mục cha --</option>
+                                <th:block th:each="category : ${categories}">
+                                    <option th:value="${category.id}" th:text="${category.name}"></option>
+                                </th:block>
+                            </select>
                         </th>
                         <th></th>
 <!--                        <th></th>-->

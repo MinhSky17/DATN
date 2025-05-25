@@ -67,7 +67,7 @@ $(document).ready(function () {
             register_email: {
                 required: true,
                 email: true,
-                maxlength: 25
+                maxlength: 50
             },
             register_password: {
                 required: true,
@@ -91,7 +91,7 @@ $(document).ready(function () {
             register_email: {
                 required: "Vui lòng nhập email!",
                 email: "Email không đúng định dạng!",
-                maxlength: "Email có độ dài tối đa 25 ký tự!",
+                maxlength: "Email có độ dài tối đa 50 ký tự!",
             },
             register_password: {
                 required: "Vui lòng nhập mật khẩu!",

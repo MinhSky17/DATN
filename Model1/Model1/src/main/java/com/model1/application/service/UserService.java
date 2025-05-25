@@ -15,6 +15,8 @@ import java.util.List;
 public interface UserService {
     List<UserDTO> getListUsers();
 
+    User findByUserId(Long id);
+
     Page<User> adminListUserPages(String fullName, String phone, String email, Integer page);
 
     User createUser(CreateUserRequest createUserRequest);

@@ -18,7 +18,6 @@
 <body>
 <section role="main" class="content-body" id="main-content">
     <header class="page-header">
-        <!--        <h2>Editable Tables</h2>-->
         <div class="right-wrapper text-right">
             <ol class="breadcrumbs">
                 <li>
@@ -28,8 +27,7 @@
                 </li>
                 <li><span>Danh sách đơn hàng</span></li>
             </ol>
-            <a class="sidebar-right-toggle" data-open="sidebar-right"><i
-                    class="fas fa-chevron-left"></i></a>
+            <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fas fa-chevron-left"></i></a>
         </div>
     </header>
 
@@ -45,62 +43,50 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3">
-                        <a href="/admin/orders/create" id="addToTable" class="btn btn-primary">Thêm mới đơn hàng <i
-                                class="fas fa-plus"></i></a>
-                        <a href="/admin/orders" class="btn btn-primary">Refresh <i
-                                class="fas fa-redo-alt"></i></a>
-                        <button id="btn-search" class="btn btn-primary">Tìm kiếm <i
-                                class="fas fa-search"></i></button>
+                        <a href="/admin/orders/create" id="addToTable" class="btn btn-primary">Thêm mới đơn hàng <i class="fas fa-plus"></i></a>
+                        <a href="/admin/orders" class="btn btn-primary">Refresh <i class="fas fa-redo-alt"></i></a>
+                        <button id="btn-search" class="btn btn-primary">Tìm kiếm <i class="fas fa-search"></i></button>
                     </div>
                 </div>
             </div>
             <table class="table table-bordered table-striped mb-0" id="datatable-editable">
                 <thead>
                 <tr>
-                    <th width="8%">Mã đơn hàng</th>
+                    <th width="10%">Mã đơn hàng</th>
                     <th>Người nhận</th>
                     <th>Điện thoại</th>
                     <th>Trạng thái</th>
-                    <th width="20%">Sản phẩm</th>
+                    <th width="15%">Tổng tiền</th>
                     <th>Ngày tạo</th>
-                    <th>Ngày sửa</th>
                 </tr>
-                <tr>
                 <tr class="heading-search">
                     <form method="GET" id="search-form">
                         <th>
-                            <input type="text" name="id" id="id" class="form-control search-input">
+                            <input type="text" name="id" id="id" class="form-control search-input" th:value="${id}">
                         </th>
                         <th>
-                            <input type="text" name="name" id="name" class="form-control search-input">
+                            <input type="text" name="name" id="name" class="form-control search-input" th:value="${name}">
                         </th>
                         <th>
-                            <input type="text" name="phone" id="phone" class="form-control search-input">
+                            <input type="text" name="phone" id="phone" class="form-control search-input" th:value="${phone}">
                         </th>
                         <th>
                             <select name="status" class="form-control search-select" id="status">
-                                <option value="">Tất cả</option>
-                                <option value="1">Chờ lấy hàng</option>
-                                <option value="2">Đang giao hàng</option>
-                                <option value="3">Đã giao hàng</option>
-                                <option value="4">Đơn hàng bị trả lại</option>
-                                <option value="5">Đơn hàng bị hủy</option>
-
+                                <option value="" th:selected="${status == ''}">Tất cả</option>
+                                <option value="1" th:selected="${status == '1'}">Đang chuẩn bị hàng</option>
+                                <option value="2" th:selected="${status == '2'}">Đang giao hàng</option>
+                                <option value="3" th:selected="${status == '3'}">Đã giao hàng</option>
+                                <option value="5" th:selected="${status == '5'}">Đơn hàng bị hủy</option>
                             </select>
                         </th>
                         <th>
-                            <select name="product" class="form-control search-select" id="product">
-                                <option value="">Tất cả</option>
-                                <th:block th:each="product : ${productList}">
-                                    <option th:value="${product.id}" th:text="${product.name}"></option>
-                                </th:block>
-                            </select>
+                            
                         </th>
-                        <th></th>
-                        <th></th>
+                        <th>
+                            
+                        </th>
                         <input type="hidden" name="page" id="page">
                     </form>
-                </tr>
                 </tr>
                 </thead>
                 <tbody>
@@ -112,56 +98,82 @@
                         <td th:text="${order.receiverName}"></td>
                         <td th:text="${order.receiverPhone}"></td>
                         <td>
-                            <span th:if="${order.status} == 1" class="badge badge-warning">Chờ lấy hàng</span>
-                            <span th:if="${order.status} == 2" class="badge badge-primary">Đang giao hàng</span>
-                            <span th:if="${order.status} == 3" class="badge badge-success">Đã giao hàng</span>
-                            <span th:if="${order.status} == 4" class="badge badge-danger">Đơn hàng bị trả lại</span>
-                            <span th:if="${order.status} == 5" class="badge badge-light">Đơn hàng bị hủy</span>
+                            <span th:if="${order.status == 1}" class="badge badge-warning">Đang chuẩn bị hàng</span>
+                            <span th:if="${order.status == 2}" class="badge badge-primary">Đang giao hàng</span>
+                            <span th:if="${order.status == 3}" class="badge badge-success">Đã giao hàng</span>
+                            <span th:if="${order.status == 5}" class="badge badge-light">Đơn hàng bị hủy</span>
                         </td>
-                        <td th:text="${order.product.name}"></td>
+                        <td th:text="${order.totalPrice}"></td>
                         <td>
                             <span th:text="${#dates.format(order.createdAt, 'dd-MM-yyyy HH:mm')}"></span>
-                        </td>
-                        <td>
-                            <span th:text="${#dates.format(order.modifiedAt, 'dd-MM-yyyy HH:mm')}"></span>
                         </td>
                     </tr>
                 </th:block>
                 </tbody>
             </table>
             <br>
-            <!-- Pagination -->
             <nav aria-label="Page navigation">
                 <ul class="pagination" id="pagination"></ul>
             </nav>
+            <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
         </div>
     </section>
-
 </section>
 
 <th:block id="js-resources">
     <script type="text/javascript" th:src="@{/adminlte/pagination/jquery.simplePagination.js}"></script>
     <script type="text/javascript" th:src="@{/adminlte/js/table.js}"></script>
     <script th:inline="javascript">
-        let id, name, phone, status, product, page;
         $(function () {
             let vars = parseUrl();
-            id = vars["id"] || ""
-            name = vars["name"] || ""
-            phone = vars["phone"] || ""
-            status = vars["status"] || ""
-            product = vars["product"] || ""
-            page = vars["page"] || "0"
+            let id = vars["id"] || "";
+            let name = vars["name"] || "";
+            let phone = vars["phone"] || "";
+            let status = vars["status"] || "";
+            let total = vars["total"] || "";
+            let sort = vars["sort"] || "";
+            let page = vars["page"] || "1";
 
-            $('#id').val(id)
-            $('#name').val(name)
-            $('#phone').val(phone)
-            $('#status').val(status)
-            $('#product').val(product)
-            $('#page').val(page)
+            $('#id').val(id);
+            $('#name').val(name);
+            $('#phone').val(phone);
+            $('#status').val(status);
+            $('#total').val(total);
+            $('#sort-price').val(sort);
+            $('#page').val(page);
 
-            pagination([[${totalPages}]],[[${currentPage}]])
+            pagination([[${totalPages}]], [[${currentPage}]]);
         });
+
+        $('#btn-search').click(function() {
+            $('#page').val('1');
+            $('#search-form').submit();
+        });
+
+        function sortProducts() {
+            const sortValue = document.getElementById('sort-price').value;
+            const url = new URL(window.location);
+            if (!sortValue) {
+                url.searchParams.delete('sort');
+            } else {
+                url.searchParams.set('sort', sortValue);
+            }
+            url.searchParams.set('page', '1');
+            window.location.href = url.toString();
+        }
+
+        function parseUrl() {
+            let query = window.location.search.substring(1);
+            let vars = query.split('&');
+            let result = {};
+            for (let i = 0; i < vars.length; i++) {
+                let pair = vars[i].split('=');
+                if (pair[0]) {
+                    result[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
+                }
+            }
+            return result;
+        }
     </script>
 </th:block>
 </body>

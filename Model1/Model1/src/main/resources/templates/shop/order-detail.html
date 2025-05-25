@@ -439,22 +439,71 @@
         }
 
         async function cancelOrder(orderId) {
-            try {
-                const response = await fetch(`/api/cancel-order/${orderId}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + localStorage.getItem('token')
-                    }
-                });
-                if (!response.ok) throw new Error('Không thể hủy đơn hàng');
-                const data = await response.json();
-                alert('Hủy đơn hàng thành công');
-                document.querySelector('.status').textContent = 'Đã hủy';
-                document.querySelector('.cancel-btn')?.remove();
-            } catch (error) {
-                alert('Lỗi: ' + error.message);
+            // Hiển thị modal xác nhận
+            const confirmModal = `
+                <div class="modal fade" id="confirmCancelModal" tabindex="-1" aria-labelledby="confirmCancelModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="confirmCancelModalLabel">Xác nhận hủy đơn hàng</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Bạn có chắc chắn muốn hủy đơn hàng #${orderId} không?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                <button type="button" class="btn btn-danger" id="confirmCancelBtn">Xác nhận</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        
+            // Thêm modal vào body nếu chưa tồn tại
+            if (!document.getElementById('confirmCancelModal')) {
+                document.body.insertAdjacentHTML('beforeend', confirmModal);
             }
+        
+            // Hiển thị modal
+            const modal = new bootstrap.Modal(document.getElementById('confirmCancelModal'));
+            modal.show();
+        
+            // Xử lý sự kiện nhấn nút Xác nhận
+            document.getElementById('confirmCancelBtn').onclick = async () => {
+                try {
+                    const response = await fetch(`/api/cancel-order/${orderId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + localStorage.getItem('token')
+                        }
+                    });
+        
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData || 'Lỗi khi hủy đơn hàng');
+                    }
+        
+                    const data = await response.text(); // Backend trả về text, không phải JSON
+                    toastr.success(data || 'Hủy đơn hàng thành công');
+                    
+                    // Cập nhật giao diện
+                    const statusElement = document.querySelector('.status');
+                    if (statusElement) {
+                        statusElement.textContent = 'Đã hủy';
+                    }
+                    const cancelBtn = document.querySelector('.cancel-btn');
+                    if (cancelBtn) {
+                        cancelBtn.remove();
+                    }
+        
+                    // Ẩn modal sau khi hủy thành công
+                    modal.hide();
+                } catch (error) {
+                    toastr.error(error.message || 'Có lỗi xảy ra. Vui lòng thử lại.');
+                }
+            };
         }
 
         function formatPrice(value) {

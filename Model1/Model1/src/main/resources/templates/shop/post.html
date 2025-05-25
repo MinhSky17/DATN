@@ -13,6 +13,101 @@
     <title>Tin tức</title>
     <th:block id="css-resources">
         <link rel="stylesheet" th:href="@{/adminlte/pagination/simplePagination.css}">
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+        <style>
+            .main {
+                background-color: #f9f6f7; /* Màu nền hồng nhạt */
+                padding: 40px 0;
+            }
+            .breadcrumb-nav {
+                background-color: transparent;
+                border-bottom: 1px solid #eee;
+                margin-bottom: 30px;
+            }
+            .breadcrumb-nav .breadcrumb-item a {
+                color: #D81B60;
+            }
+            .breadcrumb-nav .breadcrumb-item.active {
+                color: #666;
+            }
+            .post {
+                display: flex;
+                align-items: center;
+                background-color: #fff;
+                border-radius: 15px;
+                margin-bottom: 25px;
+                padding: 20px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); /* Bóng đổ nhẹ */
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .post:hover {
+                transform: translateY(-5px); /* Hiệu ứng nâng lên khi hover */
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            }
+            .post-media {
+                flex: 0 0 220px;
+                margin-right: 25px;
+                position: relative;
+                overflow: hidden;
+                border-radius: 10px;
+            }
+            .post-media img {
+                width: 100%;
+                height: 160px;
+                object-fit: cover;
+                transition: transform 0.3s ease;
+            }
+            .post-media:hover img {
+                transform: scale(1.05); /* Hiệu ứng zoom nhẹ khi hover ảnh */
+            }
+            .post-body {
+                flex: 1;
+            }
+            .post-title {
+                font-family: Sans-serif, serif;
+                font-size: 22px;
+                margin-bottom: 12px;
+                line-height: 1.3;
+            }
+            .post-title a {
+                color: #333;
+                text-decoration: none;
+                background: linear-gradient(45deg, #D81B60, #FF69B4); /* Gradient hồng */
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                transition: opacity 0.3s ease;
+            }
+            .post-title a:hover {
+                opacity: 0.8;
+            }
+            .post-description {
+                font-family: 'Roboto', sans-serif;
+                font-size: 15px;
+                color: #777;
+                line-height: 1.6;
+            }
+            .pagination {
+                justify-content: center;
+                margin-top: 40px;
+            }
+            .pagination .page-link {
+                border: none;
+                color: #D81B60;
+                background-color: transparent;
+                font-family: 'Roboto', sans-serif;
+                font-weight: 500;
+                padding: 10px 15px;
+                transition: color 0.3s ease;
+            }
+            .pagination .page-link:hover {
+                color: #FF69B4;
+            }
+            .pagination .active .page-link {
+                background-color: #D81B60;
+                color: #fff;
+                border-radius: 5px;
+            }
+        </style>
     </th:block>
 </head>
 <body>
@@ -20,82 +115,59 @@
     <nav aria-label="breadcrumb" class="breadcrumb-nav">
         <div class="container">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index-2.html"><i class="icon-home"></i></a></li>
+                <li class="breadcrumb-item"><a href="/"><i class="icon-home"></i></a></li>
                 <li class="breadcrumb-item active" aria-current="page">Tin tức</li>
             </ol>
         </div>
-        <!-- End .container -->
     </nav>
 
     <div class="container">
         <form method="GET" id="search-form">
             <div class="row">
-            <div class="col-lg-12">
-                <th:block th:each="post : ${posts}">
-                    <article class="post">
-                        <div class="post-media">
-                            <a th:href="@{/tin-tuc/{slug}/{id}(id=${post.id},slug=${post.slug})}">
-                                <img th:src="@{${post.thumbnail}}" th:alt="${post.title}">
-                            </a>
-                        </div>
-                        <!-- End .post-media -->
-
-                        <div class="post-body">
-                            <div class="post-date">
-                                <span class="month" th:text="${#dates.format(post.publishedAt, 'MM yyyy')}"></span></p>
+                <div class="col-lg-12">
+                    <th:block th:each="post : ${posts}">
+                        <article class="post">
+                            <div class="post-media">
+                                <a th:href="@{/tin-tuc/{slug}/{id}(id=${post.id},slug=${post.slug})}">
+                                    <img th:src="@{${post.thumbnail}}" th:alt="${post.title}">
+                                </a>
                             </div>
-                            <!-- End .post-date -->
 
-                            <h2 class="post-title">
-                                <a th:href="@{/tin-tuc/{slug}/{id}(id=${post.id},slug=${post.slug})}" th:text="${post.title}"></a>
-                            </h2>
+                            <div class="post-body">
+                                <h2 class="post-title">
+                                    <a th:href="@{/tin-tuc/{slug}/{id}(id=${post.id},slug=${post.slug})}" th:text="${post.title}"></a>
+                                </h2>
 
-                            <div class="post-content">
-                                <p th:utext="${post.content}"></p>
-
-                                <a th:href="@{/tin-tuc/{slug}/{id}(id=${post.id},slug=${post.slug})}" class="read-more">Read More <i
-                                        class="icon-angle-double-right"></i></a>
+                                <div class="post-description">
+                                    <p th:utext="${post.description}"></p>
+                                    
+                                </div>
                             </div>
-                            <!-- End .post-content -->
+                        </article>
+                    </th:block>
 
-                            <div class="post-meta">
-                                <i class="icon-calendar"></i><span th:text="${#dates.format(post.publishedAt, 'dd-MM-yyyy')}"></span>
-                                <span><i class="icon-user"></i>By <a th:text="${post.createdBy.fullName}"></a></span>
-                            </div>
-                            <!-- End .post-meta -->
-                        </div>
-                        <!-- End .post-body -->
-                    </article>
-                    <!-- End .post -->
-                </th:block>
-
-                <!-- Pagination -->
-                <nav aria-label="Page navigation">
-                    <ul class="pagination" id="pagination"></ul>
-                </nav>
+                    <!-- Pagination -->
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination" id="pagination"></ul>
+                    </nav>
+                </div>
             </div>
-            <!-- End .col-lg-9 -->
-        </div>
             <input type="hidden" name="page" id="page">
         </form>
-        <!-- End .row -->
     </div>
-    <!-- End .container -->
 </main>
-<!-- End .main -->
-
 
 <th:block id="js-resources">
     <script type="text/javascript" th:src="@{/adminlte/pagination/jquery.simplePagination.js}"></script>
     <script type="text/javascript" th:src="@{/adminlte/js/table.js}"></script>
     <script th:inline="javascript">
         let page;
-        $(function (){
+        $(function () {
             let vars = parseUrl();
-            page = vars["page"] || "1"
-            $('#page').val(page)
+            page = vars["page"] || "1";
+            $('#page').val(page);
             pagination([[${totalPages}]], [[${currentPage}]]);
-        })
+        });
     </script>
 </th:block>
 </body>

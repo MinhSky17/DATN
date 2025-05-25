@@ -7,52 +7,427 @@
                         <i class="icon-menu"></i>
                     </button>
                     <a href="/" class="logo">
-                        <img th:src="@{/shop/images/logo-coshine.jpeg}"  alt="logo">
+                        <img th:src="@{/shop/images/logo-coshine.jpeg}" alt="logo">
+                        <span class="brand-text">COSHINE COSMETIC</span>
                     </a>
-                </div><!-- End .header-left -->
-
+            
+                </div>
                 <div class="header-right w-lg-max">
-                    <div class="header-icon header-icon header-search header-search-inline header-search-category w-lg-max text-right">
+                    <div class="header-icon header-search header-search-inline header-search-category w-lg-max text-right">
                         <a href="#" class="search-toggle search-button" role="button"><i class="icon-search-3"></i></a>
-                            <div class="header-search-wrapper">
-                                <input class="form-control search-input"  placeholder="Nhập sản phẩm cần tìm kiếm..." required>
-                                <button class="btn icon-search-3 p-0 search-button" type="submit"></button>
-                            </div><!-- End .header-search-wrapper -->
-                    </div><!-- End .header-search -->
-
+                        <div class="header-search-wrapper">
+                            <input class="form-control search-input" placeholder="Nhập sản phẩm cần tìm kiếm..." required>
+                            <button class="btn icon-search-3 p-0 search-button" type="submit"></button>
+                        </div>
+                    </div>
                     <div class="header-contact d-none d-lg-flex pl-4 ml-3 mr-xl-5 pr-4">
                         <img alt="phone" th:src="@{/shop/images/phone.png}" width="30" height="30" class="pb-1">
                         <h6>Hotline<a href="tel:#" class="text-dark font1">089 993 1712</a></h6>
                     </div>
-
                     <a th:href="@{/cart}" class="header-icon header-cart position-relative">
                         <i class="icon-shopping-cart"></i>
-                        
+                        <span class="cart-count badge bg-danger rounded-circle" th:text="${cartItemCount != null} ? ${cartItemCount} : 0" id="cart-count">0</span>
                     </a>
-
-                    <a href="" data-toggle="modal" data-target="#exampleModal" class="header-icon account-setting"><i class="icon-user-2"></i></a>
-
-                </div><!-- End .header-right -->
-            </div><!-- End .container -->
-        </div><!-- End .header-middle -->
-
+                    <a href="#" data-toggle="modal" data-target="#exampleModal" class="header-icon account-setting"><i class="icon-user-2"></i></a>
+                </div>
+            </div>
+        </div>
         <div class="header-bottom sticky-header d-none d-lg-block">
             <div class="container">
                 <nav class="main-nav w-100">
                     <ul class="menu">
-                        <li class="active">
-                            <a href="/">Trang chủ</a>
+                        <li><a href="/">Trang chủ</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Trang điểm</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/trang-diem-mat">Trang điểm mắt</a></li>      
+                                <li><a href="/trang-diem-moi">Trang điểm môi</a></li>
+                                <li><a href="/trang-diem-guong-mat">Trang điểm mặt</a></li>
+                            </ul>
                         </li>
-<!--                        <th:block th:each="brand : ${brands}">-->
-<!--                            <li><a href="/" th:text="${brand.name}">Trang chủ</a></li>-->
-<!--                        </th:block>-->
-                        <li class="float-right mr-0"><a href="/lien-he" class="px-4">Liên hệ</a></li>
-                        <li class="float-right"><a href="/doi-hang">Chính sách</span></a></li>
-                        <li class="float-right"><a href="/tin-tuc">Tin tức</a></li>
-                        <li class="float-right"><a href="/san-pham">Sản phẩm</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Chăm sóc</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/cham-soc-da">Chăm sóc da</a></li>
+                                <li><a href="/cham-soc-toc">Chăm sóc tóc</a></li>
+                                <li><a href="/cham-soc-co-the">Chăm sóc cơ thể</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/san-pham">Sản phẩm</a></li>
+                        <li><a href="/tin-tuc">Tin tức</a></li>
+                        <li><a href="/doi-hang">Chính sách</a></li>
+                        <li><a href="/lien-he">Liên hệ</a></li>
                     </ul>
                 </nav>
-            </div><!-- End .container -->
-        </div><!-- End .header-bottom -->
-    </header><!-- End .header -->
+            </div>
+        </div>
+    </header>
+
+    <!-- Thêm Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS cho header -->
+    <style>
+        /* Tổng thể header */
+        .header {
+            background-color: #FFFFFF;
+            font-family: 'Open Sans', sans-serif;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header middle */
+        .header-middle {
+            padding: 0px 0;
+        }
+
+        .header-left .logo img {
+            max-height: 85px;
+            border-radius: 5px;
+        }
+
+        /* Logo styles */
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            padding: 5px;
+            
+        }
+
+        .logo:hover {
+            
+        }
+
+        .logo img {
+            max-height: 100px;
+            weight: 100px;
+            border-radius: 10px;
+            margin-right: 15px;
+     
+            
+        }
+
+        .logo:hover img {
+            
+        }
+
+        .brand-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(45deg, #333333, #ff69b4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0;
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        .brand-text::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(45deg, #ff69b4, #333333);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+            transform-origin: right;
+        }
+
+        .logo:hover .brand-text::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        @media (max-width: 768px) {
+            .brand-text {
+                font-size: 20px;
+            }
+            
+            .logo img {
+                max-height: 40px;
+                margin-right: 10px;
+            }
+        }
+        /* Thanh tìm kiếm */
+        .header-search-wrapper {
+            background-color: #fff;
+            border: 1px solid #ff69b4 !important;
+            border-radius: 30px;
+            padding: 8px 15px;
+            float: right;
+            width: 400px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            height: 50px;
+        }
+
+        .header-search-wrapper:hover,
+        .header-search-wrapper:focus-within {
+            border-color: #ff69b4;
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.2);
+        }
+
+        .search-input {
+            font-family: 'Open Sans', sans-serif;
+            color: #333 !important;
+            flex: 1;
+            padding-right: 0;
+            background: transparent !important;
+        }
+
+        .search-input::placeholder {
+            color: #ffa6c9 !important;
+            font-style: italic;
+        }
+
+        .header-search .form-control, 
+        .header-search .select-custom {
+            background-color: transparent;
+            margin: 0;
+        }
+
+        .header-search-wrapper .btn {
+            background-color: transparent;
+            margin: 0;
+            padding: 0 0 0 5px;
+        }
+
+        .header-search .search-button {
+            transition: all 0.3s ease;
+        }
+
+        .header-search .search-button:hover {
+            background-color: transparent;
+            transform: scale(1.1);
+        }
+
+        .search-button i {
+            color: #ff69b4 !important;
+            font-size: 20px;
+        }
+
+        .search-button:hover i {
+            color: #ff1493 !important;
+        }
+
+        /* Hotline */
+        .header-contact h6 {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+            color: #333333;
+            margin: 0;
+        }
+
+        .header-contact a {
+            color: #D81B60 !important;
+            font-weight: 600;
+        }
+
+        /* Icon giỏ hàng và tài khoản */
+        .header-icon i {
+            color: #333333;
+            font-size: 24px;
+        }
+
+        .header-icon:hover i {
+            color: #D81B60;
+            
+        }
+
+        .header-cart {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            font-size: 12px;
+            line-height: 20px;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            padding: 0;
+            display: none;
+            background-color: #D81B60 !important;
+            border: 2px solid #FFFFFF;
+            color: #FFFFFF;
+        }
+
+        .cart-count:not(:empty) {
+            display: inline-block;
+        }
+
+        /* Header bottom (menu) */
+        .header-bottom {
+            background-color: #FFFFFF;
+            padding: 5px 0;
+            border-top: 1px solid #EEEEEE;
+        }
+
+        .main-nav .menu {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .main-nav .menu li {
+            position: relative;
+            margin: 0 10px;
+        }
+
+        .main-nav .menu li a {
+            display: block;
+            color: #333333;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 10px 15px;
+            text-decoration: none;
+            transition: all 0.1s ease;
+            border-radius: 10px;
+        }
+
+        .main-nav .menu > li:first-child a {
+            padding-left: 10px;
+        }
+
+        .main-nav .menu li a:hover,
+        .main-nav .menu li.active a {
+            color: #FFFFFF;
+            background: linear-gradient(45deg,rgb(86, 76, 76), #ff69b4) !important;
+            
+        }
+
+        .main-nav .menu > li.active > a, .main-nav .menu > li > a:hover{
+            border-top-color: #ffffff !important;
+            transition: all 0s ease !important;
+        }
+
+        /* Dropdown menu */
+        .dropdown-menu {
+            background-color: #FFDEE9;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 5px;
+            padding: 10px 0;
+        }
+
+        .dropdown-menu li a {
+            color: #333333 !important;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 400;
+            padding: 8px 20px;
+            font-size: 14px;
+            text-transform: capitalize;
+        }
+
+        
+
+        #account-setting:hover {
+            color: #D81B60!important;
+            text-decoration: none;
+        }
+
+        .dropdown-menu li a:hover {
+            background-color: #D81B60;
+            color: #FFFFFF !important;
+            border-radius: 10px;
+        }
+
+        /* Nút menu mobile */
+        .mobile-menu-toggler i {
+            color: #333333;
+            font-size: 24px;
+        }
+
+        .mobile-menu-toggler:hover i {
+            color: #D81B60;
+        }
+
+        
+
+    </style>
+
+    <!-- JavaScript cho header -->
+    <script>
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return null;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const badge = document.querySelector('#cart-count');
+            if (!badge) return;
+
+            // Kiểm tra nếu vừa đăng xuất (dựa trên tham số URL)
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('logout')) {
+                badge.textContent = '0';
+                return;
+            }
+
+            // Lấy số lượng từ cookie hoặc model
+            const cookieCount = getCookie('CART_ITEM_COUNT');
+            const modelCount = parseInt(badge.textContent) || 0;
+
+            if (window.location.pathname === '/') {
+                // Ưu tiên modelCount ở trang chủ
+                badge.textContent = modelCount;
+            } else if (cookieCount) {
+                // Sử dụng cookieCount ở các trang khác nếu có
+                badge.textContent = cookieCount;
+            } else {
+                badge.textContent = '0';
+            }
+        });
+
+        async function handleLogout() {
+            try {
+                const token = getCookie('JWT_TOKEN');
+                const response = await fetch('/api/logout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    }
+                });
+
+                if (response.ok) {
+                    // Cookie JWT_TOKEN và CART_ITEM_COUNT đã được xóa bởi Spring Security
+                    const badge = document.querySelector('#cart-count');
+                    if (badge) badge.textContent = '0';
+                    window.location.href = '/?logout=true';
+                } else {
+                    throw new Error('Lỗi khi đăng xuất');
+                }
+            } catch (error) {
+                console.error('Lỗi khi đăng xuất:', error);
+                toastr.error(error.message || 'Lỗi khi đăng xuất');
+            }
+        }
+
+        // Cập nhật badge khi giỏ hàng thay đổi
+        document.addEventListener('cart-updated', () => {
+            const badge = document.querySelector('#cart-count');
+            const cookieCount = getCookie('CART_ITEM_COUNT');
+            if (badge && cookieCount) {
+                badge.textContent = cookieCount;
+            } else if (badge) {
+                badge.textContent = '0';
+            }
+        });
+    </script>
 </th:block>
