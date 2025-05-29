@@ -2,4 +2,5 @@
 ul.nav-main li a {
     color: #ffffff;
     transition: all 0.3s ease;
+    font-size: 14px;
 }

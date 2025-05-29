@@ -1,9 +1,7 @@
 package com.model1.application.service.impl;
 
-import com.model1.application.entity.Product;
-import com.model1.application.entity.ProductColor;
-import com.model1.application.entity.ProductSize;
-import com.model1.application.entity.Promotion;
+import com.github.slugify.Slugify;
+import com.model1.application.entity.*;
 import com.model1.application.exception.BadRequestException;
 import com.model1.application.exception.InternalServerException;
 import com.model1.application.exception.NotFoundException;
@@ -27,6 +25,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -97,8 +96,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void updateProduct(CreateProductRequest createProductRequest, String id) {
         //Kiểm tra sản phẩm có tồn tại
-        Optional<Product> product = productRepository.findById(id);
-        if (product.isEmpty()) {
+        Optional<Product> product1 = productRepository.findById(id);
+        if (product1.isEmpty()) {
             throw new NotFoundException("Không tìm thấy sản phẩm!");
         }
 
@@ -119,11 +118,33 @@ public class ProductServiceImpl implements ProductService {
             throw new BadRequestException("Ảnh sản phẩm trống!");
         }
 
-        Product result = ProductMapper.toProduct(createProductRequest);
-        result.setId(id);
-        result.setModifiedAt(new Timestamp(System.currentTimeMillis()));
+        Product product = product1.get();
+
+        product.setName(createProductRequest.getName());
+        product.setDescription(createProductRequest.getDescription());
+        product.setPrice(createProductRequest.getPrice());
+        product.setSalePrice(createProductRequest.getSalePrice());
+        product.setImages(createProductRequest.getImages());
+        product.setImageFeedBack(createProductRequest.getFeedBackImages());
+        product.setStatus(createProductRequest.getStatus());
+        //Gen slug
+        Slugify slug = new Slugify();
+        product.setSlug(slug.slugify(createProductRequest.getName()));
+        //Brand
+        Brand brand = new Brand();
+        brand.setId(createProductRequest.getBrandId());
+        product.setBrand(brand);
+        //Category
+        ArrayList<Category> categories = new ArrayList<>();
+        for (Integer ma : createProductRequest.getCategoryIds()) {
+            Category category = new Category();
+            category.setId(ma);
+            categories.add(category);
+        }
+        product.setCategories(categories);
+        product.setModifiedAt(new Timestamp(System.currentTimeMillis()));
         try {
-            productRepository.save(result);
+            productRepository.save(product);
         } catch (Exception e) {
             throw new InternalServerException("Có lỗi khi sửa sản phẩm!");
         }
@@ -203,7 +224,8 @@ public class ProductServiceImpl implements ProductService {
         DetailProductInfoDTO dto = new DetailProductInfoDTO();
         dto.setId(product.getId());
         dto.setName(product.getName());
-        dto.setPrice(product.getSalePrice());
+        dto.setPrice(product.getPrice());
+        dto.setPromotionPrice(product.getSalePrice());
         dto.setViews(product.getView());
         dto.setSlug(product.getSlug());
         dto.setTotalSold(product.getTotalSold());
@@ -221,7 +243,7 @@ public class ProductServiceImpl implements ProductService {
         Promotion promotion = promotionService.checkPublicPromotion();
         if (promotion != null) {
             dto.setCouponCode(promotion.getCouponCode());
-            dto.setPromotionPrice(promotionService.calculatePromotionPrice(dto.getPrice(), promotion));
+            //dto.setPromotionPrice(promotionService.calculatePromotionPrice(dto.getPrice(), promotion));
         } else {
             dto.setCouponCode("");
         }

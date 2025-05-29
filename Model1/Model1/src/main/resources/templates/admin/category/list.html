@@ -79,15 +79,14 @@
                                 <option value="1">Hiển thị</option>
                             </select>
                         </th>
-                        <th>
-                            
-                            <select name="name" class="form-control search-select" id="name">
+                        <!-- <th>                           
+                            <select name="category" class="form-control search-select" id="category">
                                 <option value="">-- Chọn danh mục cha --</option>
-                                <th:block th:each="category : ${categories}">
+                                <th:block th:each="category : ${rootCategories}">
                                     <option th:value="${category.id}" th:text="${category.name}"></option>
                                 </th:block>
                             </select>
-                        </th>
+                        </th>-->
                         <th></th>
 <!--                        <th></th>-->
 <!--                        <th></th>-->
@@ -152,9 +151,10 @@
                             <br>
                             <div class="form-group">
                                 <label>Danh mục cha</label>
+                                
                                 <select class="form-control" name="parent_id" id="parent_id">
                                     <option value="">-- Chọn danh mục cha --</option>
-                                    <th:block th:each="category : ${categories}">
+                                    <th:block th:each="category : ${rootCategories}">
                                         <option th:value="${category.id}" th:text="${category.name}"></option>
                                     </th:block>
                                 </select>
@@ -192,10 +192,10 @@
                                    placeholder="Nhập tên danh mục mới">
                             <br>
                             <div class="form-group">
-                                <label>Danh mục cha</label>
+                                <label>Danh mục cha</label>    
                                 <select class="form-control" name="update_parent_id" id="update_parent_id">
                                     <option value="">-- Chọn danh mục cha --</option>
-                                    <th:block th:each="category : ${categories}">
+                                    <th:block th:each="category : ${rootCategories}">
                                         <option th:value="${category.id}" th:text="${category.name}"></option>
                                     </th:block>
                                 </select>
@@ -439,24 +439,18 @@
 }
 
 .edit-category {
-    color: #ffc107;
+    color: #ffffff !important;
+    background: #ffc107;
 }
 
-.edit-category:hover {
-    color: #fff;
-    background-color: #ffc107;
-}
+
 
 .delete-category {
-    color: #dc3545;
-}
-
-.delete-category:hover {
-    color: #fff;
-    background-color: #dc3545;
+    background: #dc3545;
+    color: #ffffff !important;
 }
 
 .actions i {
-    font-size: 16px;
+    font-size: 14px;
 }
 </style>

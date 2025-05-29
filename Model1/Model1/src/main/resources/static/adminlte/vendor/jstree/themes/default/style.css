@@ -550,12 +550,12 @@
   background-position: -36px -68px;
 }
 .jstree-default .jstree-ellipsis {
-  overflow: hidden;
+  overflow: auto;
 }
 .jstree-default .jstree-ellipsis .jstree-anchor {
   width: calc(100% - 29px);
   text-overflow: ellipsis;
-  overflow: hidden;
+  overflow: auto;
 }
 .jstree-default.jstree-rtl .jstree-node {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACAQMAAAB49I5GAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMOBgAAGAAJMwQHdQAAAABJRU5ErkJggg==");
@@ -731,12 +731,12 @@
   background-position: -39px -71px;
 }
 .jstree-default-small .jstree-ellipsis {
-  overflow: hidden;
+  overflow: auto;
 }
 .jstree-default-small .jstree-ellipsis .jstree-anchor {
   width: calc(100% - 23px);
   text-overflow: ellipsis;
-  overflow: hidden;
+  overflow: auto;
 }
 .jstree-default-small.jstree-rtl .jstree-node {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAACAQMAAABv1h6PAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMHBgAAiABBI4gz9AAAAABJRU5ErkJggg==");
@@ -912,12 +912,12 @@
   background-position: -32px -64px;
 }
 .jstree-default-large .jstree-ellipsis {
-  overflow: hidden;
+  overflow: auto;
 }
 .jstree-default-large .jstree-ellipsis .jstree-anchor {
   width: calc(100% - 37px);
   text-overflow: ellipsis;
-  overflow: hidden;
+  overflow: auto;
 }
 .jstree-default-large.jstree-rtl .jstree-node {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAACAQMAAAAD0EyKAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjgIIGBgABCgCBvVLXcAAAAABJRU5ErkJggg==");

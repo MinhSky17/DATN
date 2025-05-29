@@ -140,4 +140,10 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
 
+    @Override
+    public List<Category> getRootCategories() {
+        //return categoryRepository.findByParentIdEqualsZero();
+        return categoryRepository.findByParentId(0L);
+    }
+
 }

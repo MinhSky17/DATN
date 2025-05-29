@@ -1193,7 +1193,7 @@
   -webkit-transform: perspective(1px) translateZ(0);
   transform: perspective(1px) translateZ(0);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-  overflow: hidden;
+  overflow: auto;
   -webkit-transition-duration: 0.3s;
   transition-duration: 0.3s;
   -webkit-transition-property: color, background-color;
@@ -1221,7 +1221,7 @@
   -webkit-transform: perspective(1px) translateZ(0);
   transform: perspective(1px) translateZ(0);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-  overflow: hidden;
+  overflow: auto;
   -webkit-transition-duration: 0.5s;
   transition-duration: 0.5s;
   -webkit-transition-property: color, background-color;
@@ -1587,7 +1587,7 @@
   transform: perspective(1px) translateZ(0);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
   position: relative;
-  overflow: hidden;
+  overflow: auto;
   background: #e1e1e1;
   -webkit-transition-property: color;
   transition-property: color;
@@ -1629,7 +1629,7 @@
   transform: perspective(1px) translateZ(0);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
   position: relative;
-  overflow: hidden;
+  overflow: auto;
   background: #2098D1;
   -webkit-transition-property: color;
   transition-property: color;
@@ -2148,7 +2148,7 @@
   transform: perspective(1px) translateZ(0);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
   position: relative;
-  overflow: hidden;
+  overflow: auto;
 }
 .hvr-underline-from-left:before {
   content: "";
@@ -2178,7 +2178,7 @@
   transform: perspective(1px) translateZ(0);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
   position: relative;
-  overflow: hidden;
+  overflow: auto;
 }
 .hvr-underline-from-center:before {
   content: "";
@@ -2209,7 +2209,7 @@
   transform: perspective(1px) translateZ(0);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
   position: relative;
-  overflow: hidden;
+  overflow: auto;
 }
 .hvr-underline-from-right:before {
   content: "";
@@ -2239,7 +2239,7 @@
   transform: perspective(1px) translateZ(0);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
   position: relative;
-  overflow: hidden;
+  overflow: auto;
 }
 .hvr-overline-from-left:before {
   content: "";
@@ -2269,7 +2269,7 @@
   transform: perspective(1px) translateZ(0);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
   position: relative;
-  overflow: hidden;
+  overflow: auto;
 }
 .hvr-overline-from-center:before {
   content: "";
@@ -2300,7 +2300,7 @@
   transform: perspective(1px) translateZ(0);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
   position: relative;
-  overflow: hidden;
+  overflow: auto;
 }
 .hvr-overline-from-right:before {
   content: "";
@@ -2330,7 +2330,7 @@
   transform: perspective(1px) translateZ(0);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
   position: relative;
-  overflow: hidden;
+  overflow: auto;
 }
 .hvr-reveal:before {
   content: "";
@@ -2364,7 +2364,7 @@
   transform: perspective(1px) translateZ(0);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
   position: relative;
-  overflow: hidden;
+  overflow: auto;
 }
 .hvr-underline-reveal:before {
   content: "";
@@ -2397,7 +2397,7 @@
   transform: perspective(1px) translateZ(0);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
   position: relative;
-  overflow: hidden;
+  overflow: auto;
 }
 .hvr-overline-reveal:before {
   content: "";

@@ -25,4 +25,6 @@ public interface CategoryService {
 
     //Đếm số danh mục
     long getCountCategories();
+
+    List<Category> getRootCategories();
 }

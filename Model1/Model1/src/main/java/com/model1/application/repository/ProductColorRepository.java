@@ -21,7 +21,7 @@ public interface ProductColorRepository extends JpaRepository<ProductColor,Long>
     List<ProductColor> findByProductId(String id);
 
     //Kiểm trả color sản phẩm
-    @Query(value = "SELECT * FROM product_color WHERE product_id = ?1 AND code = ?2 AND quantity >0 ", nativeQuery = true)
+    @Query(value = "SELECT * FROM product_color WHERE product_id = ?1 AND code = ?2", nativeQuery = true)
     ProductColor checkProductAndColorAvailable(String productId, String code);
 
     //Trừ 1 sản phẩm theo color

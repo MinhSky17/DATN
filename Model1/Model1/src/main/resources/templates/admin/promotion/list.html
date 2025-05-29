@@ -47,7 +47,7 @@
                     <div class="mb-3">
                         <a href="/admin/promotions/create" id="addToTable" class="btn btn-primary">Thêm mới khuyến mại <i
                                 class="fas fa-plus"></i></a>
-                        <a href="/admin/products" class="btn btn-primary">Refresh <i
+                        <a href="/admin/promotions" class="btn btn-primary">Refresh <i
                                 class="fas fa-redo-alt"></i></a>
                         <button id="btn-search" class="btn btn-primary">Tìm kiếm <i
                                 class="fas fa-search"></i></button>
@@ -62,7 +62,9 @@
                     <th>Loại</th>
                     <th>Trạng thái</th>
                     <th>Giá trị</th>
+                    <th>Giảm tối đa</th>
                     <th>Ngày hết hạn</th>
+                    <th width="15%">Thao tác</th>
                 </tr>
                 <tr class="heading-search">
                     <form  method="GET" id="search-form">
@@ -86,6 +88,8 @@
                                 <option value="1">Kích hoạt</option>
                             </select>
                         </th>
+                        <th></th>
+                        <th></th>
                         <th></th>
                         <th></th>
                         <input type="hidden" name="page" id="page">
@@ -125,7 +129,18 @@
                             </th:block>
                         </td>
                         <td>
+                            <span th:text="${promotion.maximumDiscountValue}"></span> đ
+                        </td>
+                        <td>
                             <span th:text="${#dates.format(promotion.expiredAt, 'dd-MM-yyyy')}"></span>
+                        </td>
+                        <td class="actions">
+                            <a th:href="@{/admin/promotions/update/{id}(id=${promotion.id})}" class="on-default edit-row edit-promotion">
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
+                            <a href="#" class="on-default remove-row delete-promotion" th:data-id="${promotion.id}">
+                                <i class="far fa-trash-alt"></i>
+                            </a>
                         </td>
                     </tr>
                 </th:block>
@@ -162,7 +177,84 @@
 
             pagination([[${totalPages}]], [[${currentPage}]])
         });
+
+        $('.delete-promotion').click(function () {
+            let id = $(this).data('id');
+            swal({
+                title: 'Xóa khuyến mại ?',
+                text: "Bạn có chắc chắn muốn xóa !",
+                type: 'warning',
+                showCancelButton: true
+            }).then(function (rs) {
+                if (rs.value) {
+                    $.ajax({
+                        url: '/api/admin/promotions/' + id,
+                        type: 'DELETE',
+                        contentType: 'application/json',
+                        success: function (data) {
+                            toastr.success("Xóa khuyến mãi thành công");
+                            setTimeout(function () {
+                                location.href = "/admin/promotions";
+                            }, 1000);
+                        },
+                        error: function (error) {
+                            toastr.error(error.responseJSON.message);
+                        }
+                    })
+                }
+            })
+        })
     </script>
 </th:block>
 </body>
 </html>
+
+<style>
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: white;
+    }
+    
+    .btn-primary:hover {
+        background-color: #0069d9;
+        border-color: #0062cc;
+        color: white;
+    }
+    
+    .btn-primary:focus, .btn-primary:active {
+        background-color: #0069d9 !important;
+        border-color: #0062cc !important;
+        color: white !important;
+        box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5) !important;
+    }
+    
+    /* Thêm CSS mới cho nút sửa và xóa */
+    .actions {
+        text-align: center;
+        white-space: nowrap;
+    }
+    
+    .actions a {
+        display: inline-block;
+        padding: 6px 12px;
+        margin: 0 3px;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+    }
+    
+    .edit-promotion {
+        color: #ffffff !important;
+        background: #ffc107;
+    }
+    
+    
+    .delete-promotion {
+        color: #ffffff !important;
+        background: #dc3545;
+    }
+    
+    
+    .actions i {
+        font-size: 14px;
+    }

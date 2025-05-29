@@ -156,7 +156,7 @@
 
 body.modal1-on,
 body.modal2-on {
-    overflow: hidden;
+    overflow: auto;
 }
 
 @media (min-width: 576px) {
@@ -687,7 +687,7 @@ input[type=radio] + label .radio-dot:before {
 }
 @media (max-width: 767px) {
     .main-content .nav {
-        overflow-x: scroll;
+        overflow-x: hidden;
     }
     .main-content .nav-link {
         white-space: nowrap;

@@ -50,7 +50,7 @@
                         </div><!-- End .post-meta -->
 
                         <div class="post-content">
-                            <p th:utext="${post.description}"></p>
+                            <p th:utext="${post.content}"></p>
                         </div><!-- End .post-content -->
 
 <!--                        <div class="post-share">-->
@@ -83,7 +83,7 @@
                                 <div class="post-author">
                                     <!--                                    <h3 class="icon-user" th:text="${comment.user.email}"></h3>-->
                                     <figure>
-                                       <img th:src="@{/shop/images/avatar/avatar.png}" width="30px" height="30px" alt="author">
+                                       <img th:src="${user_avatar}" width="30px" height="30px" alt="author">
                                     </figure>
                                     <div class="author-content">
                                         <h5 th:text="${comment.user.fullName}"></h5>

@@ -18,7 +18,7 @@
                 display: flex;
                 width: 100%;
                 justify-content: center;
-                overflow: hidden;
+                overflow: auto;
                 flex-direction: row-reverse;
                 height: 40px;
                 position: relative;
@@ -116,6 +116,14 @@
                 margin-right: auto;
                 color: black;
             }
+            .prod-thumbnail .active img, .prod-thumbnail img:hover {
+                width: 140px;
+                height: 140px;
+            }
+            .prod-thumbnail img {
+                width: 140px;
+                height: 140px;
+            }
 
             
         </style>
@@ -147,7 +155,7 @@
                     <div class="prod-thumbnail owl-dots" id='carousel-custom-dots'>
                         <th:block th:each="img :${product.productImages}">
                             <div class="owl-dot">
-                                <img th:src="@{${img}}"/>
+                                <img th:src="@{${img}}" width="120" height="120"/>
                             </div>
                         </th:block>
                     </div>
@@ -224,7 +232,7 @@
                             cursor: pointer;
                         ">−</button>
 
-                        <input type="number" id="qtyDisplay" value="1" min="1"
+                        <input type="number" id="qtyDisplay" value="1" min="1"                    
                         oninput="validateQtyInput(this)" 
                         style="
                             width: 30px;
@@ -257,7 +265,35 @@
                             MUA NGAY</button>
                         </div>
                     </div>
-                    
+
+                    <div class="row mt-4" style="margin-left: 0px">
+                        <div class="col-md-6">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <i class="fas fa-star" style="color: #ffd700;"></i>
+                                <div>Nhận <b>HSV Point</b> cho mỗi lần mua</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <i class="fas fa-check-circle" style="color: #28a745;"></i>
+                                <div>Cam kết <b>hàng chính hãng</b></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3" style="margin-left: 0px">
+                        <div class="col-md-6">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <i class="fas fa-truck" style="color: #007bff;"></i>
+                                <div><b>Miễn phí giao hàng</b> 24h</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <i class="fas fa-exchange-alt" style="color: #17a2b8;"></i>
+                                <div>Đổi/trả hàng trong <b>7 ngày</b></div>
+                            </div>
+                        </div>
+                    </div>
 
 
                     
@@ -356,7 +392,7 @@
                                     <th:block th:each="comment : ${product.comments}">
                                         <li class="comment-container">
                                             <div class="comment-avatar">
-                                                <img th:src="@{/shop/images/avatar/avatar.png}" width="65" height="65" alt="avatar"/>
+                                                <img th:src="${user_avatar}" width="65" height="65" alt="avatar"/>
                                             </div><!-- End .comment-avatar-->
                                             <div class="comment-box">
                                                 <div class="ratings-container">
@@ -430,16 +466,16 @@
                                 <a th:href="@{/{slug}/{id}(id=${related.id},slug=${related.slug})}" th:text="${related.name}"></a>
                             </h3>
                             <div class="price-box">
-                                <th:block th:if="${related.promotionPrice}">
-                                    <span class="product-price" th:text="${#numbers.formatDecimal(related.promotionPrice, 0, 'COMMA', 0, 'POINT') +' đ'}"></span>
-                                    <del class="old-price" th:text="${#numbers.formatDecimal(related.price, 0, 'COMMA', 0, 'POINT') +' đ'}"></del>
+                                <th:block th:if="${related.sale != null and related.price != related.sale}">
+                                    <span class="product-price" th:text="${#numbers.formatDecimal(related.sale, 0, 'COMMA', 0, 'POINT') + ' đ'}"></span>
+                                    <del class="old-price" th:text="${#numbers.formatDecimal(related.price, 0, 'COMMA', 0, 'POINT') + ' đ'}"></del>
                                 </th:block>
-                                <th:block th:unless="${related.promotionPrice}">
-                                    <span class="product-price" th:text="${#numbers.formatDecimal(related.price, 0, 'COMMA', 0, 'POINT') +' đ'}"></span>
+                                <th:block th:if="${related.sale != null and related.price == related.sale}">
+                                    <span class="product-price" th:text="${#numbers.formatDecimal(related.price, 0, 'COMMA', 0, 'POINT') + ' đ'}"></span>
                                 </th:block>
                             </div><!-- End .price-box -->
                             <div class="ratings-container">
-                                <p class="card-text sold">&Dstrok;&atilde; b&aacute;n <span th:text="${related.totalSold}"></span> &dstrok;&ocirc;i</p>
+                                <p class="card-text sold">&Dstrok;&atilde; b&aacute;n <span th:text="${related.totalSold}"></span></p>
                             </div><!-- End .product-container -->
                         </div><!-- End .product-details -->
                     </div>
@@ -562,7 +598,7 @@
                 // Lấy nút màu đang được chọn
                 const selectedColorBtn = document.querySelector('.color-btn.active');
                 if (!selectedColorBtn) {
-                    alert("Vui lòng chọn màu sản phẩm");
+                    toastr.warning("Vui lòng chọn màu sản phẩm");
                     return;
                 }
 
@@ -585,11 +621,24 @@
                     contentType: 'application/json',
                     success: function(response) {
                         if(response.status == 'success') {
-                            alert('Thêm vào giỏ hàng thành công');
+                            toastr.success('Thêm vào giỏ hàng thành công');
                             document.dispatchEvent(new Event('cart-updated'));
                         }else {
-                            alert('Thêm vào giỏ hàng thất bại');}
+                            toastr.error('Thêm vào giỏ hàng thất bại');}
+                    },
+                    error: function(xhr, status, error) {
+                        let errorMessage = "Lỗi không xác định";
+                        try {
+                            const res = JSON.parse(xhr.responseText); // Đọc JSON trả về
+                            if (res.message) {
+                                errorMessage = res.message;
+                            }
+                        } catch (e) {
+                            errorMessage = error;
+                        }
+                        toastr.error(errorMessage);
                     }
+
                 })
             }
             
@@ -619,7 +668,8 @@
                     if (currentValue < maxQty) {
                         input.value = currentValue + 1;
                     } else {
-                        alert('Đã đạt số lượng tối đa của sản phẩm');
+                        toastr.warning("Đã đạt số lượng tối đa của sản phẩm");
+                        //alert('Đã đạt số lượng tối đa của sản phẩm');
                     }
                 } else {
                     input.value = currentValue + 1;
@@ -684,7 +734,7 @@
                 // Get selected color button
                 const selectedColorBtn = document.querySelector('.color-btn.active');
                 if (!selectedColorBtn) {
-                    alert("Vui lòng chọn màu sản phẩm");
+                    toastr.warning("Vui lòng chọn màu sản phẩm");
                     return;
                 }
 

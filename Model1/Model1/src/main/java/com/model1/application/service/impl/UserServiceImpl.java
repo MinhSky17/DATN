@@ -1,12 +1,13 @@
 package com.model1.application.service.impl;
 
+import com.model1.application.entity.Brand;
 import com.model1.application.entity.User;
 import com.model1.application.exception.BadRequestException;
+import com.model1.application.exception.InternalServerException;
+import com.model1.application.exception.NotFoundException;
 import com.model1.application.model.dto.UserDTO;
 import com.model1.application.model.mapper.UserMapper;
-import com.model1.application.model.request.ChangePasswordRequest;
-import com.model1.application.model.request.CreateUserRequest;
-import com.model1.application.model.request.UpdateProfileRequest;
+import com.model1.application.model.request.*;
 import com.model1.application.repository.UserRepository;
 import com.model1.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.model1.application.config.Contant.LIMIT_USER;
 
@@ -64,6 +67,8 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+
+
     @Override
     public void changePassword(User user, ChangePasswordRequest changePasswordRequest) {
         //Kiểm tra mật khẩu
@@ -83,5 +88,65 @@ public class UserServiceImpl implements UserService {
         user.setAddress(updateProfileRequest.getAddress());
 
         return userRepository.save(user);
+    }
+
+    @Override
+    public User getUserById(long id) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isEmpty()) {
+            throw new NotFoundException("Tài khoản không tồn tại!");
+        }
+        return user.get();
+    }
+
+    @Override
+    public User taoUser(CrUserRequest crUserRequest) {
+        User user = userRepository.findByEmail(crUserRequest.getEmail());
+        if (user != null) {
+            throw new BadRequestException("Email đã tồn tại trong hệ thống. Vui lòng sử dụng email khác!");
+        }
+        user = UserMapper.toUser2(crUserRequest);
+        userRepository.save(user);
+        return user;
+    }
+
+    @Override
+    public void updateUser(CrUserRequest crUserRequest, Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isEmpty()) {
+            throw new NotFoundException("Tài khoản không tồn tại!");
+        }
+        User existingUser = userOptional.get();
+
+        // Kiểm tra email trùng, loại trừ email của user hiện tại
+        User userByEmail = userRepository.findByEmail(crUserRequest.getEmail());
+        if (userByEmail != null && !(userByEmail.getId() == id)) {
+            throw new BadRequestException("Email đã tồn tại trong hệ thống. Vui lòng sử dụng email khác!");
+        }
+
+        existingUser.setFullName(crUserRequest.getFullName());
+        existingUser.setEmail(crUserRequest.getEmail());
+        existingUser.setPhone(crUserRequest.getPhone());
+        existingUser.setAvatar(crUserRequest.getAvatar());
+        existingUser.setModifiedAt(new Timestamp(System.currentTimeMillis()));
+
+        try {
+            userRepository.save(existingUser);
+        } catch (Exception ex) {
+            throw new InternalServerException("Lỗi khi sửa tài khoản");
+        }
+    }
+
+    @Override
+    public void deleteUser(long id) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isEmpty()) {
+            throw new NotFoundException("Tài khoản không tồn tại!");
+        }
+        try {
+            userRepository.deleteById(id);
+        } catch (Exception ex) {
+            throw new InternalServerException("Lỗi khi xóa tài khoản!");
+        }
     }
 }

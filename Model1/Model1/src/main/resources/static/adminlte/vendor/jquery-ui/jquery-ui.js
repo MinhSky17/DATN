@@ -3245,7 +3245,7 @@ var effectsEffectExplode = $.effects.define( "explode", "hide", function( option
 					top: -i * height
 				} )
 
-				// Select the wrapper - make it overflow: hidden and absolute positioned based on
+				// Select the wrapper - make it overflow: auto and absolute positioned based on
 				// where the original was located +left and +top equal to the size of pieces
 				.parent()
 					.addClass( "ui-effects-explode" )
@@ -10858,7 +10858,7 @@ $.widget( "ui.resizable", $.ui.mouse, {
 		if ( this.element[ 0 ].nodeName.match( /^(canvas|textarea|input|select|button|img)$/i ) ) {
 
 			this.element.wrap(
-				$( "<div class='ui-wrapper' style='overflow: hidden;'></div>" ).css( {
+				$( "<div class='ui-wrapper' style='overflow: auto;'></div>" ).css( {
 					position: this.element.css( "position" ),
 					width: this.element.outerWidth(),
 					height: this.element.outerHeight(),

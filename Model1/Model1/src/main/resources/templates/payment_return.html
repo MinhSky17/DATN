@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VNPay Callback</title>
+    <script>
+        window.onload = function () {
+            const params = new URLSearchParams(window.location.search);
+            const responseCode = params.get('vnp_ResponseCode');
+            const message = (responseCode === '00') ? 'Thành công' : 'Thanh toán thất bại: ' + responseCode;
+
+            // Gửi message về window opener (cửa sổ cha)
+            if (window.opener) {
+                window.opener.postMessage(message, '*');
+            }
+
+            // Đóng cửa sổ này
+            setTimeout(() => window.close(), 1000);
+        }
+    </script>
+</head>
+<body>
+    <p>Đang xử lý kết quả thanh toán...</p>
+</body>
+</html>

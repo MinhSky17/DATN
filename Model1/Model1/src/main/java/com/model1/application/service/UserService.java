@@ -4,6 +4,7 @@ package com.model1.application.service;
 import com.model1.application.entity.User;
 import com.model1.application.model.dto.UserDTO;
 import com.model1.application.model.request.ChangePasswordRequest;
+import com.model1.application.model.request.CrUserRequest;
 import com.model1.application.model.request.CreateUserRequest;
 import com.model1.application.model.request.UpdateProfileRequest;
 import org.springframework.data.domain.Page;
@@ -20,8 +21,12 @@ public interface UserService {
     Page<User> adminListUserPages(String fullName, String phone, String email, Integer page);
 
     User createUser(CreateUserRequest createUserRequest);
+    User taoUser(CrUserRequest crUserRequest);
 
     void changePassword(User user, ChangePasswordRequest changePasswordRequest);
 
     User updateProfile(User user, UpdateProfileRequest updateProfileRequest);
+    User getUserById(long id);
+    void updateUser(CrUserRequest crUserRequest, Long id);
+    void deleteUser(long id);
 }

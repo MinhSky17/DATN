@@ -134,7 +134,7 @@
     </section>
 
     <!-- Modal add new brand-->
-    <div class="modal fade" id="modal-add-new-brand" tabindex="-1" role="dialog" aria-labelledby="modalAddNewBrand"
+    <div class="modal fade" style="overflow-y: scroll" id="modal-add-new-brand" tabindex="-1" role="dialog" aria-labelledby="modalAddNewBrand"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -271,6 +271,8 @@
             $('.invalid-feedback-thumbnail').hide();
             $('.preview-img').attr('src', url);
         })
+
+        
 
         $("#modal-add-new-brand").on("hidden.bs.modal", function () {
             closeModalInsertUpdate();
@@ -410,7 +412,7 @@
                         url:"/api/admin/brands/"+ id,
                         type: "DELETE",
                         success: function (data){
-                            toastr.success("Xóa danh mục thành công!");
+                            toastr.success("Xóa nhãn hiệu thành công!");
                             setTimeout(() => location.reload(), 500);
                         },
                         error: function (error){
@@ -462,24 +464,18 @@
 }
 
 .edit-brand {
-    color: #ffc107;
+    color: #ffffff !important;
+    background: #ffc107;
 }
 
-.edit-brand:hover {
-    color: #fff;
-    background-color: #ffc107;
-}
 
 .delete-brand {
-    color: #dc3545;
+    color: #ffffff !important;
+    background: #dc3545;
 }
 
-.delete-brand:hover {
-    color: #fff;
-    background-color: #dc3545;
-}
 
 .actions i {
-    font-size: 16px;
+    font-size: 14px;
 }
 </style>

@@ -257,7 +257,7 @@
           border: 1px solid rgba(200, 200, 200, 0.8);
           background-color: rgba(255, 255, 255, 0.8); }
         .dropzone .dz-preview .dz-details .dz-filename:not(:hover) {
-          overflow: hidden;
+          overflow: hiddenen;
           text-overflow: ellipsis; }
           .dropzone .dz-preview .dz-details .dz-filename:not(:hover) span {
             border: 1px solid transparent; }
@@ -275,7 +275,7 @@
       filter: blur(8px); }
     .dropzone .dz-preview .dz-image {
       border-radius: 20px;
-      overflow: hidden;
+      overflow: hiddenen;
       width: 120px;
       height: 120px;
       position: relative;
@@ -344,7 +344,7 @@
       background: rgba(255, 255, 255, 0.9);
       -webkit-transform: scale(1);
       border-radius: 8px;
-      overflow: hidden; }
+      overflow: auto; }
       .dropzone .dz-preview .dz-progress .dz-upload {
         background: #333;
         background: linear-gradient(to bottom, #666, #444);

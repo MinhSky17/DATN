@@ -3216,7 +3216,7 @@ label {
     .modal-body {
         max-height: calc(100vh - 210px);
         padding-top: 2rem;
-        overflow-y: auto
+        overflow-y: scroll
     }
 
     .modal-header, .modal-footer, .modal-body {
@@ -6113,7 +6113,7 @@ body {
     font-family: "Open Sans", sans-serif;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
-    overflow-x: hidden
+    /* overflow-x: hidden */
 }
 
 body:not(.loaded) > *:not(.loading-overlay) {
@@ -6819,6 +6819,15 @@ img.slide-bg {
 }
 
 .sticky-header.fixed {
+    position: fixed;
+    right: 0;
+    left: 0;
+    padding: 0;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.08);
+    z-index: 1040
+}
+
+.header-middle.fixed {
     position: fixed;
     right: 0;
     left: 0;
@@ -7959,7 +7968,7 @@ header .separator {
     box-shadow: 0.1rem 0 0.6rem 0 rgba(50, 50, 50, 0.65);
     visibility: hidden;
     z-index: 1001;
-    overflow-y: auto
+    overflow-y: hidden
 }
 
 .mmenu-active .mobile-menu-container {
@@ -9337,7 +9346,8 @@ main .sticky-header .product-ratings:before {
 .prod-thumbnail {
     display: flex;
     display: -ms-flexbox;
-    margin: 3px -3px 0
+    margin: 3px -3px 0;
+    float: left;
 }
 
 .prod-thumbnail > .owl-dot {
@@ -10307,7 +10317,7 @@ aside .widget-info i {
         transition: transform .2s ease-in-out 0s;
         background-color: #fff;
         z-index: 9999;
-        overflow-y: auto
+        overflow-y: hidden
     }
 
     .sidebar-opened .mobile-sidebar {
@@ -11851,8 +11861,8 @@ tbody .product-col {
 }
 
 section {
-    padding-top: 4.8rem;
-    padding-bottom: 4.8rem
+    padding-top: 2.8rem;
+    padding-bottom: 0.8rem
 }
 
 .home-slider {

@@ -56,8 +56,9 @@
                     <th>Người nhận</th>
                     <th>Điện thoại</th>
                     <th>Trạng thái</th>
-                    <th width="15%">Tổng tiền</th>
+                    <th width="10%">Tổng tiền</th>
                     <th>Ngày tạo</th>
+                    <th>Thao tác</th>
                 </tr>
                 <tr class="heading-search">
                     <form method="GET" id="search-form">
@@ -85,6 +86,7 @@
                         <th>
                             
                         </th>
+                        <th><th>
                         <input type="hidden" name="page" id="page">
                     </form>
                 </tr>
@@ -103,9 +105,16 @@
                             <span th:if="${order.status == 3}" class="badge badge-success">Đã giao hàng</span>
                             <span th:if="${order.status == 5}" class="badge badge-light">Đơn hàng bị hủy</span>
                         </td>
-                        <td th:text="${order.totalPrice}"></td>
+                        <td>
+                            <span th:text="${order.totalPrice}"></span> đ
+                        </td> 
                         <td>
                             <span th:text="${#dates.format(order.createdAt, 'dd-MM-yyyy HH:mm')}"></span>
+                        </td>
+                        <td class="actions">
+                            <a th:href="@{/admin/orders/update/{id}(id=${order.id})}" class="on-default edit-row edit-brand">
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
                         </td>
                     </tr>
                 </th:block>
@@ -178,3 +187,46 @@
 </th:block>
 </body>
 </html>
+
+<style>
+
+    .badge{
+        padding: 5px;
+        border-radius: 8px;
+        font-size: 12px;
+    }
+
+    .badge-warning{
+        background-color: badge;
+        color: white;
+    }
+
+    .badge-light{
+    
+        background-color: red;
+        color: white;
+    }
+
+    .badge-primary{
+        background-color: blue;
+        color: white;
+    }
+
+    .actions {
+        text-align: center;
+        white-space: nowrap;
+    }
+    
+    .actions a {
+        display: inline-block;
+        padding: 6px 12px;
+        margin: 0 3px;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+    }
+    
+    .edit-brand {
+        color: #ffffff !important;
+        background: #ffc107;
+    }
+    </style>

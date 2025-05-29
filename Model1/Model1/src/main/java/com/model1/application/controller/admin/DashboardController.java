@@ -14,11 +14,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.time.Year;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class DashboardController {
@@ -53,9 +56,43 @@ public class DashboardController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private OrderStatisticsService orderStatisticsService;
+
     @GetMapping("/admin")
     public String dashboard(Model model){
+        Double totalRevenue = orderStatisticsService.getTotalRevenue();
+
+        // Doanh thu tháng hiện tại
+        Double monthRevenue = orderStatisticsService.getMonthRevenue();
+
+        // Doanh thu hôm nay
+        Double todayRevenue = orderStatisticsService.getTodayRevenue();
+
+        // Doanh thu 7 ngày gần nhất (theo ngày)
+        Map<String, Double> last7DaysRevenue = orderStatisticsService.getLast7DaysRevenue();
+
+        // Doanh thu theo tháng trong năm hiện tại
+        int currentYear = Year.now().getValue();
+        Map<Integer, Double> revenueByMonth = orderStatisticsService.getRevenueByMonth(currentYear);
+
+
+        // Đưa dữ liệu sang Thymeleaf
+        model.addAttribute("totalRevenue", totalRevenue);
+        model.addAttribute("monthRevenue", monthRevenue);
+        model.addAttribute("todayRevenue", todayRevenue);
+        model.addAttribute("last7DaysRevenue", last7DaysRevenue);
+        model.addAttribute("revenueByMonth", revenueByMonth);
+        model.addAttribute("currentYear", currentYear);
+
+        //return "admin/dashboard"; // Trỏ tới dashboard.html trong templates/admin/
         return "admin/index";
+    }
+
+    @GetMapping("/api/admin/revenue-by-month/{year}")
+    public ResponseEntity<Map<Integer, Double>> getRevenueByMonth(@PathVariable int year) {
+        Map<Integer, Double> revenueByMonth = orderStatisticsService.getRevenueByMonth(year);
+        return ResponseEntity.ok(revenueByMonth);
     }
 
     @GetMapping("/api/admin/count/posts")

@@ -361,7 +361,7 @@
                             <div class="form-group">
                                 <select id="payment_method" name="payment_method" class="form-control">
                                     <option value="cod">Thanh toán khi nhận hàng (COD)</option>
-                                    <option value="vietqr">VietQR</option>
+                                    <option value="vnpay">Thanh toán qua VNPay</option>
                                 </select>
                                 <span class="error-message" style="display: none; color: red;"></span>
                             </div>
@@ -379,16 +379,72 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
-            const orderId = urlParams.get('orderId');
-            let appliedCouponCode = null; // Lưu couponCode khi áp dụng mã
-        
-            if (!orderId) {
-                showError('Không tìm thấy đơn hàng');
+            let orderId = urlParams.get('orderId');
+            let appliedCouponCode = null;
+
+            // Làm sạch orderId để loại bỏ các ký tự không mong muốn
+            if (orderId) {
+                orderId = orderId.replace(/[{}\s]/g, '');
+            } else {
+                showError('Không tìm thấy orderId trong URL');
                 return;
             }
-        
+
+            // Kiểm tra nếu trang được tải lại từ VNPay return
+            if (urlParams.get('vnp_TxnRef')) {
+                handleVnpayReturn();
+            }
+
+            // Lắng nghe callback từ cửa sổ VNPay
+            window.addEventListener('message', (event) => {
+                const data = event.data;
+                if (data && data.status) {
+                    handlePaymentCallback(data);
+                }
+            });
+
+            function handleVnpayReturn() {
+                fetch('/return' + window.location.search, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Lỗi khi xử lý phản hồi từ VNPay');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    handlePaymentCallback(data);
+                })
+                .catch(error => {
+                    showError(error.message);
+                });
+            }
+
+            function handlePaymentCallback(data) {
+                console.log('Payment callback:', data);
+                const message = data.status === 'success'
+                    ? `Thanh toán thành công cho đơn hàng ${data.orderId}. Mã giao dịch: ${data.transactionId || 'N/A'}`
+                    : `Thanh toán thất bại: ${data.message}`;
+                if (data.status === 'success') {
+                    showMessage(message);
+                } else {
+                    showError(message);
+                }
+                // Lưu trạng thái giao dịch (tuỳ chọn)
+                localStorage.setItem('lastTransaction', JSON.stringify(data));
+                // Chuyển hướng sau khi hiển thị thông báo
+                setTimeout(() => {
+                    window.location.href = `/tai-khoan/lich-su-giao-dich/${data.orderId}`;
+                }, 2000);
+            }
+
             function fetchOrderDetails() {
-                fetch(`/api/don-hang/${orderId}`, { // Sửa endpoint
+                console.log('Fetching order with ID:', orderId); // Debug
+                fetch(`/api/don-hang/${orderId}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -396,25 +452,30 @@
                     }
                 })
                 .then(response => {
+                    console.log('Response status:', response.status); // Debug
                     if (!response.ok) throw new Error('Không thể lấy chi tiết đơn hàng');
                     return response.json();
                 })
                 .then(data => {
+                    console.log('Order data:', data); // Debug
                     renderOrderItems(data);
                     updatePricing(data);
                 })
-                .catch(error => showError(error.message));
+                .catch(error => {
+                    console.error('Error fetching order:', error); // Debug
+                    showError(error.message);
+                });
             }
-        
+
             function renderOrderItems(order) {
                 const cartItemsDiv = document.querySelector('.cart-items');
                 cartItemsDiv.innerHTML = '';
-        
+
                 if (!order.items || order.items.length === 0) {
                     cartItemsDiv.innerHTML = '<p>Không có sản phẩm trong đơn hàng</p>';
                     return;
                 }
-        
+
                 order.items.forEach(item => {
                     const itemDiv = document.createElement('div');
                     itemDiv.className = 'product-col';
@@ -424,7 +485,7 @@
                         </div>
                         <div class="product-details" style="flex-grow: 1;">
                             <div class="product-title">${item.productName || 'N/A'}</div>
-                            <p>Màu: ${item.color || 'N/A'}</p> <!-- Sửa từ code thành color -->
+                            <p>Màu: ${item.code || 'N/A'}</p>
                             <p>Số lượng: ${item.quantity}</p>
                         </div>
                         <div class="price-col">${formatPrice(item.price * item.quantity)}</div>
@@ -432,28 +493,29 @@
                     cartItemsDiv.appendChild(itemDiv);
                 });
             }
-        
+
             function updatePricing(order) {
                 let totalPrice = order.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
                 let promotionValue = 0;
-        
+
                 document.getElementById('in-price').value = formatPrice(totalPrice);
                 document.getElementById('in-promotion-value').value = formatPrice(promotionValue);
                 document.getElementById('in-total-price').value = formatPrice(totalPrice - promotionValue);
             }
-        
+
             function formatPrice(price) {
                 return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
             }
-        
+
             function showError(message) {
+                console.error('Error:', message); // Debug
                 const errorDiv = document.createElement('div');
                 errorDiv.className = 'alert alert-danger';
                 errorDiv.textContent = message;
                 document.querySelector('.container').prepend(errorDiv);
                 setTimeout(() => errorDiv.remove(), 5000);
             }
-        
+
             function showMessage(message) {
                 const messageDiv = document.createElement('div');
                 messageDiv.className = 'alert alert-success';
@@ -461,14 +523,14 @@
                 document.querySelector('.container').prepend(messageDiv);
                 setTimeout(() => messageDiv.remove(), 5000);
             }
-        
+
             document.getElementById('btn-apply-coupon').addEventListener('click', () => {
                 const coupon = document.getElementById('in-coupon').value;
                 if (!coupon) {
                     showError('Vui lòng nhập mã khuyến mãi');
                     return;
                 }
-        
+
                 fetch(`/api/check-hidden-promotion?code=${coupon}`, {
                     method: 'GET',
                     headers: {
@@ -487,14 +549,14 @@
                     if (data.maximumDiscountValue && promotionValue > data.maximumDiscountValue) {
                         promotionValue = data.maximumDiscountValue;
                     }
-                    appliedCouponCode = coupon; // Lưu couponCode
+                    appliedCouponCode = coupon;
                     document.getElementById('in-promotion-value').value = formatPrice(promotionValue);
                     document.getElementById('in-total-price').value = formatPrice(totalPrice - promotionValue);
                     showMessage('Áp dụng mã khuyến mãi thành công');
                 })
                 .catch(error => showError(error.message));
             });
-        
+
             document.getElementById('btn-buy-now').addEventListener('click', () => {
                 const receiverName = document.getElementById('receiver_name').value;
                 const receiverPhone = document.getElementById('receiver_phone').value;
@@ -503,34 +565,34 @@
                 const paymentMethod = document.getElementById('payment_method').value;
                 const price = parseFloat(document.getElementById('in-price').value.replace(/[^0-9]/g, ''));
                 const totalPrice = parseFloat(document.getElementById('in-total-price').value.replace(/[^0-9]/g, ''));
-        
+
                 let isValid = true;
-        
+
                 if (!receiverName) {
                     document.getElementById('receiver_name').nextElementSibling.textContent = 'Vui lòng nhập tên người nhận';
                     document.getElementById('receiver_name').nextElementSibling.style.display = 'block';
                     isValid = false;
                 }
-        
+
                 const phoneFormat = /^((09|03|07|08|05)+([0-9]{8})\b)$/;
                 if (!receiverPhone || !phoneFormat.test(receiverPhone)) {
                     document.getElementById('receiver_phone').nextElementSibling.textContent = 'Số điện thoại không hợp lệ';
                     document.getElementById('receiver_phone').nextElementSibling.style.display = 'block';
                     isValid = false;
                 }
-        
+
                 if (!receiverAddress) {
                     document.getElementById('receiver_address').nextElementSibling.textContent = 'Vui lòng nhập địa chỉ nhận hàng';
                     document.getElementById('receiver_address').nextElementSibling.style.display = 'block';
                     isValid = false;
                 }
-        
+
                 if (!paymentMethod) {
                     document.getElementById('payment_method').nextElementSibling.textContent = 'Vui lòng chọn phương thức thanh toán';
                     document.getElementById('payment_method').nextElementSibling.style.display = 'block';
                     isValid = false;
                 }
-        
+
                 if (isValid) {
                     const request = {
                         orderId: orderId,
@@ -539,12 +601,12 @@
                         receiverAddress: receiverAddress,
                         note: notes,
                         couponCode: appliedCouponCode,
-                        price: price, // Sử dụng couponCode đã lưu
+                        price: price,
                         totalPrice: totalPrice,
                         paymentMethod: paymentMethod
                     };
-        
-                    fetch('/api/don-hang/confirm', { // Sửa endpoint
+
+                    fetch('/api/don-hang/confirm', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -561,19 +623,74 @@
                         return response.json();
                     })
                     .then(data => {
-                        showMessage('Đặt hàng thành công');
-                        setTimeout(() => {
-                            window.location.href = `/tai-khoan/lich-su-giao-dich/${orderId}`;
-                        }, 1000);
+                        if (paymentMethod === 'vnpay') {
+                            fetch('/payment', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'text/plain', // Rõ ràng yêu cầu text/plain
+                                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                                },
+                                body: JSON.stringify({
+                                    receiverName: receiverName,
+                                    receiverPhone: receiverPhone,
+                                    receiverAddress: receiverAddress,
+                                    notes: notes,
+                                    amount: totalPrice * 100,
+                                    orderInfo: `Đơn hàng ${orderId}`,
+                                    orderId: orderId
+                                })
+                            })
+                            .then(response => {
+                                if (!response.ok) {
+                                    return response.text().then(text => {
+                                        try {
+                                            const err = JSON.parse(text);
+                                            throw new Error(err.message || 'Tạo thanh toán VNPay thất bại');
+                                        } catch {
+                                            throw new Error(text || 'Tạo thanh toán VNPay thất bại');
+                                        }
+                                    });
+                                }
+                                return response.text();
+                            })
+                            .then(url => {
+                                if (url.startsWith('http')) {
+                                    const paymentWindow = window.open(url, '_blank');
+                                    if (!paymentWindow) {
+                                        throw new Error('Không thể mở cửa sổ thanh toán. Vui lòng cho phép popup.');
+                                    }
+                                    // Lắng nghe callback từ VNPay
+                                    window.addEventListener('message', (event) => {
+                                        if (event.origin) {
+                                            if (event.data === 'Thành công') {
+                                                showMessage('Thanh toán thành công');
+                                                setTimeout(() => {
+                                                    window.location.href = `/tai-khoan/lich-su-giao-dich/${orderId}`;
+                                                }, 1000);
+                                            } else {
+                                                showError(event.data || 'Thanh toán thất bại');
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    throw new Error('URL thanh toán không hợp lệ');
+                                }
+                            })
+                            .catch(error => showError(error.message));
+                        } else if (paymentMethod === 'cod') {
+                            showMessage('Đặt hàng thành công');
+                            setTimeout(() => {
+                                window.location.href = `/tai-khoan/lich-su-giao-dich/${orderId}`;
+                            }, 1000);
+                        }
                     })
                     .catch(error => showError(error.message));
                 }
             });
-        
+
             fetchOrderDetails();
         });
-            
-        
     </script>
 </th:block>
 </body>

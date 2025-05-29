@@ -71,7 +71,6 @@ input:checked + .slider:before {
     grid-row-gap: 10px;
     grid-template-columns: repeat(5, 1fr);
     max-height: 800px;
-    overflow-y: auto;
 }
 
 #list-user-img .list .grid-item {
@@ -166,6 +165,30 @@ input#upload-thumbnail {
 }
 
 .thumbnail-container .img-div img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.user-container {
+    position: relative;
+    width: 100%;
+    padding-top: 68.88%;
+    margin-bottom: 10px;
+}
+
+.user-container .img-div {
+    position:  absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.user-container .img-div img {
     width: 100%;
     height: 100%;
     object-fit: cover;

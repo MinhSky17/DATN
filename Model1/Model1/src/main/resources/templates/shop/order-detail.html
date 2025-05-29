@@ -100,7 +100,7 @@
                 width: 80px;
                 height: 80px;
                 border-radius: 6px;
-                overflow: hidden;
+                overflow: auto;
             }
 
             .product-image-container img {
@@ -308,7 +308,7 @@
             <div class="left-sidebar">
                 <div class="header">
                     <div class="avatar">
-                        <img class="img-fluid" th:src="@{/shop/images/avatar/avatar.png}" alt="avatar"/>
+                        <img class="img-fluid" th:src="${user_avatar}" alt="avatar"/>
                     </div>
                     <div class="user-info">
                         <div class="user-name" th:text="${user_fullname} ?: 'Người dùng'"></div>
@@ -345,6 +345,15 @@
                             <p><span class="label">Số điện thoại:</span> <span th:text="${order.receiverPhone} ?: 'Không có thông tin'"></span></p>
                             <p><span class="label">Địa chỉ:</span> <span th:text="${order.receiverAddress} ?: 'Không có thông tin'"></span></p>
                             <p><span class="label">Ghi chú:</span> <span th:text="${order.note} ?: 'Không có ghi chú'"></span></p>
+                            <p>
+                                <span class="label">Phương thức thanh toán:</span>
+                                <span th:switch="${order.paymentMethod}">
+                                  <span th:case="'vnpay'">VNPay</span>
+                                  <span th:case="'cod'">Thanh toán khi nhận hàng</span>
+                                  <span th:case="*">Không có ghi chú</span>
+                                </span>
+                              </p>
+                              
                         </div>
 
                         <div class="order-products-section">

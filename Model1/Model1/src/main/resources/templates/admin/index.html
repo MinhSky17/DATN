@@ -9,31 +9,16 @@
                                                 ~{:: #main-content}
                                                )}">
 <head>
-    <title>Trang quản trị </title>
+    <title>Trang quản trị</title>
     <th:block id="css-resources">
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.css">
         <style>
-            #barChart {
+            #revenueByMonthChart, #last7DaysChart {
                 display: block;
                 box-sizing: border-box;
-                height: 411px !important;
-                width: 411px !important;
+                height: 400px !important;
+                width: 100% !important;
                 margin: auto;
-            }
-
-            #doughnutBrand {
-                display: block;
-                box-sizing: border-box;
-                height: 411px !important;
-                width: 411px !important;
-                margin: auto;
-            }
-
-            #myChartProduct {
-                display: block;
-                box-sizing: border-box;
-                height: 409px !important;
-                width: 775px;
             }
         </style>
     </th:block>
@@ -49,10 +34,65 @@
                     </a>
                 </li>
             </ol>
-            <a class="sidebar-right-toggle" data-open="sidebar-right"><i
-                    class="fas fa-chevron-left"></i></a>
+            <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fas fa-chevron-left"></i></a>
         </div>
     </header>
+    <div class="row pt-4" style="margin-top: -30px !important">
+        <div class="col-lg-12">
+            <section class="card revenue-card">
+                <div class="card-body">
+                    <h2 class="card-title1">Thống kê doanh thu</h2>
+                    <div class="row revenue-stats">
+                        <div class="col-md-4 revenue-item">
+                            <div class="revenue-box total-revenue">
+                                <h4>Tổng doanh thu</h4>
+                                <p th:text="${#numbers.formatDecimal(totalRevenue, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 revenue-item">
+                            <div class="revenue-box month-revenue">
+                                <h4>Doanh thu tháng này</h4>
+                                <p th:text="${#numbers.formatDecimal(monthRevenue, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 revenue-item">
+                            <div class="revenue-box today-revenue">
+                                <h4>Doanh thu hôm nay</h4>
+                                <p th:if="${todayRevenue != null}" th:text="${#numbers.formatDecimal(todayRevenue, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></p>
+                                <p th:if="${todayRevenue == null}">0 VNĐ</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="row pt-4">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+            <section class="card">
+                <div class="card-body">
+                    <div style="display: flex; height:40px, lig">
+                        <h2 class="card-title">Doanh thu theo tháng</h2>
+                        <select id="yearSelect" class="form-control" style="width: 120px;">
+                            <!-- Sử dụng currentYear từ controller để đảm bảo giá trị hợp lệ -->
+                            <th:block th:each="year : ${#numbers.sequence(currentYear, 2020)}">
+                                <option th:value="${year}" th:text="${year}" th:selected="${year == currentYear}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+                    <canvas id="revenueByMonthChart" style="height: 400px !important; width: 100% !important;"></canvas>
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-6">
+            <section class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Doanh thu 7 ngày gần nhất</h2>
+                    <canvas id="last7DaysChart"></canvas>
+                </div>
+            </section>
+        </div>
+    </div>
     <div class="row">
         <div class="col-lg-12">
             <div class="row mb-3">
@@ -62,7 +102,7 @@
                             <div class="widget-summary">
                                 <div class="widget-summary-col widget-summary-col-icon">
                                     <div class="summary-icon bg-primary">
-                                        <i class="fas fa-life-ring"></i>
+                                        <i class="bx bx-droplet"></i>
                                     </div>
                                 </div>
                                 <div class="widget-summary-col">
@@ -86,7 +126,7 @@
                             <div class="widget-summary">
                                 <div class="widget-summary-col widget-summary-col-icon">
                                     <div class="summary-icon bg-warning">
-                                        <i class="fas fa-certificate"></i>
+                                        <i class="bx bx-list-ul"></i>
                                     </div>
                                 </div>
                                 <div class="widget-summary-col">
@@ -110,7 +150,7 @@
                             <div class="widget-summary">
                                 <div class="widget-summary-col widget-summary-col-icon">
                                     <div class="summary-icon bg-success">
-                                        <i class="fas fa-mail-bulk"></i>
+                                        <i class="bx bx-news"></i>
                                     </div>
                                 </div>
                                 <div class="widget-summary-col">
@@ -136,12 +176,12 @@
                             <div class="widget-summary">
                                 <div class="widget-summary-col widget-summary-col-icon">
                                     <div class="summary-icon bg-secondary">
-                                        <i class="fas fa-shopping-cart"></i>
+                                        <i class="bx bx-package"></i>
                                     </div>
                                 </div>
                                 <div class="widget-summary-col">
                                     <div class="summary">
-                                        <h4 class="title">Tổng số đơn hàng</h4>
+                                        <h4 class="title">Tổng số đơn hàng đã giao</h4>
                                         <div class="info">
                                             <strong class="amount" id="order-count"></strong>
                                         </div>
@@ -160,7 +200,7 @@
                             <div class="widget-summary">
                                 <div class="widget-summary-col widget-summary-col-icon">
                                     <div class="summary-icon bg-info">
-                                        <i class="fas fa-bookmark"></i>
+                                        <i class="bx bx-badge-check"></i>
                                     </div>
                                 </div>
                                 <div class="widget-summary-col">
@@ -184,7 +224,7 @@
                             <div class="widget-summary">
                                 <div class="widget-summary-col widget-summary-col-icon">
                                     <div class="summary-icon bg-danger">
-                                        <i class="fas fa-user-injured"></i>
+                                        <i class="fas fa-user"></i>
                                     </div>
                                 </div>
                                 <div class="widget-summary-col">
@@ -205,88 +245,199 @@
             </div>
         </div>
     </div>
-    <div class="row pt-4">
-        <div class="col-lg-7 mb-4 mb-lg-0">
-            <section class="card">
-                <header class="card-header">
-                    <div class="card-actions">
-                        <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
-                        <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
-                    </div>
-                    <h2 class="card-title">Thống kê doanh số</h2>
-                    <div class="row" style="margin-top: 20px">
-                        <div class="col-md-3">
-                            <input type="date" id="datepicker" class="form-control">
-                        </div>
-                        <div class="col-md-3">
-                            <input type="date" id="datepicker2" class="form-control">
-                        </div>
-                        <div class="col-md-3">
-                            <button type="button" id="btn-dashboard-filter" class="btn btn-primary btn-sm"
-                                    value="Lọc kết quả">Lọc kết quả
-                            </button>
-                            <a href="/admin" class="btn btn-primary btn-sm">refesh</a>
-                        </div>
-                    </div>
-                </header>
-                <div class="card-body">
-                    <div class="chart chart-md" id="chart"></div>
-                </div>
-            </section>
-        </div>
-
-        <div class="col-lg-5">
-            <section class="card">
-                <header class="card-header">
-                    <div class="card-actions">
-                        <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
-                        <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
-                    </div>
-                    <h2 class="card-title">Số lượng Sản phẩm được mua theo danh mục</h2>
-                </header>
-                <div class="card-body">
-                    <canvas id="barChart"></canvas>
-                </div>
-            </section>
-        </div>
-
-    </div>
-    <div class="row pt-4">
-        <div class="col-lg-5 mb-4 mb-lg-0">
-            <section class="card">
-                <header class="card-header">
-                    <div class="card-actions">
-                        <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
-                        <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
-                    </div>
-                    <h2 class="card-title">Số lượng sản phẩm được mua theo nhãn hiệu</h2>
-                </header>
-                <div class="card-body">
-                    <canvas id="doughnutBrand"></canvas>
-                </div>
-            </section>
-        </div>
-        <div class="col-lg-7">
-            <section class="card">
-                <header class="card-header">
-                    <div class="card-actions">
-                        <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
-                        <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
-                    </div>
-                    <h2 class="card-title">10 Sản phẩm bán chạy nhất trong tháng</h2>
-                </header>
-                <div class="card-body">
-                    <canvas id="myChartProduct"></canvas>
-                </div>
-            </section>
-        </div>
-    </div>
+    
+    
 </section>
 
 <th:block id="js-resources">
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
     <script th:src="@{https://cdn.jsdelivr.net/npm/chart.js@3.1.0/dist/chart.min.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            // Lấy số liệu thống kê
+            $.ajax({
+                url: '/api/admin/count/products',
+                type: 'GET',
+                success: function (data) {
+                    $('#product-count').text(data);
+                }
+            });
+            $.ajax({
+                url: '/api/admin/count/categories',
+                type: 'GET',
+                success: function (data) {
+                    $('#category-count').text(data);
+                }
+            });
+            $.ajax({
+                url: '/api/admin/count/posts',
+                type: 'GET',
+                success: function (data) {
+                    $('#post-count').text(data);
+                }
+            });
+            $.ajax({
+                url: '/api/admin/count/orders',
+                type: 'GET',
+                success: function (data) {
+                    $('#order-count').text(data);
+                }
+            });
+            $.ajax({
+                url: '/api/admin/count/brands',
+                type: 'GET',
+                success: function (data) {
+                    $('#brands-count').text(data);
+                }
+            });
+            $.ajax({
+                url: '/api/admin/count/users',
+                type: 'GET',
+                success: function (data) {
+                    $('#countUser').text(data);
+                }
+            });
+
+
+
+
+            // Biểu đồ doanh thu theo tháng
+function updateRevenueByMonthChart(year) {
+    $.ajax({
+        url: '/api/admin/revenue-by-month/' + year,
+        type: 'GET',
+        contentType: 'application/json',
+        success: function (revenueByMonth) {
+            const monthLabels = ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
+                                'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
+            const monthData = Array(12).fill(0);
+            Object.keys(revenueByMonth).forEach(month => {
+                monthData[parseInt(month) - 1] = revenueByMonth[month] || 0;
+            });
+
+            // Xóa biểu đồ cũ nếu tồn tại
+            const chartElement = document.getElementById('revenueByMonthChart');
+            if (chartElement.chart) {
+                chartElement.chart.destroy();
+            }
+
+            // Tạo biểu đồ mới
+            chartElement.chart = new Chart(chartElement, {
+                type: 'bar',
+                data: {
+                    labels: monthLabels,
+                    datasets: [{
+                        label: 'Doanh thu (VNĐ)',
+                        data: monthData,
+                        backgroundColor: '#007bff',
+                        borderColor: '#0056b3',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Doanh thu (VNĐ)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Tháng'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        }
+                    }
+                }
+            });
+        },
+        error: function (err) {
+            console.error('Lỗi khi lấy dữ liệu doanh thu theo tháng:', err);
+            alert('Không thể tải dữ liệu doanh thu. Vui lòng thử lại sau.');
+        }
+    });
+}
+
+// Xử lý sự kiện khi thay đổi năm và khởi tạo biểu đồ
+$(document).ready(function () {
+    // Lấy năm hiện tại
+    const currentYear = new Date().getFullYear();
+    
+    // Khởi tạo biểu đồ với năm hiện tại
+    updateRevenueByMonthChart(currentYear);
+
+    // Xử lý khi thay đổi năm trong dropdown
+    $('#yearSelect').change(function () {
+        const selectedYear = $(this).val();
+        updateRevenueByMonthChart(selectedYear);
+    });
+});
+
+
+            // Biểu đồ doanh thu 7 ngày gần nhất
+            const last7DaysRevenue = /*[[${last7DaysRevenue}]]*/ {};
+            const today = new Date();
+            const dayLabels = [];
+            const dayData = [];
+
+            // Tạo danh sách nhãn và dữ liệu cho 7 ngày gần nhất
+            for (let i = 6; i >= 0; i--) {
+                const date = new Date(today);
+                date.setDate(today.getDate() - i);
+                // Định dạng ngày thành dd/mm
+                const day = String(date.getDate()).padStart(2, '0');
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const dateString = `${day}/${month}`;
+                dayLabels.push(dateString);
+                // Key trong last7DaysRevenue vẫn là YYYY-MM-DD
+                const dataKey = date.toISOString().split('T')[0];
+                dayData.push(last7DaysRevenue[dataKey] || 0); // Gán 0 nếu không có dữ liệu
+            }
+
+            new Chart(document.getElementById('last7DaysChart'), {
+                type: 'line',
+                data: {
+                    labels: dayLabels,
+                    datasets: [{
+                        label: 'Doanh thu (VNĐ)',
+                        data: dayData,
+                        fill: false,
+                        borderColor: '#28a745',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Doanh thu (VNĐ)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Ngày'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
     <script>
         let dataChartProductOrderedByCategory = [];
         let labelChartProductOrderedByCategory = [];
@@ -578,3 +729,121 @@
 
 </body>
 </html>
+
+<style>
+    .body{
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .form-control{
+        width: 100px;
+        margin-left: 10px;
+        padding: 3px;
+        margin-top: -10px;
+    }
+
+    .card-title{
+        padding-bottom: 10px;
+    }
+
+    .revenue-card {
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
+        overflow: hidden;
+        transition: transform 0.3s ease;
+    }
+    
+    .revenue-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .card-title1 {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 1.5rem;
+        margin-top: 0px;
+        text-align: center;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 0.5rem;
+        padding-top: 5px;
+    }
+    
+    .revenue-stats {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+    }
+    
+    .revenue-item {
+        flex: 1;
+    }
+    
+    .revenue-box {
+        background: #ffffff;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        
+    }
+    
+    
+    
+    .revenue-box h4 {
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: #34495e;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+    }
+    
+    .revenue-box p {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0;
+        color: black !important;
+        
+    }
+    
+    /* Màu sắc khác nhau cho từng box */
+    .total-revenue {
+        border-left: 4px solid #007bff;
+        border-right: 4px solid #007bff;
+        background: linear-gradient(135deg,rgb(229, 236, 244),rgb(170, 211, 255));
+    }
+    
+    .month-revenue {
+        border-left: 4px solid #28a745;
+        border-right: 4px solid #28a745;
+        background: linear-gradient(135deg,rgb(235, 246, 241),rgb(187, 249, 190));
+    }
+    
+    .today-revenue {
+        border-left: 4px solid #dc3545;
+        border-right: 4px solid #dc3545;
+        background: linear-gradient(135deg,rgb(255, 236, 236),rgb(255, 163, 163));
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .revenue-stats {
+            flex-direction: column;
+            gap: 15px;
+        }
+    
+        .revenue-box {
+            padding: 15px;
+        }
+    
+        .revenue-box h4 {
+            font-size: 1.1rem;
+        }
+    
+        .revenue-box p {
+            font-size: 1.3rem;
+        }
+    }
+</style>

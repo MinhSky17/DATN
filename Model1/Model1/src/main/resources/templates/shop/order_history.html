@@ -102,7 +102,7 @@
                     width: 100px;
                     height: 100px;
                     border-radius: 8px;
-                    overflow: hidden;
+                    overflow: auto;
                 }
 
                 .product-image-container img {
@@ -334,7 +334,7 @@
             <div class="left-sidebar">
                 <div class="header">
                     <div class="avatar">
-                        <img class="img-fluid" th:src="@{/shop/images/avatar/avatar.png}" alt="avatar"/>
+                        <img class="img-fluid" th:src="${user_avatar}" alt="avatar"/>
                     </div>
                     <div class="user-info">
                         <div class="user-name" th:text="${user_fullname}"></div>

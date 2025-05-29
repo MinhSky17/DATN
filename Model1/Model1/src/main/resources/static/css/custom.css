@@ -22,7 +22,7 @@
 .header-search form {
     border: 2px solid #ff6b6b;
     border-radius: 25px;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .header-search .form-control {

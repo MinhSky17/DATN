@@ -4,8 +4,8 @@ html, body {
 }
 
 html {
-    overflow-x: hidden !important;
-    overflow-y: scroll !important
+    /* overflow-x: hidden !important; */
+    overflow-y: hidden !important
 }
 
 body {
@@ -96,7 +96,7 @@ a:active {
 }
 
 .page-header {
-    background: #171717;
+    background: #4983ff;
     border-bottom: none;
     border-left: 1px solid #3a3a3a;
     box-shadow: 1px 3px 0 1px #ccc;
@@ -359,7 +359,7 @@ a:active {
     }
 
     html.mobile-device .sidebar-left, html.mobile-device .sidebar-right {
-        overflow-y: scroll;
+        overflow-y: hidden;
         overflow-x: hidden;
         -webkit-overflow-scrolling: touch
     }
@@ -374,7 +374,7 @@ a:active {
 
     .body {
         min-height: 0;
-        overflow: visible
+        /* overflow: visible */
     }
 
     .header {
@@ -465,7 +465,7 @@ a:active {
     }
 
     html.no-mobile-device .inner-wrapper {
-        overflow-y: auto
+        /* overflow-y: hidden */
     }
 
     html.no-mobile-device.sidebar-left-opened, html.no-mobile-device.sidebar-left-opened body, html.no-mobile-device.sidebar-right-opened, html.no-mobile-device.sidebar-right-opened body {
@@ -1112,7 +1112,7 @@ a:active {
     right: 0;
     width: 73px;
     height: 50px;
-    background-color: #171717;
+    background-color: #1554dc;
     border-radius: 0 0 0 5px;
     text-align: center;
     cursor: pointer
@@ -1720,7 +1720,7 @@ html.mobile-device.sidebar-light .sidebar-left {
 
 @media only screen and (max-width: 767px) {
     html.no-mobile-device.custom-scroll .sidebar-right .nano > .nano-content {
-        overflow: scroll;
+        overflow: hidden;
         overflow-x: hidden
     }
 }
@@ -1782,7 +1782,7 @@ html.no-overflowscrolling .nano:hover > .nano-pane > .nano-slider {
 }
 
 html.no-overflowscrolling.custom-scroll .nano > .nano-content {
-    overflow: scroll;
+    overflow: hidden;
     overflow-x: hidden
 }
 
@@ -1808,7 +1808,7 @@ html.no-overflowscrolling.sidebar-light:not(.dark) .inner-menu .nano {
 
 @media only screen and (max-width: 767px) {
     html.no-overflowscrolling .sidebar-left .nano > .nano-content, html.no-overflowscrolling .sidebar-right .nano > .nano-content, html.no-overflowscrolling .inner-menu .nano > .nano-content {
-        overflow: scroll !important;
+        overflow: hidden !important;
         overflow-x: hidden !important
     }
 }
@@ -1825,7 +1825,7 @@ html.no-overflowscrolling.sidebar-light:not(.dark) .inner-menu .nano {
     }
 
     html.overflowscrolling.fixed.custom-scroll .sidebar-left .nano > .nano-content, html.overflowscrolling.fixed.custom-scroll .sidebar-right .nano > .nano-content, html.overflowscrolling.fixed.custom-scroll .inner-menu .nano > .nano-content {
-        overflow-y: scroll;
+        overflow-y: hidden;
         overflow-x: hidden
     }
 
@@ -2877,7 +2877,7 @@ html.sidebar-light:not(.dark) .inner-menu a.menu-item.active {
     left: 0;
     line-height: 52px;
     position: relative;
-    overflow: hidden;
+    overflow: hiddenenen;
     text-align: left;
     text-decoration: none
 }
@@ -2992,7 +2992,7 @@ html.dark .inner-menu-toggle:after, html.dark .inner-menu .inner-menu-toggle-ins
         padding: 10px;
         max-height: 350px;
         overflow-x: hidden;
-        overflow-y: auto
+        overflow-y: hidden
     }
 }
 
@@ -3005,7 +3005,7 @@ html.dark .inner-menu-toggle:after, html.dark .inner-menu .inner-menu-toggle-ins
 
 @media (max-width: 991px) {
     .header-nav-main.collapsing {
-        overflow: hidden
+        overflow: hiddenenenen
     }
 
     .header-nav-main nav {
@@ -4193,7 +4193,7 @@ html.dark .header .separator, html.header-dark .header .separator {
         padding: 10px;
         max-height: 350px;
         overflow-x: hidden;
-        overflow-y: auto
+        overflow-y: hidden
     }
 }
 
@@ -5822,9 +5822,12 @@ ul.nav-main > li > a {
     padding: 12px 25px
 }
 
-ul.nav-main > li > a:hover, ul.nav-main > li > a:focus {
-    background-color: #21262d
+ul.nav-main > li > a:hover, ul.nav-main > li > a:focus, ul.nav-main > li > a:active {
+    background-color: #0079ff;
+    border-radius: 12px;
+    margin: 8px;
 }
+
 
 ul.nav-main > li.nav-active > a {
     box-shadow: 2px 0 0 #ccc inset
@@ -5839,7 +5842,9 @@ ul.nav-main > li.nav-active > i {
 }
 
 ul.nav-main > li.nav-expanded > a {
-    background: #21262d
+    background-color: #2a517c;
+    border-radius: 12px;
+    margin: 8px;
 }
 
 ul.nav-main li {
@@ -5851,8 +5856,7 @@ ul.nav-main li a {
     color: #abb4be;
     white-space: nowrap;
     text-overflow: ellipsis;
-    font-size: 12.8px;
-    font-size: .8rem
+    font-size: 14px;
 }
 
 ul.nav-main li a span.badge {
@@ -5909,7 +5913,7 @@ ul.nav-main li.nav-parent.nav-expanded > ul.nav-children {
 }
 
 ul.nav-main li .nav-children {
-    background: #191c21;
+    background: #0640be;
     box-shadow: 0 -3px 3px -3px rgba(0, 0, 0, .7) inset;
     display: none;
     padding: 10px 0
@@ -5921,7 +5925,7 @@ ul.nav-main li .nav-children li a {
 }
 
 ul.nav-main li .nav-children li a:hover, ul.nav-main li .nav-children li a:focus {
-    background: #191c21
+    background: #0640be
 }
 
 ul.nav-main li .nav-children li a:after {
@@ -6582,38 +6586,37 @@ html.sidebar-light:not(.dark) ul.nav-main li .nav-children li a:hover, html.side
 }
 
 .btn-primary {
-    background-color: #ccc;
-    border-color: #ccc #ccc #b3b3b3;
-    color: #fff
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #ffffff;
 }
 
 .btn-primary:hover, .btn-primary.hover {
-    background-color: #dfdfdf;
-    border-color: #e6e6e6 #e6e6e6 #ccc;
-    color: #fff
+    background-color: #0069d9; /* darker blue for hover */
+    border-color: #0062cc;
+    color: #ffffff;
 }
 
 .btn-primary:focus, .btn-primary.focus {
-    box-shadow: 0 0 0 3px rgba(204, 204, 204, .5);
-    color: #fff
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* use primary color */
+    color: #ffffff;
 }
 
 .btn-primary.disabled, .btn-primary:disabled {
-    background-color: #ccc;
-    border-color: #ccc #ccc #b3b3b3
+    background-color: #c0c0c0; /* neutral gray for disabled */
+    border-color: #c0c0c0;
+    color: #6c757d; /* muted text */
+    cursor: not-allowed;
 }
 
-.btn-primary:active, .btn-primary.active, .show > .btn-primary.dropdown-toggle {
-    background-color: #b9b9b9;
-    background-image: none;
-    border-color: #b3b3b3 #b3b3b3 #999
-}
-
+.btn-primary:active, .btn-primary.active,
 .show > .btn-primary.dropdown-toggle {
-    background-color: #b9b9b9;
-    background-image: none;
-    border-color: #b3b3b3 #b3b3b3 #999
+    background-color: #0056b3; /* deeper blue for active */
+    border-color: #004f9f;
+    color: #ffffff;
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
+
 
 .btn-success {
     background-color: #47a447;
@@ -7213,7 +7216,7 @@ html.dark .call-to-action.call-to-action-grey:before {
     width: 100%;
     padding: 0;
     border-radius: 0 0 5px 5px !important;
-    overflow: hidden
+    overflow: hiddenenen
 }
 
 .card-footer-btn-group a {
@@ -7455,7 +7458,7 @@ html.dark .card-body {
 
 html.dark .card-footer {
     background: #242830;
-    border-top-color: #191c21
+    border-top-color: #0640be
 }
 
 html .card-primary .card-header {
@@ -8355,7 +8358,7 @@ html .card-dark .card-actions a, html .card-dark .card-title {
 
 .chart-data-selector .chart-data-selector-items {
     position: relative;
-    overflow: hidden
+    overflow: hiddenenenenen
 }
 
 .chart-data-selector .chart-data-selector-items .chart-active {
@@ -9097,7 +9100,7 @@ html.dark .dropzone:hover .dz-default span {
 
 .ecommerce-form-sidebar-overlay-wrapper .ecommerce-form-sidebar-overlay-body .ecommerce-form-sidebar-overlay-content {
     height: 100%;
-    overflow-y: auto;
+    overflow-y: hidden;
     overflow-x: hidden
 }
 
@@ -9252,7 +9255,7 @@ html.dark .dropzone:hover .dz-default span {
 
 .ecommerce-timeline {
     position: relative;
-    overflow: hidden
+    overflow: hiddenenenenenen
 }
 
 .ecommerce-timeline:before {
@@ -9435,7 +9438,7 @@ html.dark .dropzone:hover .dz-default span {
 .fileupload .uneditable-input .fileupload-preview {
     display: inline-block;
     float: left;
-    overflow: hidden;
+    overflow: hiddenenenenen;
     padding: 0 0 0 17px;
     text-overflow: ellipsis;
     width: 100%
@@ -11404,7 +11407,7 @@ label.error {
 .list-markers p {
     margin: 0 0 2px;
     padding: 3px 55px 3px 0;
-    overflow: hidden;
+    overflow: hiddenenen;
     white-space: nowrap;
     text-overflow: ellipsis;
     width: 100%
@@ -12303,7 +12306,7 @@ dl dd {
 }
 
 .loading-overlay-showing {
-    overflow: hidden
+    overflow: hiddenen
 }
 
 .loading-overlay-showing > .loading-overlay {
@@ -14415,7 +14418,7 @@ html.ie11 .scroll-to-top {
     top: 0;
     padding: 0 37px 0 0;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: hidden;
     outline: none
 }
 
@@ -16401,7 +16404,7 @@ p .alternative-font {
 }
 
 a, a:hover, a:focus {
-    color: #ccc
+    color: black;
 }
 
 p.drop-caps:first-letter {
@@ -17027,11 +17030,10 @@ ul.simple-bullet-list li.orange:before {
 
 .widget-summary .summary-icon {
     margin-right: 15px;
-    width: 90px;
-    height: 90px;
-    line-height: 90px;
-    font-size: 51.2px;
-    font-size: 3.2rem;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    font-size: 45px;
     text-align: center;
     color: #fff;
     border-radius: 55px

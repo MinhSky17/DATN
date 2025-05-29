@@ -67,7 +67,7 @@
                     <th>Ảnh</th>
                     <th>Nhãn hiệu</th>
                     <th>Danh mục</th>
-                    <th>Giá nhập</th>
+                    <th>Giá gốc</th>
                     <th>Giá bán</th>
                     <th>Đã bán</th>
                     <th>Thao tác</th>
@@ -102,8 +102,6 @@
                         <th></th>
                         <th></th>
                         <th></th>
-                        <th></th>
-                        <th></th>
                         <input type="hidden" name="page" id="page">
                     </form>
                 </tr>
@@ -126,7 +124,7 @@
                         <td class="money" th:text="${product.salePrice}"></td>
                         <td th:text="${product.totalSold}"></td>
                         <td class="actions">
-                            <a th:href="@{/admin/products/{slug}/{id}(id=${product.id}, slug=${product.slug})}" class="on-default edit-row"><i class="fas fa-pencil-alt"></i></a>
+                            <a th:href="@{/admin/products/{slug}/{id}(id=${product.id}, slug=${product.slug})}" class="on-default edit-row edit-product"><i class="fas fa-pencil-alt"></i></a>
                             <a href="#" th:data-id="${product.id}" class="on-default remove-row delete-product"><i class="far fa-trash-alt"></i></a>
                         </td>
                     </tr>
@@ -253,3 +251,54 @@
 </th:block>
 </body>
 </html>
+
+<style>
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: white;
+    }
+    
+    .btn-primary:hover {
+        background-color: #0069d9;
+        border-color: #0062cc;
+        color: white;
+    }
+    
+    .btn-primary:focus, .btn-primary:active {
+        background-color: #0069d9 !important;
+        border-color: #0062cc !important;
+        color: white !important;
+        box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5) !important;
+    }
+    
+    /* Thêm CSS mới cho nút sửa và xóa */
+    .actions {
+        text-align: center;
+        white-space: nowrap;
+    }
+    
+    .actions a {
+        display: inline-block;
+        padding: 6px 12px;
+        margin: 0 3px;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+    }
+    
+    .edit-product {
+        color: #ffffff !important;
+        background: #ffc107;
+    }
+    
+    
+    .delete-product {
+        color: #ffffff !important;
+        background: #dc3545;
+    }
+    
+    
+    .actions i {
+        font-size: 14px;
+    }
+    </style>

@@ -1,7 +1,7 @@
 <th:block th:fragment="sidebar">
-<aside id="sidebar-left" class="sidebar-left" >
-    <div class="sidebar-header">
-        <div class="sidebar-title">
+<aside id="sidebar-left" class="sidebar-left" style="background: #0640be" >
+    <div class="sidebar-header" >
+        <div class="sidebar-title" style="background: #0640be">
 
         </div>
         <div class="sidebar-toggle d-none d-md-block" data-toggle-class="sidebar-left-collapsed"
@@ -9,8 +9,8 @@
             <i class="fas fa-bars" aria-label="Toggle sidebar"></i>
         </div>
     </div>
-    <div class="nano">
-        <div class="nano-content">
+    <div class="nano" style="background: #0640be">
+        <div class="nano-content" >
             <nav id="menu" class="nav-main" role="navigation">
                 <ul class="nav nav-main">
                     <li>
@@ -19,121 +19,49 @@
                             <span >Trang chủ</span>
                         </a>
                     </li>
-                    <li class="nav-parent">
-                        <a class="nav-link" href="#">
-                            <i class="bx bx-layout" aria-hidden="true"></i>
+                    <li>
+                        <a class="nav-link" href="/admin/categories">                           
+                            <i class='bx bx-list-ul' aria-hidden="true"></i>
                             <span>Quản lý danh mục</span>
                         </a>
-                        <ul class="nav nav-children">
-                            <li>
-                                <a class="nav-link" href="/admin/categories">
-                                    Danh sách danh mục
-                                </a>
-                            </li>
-                        </ul>
+                        
                     </li>
-                    <li class="nav-parent">
-                        <a class="nav-link" href="#">
-                            <i class="bx bx-layout" aria-hidden="true"></i>
+                    <li>
+                        <a class="nav-link" href="/admin/brands">
+                            <i class='bx bx-badge-check' aria-hidden="true"></i>
                             <span>Quản lý nhãn hiệu</span>
                         </a>
-                        <ul class="nav nav-children">
-                            <li>
-                                <a class="nav-link" href="/admin/brands">
-                                    Danh sách nhãn hiệu
-                                </a>
-                            </li>
-                        </ul>
                     </li>
-                    <li class="nav-parent">
-                        <a class="nav-link" href="#">
-                            <i class="bx bx-loader-circle" aria-hidden="true"></i>
+                    <li>
+                        <a class="nav-link" href="/admin/products">                     
+                            <i class='bx bx-droplet' aria-hidden="true"></i>
                             <span>Quản lý sản phẩm</span>
                         </a>
-                        <ul class="nav nav-children">
-                            <li>
-                                <a class="nav-link" href="/admin/products">
-                                    Danh sách sản phẩm
-                                </a>
-                            </li>
-                            <li>
-                                <a class="nav-link" href="/admin/products/create">
-                                    Thêm mới sản phẩm
-                                </a>
-                            </li>
-                        </ul>
                     </li>
-                    <li class="nav-parent">
-                        <a class="nav-link" href="#">
-                            <i class="bx bx-cube" aria-hidden="true"></i>
+                    <li>
+                        <a class="nav-link" href="/admin/posts">
+                            <i class='bx bx-news' aria-hidden="true"></i>
+
                             <span>Quản lý bài viết</span>
                         </a>
-                        <ul class="nav nav-children">
-                            <li>
-                                <a class="nav-link" href="/admin/posts">
-                                    Danh sách bài viết
-                                </a>
-                            </li>
-                            <li>
-                                <a class="nav-link" href="/admin/posts/create">
-                                    Thêm mới bài viết
-                                </a>
-                            </li>
-                        </ul>
                     </li>
-                    <li class="nav-parent">
-                        <a class="nav-link" href="#">
-                            <i class="bx bx-collection" aria-hidden="true"></i>
+                    <li>
+                        <a class="nav-link" href="/admin/promotions">
+                            <i class='bx bx-purchase-tag' aria-hidden="true"></i>
                             <span>Quản lý khuyến mại</span>
-                        </a>
-                        <ul class="nav nav-children">
-                            <li>
-                                <a class="nav-link" href="/admin/promotions">
-                                    Danh sách khuyến mại
-                                </a>
-                            </li>
-                            <li>
-                                <a class="nav-link" href="/admin/promotions/create">
-                                    Thêm mới khuyến mại
-                                </a>
-                            </li>
-                        </ul>
+                        </a>                       
                     </li>
-                    <li class="nav-parent">
-                        <a class="nav-link" href="#">
-                            <i class="bx bx-cart-alt" aria-hidden="true"></i>
+                    <li>
+                        <a class="nav-link" href="/admin/orders">
+                            <i class='bx bx-package' aria-hidden="true"></i>
                             <span>Quản lý đơn hàng</span>
                         </a>
-                        <ul class="nav nav-children">
-                            <li>
-                                <a class="nav-link" href="/admin/orders">
-                                    Danh sách đơn hàng
-                                </a>
-                            </li>
-                            <li>
-                                <a class="nav-link" href="/admin/orders/create">
-                                    Thêm mới đơn hàng
-                                </a>
-                            </li>
-                        </ul>
                     </li>
-                    <li class="nav-parent">
-                        <a class="nav-link" href="#">
-                            <i class="fas fa-user-injured"></i>
+                    <li>
+                        <a class="nav-link" href="/admin/users">
+                            <i class="fas fa-user"></i>
                             <span>Quản lý tài khoản</span>
-                        </a>
-                        <ul class="nav nav-children">
-                            <li>
-                                <a class="nav-link" href="/admin/users">
-                                    Danh sách tài khoản
-                                </a>
-                            </li>
-                            <li>
-                                <a class="nav-link" href="#">
-                                    Thêm mới tài khoản
-                                </a>
-                            </li>
-                        </ul>
+                        </a>                        
                     </li>
 
                 </ul>

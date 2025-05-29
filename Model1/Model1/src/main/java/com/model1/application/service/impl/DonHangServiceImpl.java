@@ -91,8 +91,8 @@ public class DonHangServiceImpl implements DonHangService {
             }
 
             // Cập nhật số lượng
-            productColor.setQuantity(productColor.getQuantity() - quantity);
-            productColorRepository.save(productColor);
+//            productColor.setQuantity(productColor.getQuantity() - quantity);
+//            productColorRepository.save(productColor);
 
             // Tạo chi tiết đơn hàng
             OrderDetail orderDetail = new OrderDetail();
@@ -165,7 +165,7 @@ public class DonHangServiceImpl implements DonHangService {
         if (dto.getTotalPrice() < 0) {
             throw new IllegalArgumentException("Tổng tiền không hợp lệ");
         }
-        if (dto.getPaymentMethod() == null || !List.of("cod", "zalopay", "aftee", "card", "momo", "fundiin").contains(dto.getPaymentMethod())) {
+        if (dto.getPaymentMethod() == null || !List.of("cod", "vnpay", "aftee", "card", "momo", "fundiin").contains(dto.getPaymentMethod())) {
             throw new IllegalArgumentException("Phương thức thanh toán không hợp lệ");
         }
         if (dto.getCouponCode() != null && !dto.getCouponCode().trim().isEmpty()) {
@@ -186,6 +186,18 @@ public class DonHangServiceImpl implements DonHangService {
         donHang.setStatus(1);
         donHang.setModifiedAt(new Timestamp(System.currentTimeMillis()));
 
+        //Cap nhat so luong mau san pham
+        List<OrderDetail> details = orderDetailRepository.findByOrderId(donHang.getId());
+        for (OrderDetail detail : details) {
+            ProductColor productColor = productColorRepository.findById(detail.getColorId()).orElse(null);
+            productColor.setQuantity(productColor.getQuantity() - detail.getQuantity());
+            productColorRepository.save(productColor);
+
+            Product product = productRepository.findById(detail.getProductId()).orElse(null);
+            product.setTotalSold(product.getTotalSold() + detail.getQuantity());
+            productRepository.save(product);
+        }
+
         return donHangRepository.save(donHang);
     }
 
@@ -200,6 +212,19 @@ public class DonHangServiceImpl implements DonHangService {
         DonHang donHang = donHangRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng"));
         donHang.setStatus(5);
+
+        //Cap nhat so luong mau san pham
+        List<OrderDetail> details = orderDetailRepository.findByOrderId(donHang.getId());
+        for (OrderDetail detail : details) {
+            ProductColor productColor = productColorRepository.findById(detail.getColorId()).orElse(null);
+            productColor.setQuantity(productColor.getQuantity() + detail.getQuantity());
+            productColorRepository.save(productColor);
+
+            Product product = productRepository.findById(detail.getProductId()).orElse(null);
+            product.setTotalSold(product.getTotalSold() + detail.getQuantity());
+            productRepository.save(product);
+        }
+
         donHangRepository.save(donHang);
     }
 

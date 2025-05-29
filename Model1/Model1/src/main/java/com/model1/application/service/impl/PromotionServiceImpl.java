@@ -65,12 +65,12 @@ public class PromotionServiceImpl implements PromotionService {
 
         //Check có khuyến mại nào đang chạy hay chưa
 
-        if (createPromotionRequest.isPublic() && createPromotionRequest.isActive()) {
-            Promotion alreadyPromotion = promotionRepository.checkHasPublicPromotion();
-            if (alreadyPromotion != null) {
-                throw new BadRequestException("Chương trình khuyến mãi công khai \"" + alreadyPromotion.getCouponCode() + "\" đang chạy. Không thể tạo mới");
-            }
-        }
+//        if (createPromotionRequest.isPublic() && createPromotionRequest.isActive()) {
+//            Promotion alreadyPromotion = promotionRepository.checkHasPublicPromotion();
+//            if (alreadyPromotion != null) {
+//                throw new BadRequestException("Chương trình khuyến mãi công khai \"" + alreadyPromotion.getCouponCode() + "\" đang chạy. Không thể tạo mới");
+//            }
+//        }
 
         Promotion promotion = new Promotion();
         promotion.setCouponCode(createPromotionRequest.getCode());
@@ -112,12 +112,12 @@ public class PromotionServiceImpl implements PromotionService {
         }
 
         //Check có khuyến mại nào đang chạy hay không
-        if (createPromotionRequest.isActive() && createPromotionRequest.isPublic()) {
-            Promotion alreadyPromotion = promotionRepository.checkHasPublicPromotion();
-            if (alreadyPromotion != null) {
-                throw new BadRequestException("Chương trình khuyến mãi công khai \"" + alreadyPromotion.getCouponCode() + "\" đang chạy. Không thể tạo mới");
-            }
-        }
+//        if (createPromotionRequest.isActive() && createPromotionRequest.isPublic()) {
+//            Promotion alreadyPromotion = promotionRepository.checkHasPublicPromotion();
+//            if (alreadyPromotion != null) {
+//                throw new BadRequestException("Chương trình khuyến mãi công khai \"" + alreadyPromotion.getCouponCode() + "\" đang chạy. Không thể tạo mới");
+//            }
+//        }
 
         //Kiểm tra mã code
         rs = promotionRepository.findByCouponCode(createPromotionRequest.getCode());

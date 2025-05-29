@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="fixed" xmlns:th="http://www.thymeleaf.org" th:fragment="main-fragment(title, header,sidebar, cssResources, jsResources, mainContent)">
+<html class="fixed" style="overflow: auto !important;" xmlns:th="http://www.thymeleaf.org" th:fragment="main-fragment(title, header,sidebar, cssResources, jsResources, mainContent)">
 
 <!-- Mirrored from www.okler.net/previews/porto-admin/3.1.0/layouts-default.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 03 Mar 2021 05:30:02 GMT -->
 
@@ -49,7 +49,7 @@
 </head>
 
 <body>
-<section class="body">
+<section class="body" style="overflow-y:scrool">
     <!-- HEADER -->
     <th:block th:replace="~{fragment/header_admin :: ${header}}"></th:block>
 

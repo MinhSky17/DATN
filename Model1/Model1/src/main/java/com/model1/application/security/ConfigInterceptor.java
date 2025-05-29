@@ -18,6 +18,7 @@ public class ConfigInterceptor extends HandlerInterceptorAdapter {
             CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
             modelAndView.addObject("user_id", principal.getUser().getId());
             modelAndView.addObject("user_fullname", principal.getUser().getFullName());
+            modelAndView.addObject("user_avatar", principal.getUser().getAvatar());
             modelAndView.addObject("user_phone", principal.getUser().getPhone());
             modelAndView.addObject("user_email", principal.getUser().getEmail());
             modelAndView.addObject("user_address", principal.getUser().getAddress());

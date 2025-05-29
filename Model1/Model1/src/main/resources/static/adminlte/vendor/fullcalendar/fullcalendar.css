@@ -320,7 +320,7 @@ When it's NOT activated, the fc-button classes won't even be in the DOM.
   }
 .fc .fc-scroller-harness {
     position: relative;
-    overflow: hidden;
+    overflow: auto;
     direction: ltr;
       /* hack for chrome computing the scroller's right/left wrong for rtl. undone below... */
       /* TODO: demonstrate in codepen */
@@ -591,7 +591,7 @@ A HORIZONTAL event
   }
 .fc-h-event .fc-event-time {
     max-width: 100%; /* clip overflow on this element */
-    overflow: hidden;
+    overflow: auto;
   }
 .fc-h-event .fc-event-title-container { /* serves as a container for the sticky cushion */
     flex-grow: 1;
@@ -604,7 +604,7 @@ A HORIZONTAL event
     left: 0;  /* for sticky */
     right: 0; /* for sticky */
     max-width: 100%; /* clip overflow on this element */
-    overflow: hidden;
+    overflow: auto;
   }
 .fc-h-event.fc-event-selected:before {
     /* expand hit area */
@@ -895,7 +895,7 @@ A HORIZONTAL event
     flex-grow: 1;
     flex-shrink: 1;
     min-width: 0; /* important for allowing to shrink all the way */
-    overflow: hidden;
+    overflow: auto;
     font-weight: bold;
   }
 .fc-daygrid-dot-event:hover,
@@ -955,7 +955,7 @@ A VERTICAL event
     flex-grow: 0;
     flex-shrink: 0;
     max-height: 100%;
-    overflow: hidden;
+    overflow: auto;
   }
 
 .fc-v-event .fc-event-title-container { /* a container for the sticky cushion */
@@ -968,7 +968,7 @@ A VERTICAL event
     top: 0;
     bottom: 0;
     max-height: 100%; /* clip overflow */
-    overflow: hidden;
+    overflow: auto;
   }
 
 .fc-v-event:not(.fc-event-start) {
@@ -1108,7 +1108,7 @@ A VERTICAL event
     height: 100%; /* will need liquid-hack in FF */
   }
 .fc .fc-timegrid-axis-frame {
-    overflow: hidden;
+    overflow: auto;
     display: flex;
     align-items: center; /* vertical align */
     justify-content: flex-end; /* horizontal align. matches text-align below */
@@ -1202,7 +1202,7 @@ A VERTICAL event
 }
 .fc .fc-timegrid-now-indicator-container {
     bottom: 0;
-    overflow: hidden; /* don't let overflow of lines/arrows cause unnecessary scrolling */
+    overflow: auto; /* don't let overflow of lines/arrows cause unnecessary scrolling */
     /* z-index is set on the individual elements */
   }
 .fc-direction-ltr .fc-timegrid-col-events {
@@ -1235,7 +1235,7 @@ A VERTICAL event
   }
 .fc-timegrid-event-condensed .fc-event-main-frame {
     flex-direction: row;
-    overflow: hidden;
+    overflow: auto;
   }
 .fc-timegrid-event-condensed .fc-event-time:after {
     content: '\00a0-\00a0'; /* dash surrounded by non-breaking spaces */

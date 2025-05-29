@@ -17,15 +17,16 @@ import java.util.List;
 @SqlResultSetMappings(
         value ={
                 @SqlResultSetMapping(
-                        name ="productInfoDto",
-                        classes =@ConstructorResult(
+                        name = "productInfoDto",
+                        classes = @ConstructorResult(
                                 targetClass = ProductInfoDTO.class,
-                                columns ={
+                                columns = {
                                         @ColumnResult(name = "id", type = String.class),
                                         @ColumnResult(name = "name", type = String.class),
                                         @ColumnResult(name = "slug", type = String.class),
                                         @ColumnResult(name = "price", type = Long.class),
-                                        @ColumnResult(name = "views",type = Integer.class),
+                                        @ColumnResult(name = "sale", type = Long.class),
+                                        @ColumnResult(name = "views", type = Integer.class),
                                         @ColumnResult(name = "images", type = String.class),
                                         @ColumnResult(name = "total_sold", type = Integer.class)
                                 }
@@ -70,14 +71,14 @@ import java.util.List;
 @NamedNativeQuery(
         name = "getListNewProducts",
         resultSetMapping = "productInfoDto",
-        query = "SELECT p.id, p.name, p.sale_price as price, p.product_view as views, p.slug, p.total_sold, p.images ->> '$[0]' AS images " +
+        query = "SELECT p.id, p.name, p.price as price, p.sale_price as sale, p.product_view as views, p.slug, p.total_sold, p.images ->> '$[0]' AS images " +
                 "FROM product p WHERE p.status = 1 " +
-                "order by p.created_at DESC limit ?1"
+                "ORDER BY p.created_at DESC LIMIT ?1"
 )
 @NamedNativeQuery(
         name = "getListBestSellProducts",
         resultSetMapping = "productInfoDto",
-        query = "SELECT p.id, p.name, p.sale_price as price, p.product_view as views, p.slug, p.total_sold, p.images ->> '$[0]' AS images " +
+        query = "SELECT p.id, p.name, p.price as price, p.sale_price as sale, p.product_view as views, p.slug, p.total_sold, p.images ->> '$[0]' AS images " +
                 "FROM product p " +
                 "WHERE p.status = 1 " +
                 "ORDER BY total_sold DESC LIMIT ?1"
@@ -86,7 +87,7 @@ import java.util.List;
 @NamedNativeQuery(
         name = "getListViewProducts",
         resultSetMapping = "productInfoDto",
-        query = "SELECT p.id, p.name, p.sale_price as price, p.product_view as views, p.slug, p.total_sold, p.images ->> '$[0]' AS images " +
+        query = "SELECT p.id, p.name, p.price as price, p.sale_price as sale, p.product_view as views, p.slug, p.total_sold, p.images ->> '$[0]' AS images " +
                 "FROM product p " +
                 "WHERE p.status = 1 " +
                 "ORDER BY product_view DESC LIMIT ?1"
@@ -95,7 +96,7 @@ import java.util.List;
 @NamedNativeQuery(
         name = "getRelatedProducts",
         resultSetMapping = "productInfoDto",
-        query = "SELECT p.id, p.name, p.sale_price as price, p.product_view as views, p.slug, p.total_sold, p.images ->> '$[0]' AS images " +
+        query = "SELECT p.id, p.name, p.price as price, p.sale_price as sale, p.product_view as views, p.slug, p.total_sold, p.images ->> '$[0]' AS images " +
                 "FROM product p " +
                 "WHERE p.status = 1 " +
                 "AND p.id != ?1 " +

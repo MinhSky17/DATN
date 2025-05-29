@@ -50,6 +50,10 @@ public class CartServiceImpl implements CartService {
 
         ProductColor productColor = productColorRepository.findById(cartAddDTO.getColorId())
                 .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy màu"));
+        // Kiểm tra số lượng
+        if (productColor.getQuantity() < cartAddDTO.getQuantity()) {
+            throw new RuntimeException("Số lượng màu trong kho không đủ");
+        }
 
         List<Cart> carts = cartRepository.findByUserId(userId);
 

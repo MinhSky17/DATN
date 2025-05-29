@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -29,10 +30,15 @@ public class CategoryController {
 
         Page<Category> categories = categoryService.adminGetListCategory(id,name,status,page);
 
-        Map<Long, String> categoryIdNameMap = categories.getContent()
+
+        // Lấy danh sách danh mục gốc (parentId = null)
+        List<Category> rootCategories = categoryService.getRootCategories();
+
+        Map<Long, String> categoryIdNameMap = rootCategories
                 .stream()
                 .collect(Collectors.toMap(Category::getId, Category::getName));
 
+        model.addAttribute("rootCategories", rootCategories);
         model.addAttribute("categories",categories.getContent());
         model.addAttribute("categoryIdNameMap", categoryIdNameMap);
         model.addAttribute("totalPages",categories.getTotalPages());

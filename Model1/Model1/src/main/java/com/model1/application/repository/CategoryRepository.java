@@ -27,4 +27,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     List<ChartDTO> getListProductOrderCategories();
 
 //    List<Category> findByProducts_Name(String name);
+
+    List<Category> findByParentIdIsNull();
+    List<Category> findByParentId(Long parentId);
 }
