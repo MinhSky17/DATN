@@ -18,7 +18,7 @@
                 display: flex;
                 width: 100%;
                 justify-content: center;
-                overflow: auto;
+                overflow: hidden;
                 flex-direction: row-reverse;
                 height: 40px;
                 position: relative;
@@ -82,8 +82,19 @@
                 transition: max-height 0.3s ease;
             }
 
+            .product-reviews-content{
+                max-height: 400px;
+                overflow: hidden;
+                position: relative;
+                transition: max-height 0.3s ease;
+            }
+
             /* Khi mở rộng */
             .product-desc-wrapper.expanded {
+                max-height: 30000px; /* Đủ lớn để chứa nội dung */
+            }
+
+            .product-reviews-content.expanded {
                 max-height: 30000px; /* Đủ lớn để chứa nội dung */
             }
 
@@ -100,6 +111,10 @@
 
             /* Ẩn overlay khi mở rộng */
             .product-desc-wrapper.expanded .fade-overlay {
+                display: none;
+            }
+
+            .product-reviews-content.expanded.fade-overlay {
                 display: none;
             }
 
@@ -350,9 +365,9 @@
                 <li class="nav-item">
                     <a class="nav-link active" id="product-tab-desc" data-toggle="tab" href="#product-desc-content" role="tab" aria-controls="product-desc-content" aria-selected="true">Mô tả chi tiết sản phẩm</a>
                 </li>
-                <li class="nav-item">
+                <!--<li class="nav-item">
                     <a class="nav-link" id="product-tab-more-info" data-toggle="tab" href="#product-more-info-content" role="tab" aria-controls="product-more-info-content" aria-selected="false">Hình ảnh feedback</a>
-                </li>
+                </li>-->
                 <li class="nav-item">
                     <a class="nav-link" id="product-tab-reviews" data-toggle="tab" href="#product-reviews-content" role="tab" aria-controls="product-reviews-content" aria-selected="false">Đánh giá sản phẩm</a>
                 </li>
@@ -385,7 +400,7 @@
 
 
                 <div class="tab-pane fade" id="product-reviews-content" role="tabpanel" aria-labelledby="product-tab-reviews">
-                    <div class="product-reviews-content">
+                    <div class="product-reviews-content" id="review-content">
                         <div class="row">
                             <div class="col-xl-6">
                                 <ol class="comment-list">
@@ -446,6 +461,21 @@
                             </div>
                         </div>
                     </div><!-- End .product-reviews-content -->
+
+                    <!-- Thêm nút này ngay sau phần #product-reviews-content -->
+                    <button class="toggle-desc-btn" id="toggleReviewBtn" onclick="toggleReviews()">XEM THÊM ĐÁNH GIÁ</button>
+
+                    <script>
+                    function toggleReviews() {
+
+                        const wrapper = document.getElementById('review-content');
+                        const btn = document.getElementById('toggleReviewBtn');
+                    
+                        wrapper.classList.toggle('expanded');
+                    
+                        btn.textContent = wrapper.classList.contains('expanded') ? 'THU GỌN ĐÁNH GIÁ' : 'XEM THÊM ĐÁNH GIÁ';
+                    }
+                    </script>
                 </div><!-- End .tab-pane -->
             </div><!-- End .tab-content -->
         </div><!-- End .product-single-tabs -->
@@ -824,7 +854,8 @@
                         $(".comment-list").append(`
                                 <li class="comment-container">
                                             <div class="comment-avatar">
-                                                <img src="/shop/images/avatar/avatar.png" width="65" height="65" alt="avatar"/>
+                                                
+                                                <img th:src="${user_avatar}" width="65" height="65" alt="avatar"/>
                                             </div>
                                             <div class="comment-box">
                                                 <div class="comment-text">
@@ -849,6 +880,20 @@
             let ratingValue = $(this).val();
             // Xử lý giá trị rating
             console.log("Đã chọn rating:", ratingValue);
+        });
+
+        // Ẩn nút "Xem thêm" nếu nội dung không vượt quá 500px
+        document.addEventListener("DOMContentLoaded", function() {
+            const reviewsContent = document.getElementById('product-reviews-content');
+            const toggleBtn = document.querySelector('.review-toggle-btn');
+            
+            // Kiểm tra chiều cao thực tế của nội dung
+            const actualHeight = reviewsContent.scrollHeight;
+            if (actualHeight <= 500) {
+                toggleBtn.style.display = 'none'; // Ẩn nút nếu nội dung ngắn
+                reviewsContent.style.maxHeight = 'none'; // Bỏ giới hạn chiều cao
+                reviewsContent.classList.add('expanded'); // Đảm bảo không có hiệu ứng mờ
+            }
         });
 
          //$(".btn-rating").click(function (){

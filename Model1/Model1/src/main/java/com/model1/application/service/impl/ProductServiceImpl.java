@@ -425,7 +425,7 @@ public class ProductServiceImpl implements ProductService {
         //Tính tổng số trang
         int totalPages = pageUtil.calculateTotalPage(totalItems);
 
-        return new PageableDTO(checkPublicPromotion(products), totalPages, req.getPage());
+        return new PageableDTO(products, totalPages, req.getPage());
 
     }
 

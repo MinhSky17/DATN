@@ -3811,9 +3811,9 @@ span.page-link, .page-link-btn {
 
 .product-default a {
     color: inherit;
-    white-space: nowrap;
+    /*white-space: nowrap;*/
     overflow: hidden;
-    text-overflow: ellipsis
+    /*text-overflow: ellipsis*/
 }
 
 .product-default a:hover {

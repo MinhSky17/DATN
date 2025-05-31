@@ -297,6 +297,11 @@
                 background: #c82333;
                 transform: translateY(-2px);
             }
+
+            .btn{
+                padding: 10px 20px;
+                border-radius: 8px;
+            }
         </style>
         <link rel="stylesheet" th:href="@{/shop/css/custom.css}">
     </th:block>
@@ -455,13 +460,13 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="confirmCancelModalLabel">Xác nhận hủy đơn hàng</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body" style="overflow: hidden;">
                                 Bạn có chắc chắn muốn hủy đơn hàng #${orderId} không?
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                <button type="button" class="btn btn-secondary" id="cancelCancelBtn">Hủy</button>
                                 <button type="button" class="btn btn-danger" id="confirmCancelBtn">Xác nhận</button>
                             </div>
                         </div>
@@ -477,7 +482,10 @@
             // Hiển thị modal
             const modal = new bootstrap.Modal(document.getElementById('confirmCancelModal'));
             modal.show();
-        
+            // xu lý su kien nhan xut huy cua huy
+            document.getElementById('cancelCancelBtn').onclick = () => {
+                modal.hide();
+            };
             // Xử lý sự kiện nhấn nút Xác nhận
             document.getElementById('confirmCancelBtn').onclick = async () => {
                 try {
@@ -495,7 +503,7 @@
                     }
         
                     const data = await response.text(); // Backend trả về text, không phải JSON
-                    toastr.success(data || 'Hủy đơn hàng thành công');
+                    toastr.success("Hủy đơn hàng thành công");
                     
                     // Cập nhật giao diện
                     const statusElement = document.querySelector('.status');
@@ -510,7 +518,7 @@
                     // Ẩn modal sau khi hủy thành công
                     modal.hide();
                 } catch (error) {
-                    toastr.error(error.message || 'Có lỗi xảy ra. Vui lòng thử lại.');
+                    toastr.error(error.message || "Có lỗi xảy ra. Vui lòng thử lại.");
                 }
             };
         }
