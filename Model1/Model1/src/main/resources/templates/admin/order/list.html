@@ -43,9 +43,9 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3">
-                        <a href="/admin/orders/create" id="addToTable" class="btn btn-primary">Thêm mới đơn hàng <i class="fas fa-plus"></i></a>
+                        <!--<a href="/admin/orders/create" id="addToTable" class="btn btn-primary">Thêm mới đơn hàng <i class="fas fa-plus"></i></a>-->
                         <a href="/admin/orders" class="btn btn-primary">Refresh <i class="fas fa-redo-alt"></i></a>
-                        <button id="btn-search" class="btn btn-primary">Tìm kiếm <i class="fas fa-search"></i></button>
+                        <!--<button id="btn-search" class="btn btn-primary">Tìm kiếm <i class="fas fa-search"></i></button>-->
                     </div>
                 </div>
             </div>
@@ -77,6 +77,7 @@
                                 <option value="1" th:selected="${status == '1'}">Đang chuẩn bị hàng</option>
                                 <option value="2" th:selected="${status == '2'}">Đang giao hàng</option>
                                 <option value="3" th:selected="${status == '3'}">Đã giao hàng</option>
+                                <option value="4" th:selected="${status == '4'}">Trả hàng</option>
                                 <option value="5" th:selected="${status == '5'}">Đơn hàng bị hủy</option>
                             </select>
                         </th>
@@ -100,10 +101,11 @@
                         <td th:text="${order.receiverName}"></td>
                         <td th:text="${order.receiverPhone}"></td>
                         <td>
-                            <span th:if="${order.status == 1}" class="badge badge-warning">Đang chuẩn bị hàng</span>
+                            <span th:if="${order.status == 1}" class="badge badge-secondary">Đang chuẩn bị hàng</span>
                             <span th:if="${order.status == 2}" class="badge badge-primary">Đang giao hàng</span>
                             <span th:if="${order.status == 3}" class="badge badge-success">Đã giao hàng</span>
-                            <span th:if="${order.status == 5}" class="badge badge-light">Đơn hàng bị hủy</span>
+                            <span th:if="${order.status == 4}" class="badge badge-danger">Trả hàng</span>
+                            <span th:if="${order.status == 5}" class="badge badge-warning">Đơn hàng bị hủy</span>
                         </td>
                         <td>
                             <span th:text="${order.totalPrice}"></span> đ

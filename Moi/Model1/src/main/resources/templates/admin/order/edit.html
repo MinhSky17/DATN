@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/layout_admin :: main-fragment(
+                                                ~{:: title},
+                                                'header',
+                                                'sidebar',
+                                                ~{:: #css-resources},
+                                                ~{:: #js-resources},
+                                                ~{:: #main-content}
+                                               )}">
+<head>
+    <meta charset="UTF-8">
+    <title>Sửa đơn hàng</title>
+    <th:block id="css-resources">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <style>
+            .content-body {
+                padding: 15px;
+                background: #f8f9fa;
+                min-height: 100vh;
+            }
+
+            .card {
+                border-radius: 8px;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+                background: #fff;
+                margin-bottom: 20px;
+            }
+
+            .card-header {
+                
+                color: white;
+                padding: 10px 15px;
+                border-radius: 8px 8px 0 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .card-header h2 {
+                margin: 0;
+                font-size: 18px;
+                font-weight: 500;
+            }
+
+            .card-actions a {
+                color: white;
+                margin-left: 8px;
+                opacity: 0.8;
+            }
+
+            .card-actions a:hover {
+                opacity: 1;
+            }
+
+            .breadcrumbs {
+                font-size: 13px;
+                margin: 0;
+            }
+
+            .breadcrumbs li a {
+                color: #555;
+                text-decoration: none;
+            }
+
+            .breadcrumbs li a:hover {
+                color: #007bff;
+            }
+
+            .order-details {
+                padding: 15px;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+
+            .order-info-section,
+            .order-summary-section {
+                padding: 15px;
+                background: #fff;
+                border-radius: 6px;
+                border: 1px solid #e9ecef;
+            }
+
+            .order-info-section h4,
+            .order-summary-section h4 {
+                color: #333;
+                font-size: 16px;
+                font-weight: 600;
+                margin-bottom: 10px;
+                padding-bottom: 8px;
+                border-bottom: 2px solid #007bff;
+            }
+
+            .order-details p {
+                margin-bottom: 8px;
+                display: flex;
+                justify-content: space-between;
+                font-size: 14px;
+            }
+
+            .order-details .label {
+                font-weight: 500;
+                color: #555;
+                min-width: 120px;
+                flex-shrink: 0;
+            }
+
+            .order-details .value {
+                color: #333;
+                text-align: right;
+                flex-grow: 1;
+            }
+
+            .total-price {
+                font-size: 16px;
+                font-weight: bold;
+                color: #007bff;
+                border-top: 1px solid #e9ecef;
+                padding-top: 10px;
+                margin-top: 10px;
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .product-col {
+                display: grid;
+                grid-template-columns: 60px 1fr 100px;
+                gap: 10px;
+                align-items: center;
+                padding: 10px 0;
+                border-bottom: 1px solid #e9ecef;
+            }
+
+            .product-col:hover {
+                background: #f8f9fa;
+            }
+
+            .product-image-container {
+                width: 60px;
+                height: 60px;
+                border-radius: 4px;
+                overflow: auto;
+                border: 1px solid #e9ecef;
+            }
+
+            .product-image-container img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .product-details {
+                flex-grow: 1;
+            }
+
+            .product-title {
+                font-size: 13px;
+                font-weight: 600;
+                color: #333;
+                margin-bottom: 5px;
+            }
+
+            .product-details p {
+                color: #666;
+                margin: 3px 0;
+                font-size: 12px;
+            }
+
+            .price-col {
+                font-size: 13px;
+                font-weight: 600;
+                color: #007bff;
+                text-align: right;
+            }
+
+            .form-control {
+                border: 1px solid #ced4da;
+                border-radius: 4px;
+                padding: 8px;
+                font-size: 13px;
+            }
+
+            .form-control:focus {
+                border-color: #007bff;
+                box-shadow: 0 0 4px rgba(0,123,255,0.2);
+            }
+
+            .btn-primary {
+                background: #007bff;
+                border: none;
+                padding: 8px 15px;
+                border-radius: 4px;
+                font-size: 13px;
+                transition: all 0.3s ease;
+            }
+
+            .btn-primary:hover {
+                background: #0056b3;
+                transform: translateY(-1px);
+            }
+
+            .btn-update {
+                margin-top: 15px;
+                width: 100%;
+                max-width: 180px;
+            }
+
+            .alert-danger {
+                border-radius: 4px;
+                padding: 10px;
+                margin: 15px 0;
+                font-size: 13px;
+            }
+
+            @media (max-width: 767px) {
+                .order-details {
+                    grid-template-columns: 1fr;
+                    padding: 10px;
+                    gap: 15px;
+                }
+
+                .order-info-section,
+                .order-summary-section {
+                    padding: 10px;
+                }
+
+                .product-col {
+                    grid-template-columns: 50px 1fr 80px;
+                    gap: 8px;
+                }
+
+                .product-image-container {
+                    width: 50px;
+                    height: 50px;
+                }
+
+                .price-col {
+                    font-size: 12px;
+                }
+
+                .order-details .label {
+                    min-width: 100px;
+                }
+
+                .order-details p {
+                    font-size: 13px;
+                }
+
+                .btn-update {
+                    max-width: 100%;
+                }
+            }
+        </style>
+    </th:block>
+</head>
+<body>
+<section role="main" class="content-body" id="main-content">
+    <header class="page-header">
+        <div class="right-wrapper text-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <a href="/admin"><i class="fas fa-home"></i></a>
+                </li>
+                <li><a href="/admin/orders"><span>Danh sách đơn hàng</span></a></li>
+                <li><span th:text="'Đơn hàng #' + ${order.id}"></span></li>
+            </ol>
+            <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fas fa-chevron-left"></i></a>
+        </div>
+    </header>
+    <section class="card">
+        <header class="card-header">
+            <a th:href="@{/admin/orders}" class="btn btn-light btn-sm">
+                <i class="fas fa-arrow-left"></i>
+                <span>Quay lại</span>
+            </a>
+            <h2 class="card-title"><i class="fas fa-edit mr-1"></i> Cập nhật đơn hàng</h2>
+        </header>
+        <div class="card-body">
+            <div class="order-details" th:if="${order != null}">
+                <div class="order-info-section">
+                    <h4><i class="fas fa-info-circle mr-1"></i> Thông tin đơn hàng</h4>
+                    <input type="hidden" id="order-id" th:value="${order.id}">
+                    <p>
+                        <span class="label">Mã đơn hàng:</span>
+                        <span class="value" th:text="'#' + ${order.id}"></span>
+                    </p>
+                    <p>
+                        <span class="label">Ngày đặt:</span>
+                        <span class="value" th:text="${#dates.format(order.createdAt, 'dd/MM/yyyy HH:mm')}"></span>
+                    </p>
+                    <p>
+                        <span class="label">Tên người nhận:</span>
+                        <span class="value" th:text="${order.receiverName}"></span>
+                    </p>
+                    <p>
+                        <span class="label">Số điện thoại:</span>
+                        <span class="value" th:text="${order.receiverPhone}"></span>
+                    </p>
+                    <p>
+                        <span class="label">Địa chỉ:</span>
+                        <span class="value" th:text="${order.receiverAddress}"></span>
+                    </p>
+                    <p>
+                        <span class="label">Ghi chú:</span>
+                        <span class="value" th:text="${order.note} ?: 'Không có ghi chú'"></span>
+                    </p>
+                    <p>
+                        <span class="label">Phương thức thanh toán:</span>
+                        <span class="value" th:text="${order.paymentMethod} ?: 'Không xác định'"></span>
+                    </p>
+                    <p th:if="${order.userId != null}">
+                        <span class="label">Người đặt:</span>
+                        <span class="value" th:text="${user != null ? user.fullName : 'ID: ' + order.userId}"></span>
+                    </p>
+                    <h4><i class="fas fa-sync-alt mr-1"></i> Trạng thái đơn hàng</h4>
+                    <select name="status" class="form-control" id="status">
+                        <option value="1" th:selected="${order.status == 1}">Đang chuẩn bị hàng</option>
+                        <option value="2" th:selected="${order.status == 2}">Đang giao hàng</option>
+                        <option value="3" th:selected="${order.status == 3}">Đã giao hàng</option>
+                        <option value="5" th:selected="${order.status == 5}">Đơn hàng bị hủy</option>
+                    </select>
+                    <button id="btn-update-status" class="btn btn-primary btn-update">
+                        <i class="fas fa-save mr-1"></i> Cập nhật
+                    </button>
+                </div>
+                <div class="order-summary-section">
+                    <h4><i class="fas fa-box-open mr-1"></i> Sản phẩm & Tổng quan</h4>
+                    <div class="order-products" th:attr="data-order-id=${order.id}"></div>
+                    <p>
+                        <span class="label">Tạm tính:</span>
+                        <span class="value text-price" th:text="${order.price}"></span>
+                    </p>
+                    <p th:if="${order.couponCode != null}">
+                        <span class="label">Mã khuyến mãi:</span>
+                        <span class="value" th:text="${order.couponCode}"></span>
+                    </p>
+                    <p th:if="${order.price > order.totalPrice}">
+                        <span class="label">Khuyến mãi:</span>
+                        <span class="value text-price" th:text="${order.price - order.totalPrice}"></span>
+                    </p>
+                    <p class="total-price">
+                        <span class="label">Thành tiền:</span>
+                        <span class="value text-price" th:text="${order.totalPrice}"></span>
+                    </p>
+                </div>
+            </div>
+            <div th:if="${order == null}" class="alert alert-danger">
+                <i class="fas fa-exclamation-circle mr-1"></i> Không tìm thấy thông tin đơn hàng.
+            </div>
+            <div th:if="${error}" class="alert alert-danger">
+                <i class="fas fa-exclamation-circle mr-1"></i> <span th:text="${error}"></span>
+            </div>
+        </div>
+    </section>
+</section>
+
+<th:block id="js-resources">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script th:inline="javascript">
+        document.addEventListener('DOMContentLoaded', () => {
+            const orderId = document.querySelector('.order-products')?.getAttribute('data-order-id');
+            if (orderId) {
+                fetchOrderDetails(orderId, document.querySelector('.order-products'));
+            }
+            formatMoney();
+        });
+
+        async function fetchOrderDetails(orderId, productsDiv) {
+            try {
+                const response = await fetch(`/api/don-hang/${orderId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                });
+                if (!response.ok) throw new Error('Không thể lấy chi tiết đơn hàng');
+                const data = await response.json();
+                renderOrderProducts(data, productsDiv);
+            } catch (error) {
+                showError(error.message);
+            }
+        }
+
+        function renderOrderProducts(order, productsDiv) {
+            productsDiv.innerHTML = '';
+            if (!order.items || order.items.length === 0) {
+                productsDiv.innerHTML = '<p>Không có sản phẩm trong đơn hàng</p>';
+                return;
+            }
+
+            order.items.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'product-col';
+                itemDiv.innerHTML = `
+                    <div class="product-image-container">
+                        <img src="${item.productImage || '/shop/images/placeholder.png'}" alt="${item.productName}">
+                    </div>
+                    <div class="product-details">
+                        <div class="product-title">${item.productName || 'N/A'}</div>
+                        <p>Màu: ${item.code || 'N/A'}</p>
+                        <p>Số lượng: ${item.quantity}</p>
+                    </div>
+                    <div class="price-col">${formatPrice(item.price * item.quantity)}</div>
+                `;
+                productsDiv.appendChild(itemDiv);
+            });
+        }
+
+        function formatPrice(value) {
+            return Number(value).toLocaleString('vi-VN') + ' ₫';
+        }
+
+        function formatMoney() {
+            const priceElements = document.querySelectorAll('.text-price');
+            priceElements.forEach(element => {
+                const value = parseInt(element.textContent) || 0;
+                element.textContent = value.toLocaleString('vi-VN') + ' ₫';
+            });
+        }
+
+        function showError(message) {
+            console.error(message);
+            toastr.error(message);
+        }
+
+        $(document).ready(function() {
+            $('#btn-update-status').click(function() {
+                let status = $('#status').val();
+                // Kiểm tra giá trị status
+                if (!status || isNaN(status)) {
+                    toastr.warning("Vui lòng nhập trạng thái hợp lệ");
+                    return;
+                }
+                
+                // Giả sử orderId được lấy từ input ẩn hoặc biến
+                let orderId = $('#order-id').val(); // Cần đảm bảo orderId được truyền đúng
+                
+                $.ajax({
+                    url: `/api/admin/orders/update/${orderId}/${status}`, // thêm status vào URL
+                    type: 'PUT',
+                    success: function(data) {
+                        toastr.success(data.message || "Cập nhật trạng thái thành công");
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 1000);
+                    },
+                    error: function(error) {
+                        let message = error.responseJSON?.message || "Lỗi khi cập nhật trạng thái";
+                        toastr.warning(message);
+                    }
+                });
+                
+            });
+        });
+    </script>
+</th:block>
+</body>
+</html>

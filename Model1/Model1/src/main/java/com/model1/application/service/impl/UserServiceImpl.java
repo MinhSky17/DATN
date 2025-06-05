@@ -86,6 +86,7 @@ public class UserServiceImpl implements UserService {
         user.setFullName(updateProfileRequest.getFullName());
         user.setPhone(updateProfileRequest.getPhone());
         user.setAddress(updateProfileRequest.getAddress());
+        user.setAvatar(updateProfileRequest.getAvatar());
 
         return userRepository.save(user);
     }
@@ -128,6 +129,7 @@ public class UserServiceImpl implements UserService {
         existingUser.setEmail(crUserRequest.getEmail());
         existingUser.setPhone(crUserRequest.getPhone());
         existingUser.setAvatar(crUserRequest.getAvatar());
+        existingUser.setRoles(crUserRequest.getRoles());
         existingUser.setModifiedAt(new Timestamp(System.currentTimeMillis()));
 
         try {

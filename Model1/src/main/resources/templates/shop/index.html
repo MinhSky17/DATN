@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                      th:replace="~{/layout/layout :: main-fragment(
+                                                                     ~{:: title},
+                                                                    'header',
+                                                                    'footer',
+                                                                     ~{:: #css-resources},
+                                                                     ~{:: #js-resources},
+                                                                     ~{:: #main-content}
+                                                                    )}">
+<head>
+    <meta charset="UTF-8">
+    <title>Coshine</title>
+    <th:block id="css-resources">
+
+    </th:block>
+</head>
+
+<body>
+<main class="main" id="main-content">
+    <div class="home-slider owl-carousel owl-theme owl-carousel-lazy show-nav-hover nav-big mb-2 text-uppercase" 
+         data-owl-options="{ 
+            'loop': true,
+            'margin': 0,
+            'nav': true,
+            'dots': true,
+            'autoplay': true,
+            'autoplayTimeout': 4000,
+            'autoplayHoverPause': true,
+            'smartSpeed': 800,
+            'responsive': {
+                '0': {
+                    'items': 1
+                },
+                '768': {
+                    'items': 1
+                }
+            }
+         }">
+        <div class="home-slide home-slide1 banner">
+            <img class="owl-lazy slide-bg" th:src="@{/shop/images/slider/banner1.jpg}" 
+                 data-src="shop/images/slider/banner1.jpg" 
+                 alt="slider image"
+                 style="max-height: 500px; object-fit: cover; width: 100%;">           
+        </div>
+
+        <div class="home-slide home-slide2 banner banner-md-vw">
+            <img class="owl-lazy slide-bg" th:src="@{/shop/images/slider/banner2.jpg}" 
+                 data-src="shop/images/slider/banner2.jpg" 
+                 alt="slider image"
+                 style="max-height: 500px; object-fit: cover; width: 100%;">
+        </div>
+
+        <div class="home-slide home-slide2 banner banner-md-vw">
+            <img class="owl-lazy slide-bg" th:src="@{/shop/images/slider/banner3.jpg}" 
+                 data-src="shop/images/slider/banner3.jpg" 
+                 alt="slider image"
+                 style="max-height: 500px; object-fit: cover; width: 100%;">
+        </div>
+    </div><!-- End .home-slider -->
+
+
+    <section class="featured-products-section">
+        <div class="container">
+            <h2 class="section-title heading-border ls-20 border-0">Sản phẩm mới</h2>
+
+            <div class="products-slider custom-products owl-carousel owl-theme nav-outer show-nav-hover nav-image-center" data-owl-options="{
+						'dots': false,
+						'nav': true
+					}">
+                <th:block th:each="newProduct :${newProducts}">
+                    <div class="product-default">
+                    <figure>
+                        <a th:href="@{/{slug}/{id}(id=${newProduct.id},slug=${newProduct.slug})}">
+                            <img th:src="@{${newProduct.images}}" alt="product">
+                        </a>
+                    </figure>
+                    <div class="product-details">
+                        <h3 class="product-title">
+                            <a th:href="@{/{slug}/{id}(id=${newProduct.id},slug=${newProduct.slug})}" th:text="${newProduct.name}"></a>
+                        </h3>
+                        <div class="price-box">
+                            <th:block th:if="${newProduct.sale != null and newProduct.price != newProduct.sale}">
+                                <span class="product-price" th:text="${#numbers.formatDecimal(newProduct.sale, 0, 'COMMA', 0, 'POINT') + ' đ'}"></span>
+                                <del class="old-price" th:text="${#numbers.formatDecimal(newProduct.price, 0, 'COMMA', 0, 'POINT') + ' đ'}"></del>
+                            </th:block>
+                            <th:block th:if="${newProduct.sale != null and newProduct.price == newProduct.sale}">
+                                <span class="product-price" th:text="${#numbers.formatDecimal(newProduct.price, 0, 'COMMA', 0, 'POINT') + ' đ'}"></span>
+                            </th:block>
+                        </div><!-- End .price-box -->
+
+                    </div><!-- End .product-details -->
+                </div>
+                </th:block>
+            </div><!-- End .featured-proucts -->
+        </div>
+    </section>
+
+    <section class="new-products-section">
+        <div class="container">
+            <h2 class="section-title heading-border ls-20 border-0">Sản phẩm bán chạy</h2>
+
+            <div class="products-slider custom-products owl-carousel owl-theme nav-outer show-nav-hover nav-image-center" data-owl-options="{
+						'dots': false,
+						'nav': true,
+						'responsive': {
+							'992': {
+								'items': 4
+							}
+						}
+					}">
+                <th:block th:each="sell : ${bestSellerProducts}">
+                    <div class="product-default">
+                    <figure>
+                        <a th:href="@{/{slug}/{id}(id=${sell.id},slug=${sell.slug})}">
+                            <img th:src="@{${sell.images}}" alt="product">
+                        </a>
+                        <div class="label-group">
+                            <div class="product-label label-hot">HOT</div>
+                        </div>
+                    </figure>
+                    <div class="product-details">
+                        <h3 class="product-title">
+                            <a th:href="@{/{slug}/{id}(id=${sell.id},slug=${sell.slug})}" th:text="${sell.name}"></a>
+                        </h3>
+                        <div class="price-box">
+                            <th:block th:if="${sell.sale != null and sell.price != sell.sale}">
+                                <span class="product-price" th:text="${#numbers.formatDecimal(sell.sale, 0, 'COMMA', 0, 'POINT') + ' đ'}"></span>
+                                <del class="old-price" th:text="${#numbers.formatDecimal(sell.price, 0, 'COMMA', 0, 'POINT') + ' đ'}"></del>
+                            </th:block>
+                            <th:block th:if="${sell.sale != null and sell.price == sell.sale}">
+                                <span class="product-price" th:text="${#numbers.formatDecimal(sell.price, 0, 'COMMA', 0, 'POINT') + ' đ'}"></span>
+                            </th:block>
+                        </div><!-- End .price-box -->
+                        <div class="ratings-container">
+                            <p class="card-text sold">&Dstrok;&atilde; b&aacute;n <span th:text="${sell.totalSold}"></span></p>
+                        </div><!-- End .product-container -->
+<!--                        <div class="product-action">-->
+<!--                            <a href="#" class="btn-icon-wish"><i class="icon-heart"></i></a>-->
+<!--                            <button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal">Mua hàng</button>-->
+<!--                            <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i class="fas fa-external-link-alt"></i></a>-->
+<!--                        </div>-->
+                    </div><!-- End .product-details -->
+                </div>
+                </th:block>
+            </div><!-- End .featured-proucts -->
+        </div>
+    </section>
+
+    <section class="featured-products-section">
+        <div class="container">
+            <h2 class="section-title heading-border ls-20 border-0">Sản phẩm xem nhiều</h2>
+
+            <div class="products-slider custom-products owl-carousel owl-theme nav-outer show-nav-hover nav-image-center" data-owl-options="{
+						'dots': false,
+						'nav': true
+					}">
+                <th:block th:each="view : ${viewProducts}">
+                    <div class="product-default">
+                    <figure>
+                        <a th:href="@{/{slug}/{id}(id=${view.id},slug=${view.slug})}">
+                            <img th:src="@{${view.images}}" alt="product">
+                        </a>
+                    </figure>
+                    <div class="product-details">
+                        <h3 class="product-title">
+                            <a th:href="@{/{slug}/{id}(id=${view.id},slug=${view.slug})}" th:text="${view.name}"></a>
+                        </h3>
+                        <div class="price-box">
+                            <th:block th:if="${view.sale != null and view.price != view.sale}">
+                                <span class="product-price" th:text="${#numbers.formatDecimal(view.sale, 0, 'COMMA', 0, 'POINT') + ' đ'}"></span>
+                                <del class="old-price" th:text="${#numbers.formatDecimal(view.price, 0, 'COMMA', 0, 'POINT') + ' đ'}"></del>
+                            </th:block>
+                            <th:block th:if="${view.sale != null and view.price == view.sale}">
+                                <span class="product-price" th:text="${#numbers.formatDecimal(view.price, 0, 'COMMA', 0, 'POINT') + ' đ'}"></span>
+                            </th:block>
+                        </div><!-- End .price-box -->
+<!--                        <div class="ratings-container">-->
+<!--                            <p class="card-text sold">&Dstrok;&atilde; b&aacute;n <span th:text="${view.totalSold}"></span></p>-->
+<!--                        </div>&lt;!&ndash; End .product-container &ndash;&gt;-->
+                        <div class="ratings-container">
+                            <p class="card-text sold">Số lượt xem: <span th:text="${view.views}"></span></p>
+                        </div><!-- End .product-container -->
+<!--                        <div class="product-action">-->
+<!--                            <a href="#" class="btn-icon-wish"><i class="icon-heart"></i></a>-->
+<!--                            <button class="btn-icon btn-add-cart" data-toggle="modal" data-target="#addCartModal">Mua hàng</button>-->
+<!--                            <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i class="fas fa-external-link-alt"></i></a>-->
+<!--                        </div>-->
+                    </div><!-- End .product-details -->
+                </div>
+                </th:block>
+            </div><!-- End .featured-proucts -->
+        </div>
+    </section>
+
+
+    <section class="blog-section">
+        <div class="container">
+            <h2 class="section-title heading-border border-0 mb-2">Tin mới nhất</h2>
+
+            <div class="owl-carousel owl-theme" data-owl-options="{
+						'loop': false,
+						'margin': 20,
+						'autoHeight': true,
+						'autoplay': false,
+						'dots': false,
+						'items': 2,
+						'responsive': {
+							'576': {
+								'items': 3
+							},
+							'768': {
+								'items': 3
+							}
+						}
+					}">
+                <th:block th:each="post : ${posts}">
+                    <article class="post">
+                    <div class="post-media">
+                        <a th:href="@{/tin-tuc/{slug}/{id}(id=${post.id},slug=${post.slug})}">
+                            <img th:src="@{${post.thumbnail}}"  alt="Post" width="225px" height="280px" style="border-radius: 10px">
+                        </a>
+                        <!--<div class="post-date">
+                            <span th:text="${#dates.format(post.publishedAt, 'MM yyyy')}"></span></p>
+                        </div>-->
+                    </div><!-- End .post-media -->
+
+                    <div class="post-body">
+                        <h2 class="post-title">
+                            <a th:href="@{/tin-tuc/{slug}/{id}(id=${post.id},slug=${post.slug})}" th:text="${post.title}"></a>
+                        </h2>
+                        <div class="post-description">
+                            <p th:utext="${post.description}"></p>
+                            
+                        </div>
+                        <!-- End .post-content -->
+<!--                        <a href="single.html" class="post-comment">0 Comments</a>-->
+                    </div><!-- End .post-body -->
+                </article><!-- End .post -->
+                </th:block>
+            </div>
+
+            <hr class="mt-0 m-b-5">
+        </div>
+    </section>
+</main><!-- End .main -->
+
+<th:block id="js-resources">
+
+</th:block>
+</body>
+</html>
+
+<style>
+    .owl-carousel .owl-item img {
+        display: block;
+        height: 280px;
+        border-radius: 8px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .owl-carousel .owl-item:hover img {
+        transform: scale(1.02);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .post-media img {
+        object-fit: cover;
+        border-radius: 10px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .post-media:hover img {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .post-media {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .post-body {
+        height: 140px;
+        transition: transform 0.3s ease;
+    }
+
+    .post:hover .post-body {
+        transform: translateY(-5px);
+    }
+
+    .post-description span {
+        font-family: "Open Sans", sans-serif;
+        font-size: 14px !important;
+        line-height: 1.6;
+    }
+
+    .section-title {
+        position: relative;
+        overflow: hidden;
+        padding-bottom: 10px;
+    }
+
+    .product-default {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .product-default:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+</style>

@@ -134,7 +134,7 @@
                                     </h2>
 
                                     <div class="post-content">
-                                        <p th:utext="${postList.content}"></p>
+                                        <p th:utext="${postList.description}"></p>
 
                                         <a th:href="@{/tin-tuc/{slug}/{id}(id=${postList.id},slug=${postList.slug})}"
                                            class="read-more">Read More <i class="icon-angle-double-right"></i></a>

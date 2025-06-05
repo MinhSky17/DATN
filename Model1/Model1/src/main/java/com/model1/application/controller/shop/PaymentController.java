@@ -24,7 +24,7 @@ public class PaymentController {
     private final String vnp_TmnCode = "O1WFWCAC";
     private final String vnp_HashSecret = "V883VC8Z3MO3PVU4BV2BYBUK938FIB55";
     private final String vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    private final String vnp_ReturnUrl = "https://13f0-14-0-17-212.ngrok-free.app/payment/return";
+    private final String vnp_ReturnUrl = "http://localhost:8080/payment/return";
 
     @PostMapping(produces = MediaType.TEXT_PLAIN_VALUE)
     public @ResponseBody String createPayment(@RequestBody Map<String, String> payload) {

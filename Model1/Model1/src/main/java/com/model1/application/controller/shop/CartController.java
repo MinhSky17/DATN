@@ -58,7 +58,7 @@ public class CartController {
             return ResponseEntity.badRequest().body(Map.of("status", "error", "message", e.getMessage()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("status", "error", "message", "Đã xảy ra lỗi khi thêm vào giỏ hàng."));
+                    .body(Map.of("status", "error", "message", "Số lượng vượt quá số lượng hiện có"));
         }
     }
 
@@ -75,17 +75,31 @@ public class CartController {
         }
     }
 
+//    @PutMapping("/api/cart/update")
+//    public ResponseEntity<Map<String, String>> updateCartItem(@RequestBody CartUpdateDTO cartUpdateDTO, HttpServletResponse response) {
+//        try {
+//            cartService.updateFromCart(cartUpdateDTO);
+//            updateCartItemCountCookie(response); // Cập nhật cookie
+//            return ResponseEntity.ok(Map.of("status", "success", "message", "Cập nhật giỏ hàng thành công!"));
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body(Map.of("status", "error", "message", "Số lượng vượt quá số lượng hiện có"));
+//        }
+//    }
+
     @PutMapping("/api/cart/update")
     public ResponseEntity<Map<String, String>> updateCartItem(@RequestBody CartUpdateDTO cartUpdateDTO, HttpServletResponse response) {
         try {
             cartService.updateFromCart(cartUpdateDTO);
             updateCartItemCountCookie(response); // Cập nhật cookie
             return ResponseEntity.ok(Map.of("status", "success", "message", "Cập nhật giỏ hàng thành công!"));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(Map.of("status", "error", "message", e.getMessage()));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("status", "error", "message", "Số lượng vượt quá số lượng hiện có"));
         } catch (Exception e) {
+            e.printStackTrace(); // Log lỗi để debug
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("status", "error", "message", "Có lỗi xảy ra khi cập nhật giỏ hàng."));
+                    .body(Map.of("status", "error", "message", "Lỗi hệ thống, vui lòng thử lại sau"));
         }
     }
 

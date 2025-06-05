@@ -146,6 +146,7 @@
 </main>
 
 <th:block id="js-resources">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             fetchCartItems();
@@ -201,7 +202,7 @@
                     return response.json();
                 })
                 .then(data => {
-                    showMessage(`Đơn hàng #${data.id} đã được tạo thành công!`);
+                    //showMessage(`Đơn hàng #${data.id} đã được tạo thành công!`);
                     fetchCartItems(); // Làm mới giỏ hàng
                     // Chuyển hướng đến trang thanh toán
                     setTimeout(() => {
@@ -261,7 +262,7 @@
                         <td>
                             <div class="quantity-control">
                                 <button type="button" class="quantity-btn decrease" data-id="${item.cartId}">−</button>
-                                <input type="number" class="quantity-input" value="${item.quantity}" min="1" data-id="${item.cartId}" readonly>
+                                <input type="number" class="quantity-input" value="${item.quantity}" min="1" data-id="${item.cartId}" >
                                 <button type="button" class="quantity-btn increase" data-id="${item.cartId}">+</button>
                             </div>
                         </td>
@@ -331,60 +332,85 @@
 
             // Hàm cập nhật số lượng sản phẩm
             function updateCartItem(cartId, quantity) {
-                fetch('/api/cart/update', {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
+                $.ajax({
+                    url: '/api/cart/update',
+                    type: 'PUT',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
                         cartId: cartId,
                         quantity: quantity
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 'success') {
-                        //showMessage(data.message);
-                        fetchCartItems(); // Làm mới giỏ hàng
-                    } else {
-                        showError(data.message);
+                    }),
+                    success: function (data) {
+                        if (data.status === 'success') {
+                            // showMessage(data.message);
+                            fetchCartItems(); // Làm mới giỏ hàng
+                        } else {
+                            showError(data.message);
+                            fetchCartItems();
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        let errorMessage = "Lỗi không xác định";
+                        try {
+                            const res = JSON.parse(xhr.responseText); // Đọc JSON trả về
+                            if (res.message) {
+                                errorMessage = res.message;
+                            }
+                        } catch (e) {
+                            errorMessage = error;
+                        }
+                        toastr.error(errorMessage);
                         fetchCartItems();
                     }
-                })
-                .catch(error => {
-                    showError(error.message);
                 });
             }
+            
 
             // Hàm xử lý xóa sản phẩm
             function handleRemoveItem(event) {
-                if (!confirm('Bạn có chắc muốn xóa sản phẩm này khỏi giỏ hàng?')) {
-                    return;
-                }
-
+                //if (!confirm('Bạn có chắc muốn xóa sản phẩm này khỏi giỏ hàng?')) {
+                //    return;
+                //}
                 const cartId = event.target.closest('.btn-remove').dataset.id;
-
-                fetch(`/api/cart/remove?cartId=${cartId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        return response.text().then(text => {
-                            throw new Error(text || 'Xóa sản phẩm thất bại');
+                Swal.fire({
+                    title: 'Xác nhận xóa?',
+                    text: 'Bạn có chắc muốn xóa sản phẩm này khỏi giỏ hàng?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Xóa',
+                    cancelButtonText: 'Hủy',
+                    confirmButtonColor: '#e74c3c',
+                    cancelButtonColor: '#6c757d'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        fetch(`/api/cart/remove?cartId=${cartId}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                return response.text().then(text => {
+                                    throw new Error(text || 'Xóa sản phẩm thất bại');
+                                });
+                            }
+                            return response.text();
+                        })
+                        .then(message => {
+                            //showMessage(message);
+                            fetchCartItems(); // Làm mới giỏ hàng
+                        })
+                        .catch(error => {
+                            showError(error.message);
                         });
+                        removeItem(event);
                     }
-                    return response.text();
-                })
-                .then(message => {
-                    showMessage(message);
-                    fetchCartItems(); // Làm mới giỏ hàng
-                })
-                .catch(error => {
-                    showError(error.message);
                 });
+
+                
+
+                
             }
 
             // Hàm hiển thị thông báo lỗi

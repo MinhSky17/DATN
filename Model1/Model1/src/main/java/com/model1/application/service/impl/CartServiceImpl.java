@@ -116,6 +116,15 @@ public class CartServiceImpl implements CartService {
     public void updateFromCart(CartUpdateDTO cartUpdateDTO) {
         Cart cart = cartRepository.findById(cartUpdateDTO.getCartId())
                 .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy sản phẩm trong giỏ hàng"));
+        ProductColor productColor = productColorRepository.findById(cart.getColorId())
+                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy màu"));
+        // Kiểm tra số lượng
+        if (productColor.getQuantity() < cartUpdateDTO.getQuantity()) {
+            throw new RuntimeException(productColor.getQuantity() + " " + cartUpdateDTO.getQuantity() + " Số lượng màu trong kho không đủ");
+
+        }
+        System.out.println("ProductColor Quantity: " + productColor.getQuantity());
+        System.out.println("Requested Quantity: " + cartUpdateDTO.getQuantity());
         cart.setQuantity(cartUpdateDTO.getQuantity());
         cart.setUpdateAt(new Timestamp(System.currentTimeMillis()));
         cartRepository.save(cart);

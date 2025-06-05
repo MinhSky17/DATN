@@ -56,23 +56,23 @@ class HomeController {
     @GetMapping
     public String homePage(Model model){
 
-        //Lấy 5 sản phẩm mới nhất
-        List<ProductInfoDTO> newProducts = productService.getListNewProducts();
-        model.addAttribute("newProducts", newProducts);
-
-        //Lấy 5 sản phẩm bán chạy nhất
-        List<ProductInfoDTO> bestSellerProducts = productService.getListBestSellProducts();
-        model.addAttribute("bestSellerProducts", bestSellerProducts);
-
-        //Lấy 5 sản phẩm có lượt xem nhiều
-        List<ProductInfoDTO> viewProducts = productService.getListViewProducts();
-        model.addAttribute("viewProducts", viewProducts);
-
-        //Lấy danh sách nhãn hiệu
+//        //Lấy 5 sản phẩm mới nhất
+//        List<ProductInfoDTO> newProducts = productService.getListNewProducts();
+//        model.addAttribute("newProducts", newProducts);
+//
+//        //Lấy 5 sản phẩm bán chạy nhất
+//        List<ProductInfoDTO> bestSellerProducts = productService.getListBestSellProducts();
+//        model.addAttribute("bestSellerProducts", bestSellerProducts);
+//
+//        //Lấy 5 sản phẩm có lượt xem nhiều
+//        List<ProductInfoDTO> viewProducts = productService.getListViewProducts();
+//        model.addAttribute("viewProducts", viewProducts);
+//
+//        //Lấy danh sách nhãn hiệu
         List<Brand> brands = brandService.getListBrand();
         model.addAttribute("brands",brands);
-
-        //Lấy 5 bài viết mới nhất
+//
+//        //Lấy 5 bài viết mới nhất
         List<Post> posts = postService.getLatesPost();
         model.addAttribute("posts", posts);
 
@@ -111,8 +111,8 @@ class HomeController {
         model.addAttribute("product", product);
 
         //Lấy sản phẩm liên quan
-        List<ProductInfoDTO> relatedProducts = productService.getRelatedProducts(id);
-        model.addAttribute("relatedProducts", relatedProducts);
+//        List<ProductInfoDTO> relatedProducts = productService.getRelatedProducts(id);
+//        model.addAttribute("relatedProducts", relatedProducts);
 
         //Lấy danh sách nhãn hiệu
         List<Brand> brands = brandService.getListBrand();

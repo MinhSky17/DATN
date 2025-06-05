@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/layout_admin :: main-fragment(
+                                                ~{:: title},
+                                                'header',
+                                                'sidebar',
+                                                ~{:: #css-resources},
+                                                ~{:: #js-resources},
+                                                ~{:: #main-content}
+                                               )}">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách tài khoản</title>
+    <th:block id="css-resources">
+        <link rel="stylesheet" th:href="@{/adminlte/pagination/simplePagination.css}">
+    </th:block>
+</head>
+<body>
+<section role="main" class="content-body" id="main-content">
+    <header class="page-header">
+        <div class="right-wrapper text-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <a href="/admin">
+                        <i class="bx bx-home-alt"></i>
+                    </a>
+                </li>
+                <li><span>Danh sách tài khoản</span></li>
+            </ol>
+            <a class="sidebar-right-toggle" data-open="sidebar-right"><i
+                    class="fas fa-chevron-left"></i></a>
+        </div>
+    </header>
+
+    <section class="card">
+        <header class="card-header">
+            <div class="card-actions">
+                <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+                <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
+            </div>
+            <h2 class="card-title">Danh sách tài khoản </h2>
+        </header>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="mb-3">
+                        <button id="addToTable" class="btn btn-primary" data-toggle="modal"
+                                data-target="#modal-add-new-user">Thêm mới tài khoản <i
+                                class="fas fa-plus"></i></button>
+                        <a href="/admin/users" class="btn btn-primary">Refresh <i
+                                class="fas fa-redo-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-bordered table-striped mb-0" id="datatable-editable">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th width="20%">Tên</th>
+                    <th>Email</th>
+                    <th width="15%">Số điện thoại</th>
+                    <th width="100px">Avatar</th>
+                    <th>Ngày tạo</th>
+                    <th width="15%">Thao tác</th>
+<!--                    <th>Thao tác</th>-->
+                </tr>
+                <tr>
+                    <form method="GET" id="search-form">
+                        <th></th>
+                        <th><input type="text" name="fullName" id="fullName" class="form-control search-input"></th>
+                        <th><input type="text" name="email" id="email" class="form-control search-input"></th>
+                        <th><input type="text" name="phone" id="phone" class="form-control search-input"></th>
+                        <th></th>
+                        <th></th>
+                        <th></td>
+                        <input type="hidden" name="page" id="page">
+                    </form>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="user : ${users}">
+                    <tr data-item-id="1" th:data-id="${user.id}">
+                    <td th:text="${user.id}"></td>
+                    <td th:text="${user.fullName}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.phone}"></td>
+                    <td>
+                        <img th:src="${user.avatar}" th:alt="${user.fullName}" class="user-image"/>
+                    </td>
+                    <td th:text="${#dates.format(user.createdAt, 'dd-MM-yyyy')}"></td>
+                    <td class="actions">
+                        <a href="#" class="on-default edit-row edit-user" th:data-id="${user.id}">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
+                        <a href="#" class="on-default remove-row delete-user" th:data-id="${user.id}">
+                            <i class="far fa-trash-alt"></i>
+                        </a>
+                    </td>
+                </tr>
+                </th:block>
+                </tbody>
+            </table>
+            <br>
+            <!-- Pagination -->
+            <nav aria-label="Page navigation">
+                <ul class="pagination" id="pagination"></ul>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Modal add new user-->
+    <div class="modal fade" id="modal-add-new-user" tabindex="-1" role="dialog" aria-labelledby="modalAddNewUser"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thêm tài khoản</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="required-label" for="new-name">Họ và tên</label>
+                        <input type="text" class="form-control" id="new-name">
+                        <span class="invalid-feedback" id="invalid-feedback-new-name">Độ dài họ tên từ 1 - 50 ký tự</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="required-label" for="new-phone">Số điện thoại</label>
+                        <input type="text" class="form-control" id="new-phone">
+                        <span class="invalid-feedback" id="invalid-feedback-new-phone">Số điện thoại không hợp lệ</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="required-label" for="new-email">Email</label>
+                        <input type="text" class="form-control" id="new-email">
+                        <span class="invalid-feedback" id="invalid-feedback-new-email">Email không hợp lệ</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="required-label" for="new-password">Mật khẩu</label>
+                        <input type="text" class="form-control" id="new-password">
+                        <span class="invalid-feedback" id="invalid-feedback-new-password">Password không hợp lệ</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="required-label">Avatar</label>
+                        <div class="avatar-container" style="display:none">
+                            <div class="img-div">
+                                <img class="preview-img" alt="Avatar post">
+                            </div>
+                        </div>
+                        <div class="invalid-feedback invalid-feedback-avatar">Bạn chưa chọn avatar</div>
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#choose-img-modal">
+                            Chọn ảnh
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary btn-add-new-user">Thêm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal update user-->
+    <div class="modal fade" id="modal-update-user" tabindex="-1" role="dialog" aria-labelledby="modalUpdateUser"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Chỉnh sửa tài khoản</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" hidden id="update-user-id">
+                    <div class="form-group">
+                        <label class="required-label" for="update-name">Họ và tên</label>
+                        <input type="text" class="form-control" id="update-name">
+                        <span class="invalid-feedback" id="invalid-feedback-update-name">Độ dài tên nhãn hiệu từ 1 - 50 ký tự</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="required-label" for="update-phone">Số điện thoại</label>
+                        <input type="text" class="form-control" id="update-phone">
+                        <span class="invalid-feedback" id="invalid-feedback-update-phone">Số điện thoại không hợp lệ</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="required-label" for="update-email">Email</label>
+                        <input type="text" class="form-control" id="update-email">
+                        <span class="invalid-feedback" id="invalid-feedback-update-email">Email không hợp lệ</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="required-label">Avatar</label>
+                        <div class="avatar-container" style="display:none">
+                            <div class="img-div">
+                                <img class="preview-img" alt="Avatar post">
+                            </div>
+                        </div>
+                        <div class="invalid-feedback invalid-feedback-avatar">Bạn chưa chọn avatar</div>
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#choose-img-modal">
+                            Chọn ảnh
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary btn-update-user">Sửa</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <th:block th:replace="~{fragment/choose_image_modal :: choose-img-modal}"></th:block>
+
+</section>
+
+<th:block id="js-resources">
+    <script type="text/javascript" th:src="@{/adminlte/pagination/jquery.simplePagination.js}"></script>
+    <script type="text/javascript" th:src="@{/adminlte/js/table.js}"></script>
+    <script type="text/javascript" th:src="@{/adminlte/js/list.min.js}"></script>
+    <script type="text/javascript" th:src="@{/adminlte/js/modal_image.js}"></script>
+    <script th:inline="javascript">
+        let id,fullName, email, phone, address, page;
+
+        $(function () {
+            let vars = parseUrl();
+            id = vars["id"] || ""
+            fullName = vars["fullName"] || ""
+            email = vars["email"] || ""
+            phone = vars["phone"] || ""
+            address = vars["address"] || ""
+            page = vars["page"] || "1"
+
+            $('#id').val(id)
+            $('#fullName').val(fullName)
+            $('#email').val(email)
+            $('#phone').val(phone)
+            $('#address').val(address)
+            $('#page').val(page)
+
+            pagination([[${totalPages}]], [[${currentPage}]]);
+        });
+
+        $(function () {
+            let imgs = [[${images}]];
+            let tmp = [];
+            for (img of imgs) {
+                tmp.push({"grid-item-img": img})
+            }
+            initListImg(tmp);
+        })
+
+        $('.btn-choose-img').click(function () {
+            let url = $('#list-user-img .grid-item.choosen .grid-item-img').attr('src');
+            if (url == "" || url == null) {
+                toastr.warning("Bạn chưa chọn ảnh");
+                return;
+            }
+            closeChooseImgModal();
+            $('.avatar-container').show();
+            $('.invalid-feedback-avatar').hide();
+            $('.preview-img').attr('src', url);
+        })
+
+        $("#modal-add-new-user").on("hidden.bs.modal", function () {
+            closeModalInsertUpdate();
+        });
+
+        $("#modal-update-user").on("hidden.bs.modal", function () {
+            closeModalInsertUpdate();
+        });
+
+        function closeModalInsertUpdate() {
+            $('.avatar-container').hide();
+            $('#new-name').val('');
+            $('#new-phone').val('');
+            $('#new-email').val('');
+            $('#new-password').val('');
+            $('#update-name').val('');
+            $('#update-phone').val('');
+            $('#update-email').val('');
+            $('.preview-img').attr('src', '');
+            $('.invalid-feedback').hide();
+            $('#update-user-id').val('');
+        }
+
+        $('.btn-add-new-user').click(function () {
+            let newName = $('#new-name').val();
+            let newPhone = $('#new-phone').val();
+            let newEmail = $('#new-email').val();
+            let newPassword = $('#new-password').val();
+            let avatar = $('.preview-img').attr('src');
+
+            // Gán avatar mặc định nếu không chọn ảnh
+        // Check if avatar is empty, null, undefined or 'null' string
+        if (!avatar || avatar === '' || avatar === 'null' || avatar === undefined) {
+            // Set default avatar path if no avatar is selected
+            avatar = '/media/static/853e9144-9af1-4a8e-bfa3-e8c5ae17ebfe.png';
+            // Show avatar container since we're using default
+            $('.preview-img').attr('src',avatar);
+        }
+
+            isValid = true;
+
+            if (newName.length === 0) {
+                $('#invalid-feedback-new-name').show();
+                isValid = false;
+            }
+            if (newPhone.length === 0) {
+                $('#invalid-feedback-new-phone').show();
+                isValid = false;
+            }
+            if (newEmail.length === 0) {
+                $('#invalid-feedback-new-email').show();
+                isValid = false;
+            }
+            
+
+            if (isValid) {
+                req = {
+                    fullName: newName,
+                    email: newEmail,
+                    password: newPassword,
+                    phone: newPhone,                   
+                    avatar: avatar
+                }
+                var myJSON = JSON.stringify(req);
+                $.ajax({
+                    url: '/api/admin/user',
+                    type: 'POST',
+                    data: myJSON,
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        toastr.success("Tạo tài khoản khách hàng thành công");
+                        $('.modal').modal('hide');
+                        setTimeout(() => location.reload(), 500);
+                    },
+                    error: function (data) {
+                        toastr.warning(data.responseJSON.message);
+                    }
+                });
+            }
+        });
+
+        let userId;
+        $('.edit-user').click(function () {
+            userId = $(this).data('id');
+            $.ajax({
+                url: "/api/admin/users/" + userId,
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if($('.preview-img').attr('src') == 'null') {
+                        $('.avatar-container').hide();
+                    }
+                    else{
+                        $('.avatar-container').show();
+                    }
+                    $("#update-name").val(data.fullName);
+                    $("#update-phone").val(data.phone);
+                    $("#update-email").val(data.email);
+                    $('.preview-img').attr('src',data.avatar);
+                    $('#modal-update-user').modal('show');
+                }
+            })
+        });
+
+        $(".btn-update-user").click(function (){
+            let updateName = $('#update-name').val();
+            let updatePhone = $('#update-phone').val();
+            let updateEmail = $('#update-email').val();
+            let updateAvatar = $('.preview-img').attr('src');
+
+            isValid = true;
+
+            if (updateName.length === 0) {
+                $('#invalid-feedback-new-user').show();
+                isValid = false;
+            }
+            if (updatePhone.length === 0) {
+                $('#invalid-feedback-new-user').show();
+                isValid = false;
+            }
+            if (updateEmail.length === 0) {
+                $('#invalid-feedback-new-user').show();
+                isValid = false;
+            }
+            
+
+            // Check if avatar is empty, null, undefined or 'null' string
+        if (!updateAvatar || updateAvatar === '' || updateAvatar === 'null' || updateAvatar === undefined) {
+            // Set default avatar path if no avatar is selected
+            updateAvatar = '/media/static/853e9144-9af1-4a8e-bfa3-e8c5ae17ebfe.png';
+            // Show avatar container since we're using default
+            $('.preview-img').attr('src',updateAvatar);
+        }
+
+            if (isValid) {
+                req = {
+                    fullName: updateName,
+                    email: updateEmail,
+                    password: '11111111',
+                    phone: updatePhone,                   
+                    avatar: updateAvatar
+                }
+                var myJSON = JSON.stringify(req);
+                $.ajax({
+                    url: '/api/admin/users/'+userId,
+                    type: 'PUT',
+                    data: myJSON,
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        toastr.success("Sửa nhãn hiệu thành công");
+                        $('.modal').modal('hide');
+                        setTimeout(() => location.reload(), 500);
+                    },
+                    error: function (data) {
+                        toastr.warning(data.responseJSON.message);
+                    }
+                });
+            }
+        })
+
+        $(".delete-user").on("click",function (){
+           let id = $(this).data('id');
+            swal({
+                title: 'Bạn chắc chắn muốn xóa!',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                cancelButtonText: "Không",
+                confirmButtonText: "Có",
+            }).then(function (rs){
+                if (rs.value){
+                    $.ajax({
+                        url:"/api/admin/users/"+ id,
+                        type: "DELETE",
+                        success: function (data){
+                            toastr.success("Xóa tài khoản thành công!");
+                            setTimeout(() => location.reload(), 500);
+                        },
+                        error: function (error){
+                            toastr.warning(error.responseJSON.message);
+                        }
+                    })
+                }
+            })
+        })
+
+
+
+
+
+
+
+
+    </script>
+</th:block>
+</body>
+</html>
+
+
+<style>
+
+    .modal-body {
+        max-height: 400px;
+        overflow-y: scroll;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: white;
+    }
+    
+    .btn-primary:hover {
+        background-color: #0069d9;
+        border-color: #0062cc;
+        color: white;
+    }
+    
+    .btn-primary:focus, .btn-primary:active {
+        background-color: #0069d9 !important;
+        border-color: #0062cc !important;
+        color: white !important;
+        box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5) !important;
+    }
+    
+    /* Thêm CSS mới cho nút sửa và xóa */
+    .actions {
+        text-align: center;
+        white-space: nowrap;
+    }
+    
+    .actions a {
+        display: inline-block;
+        padding: 6px 12px;
+        margin: 0 3px;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+    }
+    
+    .edit-user{
+        color: #ffffff !important;
+        background: #ffc107;
+    }
+    
+    
+    .delete-user {
+        color: #ffffff !important;
+        background: #dc3545;
+    }
+    
+    
+    .actions i {
+        font-size: 14px;
+    }
+
+
+    .preview-img{
+        width: 200px;
+        height: 200px;
+        border-radius: 12px;
+    }
+
+    .user-image{
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+    }
+
+    .body{
+        overflow-y: scrool;
+    }
+</style>

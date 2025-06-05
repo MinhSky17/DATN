@@ -9,6 +9,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,5 +32,7 @@ public class CrUserRequest {
     private String phone;
 
     private String avatar;
+
+    private List<String> roles;
 
 }

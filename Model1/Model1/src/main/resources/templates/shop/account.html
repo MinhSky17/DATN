@@ -72,6 +72,14 @@
                                     <textarea class="form-control" rows="5" th:text="${user_address}" id="in-user-address"></textarea>
                                 </div>
                             </div>
+                            <div class="address item-row col-md-10" style="margin-bottom: 1rem;">
+                                <div class="text">Ảnh đại diện</div>
+                                <div>
+                                    <img  id="avatar-preview" th:src="${user_avatar} ?: '/default-avatar.png'" alt="Avatar Preview" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;"/>
+                                    <input type="file" id="in-user-avatar" accept="image/png,image/jpeg,image/gif,image/svg+xml" />
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
                             <div class="update-btn-wrapper item-row col-md-10">
                                 <div class="btn btn-primary red-btn update-btn">Cập nhật</div>
                             </div>
@@ -119,10 +127,24 @@
             </div>
         </div>
     </div>
+    <th:block th:replace="~{fragment/choose_image_modal :: choose-img-modal}"></th:block>
 </main>
 
 <th:block id="js-resources">
     <script th:inline="javascript">
+
+        $('.btn-choose-img').click(function () {
+            let url = $('#list-user-img .grid-item.choosen .grid-item-img').attr('src');
+            if (url == "" || url == null) {
+                toastr.warning("Bạn chưa chọn ảnh");
+                return;
+            }
+            closeChooseImgModal();
+            $('.avatar-container').show();
+            $('.invalid-feedback-avatar').hide();
+            $('.preview-img').attr('src', url);
+        })
+
         $('.btn-confirm-change-password').click(function() {
             let oldPassword = $('#old-password').val();
             let newPassword = $('#new-password').val();
@@ -196,8 +218,9 @@
             let phoneValue = $("#in-user-phone").val();
             let fullNameValue = $("#in-user-fullname").val();
             let addressValue = $('#in-user-address').val();
+            let avatarFile = $("#in-user-avatar")[0].files[0];
             let isValid = true;
-
+        
             let phoneFormat = new RegExp(/((09|03|07|08|05)+([0-9]{8})\b)/g);
             if (phoneValue == "") {
                 phoneInvalid = $("#in-user-phone").next();
@@ -210,20 +233,63 @@
                 phoneInvalid.html('Số điện thoại không hợp lệ');
                 isValid = false;
             }
-
+        
             if (fullNameValue == "") {
                 fullNameInvalid = $("#in-user-fullname").next();
                 fullNameInvalid.css('display', 'block');
                 fullNameInvalid.html('Vui lòng nhập họ tên');
                 isValid = false;
             }
-
+        
+            if (avatarFile) {
+                let fileName = avatarFile.name;
+                let extension = fileName.substr(fileName.lastIndexOf('.') + 1).toLowerCase();
+                if (extension != "jpg" && extension != "png" && extension != "svg" && extension != "jpeg" && extension != "gif") {
+                    $("#in-user-avatar").val('');
+                    $("#in-user-avatar").next().css('display', 'block').html('Chỉ hỗ trợ các định dạng ảnh: jpg, png, svg, jpeg, gif');
+                    isValid = false;
+                } else if (avatarFile.size > 2 * 1024 * 1024) { // Giới hạn 2MB
+                    $("#in-user-avatar").val('');
+                    $("#in-user-avatar").next().css('display', 'block').html('Chỉ hỗ trợ file ảnh có kích thước lớn nhất 2MB');
+                    isValid = false;
+                }
+            }
+        
             if (isValid) {
-                req = {
+                let req = {
                     phone: phoneValue,
                     full_name: fullNameValue,
-                    address: addressValue
+                    address: addressValue,
+                    avatar: avatarFile ? null : /*[[${user_avatar}]]*/ null // Giữ ảnh cũ nếu không có ảnh mới
+                };
+        
+                // Nếu có file ảnh, tải lên trước
+                if (avatarFile) {
+                    let fd = new FormData();
+                    fd.append('file', avatarFile);
+                    $.ajax({
+                        url: '/api/upload/files',
+                        type: 'POST',
+                        data: fd,
+                        contentType: false,
+                        processData: false,
+                        success: function(data) {
+                            req.avatar = data; // Lưu link ảnh
+                            sendUpdateProfileRequest(req);
+                        },
+                        error: function(data) {
+                            toastr.warning(data.responseJSON.message || 'Lỗi khi tải lên ảnh');
+                            $("#in-user-fullname").next().hide();
+                            $("#in-user-phone").next().hide();
+                            $("#in-user-avatar").next().hide();
+                        }
+                    });
+                } else {
+                    sendUpdateProfileRequest(req);
                 }
+            }
+        
+            function sendUpdateProfileRequest(req) {
                 var myJSON = JSON.stringify(req);
                 $.ajax({
                     url: '/api/update-profile',
@@ -233,17 +299,45 @@
                     success: function(data) {
                         signedValidate(true, fullNameValue);
                         toastr.success("Cập nhật profile thành công");
+                        if (req.avatar) {
+                            $("#avatar-preview").attr("src", req.avatar);
+                        }
                     },
                     error: function(data) {
-                        toastr.warning(data.responseJSON.message);
+                        toastr.warning(data.responseJSON.message || 'Lỗi khi cập nhật profile');
                     },
                     complete: function() {
                         $("#in-user-fullname").next().hide();
                         $("#in-user-phone").next().hide();
+                        $("#in-user-avatar").next().hide();
                     }
                 });
             }
-        })
+        });
+        
+        // Xem trước ảnh khi chọn file
+        $("#in-user-avatar").change(function() {
+            let avatarFile = this.files[0];
+            if (avatarFile) {
+                let fileName = avatarFile.name;
+                let extension = fileName.substr(fileName.lastIndexOf('.') + 1).toLowerCase();
+                if (extension != "jpg" && extension != "png" && extension != "svg" && extension != "jpeg" && extension != "gif") {
+                    $("#in-user-avatar").val('');
+                    $("#in-user-avatar").next().css('display', 'block').html('Chỉ hỗ trợ các định dạng ảnh: jpg, png, svg, jpeg, gif');
+                    return;
+                }
+                if (avatarFile.size > 2 * 1024 * 1024) {
+                    $("#in-user-avatar").val('');
+                    $("#in-user-avatar").next().css('display', 'block').html('Chỉ hỗ trợ file ảnh có kích thước lớn nhất 2MB');
+                    return;
+                }
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    $("#avatar-preview").attr("src", e.target.result);
+                };
+                reader.readAsDataURL(avatarFile);
+            }
+        });
     </script>
 </th:block>
 </body>

@@ -1,6 +1,7 @@
 package com.model1.application.model.mapper;
 
 import com.model1.application.entity.User;
+import com.model1.application.exception.BadRequestException;
 import com.model1.application.model.dto.UserDTO;
 import com.model1.application.model.request.CrUserRequest;
 import com.model1.application.model.request.CreateUserRequest;
@@ -9,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class UserMapper {
     public static UserDTO toUserDTO(User user) {
@@ -50,7 +52,13 @@ public class UserMapper {
         user.setAvatar(createUserRequest.getAvatar());
         user.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         user.setStatus(true);
-        user.setRoles(new ArrayList<>(Arrays.asList("USER")));
+        //user.setRoles(new ArrayList<>(Arrays.asList("USER")));
+        List<String> validRoles = Arrays.asList("USER", "ADMIN");
+        List<String> roles = createUserRequest.getRoles();
+        if (roles == null || roles.isEmpty() || roles.stream().anyMatch(role -> !validRoles.contains(role))) {
+            throw new BadRequestException("Vai trò không hợp lệ. Chỉ hỗ trợ: USER, ADMIN");
+        }
+        user.setRoles(new ArrayList<>(roles));
 
         return user;
     }

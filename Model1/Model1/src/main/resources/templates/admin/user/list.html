@@ -60,7 +60,7 @@
                     <th>Email</th>
                     <th width="15%">Số điện thoại</th>
                     <th width="100px">Avatar</th>
-                    <th>Ngày tạo</th>
+                    <th>Vai trò</th>
                     <th width="15%">Thao tác</th>
 <!--                    <th>Thao tác</th>-->
                 </tr>
@@ -87,7 +87,8 @@
                     <td>
                         <img th:src="${user.avatar}" th:alt="${user.fullName}" class="user-image"/>
                     </td>
-                    <td th:text="${#dates.format(user.createdAt, 'dd-MM-yyyy')}"></td>
+                    <!--<td th:text="${#dates.format(user.createdAt, 'dd-MM-yyyy')}"></td>-->
+                    <td th:text="${user.roles != null} ? ${#strings.listJoin(user.roles, ', ')} : ''"></td>
                     <td class="actions">
                         <a href="#" class="on-default edit-row edit-user" th:data-id="${user.id}">
                             <i class="fas fa-pencil-alt"></i>
@@ -141,6 +142,15 @@
                         <span class="invalid-feedback" id="invalid-feedback-new-password">Password không hợp lệ</span>
                     </div>
                     <div class="form-group">
+                        <label class="required-label" for="new-role">Vai trò</label>
+                        <select class="form-control" id="new-role">
+                            <option value="USER">User</option>
+                            <option value="ADMIN">Admin</option>
+                        </select>
+                        <span class="invalid-feedback" id="invalid-feedback-new-role">Vui lòng chọn ít nhất một vai trò</span>
+                    </div>
+                    
+                    <div class="form-group">
                         <label class="required-label">Avatar</label>
                         <div class="avatar-container" style="display:none">
                             <div class="img-div">
@@ -188,6 +198,14 @@
                         <label class="required-label" for="update-email">Email</label>
                         <input type="text" class="form-control" id="update-email">
                         <span class="invalid-feedback" id="invalid-feedback-update-email">Email không hợp lệ</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="required-label" for="update-role">Vai trò</label>
+                        <select class="form-control" id="update-role">
+                            <option value="USER">User</option>
+                            <option value="ADMIN">Admin</option>
+                        </select>
+                        <span class="invalid-feedback" id="invalid-feedback-update-role">Vui lòng chọn ít nhất một vai trò</span>
                     </div>
                     <div class="form-group">
                         <label class="required-label">Avatar</label>
@@ -282,6 +300,8 @@
             $('.preview-img').attr('src', '');
             $('.invalid-feedback').hide();
             $('#update-user-id').val('');
+            $('#new-role').val('');
+            $('#update-role').val('');
         }
 
         $('.btn-add-new-user').click(function () {
@@ -289,17 +309,26 @@
             let newPhone = $('#new-phone').val();
             let newEmail = $('#new-email').val();
             let newPassword = $('#new-password').val();
+            let newRoles = $('#new-role').val();
             let avatar = $('.preview-img').attr('src');
 
             // Gán avatar mặc định nếu không chọn ảnh
-        // Check if avatar is empty, null, undefined or 'null' string
-        if (!avatar || avatar === '' || avatar === 'null' || avatar === undefined) {
-            // Set default avatar path if no avatar is selected
-            avatar = '/media/static/853e9144-9af1-4a8e-bfa3-e8c5ae17ebfe.png';
-            // Show avatar container since we're using default
-            $('.preview-img').attr('src',avatar);
-        }
-
+            // Check if avatar is empty, null, undefined or 'null' string
+            if (!avatar || avatar === '' || avatar === 'null' || avatar === undefined) {
+                // Set default avatar path if no avatar is selected
+                avatar = '/media/static/853e9144-9af1-4a8e-bfa3-e8c5ae17ebfe.png';
+                // Show avatar container since we're using default
+                $('.preview-img').attr('src',avatar);
+            }
+            
+            // Kiểm tra vai trò
+            if (!newRoles || newRoles.length === 0) {
+                $('#invalid-feedback-new-role').show();
+                isValid = false;
+            } else {
+                $('#invalid-feedback-new-role').hide();
+            }
+            
             isValid = true;
 
             if (newName.length === 0) {
@@ -322,7 +351,8 @@
                     email: newEmail,
                     password: newPassword,
                     phone: newPhone,                   
-                    avatar: avatar
+                    avatar: avatar,
+                    roles: [newRoles]
                 }
                 var myJSON = JSON.stringify(req);
                 $.ajax({
@@ -359,6 +389,7 @@
                     $("#update-name").val(data.fullName);
                     $("#update-phone").val(data.phone);
                     $("#update-email").val(data.email);
+                    $('#update-role').val(data.roles);
                     $('.preview-img').attr('src',data.avatar);
                     $('#modal-update-user').modal('show');
                 }
@@ -369,6 +400,7 @@
             let updateName = $('#update-name').val();
             let updatePhone = $('#update-phone').val();
             let updateEmail = $('#update-email').val();
+            let updateRoles = $('#update-role').val();
             let updateAvatar = $('.preview-img').attr('src');
 
             isValid = true;
@@ -385,15 +417,23 @@
                 $('#invalid-feedback-new-user').show();
                 isValid = false;
             }
+
+            // Kiểm tra vai trò
+            if (!updateRoles || updateRoles.length === 0) {
+                $('#invalid-feedback-update-role').show();
+                isValid = false;
+            } else {
+                $('#invalid-feedback-update-role').hide();
+            }
             
 
             // Check if avatar is empty, null, undefined or 'null' string
-        if (!updateAvatar || updateAvatar === '' || updateAvatar === 'null' || updateAvatar === undefined) {
-            // Set default avatar path if no avatar is selected
-            updateAvatar = '/media/static/853e9144-9af1-4a8e-bfa3-e8c5ae17ebfe.png';
-            // Show avatar container since we're using default
-            $('.preview-img').attr('src',updateAvatar);
-        }
+            if (!updateAvatar || updateAvatar === '' || updateAvatar === 'null' || updateAvatar === undefined) {
+                // Set default avatar path if no avatar is selected
+                updateAvatar = '/media/static/853e9144-9af1-4a8e-bfa3-e8c5ae17ebfe.png';
+                // Show avatar container since we're using default
+                $('.preview-img').attr('src',updateAvatar);
+            }
 
             if (isValid) {
                 req = {
@@ -401,7 +441,8 @@
                     email: updateEmail,
                     password: '11111111',
                     phone: updatePhone,                   
-                    avatar: updateAvatar
+                    avatar: updateAvatar,
+                    roles: [updateRoles]
                 }
                 var myJSON = JSON.stringify(req);
                 $.ajax({
@@ -532,4 +573,6 @@
     .body{
         overflow-y: scrool;
     }
+
+    
 </style>

@@ -1,0 +1,6 @@
+/* Thiết lập màu chữ và hover cho các mục trong sidebar */
+ul.nav-main li a {
+    color: #ffffff;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}

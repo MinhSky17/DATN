@@ -23,4 +23,6 @@ public class UpdateProfileRequest {
     private String fullName;
 
     private String address;
+
+    private String avatar;
 }

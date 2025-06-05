@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(
+                                                                     ~{:: title},
+                                                                    'header',
+                                                                    'footer',
+                                                                     ~{:: #css-resources},
+                                                                     ~{:: #js-resources},
+                                                                     ~{:: #main-content}
+                                                                    )}">
+<head>
+    <meta charset="UTF-8">
+    <title>Thông tin đơn hàng</title>
+    <th:block id="css-resources">
+        <style>
+            <style>
+                /* Thanh điều hướng */
+                .main-content .nav {
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 15px;
+                    padding: 20px 0;
+                }
+
+                .nav-item {
+                    text-align: center;
+                    padding: 12px;
+                    cursor: pointer;
+                    
+                    border-radius: 8px;
+                    transition: all 0.3s ease;
+                    font-weight: 500;
+                }
+
+                .nav-item:hover {
+                    border-color: #dc3545;
+                    color: #dc3545;
+                }
+
+                .nav-item.active {
+                    background-color: #dc3545;
+                    color: white;
+                    border-color: #dc3545;
+                }
+
+                /* Card đơn hàng */
+                .item {
+                    border: 1px solid #eee;
+                    margin-bottom: 20px;
+                    padding: 20px;
+                    border-radius: 12px;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+                    transition: all 0.3s ease;
+                }
+
+                .item:hover {
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                    transform: translateY(-2px);
+                }
+
+                .header-item {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding-bottom: 15px;
+                    border-bottom: 1px solid #eee;
+                    margin-bottom: 15px;
+                }
+
+                .order-number-wrapper {
+                    font-size: 15px;
+                    color: #666;
+                }
+
+                .order-number {
+                    color: #dc3545;
+                    font-weight: 600;
+                    text-decoration: none;
+                }
+
+                .full-details {
+                    color: #dc3545;
+                    text-decoration: none;
+                    font-weight: 500;
+                    transition: color 0.3s ease;
+                }
+
+                .full-details:hover {
+                    color: #c82333;
+                }
+
+                /* Sản phẩm trong đơn hàng */
+                .product-col {
+                    display: flex;
+                    align-items: center;
+                    gap: 20px;
+                    padding: 15px 0;
+                    border-bottom: 1px solid #f5f5f5;
+                }
+
+                .product-image-container {
+                    width: 100px;
+                    height: 100px;
+                    border-radius: 8px;
+                    overflow: auto;
+                }
+
+                .product-image-container img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    transition: transform 0.3s ease;
+                }
+
+                .product-image-container img:hover {
+                    transform: scale(1.05);
+                }
+
+                .product-details {
+                    flex-grow: 1;
+                }
+
+                /* Điều chỉnh font size */
+                .product-title {
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: #333;
+                    margin-bottom: 6px;
+                }
+
+                .product-details p {
+                    color: #666;
+                    margin: 4px 0;
+                    font-size: 13px;
+                }
+
+                .price-col {
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #dc3545;
+                    white-space: nowrap; /* Ngăn xuống dòng */
+                    min-width: 120px; /* Đảm bảo độ rộng tối thiểu */
+                    text-align: right; /* Căn phải cho giá tiền */
+                }
+
+                .price.bid-price {
+                    text-align: right;
+                    font-size: 16px;
+                    font-weight: 600;
+                    color: #dc3545;
+                    margin-top: 12px;
+                    white-space: nowrap;
+                }
+
+                /* Điều chỉnh layout sản phẩm */
+                .product-col {
+                    display: grid;
+                    grid-template-columns: 80px 1fr 120px; /* Chia cột cố định */
+                    gap: 15px;
+                    align-items: center;
+                    padding: 12px 0;
+                    border-bottom: 1px solid #f5f5f5;
+                }
+
+                .product-image-container {
+                    width: 80px; /* Giảm kích thước ảnh */
+                    height: 80px;
+                    border-radius: 6px;
+                }
+
+                /* Điều chỉnh header */
+                .order-number-wrapper {
+                    font-size: 14px;
+                    color: #666;
+                }
+
+                .full-details {
+                    font-size: 14px;
+                }
+
+                /* Điều chỉnh responsive */
+                @media (max-width: 767px) {
+                    .product-col {
+                        grid-template-columns: 60px 1fr 100px;
+                        gap: 10px;
+                    }
+
+                    .product-image-container {
+                        width: 60px;
+                        height: 60px;
+                    }
+
+                    .price-col {
+                        min-width: 100px;
+                        font-size: 14px;
+                    }
+                }
+                /* Sidebar */
+                .left-sidebar {
+                    background: #fff;
+                    border-radius: 12px;
+                    padding: 20px;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+                }
+
+                .avatar img {
+                    width: 80px;
+                    height: 80px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    border: 3px solid #eee;
+                }
+
+                .user-info {
+                    margin-top: 15px;
+                    text-align: center;
+                }
+
+                .user-name {
+                    font-size: 18px;
+                    font-weight: 600;
+                    color: #333;
+                }
+
+                .edit-profile {
+                    color: #666;
+                    font-size: 14px;
+                    margin-top: 5px;
+                    cursor: pointer;
+                }
+
+                .break-line {
+                    height: 1px;
+                    background: #eee;
+                    margin: 20px 0;
+                }
+
+                .nav-sidebar {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                }
+
+                .nav-sidebar a {
+                    padding: 12px;
+                    border-radius: 8px;
+                    color: #333;
+                    text-decoration: none;
+                    transition: all 0.3s ease;
+                }
+
+                .nav-sidebar a:hover {
+                    background: #f8f9fa;
+                    color: #dc3545;
+                }
+
+                .sign-out-btn {
+                    margin-top: 20px;
+                    background: #dc3545;
+                    color: white !important;
+                    border: none;
+                    padding: 12px;
+                    border-radius: 8px;
+                    text-align: center;
+                    transition: all 0.3s ease;
+                }
+
+                .sign-out-btn:hover {
+                    background: #c82333;
+                    transform: translateY(-2px);
+                }
+                .nav-tab {
+                    margin-bottom: 30px;
+                }
+                
+                .nav-tab .nav-pills {
+                    display: grid;
+                    grid-template-columns: repeat(4, 1fr);
+                    gap: 15px;
+                    padding: 0;
+                    list-style: none;
+                    margin: 0;
+                }
+                
+                .nav-tab .nav-item {
+                    width: 100%;
+                }
+                
+                .nav-tab .nav-link {
+                    display: block;
+                    text-align: center;
+                    padding: 12px;
+                    border: 2px solid #eee;
+                    border-radius: 8px;
+                    color: #666;
+                    font-weight: 500;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    background: white;
+                    font-size: 14px;
+                }
+                
+                .nav-tab .nav-link:hover {
+                    border-color: #dc3545;
+                    color: #dc3545;
+                }
+                
+                .nav-tab .nav-link.active {
+                    background-color: #dc3545;
+                    color: white;
+                    border-color: #dc3545;
+                }
+                
+                @media (max-width: 767px) {
+                    .nav-tab .nav-pills {
+                        grid-template-columns: 1fr;
+                        gap: 10px;
+                    }
+                    
+                    .nav-tab .nav-link {
+                        padding: 10px;
+                        font-size: 13px;
+                    }
+                }
+            </style>
+        </style>
+        <link rel="stylesheet" th:href="@{/shop/css/custom.css}">
+    </th:block>
+</head>
+<body>
+<main id="main-content" class="container">
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="left-sidebar">
+                <div class="header">
+                    <div class="avatar">
+                        <img class="img-fluid" th:src="${user_avatar}" alt="avatar"/>
+                    </div>
+                    <div class="user-info">
+                        <div class="user-name" th:text="${user_fullname}"></div>
+                        <div class="edit-profile">Chỉnh sửa tài khoản</div>
+                    </div>
+                </div>
+                <div class="break-line"></div>
+                <div class="nav-sidebar">
+                    <a class="account nav-item" href="/tai-khoan">Quản lý tài khoản</a>
+                    <a class="buying-order nav-item" href="/tai-khoan/lich-su-giao-dich">Quản lý đơn hàng</a>
+                    <a class="btn btn-primary red-btn sign-out-btn" href="/api/logout">Đăng xuất</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9 main-content-wrapper">
+            <div class="main-content">
+                <div class="nav-tab">
+                    <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                        <li class="nav-item"><div class="nav-link order-status" data-status="1">Đang chuẩn bị hàng</div></li>
+                        <li class="nav-item"><div class="nav-link order-status active" data-status="2">Đang giao hàng</div></li>
+                        <li class="nav-item"><div class="nav-link order-status" data-status="3">Đã giao hàng</div></li>
+                        <li class="nav-item"><div class="nav-link order-status" data-status="5">Đơn hàng đã hủy</div></li>
+                    </ul>
+                </div>
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="list-order" role="tabpanel">
+                        <div id="order-list-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<th:block id="js-resources">
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load initial order list based on active tab
+            const initialStatus = document.querySelector('.nav-link.active').getAttribute('data-status');
+            fetchOrderList(initialStatus);
+
+            // Handle tab clicks
+            document.querySelectorAll('.order-status').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const status = tab.getAttribute('data-status');
+                    fetchOrderList(status);
+                    document.querySelector('.nav-link.active')?.classList.remove('active');
+                    tab.classList.add('active');
+                });
+            });
+
+            async function fetchOrderList(status) {
+                try {
+                    const response = await fetch(`/api/get-order-list?status=${status}`, {
+                        method: 'GET',
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                    if (!response.ok) throw new Error('Không thể lấy danh sách đơn hàng');
+                    const orders = await response.json();
+                    renderOrderList(orders);
+                } catch (error) {
+                    showError(error.message);
+                }
+            }
+
+            async function renderOrderList(orders) {
+                const container = document.getElementById('order-list-container');
+                container.innerHTML = '';
+                if (!orders || orders.length === 0) {
+                    container.innerHTML = `
+                        <div class="text-center py-5">
+                            <p class="h5 text-muted">Không có đơn hàng nào</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                for (const order of orders) {
+                    const orderDiv = document.createElement('div');
+                    orderDiv.className = 'item';
+                    orderDiv.innerHTML = `
+                        <div class="header-item">
+                            <div class="order-number-wrapper">
+                                Mã đơn <a class="order-number" href="/tai-khoan/lich-su-giao-dich/${order.id}">#${order.id}</a>
+                            </div>
+                            <a class="full-details" href="/tai-khoan/lich-su-giao-dich/${order.id}">Xem chi tiết</a>
+                        </div>
+                        <div class="item-info-wrapper">
+                            <div class="order-products" data-order-id="${order.id}"></div>
+                            <div class="price bid-price"><span class="text-price">${formatPrice(order.totalPrice)}</span></div>
+                        </div>
+                    `;
+                    container.appendChild(orderDiv);
+                    await fetchOrderDetails(order.id, orderDiv.querySelector('.order-products'));
+                }
+            }
+
+            async function fetchOrderDetails(orderId, productsDiv) {
+                try {
+                    const response = await fetch(`/api/don-hang/${orderId}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + localStorage.getItem('token')
+                        }
+                    });
+                    if (!response.ok) throw new Error('Không thể lấy chi tiết đơn hàng');
+                    const data = await response.json();
+                    renderOrderProducts(data, productsDiv);
+                } catch (error) {
+                    showError(error.message);
+                }
+            }
+
+            function renderOrderProducts(order, productsDiv) {
+                productsDiv.innerHTML = '';
+                if (!order.items || order.items.length === 0) {
+                    productsDiv.innerHTML = '<p>Không có sản phẩm trong đơn hàng</p>';
+                    return;
+                }
+
+                order.items.forEach(item => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'product-col';
+                    itemDiv.innerHTML = `
+                        <div class="product-image-container">
+                            <img src="${item.productImage || '/shop/images/placeholder.png'}" alt="${item.productName}">
+                        </div>
+                        <div class="product-details" style="flex-grow: 1;">
+                            <div class="product-title">${item.productName || 'N/A'}</div>
+                            <p>Màu: ${item.code || 'N/A'}</p>
+                            <p>Số lượng: ${item.quantity}</p>
+                        </div>
+                        <div class="price-col">${formatPrice(item.price * item.quantity)}</div>
+                    `;
+                    productsDiv.appendChild(itemDiv);
+                });
+            }
+
+            function formatPrice(value) {
+                return Number(value).toLocaleString('vi-VN') + ' ₫';
+            }
+
+            function showError(message) {
+                console.error(message);
+                alert(message); // Có thể thay bằng toastr hoặc giao diện tùy chỉnh
+            }
+        });
+    </script>
+</th:block>
+</body>
+</html>

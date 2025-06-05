@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(
+                                                                     ~{:: title},
+                                                                    'header',
+                                                                    'footer',
+                                                                     ~{:: #css-resources},
+                                                                     ~{:: #js-resources},
+                                                                     ~{:: #main-content}
+                                                                    )}">
+<head>
+    <meta charset="UTF-8">
+    <title>Chính sách đổi trả</title>
+    <th:block id="css-resources">
+        <style>
+            /* Breadcrumb */
+            .breadcrumb-nav {
+                background:rgb(255, 255, 255); /* Hồng nhạt gần trắng */
+                padding: 15px 0;
+                border-bottom: 1px solid #FFE4E9; /* Hồng nhạt */
+                font-family: 'Roboto', sans-serif;
+            }
+
+            .breadcrumb {
+                margin: 0;
+                padding: 0;
+                background: none;
+            }
+
+            .breadcrumb-item a {
+                color: #333333; /* Xám đậm */
+                text-decoration: none;
+                font-size: 14px;
+                transition: color 0.2s;
+            }
+
+            .breadcrumb-item a:hover {
+                color: #FF99AC; /* Hồng nhạt */
+            }
+
+            .breadcrumb-item.active {
+                color: #FF99AC; /* Hồng nhạt */
+                font-weight: 500;
+            }
+
+            .breadcrumb-item i {
+                color: #FF99AC; /* Hồng nhạt */
+                margin-right: 5px;
+            }
+
+            /* Main content */
+            .main {
+                background: #FFFFFF; /* Trắng */
+                padding: 30px 0;
+                font-family: 'Roboto', sans-serif;
+            }
+
+            .light-title {
+                font-family: 'Playfair Display', serif;
+                font-size: 32px;
+                font-weight: 700;
+                color: #FF99AC; /* Hồng nhạt */
+                margin-bottom: 20px;
+                text-align: center;
+                position: relative;
+            }
+
+            .light-title::after {
+                content: '';
+                position: absolute;
+                bottom: -5px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 100px;
+                height: 2px;
+                background: #FF99AC; /* Hồng nhạt */
+            }
+
+            h3 {
+                font-family: 'Roboto', sans-serif;
+                font-size: 20px;
+                font-weight: 600;
+                color: #FF99AC; /* Hồng nhạt thay cho đỏ */
+                margin-top: 30px;
+                margin-bottom: 15px;
+            }
+
+            p {
+                font-size: 15px;
+                color: #333333; /* Xám đậm */
+                line-height: 1.8;
+                margin-bottom: 15px;
+                padding: 0 15px;
+            }
+
+            p a {
+                color: #FF99AC; /* Hồng nhạt */
+                text-decoration: none;
+                font-weight: 500;
+                transition: color 0.2s;
+            }
+
+            p a:hover {
+                color: #FFCCD5; /* Hồng nhạt sáng hơn */
+                text-decoration: underline;
+            }
+
+            .col-md-12 {
+                background: #FFF8FA; /* Hồng nhạt gần trắng */
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            }
+
+            .mb-8 {
+                margin-bottom: 80px;
+            }
+        </style>
+    </th:block>
+</head>
+<body>
+<main class="main" id="main-content">
+    <nav aria-label="breadcrumb" class="breadcrumb-nav">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/"><i class="icon-home"></i></a></li>
+                <li class="breadcrumb-item active" aria-current="page">Chính sách đổi trả</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="light-title"><strong>Chính sách đổi trả</strong></h2>
+                <h3>Đối với khách hàng ở Hà Nội hoặc mua hàng trực tiếp tại cửa hàng của Coshine</h3>
+                    <p>- Trong vòng 7 ngày kể từ ngày mua hàng (theo thời gian ghi trong hóa đơn), quý khách được phép đổi sản phẩm hoặc trả hàng và nhận lại tiền.</p>
+                    <p>- Khi đến đổi, quý khách vui lòng mang theo sản phẩm trong tình trạng chưa qua sử dụng, còn nguyên bao bì và tem nhãn.</p>
+                <h3>Đối với khách hàng ở các tỉnh ngoài Hà Nội khi đặt hàng của Coshine</h3>
+                    <p>- Trong vòng 7 ngày kể từ ngày nhận hàng (theo thời gian ghi trong hóa đơn hoặc mã đơn hàng), quý khách được phép đổi sản phẩm hoặc trả hàng và nhận lại tiền.</p>
+                    <p>- Quý khách vui lòng thông báo trước về tình trạng sản phẩm, nguyên do đổi hàng qua inbox Fanpage: <a href="http://facebook.com/coshine.hn">facebook.com/coshine.hn</a> hoặc Hotline: <a href="tel:0899931712">0899.931.712</a>. Sau đó, quý khách sẽ nhận được hướng dẫn từ đội ngũ hỗ trợ của Coshine.</p>
+                    <p>- Trường hợp sản phẩm lỗi do nhà sản xuất hoặc Coshine gửi nhầm sản phẩm, Coshine xin chịu hoàn toàn phí vận chuyển để đảm bảo quý khách nhận được sản phẩm tốt nhất.</p>
+                <h3>Lưu ý:</h3>
+                <p>- Những sản phẩm đã qua sử dụng, hư hỏng hoặc mất bao bì/tem nhãn sẽ không được áp dụng chính sách đổi trả.</p>
+                <p>- Các sản phẩm trong chương trình khuyến mãi, giảm giá tùy thuộc vào sự kiện mà Coshine công bố.</p>
+                <p>- Điều kiện: Sản phẩm phải còn mới 100%, nguyên bao bì và tem nhãn.</p>
+                <p>Cảm ơn Quý Khách hàng đã tin tưởng và cho Coshine cơ hội được phục vụ Quý Khách!</p>
+            </div><!-- End .col-md-12 -->
+        </div><!-- End .row -->
+    </div><!-- End .container -->
+
+    <div class="mb-8"></div><!-- margin -->
+</main><!-- End .main -->
+<th:block id="js-resources">
+</th:block>
+</body>
+</html>
